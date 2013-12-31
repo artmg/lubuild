@@ -61,6 +61,8 @@ lxpanelctl restart
 # Icon=~/.dropbox-dist/images/emblems/emblem-dropbox-syncing.icon
 # StartupNotify=false
 
+# *** still need to configure browser
+# https://wiki.archlinux.org/index.php/dropbox#Context_menu_entries_in_file_manager_do_not_work
 
 # help > http://www.dropboxwiki.com/Using_Dropbox_CLI
 mkdir -p ~/bin
@@ -70,6 +72,9 @@ chmod +x ~/bin/dropbox.py
 
 ## third part hack script to move dropbox folder programmatically...
 # https://whatbox.ca/wiki/Dropbox
+
+# in case of issues with Ubuntu not showing panel icon see
+# workaround > http://itsfoss.com/solve-dropbox-icon-ubuntu-1310/
 
 
 ##################################
