@@ -53,6 +53,7 @@ lxpanelctl restart
 
 # *** still need to configure browser
 # https://wiki.archlinux.org/index.php/dropbox#Context_menu_entries_in_file_manager_do_not_work
+# see also http://askubuntu.com/questions/247003/is-there-a-way-to-stop-dropbox-from-opening-firefox-as-its-default-when-viewing
 
 # help > http://www.dropboxwiki.com/Using_Dropbox_CLI
 mkdir -p ~/bin
