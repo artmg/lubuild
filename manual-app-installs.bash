@@ -19,20 +19,25 @@ xdg-open https://help.ubuntu.com/community/InstallKompozer
 ##################################
 ### SKYPE
 
-case $(uname -m) in
- x86_64)
- (cd ~ && wget http://www.skype.com/go/getskype-linux-beta-ubuntu-64)
- ;;
- i?86)
- (cd ~ && wget http://www.skype.com/go/getskype-linux-beta-ubuntu-32)
- ;;
-esac
-# credit > http://www.wikihow.com/Install-Skype-Using-Terminal-on-Ubuntu-11.04
-sudo dpkg -i getskype-*
-sudo apt-get -f install -y && sudo rm getskype-*
-# credit > http://www.noobslab.com/2012/11/install-latest-skype-41-in-ubuntu.html
-#
-# (ensure Skype does not listen at port 80 or 443)
+# since 13.10 skype is back in partner repos
+# (it dropped out of repos for a release or so)
+# along with fixes to work in Ubuntu with PulseAudio
+# so these instructions are redundant for now
+
+#case $(uname -m) in
+# x86_64)
+# (cd ~ && wget http://www.skype.com/go/getskype-linux-beta-ubuntu-64)
+# ;;
+# i?86)
+# (cd ~ && wget http://www.skype.com/go/getskype-linux-beta-ubuntu-32)
+# ;;
+#esac
+## credit > http://www.wikihow.com/Install-Skype-Using-Terminal-on-Ubuntu-11.04
+#sudo dpkg -i getskype-*
+#sudo apt-get -f install -y && sudo rm getskype-*
+## credit > http://www.noobslab.com/2012/11/install-latest-skype-41-in-ubuntu.html
+##
+## (ensure Skype does not listen at port 80 or 443)
 
 
 #################################
