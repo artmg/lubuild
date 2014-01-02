@@ -22,6 +22,7 @@ xdg-open https://help.ubuntu.com/community/InstallKompozer
 # since 13.10 skype is back in partner repos
 # (it dropped out of repos for a release or so)
 # along with fixes to work in Ubuntu with PulseAudio
+# (like the PULSE_LATENCY_MSEC setting) 
 # so these instructions are redundant for now
 
 #case $(uname -m) in
