@@ -135,6 +135,8 @@ cups-pdf
 ######## LAPTOPS ############
 guvcview		
 # support for most webcams
+skype
+# back in the repos since 13.10 - no longer need manual script
 
 
 ########### KIDS #############
@@ -175,8 +177,7 @@ libreoffice
 # notes
 vym
 
-# Skype - no longer in repos - see below
-# Dropbox - manual, see below
+# Dropbox - manual, see other script
 
 # advanced
 gimp
