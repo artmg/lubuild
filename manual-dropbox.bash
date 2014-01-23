@@ -4,10 +4,6 @@
 ### DROPBOX                       ### 
 #####################################
 
-## install from repository
-#sudo apt-get install nautilus-dropbox -y
-#dropbox start -i
-
 # DROPBOX daemon manual install
 # NB: it appears this must be INSTALLED in user folder for EACH USER
 # and then individually run for each user too
@@ -21,9 +17,6 @@ case $(uname -m) in
    (cd ~ && wget -O - "https://www.dropbox.com/download?plat=lnx.x86" | tar xzf -)
  ;;
 esac
-
-# this will launch the daemon
-~/.dropbox-dist/dropboxd
 
 
 # and first time around you will need to configure it with your account
@@ -42,8 +35,13 @@ Type=Application
 Terminal=false
 StartupNotify=true
 EOF
-# then refresh the Start Menu  
-lxpanelctl restart
+
+## if you need to refresh the Start Menu  
+# lxpanelctl restart
+
+
+# this will launch the daemon
+~/.dropbox-dist/dropboxd
 
 ## alternative or supplementary lines
 # Version=1.0
@@ -71,3 +69,8 @@ lxpanelctl restart
 
 # in case of issues with Ubuntu not showing panel icon see
 # workaround > http://itsfoss.com/solve-dropbox-icon-ubuntu-1310/
+
+## alternative (still requires manual config) install from repository
+#sudo apt-get install nautilus-dropbox -y
+#dropbox start -i
+
