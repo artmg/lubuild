@@ -23,8 +23,9 @@ esac
 # If you choose "Advanced" setup you can choose where to store your files locally
 
 
-# create the Start Menu shortcut
-cat > ~/.local/share/applications/dropbox.desktop<<EOF
+# create the Start Menu shortcut / launcher
+mkdir ~/.local/share/applications
+cat > ~/.local/share/applications/dropbox.desktop<<EOF!
 [Desktop Entry]
 Name=Dropbox
 Comment=Share your files between computers
@@ -34,7 +35,7 @@ Categories=Network
 Type=Application
 Terminal=false
 StartupNotify=true
-EOF
+EOF!
 
 ## if you need to refresh the Start Menu  
 # lxpanelctl restart
