@@ -78,6 +78,60 @@ sudo apt-get install -f -y
 
 
 
+===Wine===
+
+ sudo apt-get install wine
+
+ # to get the VERY latest version
+ # credit > http://www.winehq.org/download/ubuntu
+ sudo add-apt-repository ppa:ubuntu-wine/ppa
+ sudo apt-get update
+ sudo apt-get install wine1.5
+
+ # might want to consider adding exec option to fstab/disks
+
+====Wine Shortcuts====
+
+* Create new shortcut
+* browse to file in Windows partition
+* prepend "wine "
+* don't choose an icon
+
+
+====Wine compatibility====
+
+ # on 64 bit systems, you may get 32 bit issues with wine 
+ # to make sure wine is registered as 32 bit
+ # credit > http://askubuntu.com/questions/74690/how-to-install-32-bit-wine-on-64-bit-ubuntu
+
+ export WINEARCH=win32
+ export WINEPREFIX=~/.wine32
+ wine /media/Windows/PortableApps/KeePassPortable/App/keepass/KeePass.exe 
+
+ # first time you run this it will create the wine "prefix" configuration
+ # so will be a little slower
+
+
+===Citrix===
+
+Really struggling here
+ http://askubuntu.com/questions/359864/cannot-install-icaclient-due-to-problem-with-ia32-libs
+ http://ubuntuforums.org/archive/index.php/t-2166020.html
+ http://ubuntuforums.org/archive/index.php/t-1338800.html
+ https://help.ubuntu.com/community/CitrixICAClientHowTo
+ also see section in http://debianhelp.wordpress.com/2012/09/29/to-do-list-after-installing-ubuntu-13-10-aka-saucy-salamander-os/
+
+tried loads of stuff but it still failed to run
+
+did
+    ldd /opt/Citrix/ICAClient/wfcmgr
+and got errors
+	libXp.so.6 => not found
+	libXpm.so.4 => not found
+so
+    sudo apt-get install libXp6:i386
+    sudo apt-get install libXpm4:i386
+
 #################################
 ### CITRIX RECIEVER
 
