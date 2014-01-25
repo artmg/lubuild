@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# LUBUILD_HARDWARE_TYPE_WIFI=TRUE
-# export LUBUILD_HARDWARE_TYPE_WIFI
-
 #
 ### Wifi issues after waking from hibernate or suspend ###
 #
@@ -10,7 +7,7 @@
 ## sudo not required :)
 # nmcli nm sleep false
 #
-if [[ $LUBUILD_HARDWARE_TYPE_WIFI -eq TRUE ]] ; then ( 
+if [[ $LUBUILD_HARDWARE_TYPE_LAPTOP -eq TRUE ]] ; then ( 
 sudo tee /usr/share/applications/wake-up-wifi.desktop cat <<EOF!
 [Desktop Entry]
 Type=Application
