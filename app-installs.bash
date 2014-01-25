@@ -1,13 +1,9 @@
 #!/bin/bash
 
 
-
-
-################################
-### *** Pre App Install  *** ###
-################################
-
-### REPOSITORIES
+####################################
+### *** PREPARE REPOSITORIES *** ###
+####################################
 
 # backup software sources
 sudo cp /etc/apt/sources.list{,.`date +%y%m%d`}
@@ -20,9 +16,9 @@ sudo apt-get update
 
 
 
-####################################
-### *** *** APPLICATIONS *** *** ###
-####################################
+###################################
+### *** REMOVE BUNDLED APPS *** ###
+###################################
 
 ### Clean up OS install
 
@@ -34,7 +30,12 @@ sudo apt-get remove -y abiword		# remove abiword to avoid doc corruption issues
 ## or will this do it all?
 # sudo apt-get autoremove
 
-### BASICS
+
+
+######################################
+### *** *** *** BASICS *** *** *** ###
+######################################
+
 # including some proprietary (non-libre) packages
 # pre-answer the accept EULA to avoid the install waiting
 sudo sh -c "echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | debconf-set-selections"
@@ -42,6 +43,10 @@ sudo sh -c "echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eu
 sudo apt-get install `echo ${DESKTOP_SESSION,}`-restricted-extras -y
 # help > https://help.ubuntu.com/community/RestrictedFormats
 
+
+####################################
+### *** *** APPLICATIONS *** *** ###
+####################################
 
 # Supersedes list in HTML doc section - Applications - General Apps
 
@@ -119,15 +124,34 @@ inkscape
 dia-gnome
 scribus
 
-# music
+### Alternative music players ###
+
 # on lubuntu default player is Audacious
-# consider alternative like LXMusic or RhyhtmBox
+# Audacious works but not great interface for finding tracks in big library
+#
+# consider alternative like:
+#
+# LXMusic might be too simple as well
+# Banshee does it out of the box
+# VLC might be getting into album art browsing
+# Clementine has strong fan base
+# Musique is lightweight and QT-based
+# did YaRock continue developing?
+# Rhythmbox is commonly used
+## Cover Art is still a Third party plug in:
+### sudo add-apt-repository ppa:fossfreedom/rhythmbox-plugins
+### sudo apt-get update && sudo apt-get install rhythmbox-plugin-coverart-browser
+## can preset library using gsettings set org/gnome/rhythmbox/rhythmdb locations or similar
+## https://help.ubuntu.com/community/Rhythmbox#Multiple_Library_Directories
+
+
 
 ############## TECH STUFF ################
 
 meld					
 # file and folder diffs...
 #  alternatives: xxdiff - also kdiff3 (floss) + diffMerge (free) are Win/Nux
+# http://askubuntu.com/questions/312604/how-do-i-install-xxdiff-in-13-04 
 
 geany					
 # syntax highlighting editor
@@ -176,7 +200,7 @@ python
 
 EOF
 
-# while read -r line; do [[ $line = \#* ]] && continue; sudo apt-get install -y $line; done < package_list
+while read -r line; do [[ $line = \#* ]] && continue; sudo apt-get install -y $line; done < package_list
 # while read -r line; do [[ $line = \#* ]] && continue; echo -e "$line"; done < package_list
 # credit > http://mywiki.wooledge.org/BashFAQ/001
 
@@ -195,8 +219,16 @@ EOF
 sudo /usr/share/doc/libdvdread4/install-css.sh 
 
 
+########################################
+### *** *** *** DEFAULTS *** *** *** ###
+########################################
 
-#########################
+
+
+#######################################
+### *** *** *** CLEANUP *** *** *** ###
+#######################################
+
 # after all applications are installed and/or upgraded, consider clean up using...
 # sudo apt-get autoremove -y
 
