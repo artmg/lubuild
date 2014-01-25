@@ -1,41 +1,5 @@
 #!/bin/bash
 
-#######################
-### *** ***  Live  USB  *** *** ###
-#######################
-
-# set GB keyboard map
-setxkbmap -layout gb
-# set GB as default keyboard map in sessions 
-echo '@setxkbmap -layout gb' | sudo tee -a /etc/xdg/lxsession/Lubuntu/autostart
-# credit > http://askubuntu.com/questions/102344/switching-keyboard-layouts-in-lubuntu-11-10
-
-### CDROM RO issue ################
-# credit > http://askubuntu.com/a/54622
-# credit > http://unix.stackexchange.com/questions/47433/mount-usb-drive-fat32-so-all-users-can-write-to-it#comment66000_47433
-sudo mount -o remount,rw,UID=`id -u` /cdrom
-
-# fix (requires manual changes)
-# http://www.pendrivelinux.com/sharing-files-between-ubuntu-flash-drive-and-windows/
-# workaround  
-# http://askubuntu.com/a/57911
-
-# if it's been used in windows, but not safely removed...
-# help > http://ubuntuforums.org/showthread.php?p=7525441 
-
-### LOCATION specific #######################################
-
-# move to root of Wallet drive
-cd /media/lubuntu/W_SD_8BU/
-
-# open setup help
-xdg-open Wallet/Service/Procedures/Setup/Public/Set\ up\ Ubuntu.html 
-
-### BOOKMARKS #######################
-cp ~/.gtk-bookmarks{,.`date +%y%m%d`}
-# Add local music folder to bookmarks
-echo file:///media/lubuntu/Default/Documents%20and%20Settings/UserName/Local%20Settings/Personal/Music Music.COPY | tee -a ~/.gtk-bookmarks
-
 
 
 
@@ -53,36 +17,6 @@ sudo add-apt-repository "deb http://archive.canonical.com/ $(lsb_release -sc) pa
 
 # Prepare for repository installs
 sudo apt-get update
-
-### UPDATES ################
-
-# update existing applications with no user interaction...
-sudo apt-get upgrade -y
-
-
-### OPTIONAL UPDATES only if you want ...
-
-# load any kernel updates
-sudo apt-get dist-upgrade -y
-
-# ensure that grub is properly updated in case of issues
-# and if you want to change timeout then first edit /etc/default/grub
-sudo update-grub
-
-# if you want to enable automatic updates...
-sudo apt-get install unattended-upgrades
-# credit > http://mcarpenter.org/blog/2012/08/12/ubuntu-automatic-package-updates
-sudo sh -c "echo unattended-upgrades unattended-upgrades/enable_auto_updates boolean true | debconf-set-selections"
-# for solution using a deb set default config file see https://github.com/netsocDIT/serversetup/blob/master/unattended-upgrades.sh
-sudo dpkg-reconfigure -plow unattended-upgrades
-# help > https://help.ubuntu.com/community/AutomaticSecurityUpdates
-
-#########################
-# after all applications are installed and/or upgraded, consider clean up using...
-# sudo apt-get autoremove -y
-# reboot to use any new kernel version installed
-sudo reboot
-
 
 
 
@@ -259,5 +193,11 @@ EOF
 ### Allow 
 # play dvds
 sudo /usr/share/doc/libdvdread4/install-css.sh 
+
+
+
+#########################
+# after all applications are installed and/or upgraded, consider clean up using...
+# sudo apt-get autoremove -y
 
 
