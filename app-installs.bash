@@ -223,7 +223,9 @@ sudo /usr/share/doc/libdvdread4/install-css.sh
 ### *** *** *** DEFAULTS *** *** *** ###
 ########################################
 
+# Update-Alternatives
 
+# x-www-browser /bin/firefox
 
 #######################################
 ### *** *** *** CLEANUP *** *** *** ###
