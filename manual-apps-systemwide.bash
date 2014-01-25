@@ -1,5 +1,16 @@
 #!/bin/bash
 
+
+#######################################
+### *** REMOVE APPLICATIONS *** *** ###
+#######################################
+
+#if you have installed a .deb package then use this to remove it and any dependencies
+# sudo dpkg -r package.deb
+# sudo apt-get autoremove
+
+
+
 #####################################
 ### Apps requiring manual install ###
 #####################################
