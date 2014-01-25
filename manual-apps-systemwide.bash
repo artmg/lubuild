@@ -108,17 +108,21 @@ sudo apt-get install freeplane -y
 ## wget -O - "http://sourceforge.net/projects/freeplane/files/latest/download?source=files" | 
 wget -qO- -O tmp.zip "http://sourceforge.net/projects/freeplane/files/latest/download?source=files" && unzip tmp.zip && rm tmp.zip
 
+# create the Start Menu shortcut / launcher
+# mkdir ~/.local/share/applications
 cd freeplane*
-echo "[Desktop Entry]" | sudo tee /usr/share/applications/freeplane.desktop
-echo "Name=Freeplan" | sudo tee -a /usr/share/applications/freeplane.desktop
-echo "Comment=Mind Mapping tool" | sudo tee -a /usr/share/applications/freeplane.desktop
-echo "TryExec=$PWD/freeplane.sh" | sudo tee -a /usr/share/applications/freeplane.desktop
-echo "Exec=$PWD/freeplane.sh" | sudo tee -a /usr/share/applications/freeplane.desktop
-# echo "Icon=/opt/eclipse/icon.xpm" | sudo tee -a /usr/share/applications/freeplane.desktop
-# echo "Categories=Development;IDE;Java;" | sudo tee -a /usr/share/applications/freeplane.desktop
-echo "Terminal=false" | sudo tee -a /usr/share/applications/freeplane.desktop
-echo "Type=Application" | sudo tee -a /usr/share/applications/freeplane.desktop
-echo "StartupNotify=true" | sudo tee -a /usr/share/applications/freeplane.desktop
+cat > /usr/share/applications/freeplane.desktop<<EOF!
+[Desktop Entry]
+Name=Freeplan
+Comment=Mind Mapping tool
+TryExec=$PWD/freeplane.sh
+Exec=$PWD/freeplane.sh
+Icon=/opt/eclipse/icon.xpm
+Categories=Development;IDE;Java;
+Type=Application
+Terminal=false
+StartupNotify=true
+EOF!
 cd ..
 
 #### EVERNOTE alternatives
