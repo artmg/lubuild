@@ -26,6 +26,27 @@ xdg-open https://help.ubuntu.com/community/InstallKompozer
 # Is BlueFish visual? Aptana is more web dev
 
 
+#################################
+### HP Linux Imaging & Printing project (HPLIP) - HP printer & scanner drivers
+
+xdg-open http://hplipopensource.com/hplip-web/install/install/index.html 
+# First time around you can check compatibility at 
+# xdg-open http://hplipopensource.com/hplip-web/install_wizard/index.html
+
+# should also include XSANE scanner
+
+
+#################################
+### Android Tools
+
+# android tools now in main repo
+# sudo add-apt-repository ppa:nilarimogard/webupd8
+sudo apt-get install android-tools-adb android-tools-fastboot
+
+#  access android app private files internal storage over adb without rooting:
+# http://blog.shvetsov.com/2013/02/access-android-app-data-without-root.html
+
+
 
 ##################################
 ### SKYPE
