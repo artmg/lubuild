@@ -11,10 +11,10 @@
 # help > download URLs from https://www.dropbox.com/install?os=lnx
 case $(uname -m) in
  x86_64)
-   (cd ~ && wget -O - "https://www.dropbox.com/download?plat=lnx.x86_64" | tar xzf -)
+   (mkdir ~/bin ; cd ~/bin && wget -O - "https://www.dropbox.com/download?plat=lnx.x86_64" | tar xzf -)
  ;;
  i?86)
-   (cd ~ && wget -O - "https://www.dropbox.com/download?plat=lnx.x86" | tar xzf -)
+   (mkdir ~/bin ; cd ~/bin && wget -O - "https://www.dropbox.com/download?plat=lnx.x86" | tar xzf -)
  ;;
 esac
 
@@ -29,8 +29,8 @@ cat > ~/.local/share/applications/dropbox.desktop<<EOF!
 [Desktop Entry]
 Name=Dropbox
 Comment=Share your files between computers
-Exec=$HOME/.dropbox-dist/dropboxd
-Icon=$HOME/.dropbox-dist/images/emblems/emblem-dropbox-syncing.icon
+Exec=$HOME/bin/.dropbox-dist/dropboxd
+Icon=$HOME/bin/.dropbox-dist/images/emblems/emblem-dropbox-syncing.icon
 Categories=Network
 Type=Application
 Terminal=false
@@ -42,7 +42,7 @@ EOF!
 
 
 # this will launch the daemon
-~/.dropbox-dist/dropboxd
+~/bin/.dropbox-dist/dropboxd
 
 ## alternative or supplementary lines
 # Version=1.0
