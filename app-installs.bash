@@ -113,10 +113,20 @@ gnomine gnotravex gtali iagno gnotski fraqtive khangman solfege
 libreoffice		
 # office - prefer to replace abiword - should we remove gnumeric too?
 
+# PIM that works well on Lubuntu AND is available on PortableApps.com, 
+thunderbird
+# alternative GUI for editing local Contacts?
+# What about gVim with vCard syntax
+# will OpenContacts work on Wine? - http://www.fonlow.com/opencontacts/Developer/BigPictures.htm
+
+# convert Outlook PST mailbox file into VCards and other files containing the data from each mailbox folder
+readpst
+# consider also pst-utils?
+
+
+
 # notes
 vym
-
-# Dropbox - manual, see other script
 
 # advanced
 gimp
