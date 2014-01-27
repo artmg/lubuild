@@ -99,7 +99,27 @@ sudo apt-get install -f -y
 
 
 
-===Wine===
+###############################
+#### EVERNOTE alternatives ####
+###############################
+
+## You CAN use the Windows client under WINE, and at Evernote 5 it is reasonably stable
+
+## NIXNOTE (was NEVERNOTE)
+## you may download from http://sourceforge.net/projects/nevernote/files/
+## but the author-recognised PPA seems at a reasonable version
+
+sudo add-apt-repository ppa:vincent-c/nevernote && sudo apt-get update
+sudo apt-get install -y nixnote
+# client help - https://www.evernote.com/pub/baumgarr/nevernote
+
+## Everpad for Unity##
+  # credit > http://handytutorial.com/install-evernote-in-ubuntu-12-10-12-04/
+  # but this is a unity lens,  so might not be any use in Lubuntu
+  # http://askubuntu.com/questions/243049/trouble-authorizing-everpad-on-lubuntu
+ 
+
+### ===Wine===
 
  sudo apt-get install wine
 
@@ -111,15 +131,15 @@ sudo apt-get install -f -y
 
  # might want to consider adding exec option to fstab/disks
 
-====Wine Shortcuts====
+#### ====Wine Shortcuts====
 
-* Create new shortcut
-* browse to file in Windows partition
-* prepend "wine "
-* don't choose an icon
+#* Create new shortcut
+#* browse to file in Windows partition
+#* prepend "wine "
+#* don't choose an icon
 
 
-====Wine compatibility====
+#### ====Wine compatibility====
 
  # on 64 bit systems, you may get 32 bit issues with wine 
  # to make sure wine is registered as 32 bit
@@ -133,23 +153,23 @@ sudo apt-get install -f -y
  # so will be a little slower
 
 
-===Citrix===
+### ===Citrix===
 
-Really struggling here
- http://askubuntu.com/questions/359864/cannot-install-icaclient-due-to-problem-with-ia32-libs
- http://ubuntuforums.org/archive/index.php/t-2166020.html
- http://ubuntuforums.org/archive/index.php/t-1338800.html
- https://help.ubuntu.com/community/CitrixICAClientHowTo
- also see section in http://debianhelp.wordpress.com/2012/09/29/to-do-list-after-installing-ubuntu-13-10-aka-saucy-salamander-os/
+#Really struggling here
+# http://askubuntu.com/questions/359864/cannot-install-icaclient-due-to-problem-with-ia32-libs
+# http://ubuntuforums.org/archive/index.php/t-2166020.html
+# http://ubuntuforums.org/archive/index.php/t-1338800.html
+# https://help.ubuntu.com/community/CitrixICAClientHowTo
+# also see section in http://debianhelp.wordpress.com/2012/09/29/to-do-list-after-installing-ubuntu-13-10-aka-saucy-salamander-os/
 
-tried loads of stuff but it still failed to run
+#tried loads of stuff but it still failed to run
 
-did
+#did
     ldd /opt/Citrix/ICAClient/wfcmgr
-and got errors
-	libXp.so.6 => not found
-	libXpm.so.4 => not found
-so
+#and got errors
+#	libXp.so.6 => not found
+#	libXpm.so.4 => not found
+#so
     sudo apt-get install libXp6:i386
     sudo apt-get install libXpm4:i386
 
@@ -211,12 +231,6 @@ StartupNotify=true
 EOF!
 cd ..
 
-#### EVERNOTE alternatives
-## Everpad for Unity##
-  # credit > http://handytutorial.com/install-evernote-in-ubuntu-12-10-12-04/
-  # but this is a unity lens,  so might not be any use in Lubuntu
-  # http://askubuntu.com/questions/243049/trouble-authorizing-everpad-on-lubuntu
- 
 
 # BBC iPlayer Desktop replacement...
 # get_iplayer 
