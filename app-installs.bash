@@ -235,7 +235,15 @@ sudo /usr/share/doc/libdvdread4/install-css.sh
 
 # Update-Alternatives
 
+## help - check the current defaults...
+# sudo update-alternatives --get-selections
+
 sudo update-alternatives --set x-www-browser /usr/bin/firefox
+
+# sudo update-alternatives --set gnome-text-editor /usr/bin/geany
+# geany isn't in the list in the first place so 'install' it at a high enough priority
+sudo update-alternatives --install /usr/bin/gnome-text-editor gnome-text-editor /usr/bin/geany 100
+
 
 #######################################
 ### *** *** *** CLEANUP *** *** *** ###
