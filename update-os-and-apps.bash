@@ -8,6 +8,11 @@ sudo apt-get update
 # update existing applications with no user interaction...
 sudo apt-get upgrade -y
 
+## Problems with MergeList?? - purge that cache...
+# sudo rm -r /var/lib/apt/lists/*
+# sudo apt-get clean && sudo apt-get update
+
+
 
 ### OPTIONAL UPDATES only if you want ...
 
