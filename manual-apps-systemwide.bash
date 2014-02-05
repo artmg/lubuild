@@ -32,6 +32,8 @@ xdg-open https://help.ubuntu.com/community/InstallKompozer
 # now distributed via repos
 sudo apt-get install hplip
 sudo hp-setup
+# help - https://help.ubuntu.com/community/HpAllInOne
+
 
 # alternative for manual install (or latest version)
 # xdg-open http://hplipopensource.com/hplip-web/install/install/index.html 
