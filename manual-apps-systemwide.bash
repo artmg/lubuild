@@ -29,7 +29,13 @@ xdg-open https://help.ubuntu.com/community/InstallKompozer
 #################################
 ### HP Linux Imaging & Printing project (HPLIP) - HP printer & scanner drivers
 
-xdg-open http://hplipopensource.com/hplip-web/install/install/index.html 
+# now distributed via repos
+sudo apt-get install hplip
+sudo hp-setup
+
+# alternative for manual install (or latest version)
+# xdg-open http://hplipopensource.com/hplip-web/install/install/index.html 
+
 # First time around you can check compatibility at 
 # xdg-open http://hplipopensource.com/hplip-web/install_wizard/index.html
 
