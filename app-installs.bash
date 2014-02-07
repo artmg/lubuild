@@ -119,10 +119,12 @@ thunderbird
 # What about gVim with vCard syntax
 # will OpenContacts work on Wine? - http://www.fonlow.com/opencontacts/Developer/BigPictures.htm
 
+# manipulate PDF files (e.g. split, combine) as alternative to installed GhostScript
+# see http://askubuntu.com/questions/195037/is-there-a-tool-to-split-a-book-saved-as-a-single-pdf-into-one-pdf-per-chapter/195044#195044
+pdftk
 # convert Outlook PST mailbox file into VCards and other files containing the data from each mailbox folder
 readpst
 # consider also pst-utils?
-
 
 
 # notes
