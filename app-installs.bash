@@ -169,14 +169,17 @@ geany
 # syntax highlighting editor
 # alternatives: gedit (ubuntu default), sublime text??,  xemacs21 (no app menu shortcut), vim (_really_?), gVim?
 
+
+### Internet Clients ###
 epiphany-browser	
 # alternative lightweight browser
 transmission			
 # torrent client
-
 gftp					
 # file transfer client
 
+
+### conversion tools ###
 pandoc				
 # convert documents between markup formats 
 # sample command 
@@ -185,14 +188,22 @@ pandoc
 calibre					
 # convert docs to AZW kindle format for USB download
 
+
+### sub-systems ###
 python					
 # code execution
+
+wine
+# windows emulation
+# see lubuild manual-apps-per-user.bash for more - https://github.com/artmg/lubuild/blob/master/manual-apps-per-user.bash
+
+
+########## Other Candidates ###########
 
 # decompression
 # for ubuntu, p7zip for 7z format (fits into fileroller)
 # or for xubuntu, xarchiver (includes p7zip)
 
-### Other Candidates
 # jockey-gtk
 # hardware drivers 
 
@@ -202,7 +213,6 @@ python
 ### Utilities
 # vlc vlc-plugin-esd mozilla-plugin-vlc
 # txt2tags
-
 
 # WSYIWYG html editor - kompozer no longer in repos
 # see > https://help.ubuntu.com/community/InstallKompozer 
