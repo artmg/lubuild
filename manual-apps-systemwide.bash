@@ -127,40 +127,6 @@ sudo apt-get install -y nixnote
   # http://askubuntu.com/questions/243049/trouble-authorizing-everpad-on-lubuntu
  
 
-### ===Wine===
-
- sudo apt-get install wine
-
- # to get the VERY latest version
- # credit > http://www.winehq.org/download/ubuntu
- sudo add-apt-repository ppa:ubuntu-wine/ppa
- sudo apt-get update
- sudo apt-get install wine1.5
-
- # might want to consider adding exec option to fstab/disks
-
-#### ====Wine Shortcuts====
-
-#* Create new shortcut
-#* browse to file in Windows partition
-#* prepend "wine "
-#* don't choose an icon
-
-
-#### ====Wine compatibility====
-
- # on 64 bit systems, you may get 32 bit issues with wine 
- # to make sure wine is registered as 32 bit
- # credit > http://askubuntu.com/questions/74690/how-to-install-32-bit-wine-on-64-bit-ubuntu
-
- export WINEARCH=win32
- export WINEPREFIX=~/.wine32
- wine /media/Windows/PortableApps/KeePassPortable/App/keepass/KeePass.exe 
-
- # first time you run this it will create the wine "prefix" configuration
- # so will be a little slower
-
-
 ### ===Citrix===
 
 #Really struggling here
