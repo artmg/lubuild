@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# options used
+# $LUBUILD_HARDWARE_TYPE_EXTERNAL_SCREEN
+# $LUBUILD_HARDWARE_TYPE_LAPTOP 
+
+
 #
 ### Wifi issues after waking from hibernate or suspend ###
 #
@@ -17,7 +22,6 @@ Terminal=false
 Categories=System;
 Icon=nm-signal-50
 EOF!
-
 ) ; fi
 ## alternative
 ## https://bugs.launchpad.net/ubuntu/+source/systemd-shim/+bug/1184262
@@ -25,6 +29,34 @@ EOF!
 ## or   sudo killall NetworkManager
 ## and this article may have a bugfix to help
 ###############################################
+
+
+if [[ $LUBUILD_HARDWARE_TYPE_LAPTOP -eq TRUE ]] ; then ( 
+###Set laptop mode
+# credit > http://askubuntu.com/a/361286
+echo modify the following setting in the named section ; \
+echo [State] ; \
+echo laptop_mode=yes ; \
+sudo gnome-text-editor ~/.config/lxsession/Lubuntu/desktop.conf 
+) ; fi
+
+
+# Laptop Lid settings - ignore lid close
+if [[ $LUBUILD_HARDWARE_TYPE_LAPTOP -eq TRUE ] && [ $LUBUILD_HARDWARE_TYPE_EXTERNAL_SCREEN -eq TRUE ]] ; then ( 
+# credit - http://askubuntu.com/questions/407287/change-xfce4-power-manager-option-from-terminal
+# credit - http://docs.xfce.org/xfce/xfce4-power-manager/preferences
+# help - http://docs.xfce.org/xfce/xfconf/xfconf-query
+# help - http://git.xfce.org/xfce/xfce4-power-manager/plain/src/xfpm-xfconf.c
+
+# if you want to check current settings
+# xfconf-query -c xfce4-power-manager -l -v
+# or
+# cat ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-power-manager.xml 
+
+# No action on lid close
+xfconf-query -c xfce4-power-manager -n -p "/xfce4-power-manager/lid-action-on-ac" -t int -s 0
+xfconf-query -c xfce4-power-manager -n -p "/xfce4-power-manager/lid-action-on-battery" -t int -s 0
+) ; fi
 
 
 #######################
