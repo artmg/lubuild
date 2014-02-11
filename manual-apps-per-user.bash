@@ -75,3 +75,51 @@ EOF!
 #sudo apt-get install nautilus-dropbox -y
 #dropbox start -i
 
+
+
+#####################################
+###   W I N E                     ### 
+#####################################
+
+# main install now in app-installs.bash - https://github.com/artmg/lubuild/blob/master/app-installs.bash
+# sudo apt-get install wine
+
+
+### to get the VERY latest version ###
+#
+# credit > http://www.winehq.org/download/ubuntu
+# sudo add-apt-repository ppa:ubuntu-wine/ppa
+# sudo apt-get update
+# sudo apt-get install wine1.5
+
+# might want to consider adding exec option to fstab/disks
+
+
+#### ====Wine compatibility====
+
+ # on 64 bit systems, you may get 32 bit issues with wine 
+ # to make sure wine is registered as 32 bit
+ # credit > http://askubuntu.com/questions/74690/how-to-install-32-bit-wine-on-64-bit-ubuntu
+
+export WINEARCH=win32
+export WINEPREFIX=~/.wine32
+
+# add any drives ...
+# credit - ftp://ftp.winehq.org/pub/wine/docs/en/wineusr-guide.html#AEN737
+
+ln -s /media/Windows $WINEPREFIX/dosdevices/w:
+
+## or run apps directly ...
+# wine /media/Windows/PortableApps/.... 
+## first time you run this it will create the wine "prefix" configuration
+## so will be a little slower
+
+
+#### ====Wine Shortcuts====
+
+#* Create new shortcut
+#* browse to file in Windows partition
+#* prepend "wine "
+#* don't choose an icon
+
+
