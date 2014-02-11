@@ -120,6 +120,7 @@ ln -s /media/Windows $WINEPREFIX/dosdevices/w:
 #* Create new shortcut
 #* browse to file in Windows partition
 #* prepend "wine "
+# or prepend "WINEPREFIX=~/.wine32 wine "
 #* don't choose an icon
 
 
