@@ -103,11 +103,16 @@ EOF!
 
 export WINEARCH=win32
 export WINEPREFIX=~/.wine32
+winecfg
 
 # add any drives ...
 # credit - ftp://ftp.winehq.org/pub/wine/docs/en/wineusr-guide.html#AEN737
 
 ln -s /media/Windows $WINEPREFIX/dosdevices/w:
+
+
+# single line to initialise the config,or to validate such a config, or to configure it manually...
+# WINEARCH=win32 WINEPREFIX=~/.wine32 winecfg
 
 ## or run apps directly ...
 # wine /media/Windows/PortableApps/.... 
@@ -120,7 +125,20 @@ ln -s /media/Windows $WINEPREFIX/dosdevices/w:
 #* Create new shortcut
 #* browse to file in Windows partition
 #* prepend "wine "
-# or prepend "WINEPREFIX=~/.wine32 wine "
+#* Note that ~ does not work in shortcuts so if you need an alternative prefix (e.g. 32-bit) then prepend
+# env WINEPREFIX=/home/username/.wine32 wine "
 #* don't choose an icon
 
+
+# sample Start Menu shortcut / launcher
+mkdir -p ~/.local/share/applications
+cat > ~/.local/share/applications/wine-keepass.desktop<<EOF!
+[Desktop Entry]
+Name=Wine KeePass
+Comment=KeePass with wine 32
+Exec=env WINEPREFIX=$HOME/.wine32 wine $HOME/.wine32/dosdevices/w:/PortableApps/KeePassPortable/KeePassPortable.exe
+Icon=password
+Categories=Wine
+Type=Application
+EOF!
 
