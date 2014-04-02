@@ -78,6 +78,38 @@ EOF!
 
 
 #####################################
+### Google Drive client           ### 
+#####################################
+
+# could move install to system-wide and just have user setup here
+
+## Options ##
+#
+# Grive - free, in repo, seems popular but some issues mentioned
+# InSync - $15pa, well liked
+# SyncDrive - free, more thumbs down than up!
+#
+# Grive in repos is CLI only
+# use Grive-Tools to wrap with GUI & panel icon
+#
+# credit - http://www.thefanclub.co.za/how-to/ubuntu-google-drive-client-grive-and-grive-tools
+#
+sudo add-apt-repository ppa:thefanclub/grive-tools
+sudo apt-get update
+sudo apt-get install grive-tools
+#
+# Begin setup
+#
+gksudo /bin/bash /opt/thefanclub/grive-tools/grive-setup
+#
+# or use icon in Accessories
+#
+# In the Google Drive indicator Preference prefer light icon theme for LXDE
+#
+
+
+
+#####################################
 ###   W I N E                     ### 
 #####################################
 
