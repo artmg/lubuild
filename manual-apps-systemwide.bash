@@ -35,8 +35,11 @@ sudo hp-setup
 # help - https://help.ubuntu.com/community/HpAllInOne
 
 
-# alternative for manual install (or latest version)
+## alternative for manual install (or latest version)
 # xdg-open http://hplipopensource.com/hplip-web/install/install/index.html 
+## launch the downloaded installer by entering the following, then TAB to autocomplete, then ENTER
+# bash ~/Downloads/hplip
+
 
 # First time around you can check compatibility at 
 # xdg-open http://hplipopensource.com/hplip-web/install_wizard/index.html
