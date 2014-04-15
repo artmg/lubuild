@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# request sudo password before getting stuck in...
+sudo echo
+
 
 ####################################
 ### *** PREPARE REPOSITORIES *** ###
@@ -8,7 +11,7 @@
 # backup software sources
 sudo cp /etc/apt/sources.list{,.`date +%y%m%d`}
 # Add partner
-sudo add-apt-repository "deb http://archive.canonical.com/ $(lsb_release -sc) partner"
+sudo add-apt-repository -y "deb http://archive.canonical.com/ $(lsb_release -sc) partner"
 # help > https://help.ubuntu.com/community/Repositories/CommandLine
 
 # Prepare for repository installs
