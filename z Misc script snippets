@@ -1,0 +1,28 @@
+#! /bin/bash
+
+### OS and Version ###
+
+# use ubuntu version as variable
+#
+VERSION=`lsb_release -sd | cut -c 8-`
+echo Configuring for Ubuntu ${VERSION}…
+
+#
+source /etc/lsb-release
+echo $DISTRIB_RELEASE
+
+### Apps ####
+
+#
+if dpkg -s "$PACKAGE_NAME" 2>/dev/null 1>/dev/null; then
+ echo "Package $PACKAGE_NAME is installed."
+else
+ echo "Package $PACKAGE_NAME isn't installed."
+fi
+
+# list all current installations into a file
+sudo dpkg --get-selections | grep '[[:space:]]install$' | \awk '{print $1}' &gt; package_list
+# then use the list to install (missing) packages on another machine
+cat package_list | xargs sudo apt-get install
+#
+
