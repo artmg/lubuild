@@ -8,20 +8,21 @@
 # NB: it appears this must be INSTALLED in user folder for EACH USER
 # and then individually run for each user too
 
+LUBUILD_DROPBOX_FOLDER=bin
+export LUBUILD_DROPBOX_FOLDER
+
+LUBUILD_DROPBOX_AUTOSTART=TRUE
+export LUBUILD_DROPBOX_AUTOSTART
+
 # help > download URLs from https://www.dropbox.com/install?os=lnx
 case $(uname -m) in
  x86_64)
-   (mkdir ~/bin ; cd ~/bin && wget -O - "https://www.dropbox.com/download?plat=lnx.x86_64" | tar xzf -)
+   (mkdir ~/$LUBUILD_DROPBOX_FOLDER ; cd ~/$LUBUILD_DROPBOX_FOLDER && wget -O - "https://www.dropbox.com/download?plat=lnx.x86_64" | tar xzf -)
  ;;
  i?86)
-   (mkdir ~/bin ; cd ~/bin && wget -O - "https://www.dropbox.com/download?plat=lnx.x86" | tar xzf -)
+   (mkdir ~/$LUBUILD_DROPBOX_FOLDER ; cd ~/$LUBUILD_DROPBOX_FOLDER && wget -O - "https://www.dropbox.com/download?plat=lnx.x86" | tar xzf -)
  ;;
 esac
-
-
-# and first time around you will need to configure it with your account
-# If you choose "Advanced" setup you can choose where to store your files locally
-
 
 # create the Start Menu shortcut / launcher
 mkdir -p ~/.local/share/applications
@@ -29,8 +30,8 @@ cat > ~/.local/share/applications/dropbox.desktop<<EOF!
 [Desktop Entry]
 Name=Dropbox
 Comment=Share your files between computers
-Exec=$HOME/bin/.dropbox-dist/dropboxd
-Icon=$HOME/bin/.dropbox-dist/images/emblems/emblem-dropbox-syncing.icon
+Exec=$HOME/$LUBUILD_DROPBOX_FOLDER/.dropbox-dist/dropboxd
+Icon=$HOME/$LUBUILD_DROPBOX_FOLDER/.dropbox-dist/images/emblems/emblem-dropbox-syncing.icon
 Categories=Network
 Type=Application
 Terminal=false
@@ -38,17 +39,22 @@ StartupNotify=true
 X-GNOME-Autostart-enabled=true
 EOF!
 
-## to auto start on login in Ubuntu ...
-# mkdir -p ~/.config/autostart/
-# cp ~/.local/share/applications/dropbox.desktop ~/.config/autostart/
-## credit - http://askubuntu.com/a/48327
+# Add to Autostart 
+if [[ $LUBUILD_DROPBOX_AUTOSTART -eq TRUE ]] ; then ( 
+  mkdir -p ~/.config/autostart/
+  cp ~/.local/share/applications/dropbox.desktop ~/.config/autostart/
+) ; fi
+## paths validated for BOTH Unity & LXDE at 14.04
 
 ## if you need to refresh the Start Menu  
 # lxpanelctl restart
 
 
+# and first time around you will need to configure it with your account
+# If you choose "Advanced" setup you can choose where to store your files locally
+
 # this will launch the daemon
-~/bin/.dropbox-dist/dropboxd
+~/$DROPBOX_FOLDER/.dropbox-dist/dropboxd
 
 ## alternative or supplementary lines
 # Version=1.0
