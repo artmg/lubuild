@@ -24,7 +24,7 @@ esac
 
 
 # create the Start Menu shortcut / launcher
-mkdir ~/.local/share/applications
+mkdir -p ~/.local/share/applications
 cat > ~/.local/share/applications/dropbox.desktop<<EOF!
 [Desktop Entry]
 Name=Dropbox
@@ -35,7 +35,13 @@ Categories=Network
 Type=Application
 Terminal=false
 StartupNotify=true
+X-GNOME-Autostart-enabled=true
 EOF!
+
+## to auto start on login in Ubuntu ...
+# mkdir -p ~/.config/autostart/
+# cp ~/.local/share/applications/dropbox.desktop ~/.config/autostart/
+## credit - http://askubuntu.com/a/48327
 
 ## if you need to refresh the Start Menu  
 # lxpanelctl restart
