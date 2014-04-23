@@ -28,6 +28,12 @@ sudo apt-get update
 sudo apt-get remove -y unity-lens-shopping  # prevent purchasable items appearing in software list
 # credit > http://www.omgubuntu.co.uk/2012/10/10-things-to-do-after-installing-ubuntu-12-10
 
+# avoid this 'dependendency only' package being removed when a dependee is removed
+if [[ $DESKTOP_SESSION == Lubuntu ]] ; then
+ sudo apt-mark manual lubuntu-desktop ;
+fi
+# credit - https://help.ubuntu.com/community/Lubuntu/Documentation/RemoveLubuntuDesktop
+
 sudo apt-get remove -y abiword		# remove abiword to avoid doc corruption issues
 # sudo apt-get remove -y abiword abiword-common
 ## or will this do it all?
