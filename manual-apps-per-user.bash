@@ -186,3 +186,18 @@ Categories=Wine
 Type=Application
 EOF!
 
+
+# If laptop will use external screen then create shortcut to turn off external screen if not done before unplugging
+if [[ $LUBUILD_HARDWARE_TYPE_LAPTOP -eq TRUE ] && [ $LUBUILD_HARDWARE_TYPE_EXTERNAL_SCREEN -eq TRUE ]] ; then (
+mkdir -p ~/Desktop
+cat > ~/Desktop/laptop-monitor-only.desktop<<EOF!
+[Desktop Entry]
+Name=Laptop Monitor
+Comment=turn off external monitors
+Exec=xrandr --output LVDS --auto --output HDMI-0 --off
+Icon=display
+Terminal=true
+Type=Application
+EOF!
+) ; fi
+
