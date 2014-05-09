@@ -1,6 +1,20 @@
 #!/bin/bash
 
 #####################################
+### LibreOffice                   ### 
+#####################################
+
+# disable Java integration to speed up the start up of the program. 
+
+# MANUALLY: Tools > Options > LibreOffice > Advanced > Use a Java runtime environment
+###########
+
+# list of features that will no longer work: 
+# http://ask.libreoffice.org/en/question/696/what-features-absolutely-require-java/
+
+
+
+#####################################
 ### DROPBOX                       ### 
 #####################################
 
