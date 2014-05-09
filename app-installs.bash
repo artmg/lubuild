@@ -209,6 +209,10 @@ wine
 
 ########## Other Candidates ###########
 
+# VERY comprehensive list of alternatives...
+# see - http://debianhelp.wordpress.com/2013/11/19/to-do-list-after-installing-ubuntu-13-10-aka-saucy-salamander-os-2/
+
+
 # decompression
 # for ubuntu, p7zip for 7z format (fits into fileroller)
 # or for xubuntu, xarchiver (includes p7zip)
