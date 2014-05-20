@@ -134,7 +134,8 @@ pdftk
 # convert Outlook PST mailbox file into VCards and other files containing the data from each mailbox folder
 readpst
 # consider also pst-utils?
-
+workrave
+# encourage regular breaks for posture and eyes 
 
 # notes
 vym
