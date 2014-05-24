@@ -104,18 +104,49 @@ basic256 laby kturtle
 celestia stellarium kstars marble kgeography
 
 #play
-
 aisleriot airstrike glchess glines gnect gnibbles gnobots2 gnome-sudoku
 gnomine gnotravex gtali iagno gnotski fraqtive khangman solfege
 
-# the following do not seem to be included with 12.04
-# gnome-mahjongg
+# no longer in repos
+# gnome-mahjongg klotski lightsoff quadrapassel swell-foop
 
-# the following do not seem to be included with 11.04
-# klotski
-# lightsoff
-# quadrapassel
-# swell-foop
+# Music
+hydrogen rosegarden
+
+######################
+
+
+### Alternative music players ###
+
+# on lubuntu default player is Audacious
+# Audacious works but not great interface for finding tracks in big library
+#
+# consider alternative like:
+#
+# LXMusic might be too simple as well
+# Banshee does it out of the box
+# VLC might be getting into album art browsing
+# Clementine has strong fan base
+# Musique is lightweight and QT-based
+# did YaRock continue developing?
+# Rhythmbox is commonly used
+## Cover Art is still a Third party plug in:
+### sudo add-apt-repository ppa:fossfreedom/rhythmbox-plugins
+### sudo apt-get update && sudo apt-get install rhythmbox-plugin-coverart-browser
+## can preset library using gsettings set org/gnome/rhythmbox/rhythmdb locations or similar
+## https://help.ubuntu.com/community/Rhythmbox#Multiple_Library_Directories
+
+
+
+
+#### DESIGN ####
+
+gimp
+inkscape
+dia-gnome
+scribus
+
+
 
 ################# EITHER #################
 
@@ -139,32 +170,6 @@ workrave
 
 # notes
 vym
-
-# advanced
-gimp
-inkscape
-dia-gnome
-scribus
-
-### Alternative music players ###
-
-# on lubuntu default player is Audacious
-# Audacious works but not great interface for finding tracks in big library
-#
-# consider alternative like:
-#
-# LXMusic might be too simple as well
-# Banshee does it out of the box
-# VLC might be getting into album art browsing
-# Clementine has strong fan base
-# Musique is lightweight and QT-based
-# did YaRock continue developing?
-# Rhythmbox is commonly used
-## Cover Art is still a Third party plug in:
-### sudo add-apt-repository ppa:fossfreedom/rhythmbox-plugins
-### sudo apt-get update && sudo apt-get install rhythmbox-plugin-coverart-browser
-## can preset library using gsettings set org/gnome/rhythmbox/rhythmdb locations or similar
-## https://help.ubuntu.com/community/Rhythmbox#Multiple_Library_Directories
 
 
 
