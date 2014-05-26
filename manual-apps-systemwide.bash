@@ -30,7 +30,7 @@ xdg-open https://help.ubuntu.com/community/InstallKompozer
 ### HP Linux Imaging & Printing project (HPLIP) - HP printer & scanner drivers
 
 # now distributed via repos
-sudo apt-get install hplip
+sudo apt-get install -y hplip
 sudo hp-setup
 # help - https://help.ubuntu.com/community/HpAllInOne
 
