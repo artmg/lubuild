@@ -64,7 +64,26 @@ cat > ./package_list <<EOF
 
 ######## ALL MACHINES ############
 
-# MultiMedia
+### General Utilities ###
+
+geany					
+# syntax highlighting editor
+# alternatives: gedit (ubuntu default), sublime text??,  xemacs21 (no app menu shortcut), vim (_really_?), gVim?
+boabab
+# graphical disk usage analyser
+meld					
+# file and folder diffs...
+#  alternatives: xxdiff - also kdiff3 (floss) + diffMerge (free) are Win/Nux
+# http://askubuntu.com/questions/312604/how-do-i-install-xxdiff-in-13-04 
+flashplugin-installer	
+# Adobe Flash plugin for browsers - alternatives are swfdec-gnome or gnash
+cups-pdf		
+# PDF printer
+
+
+
+####### MultiMedia ##########
+
 gstreamer		
 # none-open formats incl DVDs - also needs post install code below
 # might be part of other media player like totem
@@ -74,10 +93,6 @@ pavucontrol
 # pulse volume control
 # AUDIO usually works fine out of the box unless you want to use Bluetooth Audio Sink
 
-flashplugin-installer	
-# Adobe Flash plugin for browsers - alternatives are swfdec-gnome or gnash
-cups-pdf		
-# PDF printer
 
 
 ######## LAPTOPS ############
@@ -174,16 +189,6 @@ vym
 
 
 ############## TECH STUFF ################
-
-meld					
-# file and folder diffs...
-#  alternatives: xxdiff - also kdiff3 (floss) + diffMerge (free) are Win/Nux
-# http://askubuntu.com/questions/312604/how-do-i-install-xxdiff-in-13-04 
-
-geany					
-# syntax highlighting editor
-# alternatives: gedit (ubuntu default), sublime text??,  xemacs21 (no app menu shortcut), vim (_really_?), gVim?
-
 
 ### Internet Clients ###
 epiphany-browser	
