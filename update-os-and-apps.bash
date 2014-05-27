@@ -13,14 +13,20 @@ sudo apt-get upgrade -y
 # sudo apt-get clean && sudo apt-get update
 
 
-
 ### OPTIONAL UPDATES only if you want ...
 
 # load any kernel updates
 sudo apt-get dist-upgrade -y
 
-# ensure that grub is properly updated in case of issues
-# and if you want to change timeout then first edit /etc/default/grub
+### remove unwanted
+# after all applications are installed and/or upgraded, clean up using...
+sudo apt-get autoremove -y
+
+
+# change grub timeout 
+sudo sed --in-place 's/GRUB_TIMEOUT=10/GRUB_TIMEOUT=2/' /etc/default/grub
+# credit - http://karelzimmer.nl/data/linux/pdf/install-Lubuntu-14.04-desktop-algemeen.sh.pdf
+# ensure that grub is properly updated
 sudo update-grub
 
 
