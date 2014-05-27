@@ -288,11 +288,6 @@ sudo update-alternatives --set x-www-browser /usr/bin/firefox
 sudo update-alternatives --install /usr/bin/gnome-text-editor gnome-text-editor /usr/bin/geany 100
 
 
-#######################################
-### *** *** *** CLEANUP *** *** *** ###
-#######################################
-
-# after all applications are installed and/or upgraded, consider clean up using...
-# sudo apt-get autoremove -y
-
-
+###################################
+### *** *** *** END *** *** *** ###
+###################################
