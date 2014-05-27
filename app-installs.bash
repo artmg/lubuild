@@ -47,8 +47,15 @@ sudo apt-get remove -y abiword		# remove abiword to avoid doc corruption issues
 
 # including some proprietary (non-libre) packages
 # pre-answer the accept EULA to avoid the install waiting
-sudo sh -c "echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | debconf-set-selections"
-# credit > http://askubuntu.com/questions/16225/how-can-i-accept-microsoft-eula-agreement-for-ttf-mscorefonts-installer
+sudo debconf-set-selections <<\EOF
+msttcorefonts msttcorefonts/defoma note
+ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula boolean true
+ttf-mscorefonts-installer msttcorefonts/present-mscorefonts-eula note
+EOF
+# credit - https://code.google.com/p/installit/source/browse/install.ubuntu-restricted-extras.sh
+# previously....
+# sudo sh -c "echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | debconf-set-selections"
+## credit > http://askubuntu.com/questions/16225/how-can-i-accept-microsoft-eula-agreement-for-ttf-mscorefonts-installer
 sudo apt-get install `echo ${DESKTOP_SESSION,}`-restricted-extras -y
 # help > https://help.ubuntu.com/community/RestrictedFormats
 
