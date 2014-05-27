@@ -74,71 +74,19 @@ cat > ./package_list <<EOF
 ######## ALL MACHINES ############
 
 ### General Utilities ###
-
-geany					
-# syntax highlighting editor
-# alternatives: gedit (ubuntu default), sublime text??,  xemacs21 (no app menu shortcut), vim (_really_?), gVim?
-boabab
-# graphical disk usage analyser
-meld					
-# file and folder diffs...
-#  alternatives: xxdiff - also kdiff3 (floss) + diffMerge (free) are Win/Nux
-# http://askubuntu.com/questions/312604/how-do-i-install-xxdiff-in-13-04 
-flashplugin-installer	
-# Adobe Flash plugin for browsers - alternatives are swfdec-gnome or gnash
-cups-pdf		
-# PDF printer
-
+geany     # syntax highlighting editor - # alternatives: gedit (ubuntu default), sublime text??,  xemacs21 (no app menu shortcut), vim (_really_?), gVim?
+boabab    # graphical disk usage analyser
+flashplugin-installer	 # Adobe Flash plugin for browsers - alternatives are swfdec-gnome or gnash
+cups-pdf		# PDF printer
 
 
 ####### MultiMedia ##########
-
-gstreamer		
-# none-open formats incl DVDs - also needs post install code below
-# might be part of other media player like totem
-pulseaudio	
-# should be in by default
-pavucontrol	
-# pulse volume control
+gstreamer		 # none-open formats incl DVDs - also needs post install code below # might be part of other media player like totem
+pulseaudio	 # should be in by default
+pavucontrol	# pulse volume control
 # AUDIO usually works fine out of the box unless you want to use Bluetooth Audio Sink
 
-
-
-######## LAPTOPS ############
-guvcview		
-# support for most webcams
-skype
-# back in the repos since 13.10 - no longer need manual script
-
-
-########### KIDS #############
-# for more ideas see...
-# https://wiki.ubuntu.com/Edubuntu/AppGuide
-
-# infants
-childsplay gcompris tuxpaint kwordquiz ri-li
-
-# practice
-tuxtype ktouch tuxmath gbrainy kig kalgebra
-
-# programming
-basic256 laby kturtle
-
-# geo-astro
-celestia stellarium kstars marble kgeography
-
-#play
-aisleriot airstrike glchess glines gnect gnibbles gnobots2 gnome-sudoku
-gnomine gnotravex gtali iagno gnotski fraqtive khangman solfege
-
-# no longer in repos
-# gnome-mahjongg klotski lightsoff quadrapassel swell-foop
-
-# Music
-hydrogen rosegarden
-
-######################
-
+# vlc vlc-plugin-esd mozilla-plugin-vlc
 
 ### Alternative music players ###
 
@@ -161,69 +109,62 @@ hydrogen rosegarden
 ## https://help.ubuntu.com/community/Rhythmbox#Multiple_Library_Directories
 
 
+######## LAPTOPS ############
+guvcview		# support for most webcams
+skype     # back in the repos since 13.10 - no longer need manual script
 
 
-#### DESIGN ####
+########### KIDS #############
+# for more ideas see...  https://wiki.ubuntu.com/Edubuntu/AppGuide
+childsplay gcompris tuxpaint kwordquiz ri-li # infants
+tuxtype ktouch tuxmath gbrainy kig kalgebra  # practice
+basic256 laby kturtle                        # programming
+celestia stellarium kstars marble kgeography # geo-astro
+aisleriot airstrike glchess glines gnect gnibbles gnobots2 gnome-sudoku  # play
+gnomine gnotravex gtali iagno gnotski fraqtive khangman solfege          # play
+# no longer in repos
+# gnome-mahjongg klotski lightsoff quadrapassel swell-foop
 
-gimp
-inkscape
-dia-gnome
-scribus
+hydrogen rosegarden   # Music
+
+
+########### General purpose ###############
+
+gimp inkscape dia-gnome scribus # Design
+libreoffice		# office - prefer to replace abiword - should we remove gnumeric too?
 
 
 
-################# EITHER #################
 
-libreoffice		
-# office - prefer to replace abiword - should we remove gnumeric too?
 
-# PIM that works well on Lubuntu AND is available on PortableApps.com, 
-thunderbird
+############## Specialist stuff ################
+
+thunderbird  # PIM that works well on Lubuntu AND is available on PortableApps.com, 
+vym          # mind-map / notes
+# gnucash     # Busines app
+workrave # encourage regular breaks for posture and eyes 
+meld			   # file and folder diffs...
+ #  alternatives: xxdiff - also kdiff3 (floss) + diffMerge (free) are Win/Nux - http://askubuntu.com/questions/312604/how-do-i-install-xxdiff-in-13-04 
+
+### Internet Clients ###
+epiphany-browser	 # alternative lightweight browser
+transmission			   # torrent client
+gftp					         # file transfer client
+
+### conversion tools ###
+pandoc	# convert documents between markup formats # sample command # pandoc -f markdown -t html -o output.htm input.txt
+pdftk    # manipulate PDF files (e.g. split, combine) as alternative to installed GhostScript # see http://askubuntu.com/questions/195037/is-there-a-tool-to-split-a-book-saved-as-a-single-pdf-into-one-pdf-per-chapter/195044#195044
+readpst  # convert Outlook PST mailbox file into VCards and other files containing the data from each mailbox folder # consider also pst-utils?
+calibre		# convert docs to AZW kindle format for USB download
+# txt2tags
 # alternative GUI for editing local Contacts?
 # What about gVim with vCard syntax
 # will OpenContacts work on Wine? - http://www.fonlow.com/opencontacts/Developer/BigPictures.htm
 
-# manipulate PDF files (e.g. split, combine) as alternative to installed GhostScript
-# see http://askubuntu.com/questions/195037/is-there-a-tool-to-split-a-book-saved-as-a-single-pdf-into-one-pdf-per-chapter/195044#195044
-pdftk
-# convert Outlook PST mailbox file into VCards and other files containing the data from each mailbox folder
-readpst
-# consider also pst-utils?
-workrave
-# encourage regular breaks for posture and eyes 
-
-# notes
-vym
-
-
-
-############## TECH STUFF ################
-
-### Internet Clients ###
-epiphany-browser	
-# alternative lightweight browser
-transmission			
-# torrent client
-gftp					
-# file transfer client
-
-
-### conversion tools ###
-pandoc				
-# convert documents between markup formats 
-# sample command 
-# pandoc -f markdown -t html -o output.htm input.txt
-
-calibre					
-# convert docs to AZW kindle format for USB download
-
-
 ### sub-systems ###
-python					
-# code execution
+python					# code execution
+wine       # windows emulation
 
-wine
-# windows emulation
 # see lubuild manual-apps-per-user.bash for more - https://github.com/artmg/lubuild/blob/master/manual-apps-per-user.bash
 
 
@@ -232,20 +173,12 @@ wine
 # VERY comprehensive list of alternatives...
 # see - http://debianhelp.wordpress.com/2013/11/19/to-do-list-after-installing-ubuntu-13-10-aka-saucy-salamander-os-2/
 
-
 # decompression
 # for ubuntu, p7zip for 7z format (fits into fileroller)
 # or for xubuntu, xarchiver (includes p7zip)
 
 # jockey-gtk
 # hardware drivers 
-
-### Busines Apps
-# gnucash
-
-### Utilities
-# vlc vlc-plugin-esd mozilla-plugin-vlc
-# txt2tags
 
 # WSYIWYG html editor - kompozer no longer in repos
 # see > https://help.ubuntu.com/community/InstallKompozer 
@@ -255,13 +188,14 @@ wine
 
 EOF
 
-while read -r line; do [[ $line = \#* ]] && continue; sudo apt-get install -y $line; done < package_list
+cat package_list | while read line ; do line=${line%%\#*} ; [ "$line" ] && sudo apt-get install -y $line ; done 
+#cat package_list | while read line ; do line=${line%%\#*} ; [ "$line" ] && echo $line ; done 
+# credit - http://dbaspot.com/shell/406732-ignoring-comments-blank-lines-data-file.html#post1357732
+#
+# previously did not ignore blanks or handle inline comments....
+# while read -r line; do [[ $line = \#* ]] && continue; sudo apt-get install -y $line; done < package_list
 # while read -r line; do [[ $line = \#* ]] && continue; echo -e "$line"; done < package_list
 # credit > http://mywiki.wooledge.org/BashFAQ/001
-
-# not sure why this one fails
-
-# cat package_list | xargs -r -d # sudo apt-get install 
 
 
 ################################
