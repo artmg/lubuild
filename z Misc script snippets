@@ -26,11 +26,3 @@ sudo dpkg --get-selections | grep '[[:space:]]install$' | \awk '{print $1}' &gt;
 cat package_list | xargs sudo apt-get install
 #
 
-
-### Users ###
-
-# add a user non-interactively (unlike the adduser wrapper):
-# dependent package
-sudo apt-get install -y whois 
-
-sudo useradd -m -U newusername -p `mkpasswd newpassword`</pre>
