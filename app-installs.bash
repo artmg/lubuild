@@ -75,13 +75,13 @@ cat > ./package_list <<EOF
 
 ### General Utilities ###
 geany     # syntax highlighting editor - # alternatives: gedit (ubuntu default), sublime text??,  xemacs21 (no app menu shortcut), vim (_really_?), gVim?
-boabab    # graphical disk usage analyser
+baobab    # graphical disk usage analyser
 flashplugin-installer	 # Adobe Flash plugin for browsers - alternatives are swfdec-gnome or gnash
 cups-pdf		# PDF printer
 
 
 ####### MultiMedia ##########
-gstreamer		 # none-open formats incl DVDs - also needs post install code below # might be part of other media player like totem
+gstreamer		 ### NO LONGER FOUND! ### # none-open formats incl DVDs - also needs post install code below # might be part of other media player like totem
 pulseaudio	 # should be in by default
 pavucontrol	# pulse volume control
 # AUDIO usually works fine out of the box unless you want to use Bluetooth Audio Sink
