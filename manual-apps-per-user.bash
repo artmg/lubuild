@@ -120,9 +120,9 @@ if [[ $LUBUILD_DROPBOX_AUTOSTART -eq TRUE ]] ; then (
 #
 # credit - http://www.thefanclub.co.za/how-to/ubuntu-google-drive-client-grive-and-grive-tools
 #
-sudo add-apt-repository ppa:thefanclub/grive-tools
+sudo add-apt-repository -y ppa:thefanclub/grive-tools
 sudo apt-get update
-sudo apt-get install grive-tools
+sudo apt-get install -y grive-tools
 #
 # Begin setup
 #
