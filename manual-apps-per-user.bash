@@ -68,7 +68,7 @@ if [[ $LUBUILD_DROPBOX_AUTOSTART -eq TRUE ]] ; then (
 # If you choose "Advanced" setup you can choose where to store your files locally
 
 # this will launch the daemon
-~/$LUBUILD_DROPBOX_FOLDER/.dropbox-dist/dropboxd
+~/$LUBUILD_DROPBOX_FOLDER/.dropbox-dist/dropboxd &
 
 ## alternative or supplementary lines
 # Version=1.0
