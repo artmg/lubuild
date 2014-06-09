@@ -142,51 +142,35 @@ gksudo /bin/bash /opt/thefanclub/grive-tools/grive-setup
 # main install now in app-installs.bash - https://github.com/artmg/lubuild/blob/master/app-installs.bash
 # sudo apt-get install wine
 
-
-### to get the VERY latest version ###
-#
-# credit > http://www.winehq.org/download/ubuntu
-# sudo add-apt-repository ppa:ubuntu-wine/ppa
-# sudo apt-get update
-# sudo apt-get install wine1.5
+### to get the VERY latest version ###  # credit > http://www.winehq.org/download/ubuntu
+# sudo add-apt-repository ppa:ubuntu-wine/ppa && sudo apt-get update && sudo apt-get install wine1.5
 
 # might want to consider adding exec option to fstab/disks
 
 
 #### ====Wine compatibility====
-
- # on 64 bit systems, you may get 32 bit issues with wine 
- # to make sure wine is registered as 32 bit
- # credit > http://askubuntu.com/questions/74690/how-to-install-32-bit-wine-on-64-bit-ubuntu
-
+# to make sure wine is registered as 32 bit, especially to avoid 32 bit issues on 64 bit systems
+# credit > http://askubuntu.com/questions/74690/how-to-install-32-bit-wine-on-64-bit-ubuntu
 export WINEARCH=win32
 export WINEPREFIX=~/.wine32
 winecfg
+# single line to initialise the config,or to validate such a config, or to configure it manually...
+# WINEARCH=win32 WINEPREFIX=~/.wine32 winecfg
+## or run apps directly ...
+# wine /media/Windows/PortableApps/.... 
+## first time you run this it will create the wine "prefix" configuration - so will be a little slower
 
-# add any drives ...
-# credit - ftp://ftp.winehq.org/pub/wine/docs/en/wineusr-guide.html#AEN737
-
+# add any drives ...  # credit - ftp://ftp.winehq.org/pub/wine/docs/en/wineusr-guide.html#AEN737
 ln -s /media/Windows $WINEPREFIX/dosdevices/w:
 
 
-# single line to initialise the config,or to validate such a config, or to configure it manually...
-# WINEARCH=win32 WINEPREFIX=~/.wine32 winecfg
-
-## or run apps directly ...
-# wine /media/Windows/PortableApps/.... 
-## first time you run this it will create the wine "prefix" configuration
-## so will be a little slower
-
-
 #### ====Wine Shortcuts====
-
 #* Create new shortcut
 #* browse to file in Windows partition
 #* prepend "wine "
 #* Note that ~ does not work in shortcuts so if you need an alternative prefix (e.g. 32-bit) then prepend
 # env WINEPREFIX=/home/username/.wine32 wine "
 #* don't choose an icon
-
 
 # sample Start Menu shortcut / launcher
 mkdir -p ~/.local/share/applications
@@ -199,6 +183,35 @@ Icon=password
 Categories=Wine
 Type=Application
 EOF!
+
+
+### KeePass samples with Wine ###
+# This is the basic 'run keepass' command 
+# env WINEPREFIX=/home/amg/.wine32 wine /home/amg/.wine32/dosdevices/w:/PortableApps/KeePassPortable/KeePassPortable.exe &
+
+# database file is first argument, no switch | keyfile is -keyfile: if no password | keyfile is -preselect: if password required
+# help - http://keepass.info/help/base/cmdline.html
+ 
+# prefix unix root with Z: and either...
+# change / to \ and single quote embed OR
+# change / to \\ and double quote embed
+# credit - http://forum.winehq.org/viewtopic.php?p=57289#p57338
+# also...
+# help - http://wiki.winehq.org/FAQ#head-3b297df7a5411abe2b8d37fead01a2b8edc21619
+# help - http://www.winehq.org/docs/wine
+
+# run Keepass with Wine environment
+# open database ...
+#    /media/amg/xxxxxxxx
+# use keyfile ...
+#    /media/amg/yyyyyyyy
+# do not wait for password
+env WINEPREFIX=/home/amg/.wine32 wine \
+/home/amg/.wine32/dosdevices/w:/PortableApps/KeePassPortable/KeePassPortable.exe \
+'Z:\media\amg\xxxxxxxx\KeePass.Database.kdb' \
+-keyfile:'Z:\media\amg\yyyyyyyy\KeePass.keyfile' &
+
+
 
 
 # If laptop will use external screen then create shortcut to turn off external screen if not done before unplugging
