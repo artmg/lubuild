@@ -109,6 +109,12 @@ pavucontrol	# pulse volume control
 ## https://help.ubuntu.com/community/Rhythmbox#Multiple_Library_Directories
 
 
+######## Networking ############
+
+libnss-mdns # name resolution
+cifs-utils  # mount cifs in fuse
+
+
 ######## LAPTOPS ############
 guvcview		# support for most webcams
 skype     # back in the repos since 13.10 - no longer need manual script
