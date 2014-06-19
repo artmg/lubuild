@@ -31,6 +31,14 @@ EOF!
 ###############################################
 
 
+### Screen locking issues in 14.04
+# do we want to force screensaver to lock, or let user config manually?
+#
+# change C-A-L lock shortcut to use light locker
+sed -i 's/lxsession-default lock/light-locker-command -l/' ~/.config/openbox/lubuntu-rc.xml
+
+
+
 if [[ $LUBUILD_HARDWARE_TYPE_LAPTOP -eq TRUE ]] ; then ( 
 ###Set laptop mode
 # credit > http://askubuntu.com/a/361286
