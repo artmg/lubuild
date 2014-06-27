@@ -76,34 +76,41 @@ cat <<-EOF! > ~/bin/toggle_external_monitor.sh
 && xrandr | grep -q "\$EXTERNAL_IN_USE"  \\
 && xrandr --output \$INTERNAL_DEVICE --auto --output \$EXTERNAL_DEVICE --off \\
 || xrandr --output \$INTERNAL_DEVICE --auto --output \$EXTERNAL_DEVICE --auto
-EOF!
-chmod +x ~/bin/toggle_external_monitor.sh
-) ; fi
-
-### MANUALLY ***** edit 
-#  ~/.config/openbox/lubuntu-rc.xml
-# search
-#   </keyboard>
-# insert
-#     <keybind key="W-p">
-#       <action name="Execute">
-#         <command>~/bin/toggle_external_monitor.sh</command>
-#       </action>
-#     </keybind>
-# save then execute
-#  openbox --reconfigure
-
 # multiway options 
 # credit - http://www.thinkwiki.org/wiki/Sample_Fn-F7_script
+EOF!
+chmod +x ~/bin/toggle_external_monitor.sh
 
-### original desktop shortcut - DEPRECATED ###
-#[Desktop Entry]
-#Name=Laptop Monitor
-#Comment=turn off external monitors
-#Exec=lxterminal -e "xrandr --output LVDS --auto --output HDMI-0 --off"
-#Icon=display
-#Terminal=false
-#Type=Application
+# insert section.....
+#  <keybind key="W-p">
+#    <action name="Execute">
+#      <command>~/bin/toggle_external_monitor.sh</command>
+#    </action>
+#  </keybind>
+cp ~/.config/openbox/lubuntu-rc.xml{,.`date +%y%m%d`}
+
+cat ~/.config/openbox/lubuntu-rc.xml.`date +%y%m%d` \
+| xmlstarlet ed \
+ -s "/_:openbox_config/_:keyboard" \
+   -t elem -n keybind  \
+| xmlstarlet ed \
+ -i "/_:openbox_config/_:keyboard/_:keybind[last()]" \
+   -t attr -n key -v W-p \
+ -s "/_:openbox_config/_:keyboard/_:keybind[last()]" \
+   -t elem -n action  \
+| xmlstarlet ed \
+ -i "/_:openbox_config/_:keyboard/_:keybind[last()]/_:action" \
+   -t attr -n name -v Execute \
+ -s "/_:openbox_config/_:keyboard/_:keybind[last()]/_:action" \
+   -t elem -n command  \
+| xmlstarlet ed \
+ -s "/_:openbox_config/_:keyboard/_:keybind[last()]/_:action/_:command" \
+   -t text -n text -v "~/bin/toggle_external_monitor.sh" \
+> ~/.config/openbox/lubuntu-rc.xml
+
+openbox --reconfigure
+
+) ; fi
 ##############################################
 
 
