@@ -49,6 +49,65 @@ sudo gnome-text-editor ~/.config/lxsession/Lubuntu/desktop.conf
 ) ; fi
 
 
+
+######### toggle external screen display using SUPER-P ###########################
+#
+### MANUALLY ***** check screen IDs
+# 
+# use gui to activate both monitors
+# command to identify internal and external monitors
+xrandr  -q|grep connected
+# e.g.
+# LVDS connected 1366x768+0+0 (normal left inverted right x axis y axis) 256mm x 144mm
+# HDMI-0 connected 1920x1080+0+0 (normal left inverted right x axis y axis) 509mm x 286mm
+# VGA-0 disconnected (normal left inverted right x axis y axis)
+
+#
+# ensure there are no trailing spaces after \\
+#
+if [[ $LUBUILD_HARDWARE_TYPE_LAPTOP -eq TRUE ] && [ $LUBUILD_HARDWARE_TYPE_EXTERNAL_SCREEN -eq TRUE ]] ; then ( 
+mkdir -p ~/bin
+cat <<-EOF! > ~/bin/toggle_external_monitor.sh
+#!/bin/bash
+# credit - http://crunchbang.org/forums/viewtopic.php?id=28846
+   INTERNAL_DEVICE=LVDS \\
+&& EXTERNAL_DEVICE=HDMI-0 \\
+&& EXTERNAL_IN_USE="HDMI.*1920x1080+0+0" \\
+&& xrandr | grep -q "\$EXTERNAL_IN_USE"  \\
+&& xrandr --output \$INTERNAL_DEVICE --auto --output \$EXTERNAL_DEVICE --off \\
+|| xrandr --output \$INTERNAL_DEVICE --auto --output \$EXTERNAL_DEVICE --auto
+EOF!
+chmod +x ~/bin/toggle_external_monitor.sh
+) ; fi
+
+### MANUALLY ***** edit 
+#  ~/.config/openbox/lubuntu-rc.xml
+# search
+#   </keyboard>
+# insert
+#     <keybind key="W-p">
+#       <action name="Execute">
+#         <command>~/bin/toggle_external_monitor.sh</command>
+#       </action>
+#     </keybind>
+# save then execute
+#  openbox --reconfigure
+
+# multiway options 
+# credit - http://www.thinkwiki.org/wiki/Sample_Fn-F7_script
+
+### original desktop shortcut - DEPRECATED ###
+#[Desktop Entry]
+#Name=Laptop Monitor
+#Comment=turn off external monitors
+#Exec=lxterminal -e "xrandr --output LVDS --auto --output HDMI-0 --off"
+#Icon=display
+#Terminal=false
+#Type=Application
+##############################################
+
+
+
 # Laptop Lid settings - ignore lid close
 if [[ $LUBUILD_HARDWARE_TYPE_LAPTOP -eq TRUE ] && [ $LUBUILD_HARDWARE_TYPE_EXTERNAL_SCREEN -eq TRUE ]] ; then ( 
 # credit - http://askubuntu.com/questions/407287/change-xfce4-power-manager-option-from-terminal
