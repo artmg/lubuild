@@ -74,11 +74,11 @@ cat > ./package_list <<EOF
 ######## ALL MACHINES ############
 
 ### General Utilities ###
-geany     # syntax highlighting editor - # alternatives: gedit (ubuntu default), sublime text??,  xemacs21 (no app menu shortcut), vim (_really_?), gVim?
-baobab    # graphical disk usage analyser
+geany      # syntax highlighting editor - # alternatives: gedit (ubuntu default), sublime text??,  xemacs21 (no app menu shortcut), vim (_really_?), gVim?
+baobab     # graphical disk usage analyser
 flashplugin-installer	 # Adobe Flash plugin for browsers - alternatives are swfdec-gnome or gnash
-cups-pdf		# PDF printer
-
+cups-pdf	 	# PDF printer
+xmlstarlet # used by LUbuild for changing XML config files
 
 ####### MultiMedia ##########
 gstreamer		 ### NO LONGER FOUND! ### # none-open formats incl DVDs - also needs post install code below # might be part of other media player like totem
