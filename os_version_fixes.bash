@@ -7,4 +7,6 @@ if [[ "${DESKTOP_SESSION} $(lsb_release -sr)" == "Lubuntu 14.04" ]] ; then
    /etc/xdg/lubuntu/libfm/libfm.conf ; 
   sudo sed -i -e 's|lxsession-default terminal|x-terminal-emulator|' \
    /usr/share/lxpanel/profile/Lubuntu/config ; 
+  sed -i -e 's|lxsession-default terminal|x-terminal-emulator|' \
+   $HOME/.config/lxpanel/Lubuntu/config ;
 fi
