@@ -163,6 +163,7 @@ pandoc	# convert documents between markup formats # sample command # pandoc -f m
 pdftk    # manipulate PDF files (e.g. split, combine) as alternative to installed GhostScript # see http://askubuntu.com/questions/195037/is-there-a-tool-to-split-a-book-saved-as-a-single-pdf-into-one-pdf-per-chapter/195044#195044
 readpst  # convert Outlook PST mailbox file into VCards and other files containing the data from each mailbox folder # consider also pst-utils?
 calibre		# convert docs to AZW kindle format for USB download
+ocrfeeder # image to text - includes tesseract engine
 # txt2tags
 # alternative GUI for editing local Contacts?
 # What about gVim with vCard syntax
