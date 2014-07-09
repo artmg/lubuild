@@ -111,6 +111,10 @@ cat ~/.config/openbox/lubuntu-rc.xml.`date +%y%m%d` \
 openbox --reconfigure
 
 ) ; fi
+
+# NB: If mouse pointer does not appear when you switch external monitor on then try the following:
+# EITHER re-awaken X by switching consoles - CTRL-ALT-F1 then CTRL-ALT-F7 - credit https://bbs.archlinux.org/viewtopic.php?pid=648767#p648767
+# OR suspend and resume
 ##############################################
 
 
