@@ -95,10 +95,14 @@ pavucontrol	# pulse volume control
 #
 # consider alternative like:
 #
+# VLC might be getting into album art browsing
+# vlc browser-plugin-vlc  # vlc-plugin-pulse to use pulse instead of ALSA is now automatically included; browser ?? not sure why! ;  
+## libavcodec-extra # streaming codecs only if required;
+#
+# Clementine has strong fan base and rich features
+#
 # LXMusic might be too simple as well
 # Banshee does it out of the box
-# VLC might be getting into album art browsing
-# Clementine has strong fan base
 # Musique is lightweight and QT-based
 # did YaRock continue developing?
 # Rhythmbox is commonly used
