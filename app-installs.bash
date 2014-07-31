@@ -86,7 +86,6 @@ pulseaudio	 # should be in by default
 pavucontrol	# pulse volume control
 # AUDIO usually works fine out of the box unless you want to use Bluetooth Audio Sink
 
-# vlc vlc-plugin-esd mozilla-plugin-vlc
 
 ### Alternative music players ###
 
@@ -96,7 +95,9 @@ pavucontrol	# pulse volume control
 # consider alternative like:
 #
 # VLC might be getting into album art browsing
-# vlc browser-plugin-vlc  # vlc-plugin-pulse to use pulse instead of ALSA is now automatically included; browser ?? not sure why! ;  
+# vlc browser-plugin-vlc vlc-plugin-fluidsynth
+## vlc-plugin-pulse to use pulse instead of ALSA is now automatically included; browser ?? not sure why! ;  
+## vlc-plugin-fluidsynth: if you need to play MIDI files, includes the large but high quality soundfont fluid-soundfont-gm 
 ## libavcodec-extra # streaming codecs only if required;
 #
 # Clementine has strong fan base and rich features
