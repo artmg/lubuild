@@ -136,8 +136,10 @@ gnomine gnotravex gtali iagno gnotski fraqtive khangman solfege          # play
 # no longer in repos
 # gnome-mahjongg klotski lightsoff quadrapassel swell-foop
 
-hydrogen rosegarden   # Music
-
+### Music Production ###
+rosegarden   # composer, notation editor, midi sequencer
+hydrogen     # drum sequencer
+lilypond     # notation engraver
 
 ########### General purpose ###############
 
@@ -153,10 +155,15 @@ libreoffice		# office - prefer to replace abiword - should we remove gnumeric to
 thunderbird  # PIM that works well on Lubuntu AND is available on PortableApps.com, 
 vym          # mind-map / notes
 # gnucash     # Busines app
-workrave # encourage regular breaks for posture and eyes 
-meld			   # file and folder diffs...
+
+### Advanced Design ###
+freecad     # 3D parametric modeler (CAD)
+
+### Utility ###
+workrave    # encourage regular breaks for posture and eyes 
+meld			     # file and folder diffs...
  #  alternatives: xxdiff - also kdiff3 (floss) + diffMerge (free) are Win/Nux - http://askubuntu.com/questions/312604/how-do-i-install-xxdiff-in-13-04 
-recoll       # filesystem search engine
+recoll      # filesystem search engine
 
 ### Internet Clients ###
 epiphany-browser	 # alternative lightweight browser
