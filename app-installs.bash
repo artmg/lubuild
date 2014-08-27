@@ -14,6 +14,14 @@ sudo cp /etc/apt/sources.list{,.`date +%y%m%d`}
 sudo add-apt-repository -y "deb http://archive.canonical.com/ $(lsb_release -sc) partner"
 # help > https://help.ubuntu.com/community/Repositories/CommandLine
 
+### PPAs ###
+sudo add-apt-repository -y ppa:vincent-c/nevernote # NixNote2
+
+# Google Key - https://www.google.com/linuxrepositories/
+wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add - 
+# Chrome Repo - http://www.ubuntuupdates.org/ppa/google_chrome
+sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
+
 # Prepare for repository installs
 sudo apt-get update
 
@@ -166,9 +174,19 @@ meld			     # file and folder diffs...
 recoll      # filesystem search engine
 
 ### Internet Clients ###
-epiphany-browser	 # alternative lightweight browser
-transmission			   # torrent client
-gftp					         # file transfer client
+
+google-chrome-stable     ### PPA required ### Google Chrome
+
+epiphany-browser	        # alternative lightweight browser
+transmission			          # torrent client
+gftp					                # file transfer client
+
+nixnote                  ### PPA required ### vincent-c/nevernote
+  # client help - https://www.evernote.com/pub/baumgarr/nevernote
+  #### EVERNOTE alternatives ####
+  ## You CAN use the Windows client under WINE, and at Evernote 5 it is reasonably stable
+  # Everpad Unity Lens # credit > http://handytutorial.com/install-evernote-in-ubuntu-12-10-12-04/
+  # but this is a unity lens,  so might not be any use in Lubuntu - http://askubuntu.com/questions/243049/trouble-authorizing-everpad-on-lubuntu
 
 ### conversion tools ###
 pandoc	     # convert documents between markup formats # sample command # pandoc -f markdown -t html -o output.htm input.txt
@@ -185,6 +203,10 @@ pdfshuffler # GUI for PDF page manipulation; PdfMod is more feature-rich but nee
 ### sub-systems ###
 python					# code execution
 wine       # windows emulation
+
+android-tools-adb android-tools-fastboot ### Android Tools (now in main repo - was ppa:nilarimogard/webupd8)
+  # access android app private files internal storage over adb without rooting:
+  # http://blog.shvetsov.com/2013/02/access-android-app-data-without-root.html
 
 # see lubuild manual-apps-per-user.bash for more - https://github.com/artmg/lubuild/blob/master/manual-apps-per-user.bash
 
