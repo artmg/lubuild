@@ -47,18 +47,6 @@ sudo hp-setup
 # should also include XSANE scanner
 
 
-#################################
-### Android Tools
-
-# android tools now in main repo
-# sudo add-apt-repository ppa:nilarimogard/webupd8
-sudo apt-get install android-tools-adb android-tools-fastboot
-
-#  access android app private files internal storage over adb without rooting:
-# http://blog.shvetsov.com/2013/02/access-android-app-data-without-root.html
-
-
-
 ##################################
 ### SKYPE
 
@@ -87,6 +75,8 @@ sudo apt-get install android-tools-adb android-tools-fastboot
 #################################
 ### GOOGLE EARTH
 
+# Google's own repos have not been updated since v6 2011 so use their DEB package...
+
 sudo apt-get install lsb-core
 case $(uname -m) in
  x86_64)
@@ -109,26 +99,6 @@ sudo apt-get install -f -y
 # credit > https://help.ubuntu.com/community/GoogleEarth
 
 
-
-###############################
-#### EVERNOTE alternatives ####
-###############################
-
-## You CAN use the Windows client under WINE, and at Evernote 5 it is reasonably stable
-
-## NIXNOTE (was NEVERNOTE)
-## you may download from http://sourceforge.net/projects/nevernote/files/
-## but the author-recognised PPA seems at a reasonable version
-
-sudo add-apt-repository ppa:vincent-c/nevernote && sudo apt-get update
-sudo apt-get install -y nixnote
-# client help - https://www.evernote.com/pub/baumgarr/nevernote
-
-## Everpad for Unity##
-  # credit > http://handytutorial.com/install-evernote-in-ubuntu-12-10-12-04/
-  # but this is a unity lens,  so might not be any use in Lubuntu
-  # http://askubuntu.com/questions/243049/trouble-authorizing-everpad-on-lubuntu
- 
 
 ### ===Citrix===
 
