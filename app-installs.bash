@@ -15,7 +15,8 @@ sudo add-apt-repository -y "deb http://archive.canonical.com/ $(lsb_release -sc)
 # help > https://help.ubuntu.com/community/Repositories/CommandLine
 
 ### PPAs ###
-sudo add-apt-repository -y ppa:vincent-c/nevernote # NixNote2
+sudo add-apt-repository -y ppa:vincent-c/nevernote                # NixNote2
+sudo add-apt-repository -y ppa:freecad-maintainers/freecad-stable # FreeCAD (newer than Ubuntu version)
 
 # Google Key - https://www.google.com/linuxrepositories/
 wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add - 
@@ -165,7 +166,7 @@ vym          # mind-map / notes
 # gnucash     # Busines app
 
 ### Advanced Design ###
-freecad     # 3D parametric modeler (CAD)
+freecad freecad-doc      # 3D parametric modeler (CAD)
 
 ### Utility ###
 workrave    # encourage regular breaks for posture and eyes 
