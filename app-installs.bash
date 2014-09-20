@@ -17,6 +17,7 @@ sudo add-apt-repository -y "deb http://archive.canonical.com/ $(lsb_release -sc)
 ### PPAs ###
 sudo add-apt-repository -y ppa:vincent-c/nevernote                # NixNote2
 sudo add-apt-repository -y ppa:freecad-maintainers/freecad-stable # FreeCAD (newer than Ubuntu version)
+sudo add-apt-repository -y ppa:basic256/basic256                  # basic256
 
 # Google Key - https://www.google.com/linuxrepositories/
 wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add - 
@@ -138,7 +139,8 @@ skype     # back in the repos since 13.10 - no longer need manual script
 # for more ideas see...  https://wiki.ubuntu.com/Edubuntu/AppGuide
 childsplay gcompris tuxpaint kwordquiz ri-li # infants
 tuxtype ktouch tuxmath gbrainy kig kalgebra  # practice
-basic256 laby kturtle                        # programming
+laby kturtle                                 # programming 
+basic256                                     ### PPA required ### ppa:basic256/basic256 (version for correct syntax)
 celestia stellarium kstars marble kgeography # geo-astro
 aisleriot airstrike glchess glines gnect gnibbles gnobots2 gnome-sudoku  # play
 gnomine gnotravex gtali iagno gnotski fraqtive khangman solfege          # play
