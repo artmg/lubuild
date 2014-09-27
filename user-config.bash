@@ -14,12 +14,14 @@ sed -i 's/lxsession-default lock/light-locker-command -l/' ~/.config/openbox/lub
 
 
 if [[ $LUBUILD_HARDWARE_TYPE_LAPTOP -eq TRUE ]] ; then ( 
-###Set laptop mode
+
+### Set laptop mode ###
 # credit > http://askubuntu.com/a/361286
-echo modify the following setting in the named section ; \
-echo [State] ; \
-echo laptop_mode=yes ; \
-sudo gnome-text-editor ~/.config/lxsession/Lubuntu/desktop.conf 
+# NB: this is already present in 14.10
+#echo modify the following setting in the named section ; \
+#echo [State] ; \
+#echo laptop_mode=yes ; \
+#sudo gnome-text-editor ~/.config/lxsession/Lubuntu/desktop.conf 
 ) ; fi
 
 
@@ -53,6 +55,7 @@ cat <<-EOF! > ~/bin/toggle_external_monitor.sh
 # multiway options 
 # credit - http://www.thinkwiki.org/wiki/Sample_Fn-F7_script
 EOF!
+
 chmod +x ~/bin/toggle_external_monitor.sh
 
 # insert section.....
