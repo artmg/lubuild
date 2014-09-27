@@ -234,10 +234,13 @@ android-tools-adb android-tools-fastboot ### Android Tools (now in main repo - w
 
 EOF
 
-cat package_list | while read line ; do line=${line%%\#*} ; [ "$line" ] && sudo apt-get install -y $line ; done 
+# tee the install to log file
+cat package_list | while read line ; do line=${line%%\#*} ; [ "$line" ] && echo && echo ======== $line ======== >> package.log && sudo apt-get install -y $line | tee -a package.log ; done 
+# was 
+#cat package_list | while read line ; do line=${line%%\#*} ; [ "$line" ] && sudo apt-get install -y $line | tee -a package.log ; done 
+#cat package_list | while read line ; do line=${line%%\#*} ; [ "$line" ] && sudo apt-get install -y $line ; done 
 #cat package_list | while read line ; do line=${line%%\#*} ; [ "$line" ] && echo $line ; done 
 # credit - http://dbaspot.com/shell/406732-ignoring-comments-blank-lines-data-file.html#post1357732
-#
 # previously did not ignore blanks or handle inline comments....
 # while read -r line; do [[ $line = \#* ]] && continue; sudo apt-get install -y $line; done < package_list
 # while read -r line; do [[ $line = \#* ]] && continue; echo -e "$line"; done < package_list
