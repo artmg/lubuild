@@ -1,3 +1,6 @@
+# required software
+sudo apt-get install -y ecryptfs-utils
+
 ### Users ###
 
 NEWUSER=NewUserName
@@ -13,7 +16,6 @@ sudo adduser --encrypt-home --gecos $DISPLAYNAME,,, $NEWUSER
 # not sure this has an encrypt home option, tho
 
 ## if user already created use...
-# sudo apt-get install -y ecryptfs-utils
 # sudo ecryptfs-migrate-home -u user
 ## credit - http://www.howtogeek.com/116032/
 ## log in with this user BEFORE the next reboot (not sure why)
