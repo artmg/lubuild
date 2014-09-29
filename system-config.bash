@@ -51,9 +51,10 @@ EOF!
 
 
 
-#######################
-### *** ***  Live  USB  *** *** ###
-#######################
+
+##############################################
+###### Localisation ##########################
+##############################################
 
 # set GB keyboard map
 setxkbmap -layout gb
@@ -61,6 +62,16 @@ setxkbmap -layout gb
 echo '@setxkbmap -layout gb' | sudo tee -a /etc/xdg/lxsession/Lubuntu/autostart
 # credit > http://askubuntu.com/questions/102344/switching-keyboard-layouts-in-lubuntu-11-10
 
+# Add the rest of the language support
+sudo apt-get -y install `check-language-support -l en_GB`
+# credit http://askubuntu.com/a/476719
+
+
+
+
+#######################
+### *** ***  Live  USB  *** *** ###
+#######################
 
 ### CDROM RO issue ################
 # credit > http://askubuntu.com/a/54622
