@@ -19,10 +19,13 @@ sudo add-apt-repository -y ppa:vincent-c/nevernote                # NixNote2
 sudo add-apt-repository -y ppa:freecad-maintainers/freecad-stable # FreeCAD (newer than Ubuntu version)
 sudo add-apt-repository -y ppa:basic256/basic256                  # basic256
 
-# Google Key - https://www.google.com/linuxrepositories/
-wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add - 
-# Chrome Repo - http://www.ubuntuupdates.org/ppa/google_chrome
-sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
+# if this distros does NOT have chrome sources already...
+if [ ! -f /etc/apt/sources.list.d/google-chrome.list ]; then (
+  # Google Key - https://www.google.com/linuxrepositories/
+  wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add - 
+  # Chrome Repo - http://www.ubuntuupdates.org/ppa/google_chrome
+  sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list' ;
+) ; fi
 
 # Prepare for repository installs
 sudo apt-get update
