@@ -8,6 +8,7 @@ MODEL_NO=`sudo dmidecode -s system-product-name`
 AFFECTED_MODELS='|AO722|sample other|'
 
 if [[ $AFFECTED_MODELS == *\|$MODEL_NO\|* ]] ; then
+  sudo cp $HOME/.config/openbox/lubuntu-rc.xml{,.`date +%y%m%d`}  # backup original config
   # find the text   XF86AudioRaiseVolume
   # after each of the three  commands   amixer -q   insert the following text before   sset
   #   -D pulse 
