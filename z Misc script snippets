@@ -26,3 +26,23 @@ sudo dpkg --get-selections | grep '[[:space:]]install$' | \awk '{print $1}' &gt;
 cat package_list | xargs sudo apt-get install
 #
 
+
+
+### desktop files as example for Variable Arrays
+
+#!/bin/bash
+WEBSITE=("torios.org" "duckduckgo.com")
+NAME=(ToriOS duckduckgo)
+ICON=(www-browser firefox)
+for ((i=0;i<2;++i));do
+echo -e "[Desktop Entry]
+Encoding=UTF-8
+Exec=firefox ${WEBSITE[i]}
+Icon=${ICON[i]}
+Terminal=false
+Type=Application
+Categories=Network;
+Name=${NAME[i]}" >> ~/Desktop/${NAME[i]}.desktop
+chmod a+rx ~/Desktop/${NAME[i]}.desktop
+
+# credit - https://lists.ubuntu.com/archives/lubuntu-users/2014-September/008496.html
