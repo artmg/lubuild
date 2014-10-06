@@ -159,7 +159,7 @@ lilypond     # notation engraver
 
 gimp inkscape dia-gnome scribus # Design
 libreoffice		# office - prefer to replace abiword - should we remove gnumeric too?
-
+mythes-en-us  # english thesaurus including GB 
 
 
 
