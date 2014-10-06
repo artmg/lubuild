@@ -37,7 +37,10 @@ sudo mkdir -p /etc/X11/xorg.conf.d
 #sudo cat <<-EOF! >> /etc/X11/xorg.conf.d/20-screen.conf
 sudo tee /etc/X11/xorg.conf.d/20-screen.conf <<EOF!
 Section "Device"
+  Identifier "card0"
+  Driver "intel"
   Option "Backlight" "intel_backlight"
+  BusID "PCI:0:2:0"
 EndSection
 EOF!
 # credit - https://bugs.launchpad.net/ubuntu/+source/xserver-xorg-video-intel/+bug/1273234
