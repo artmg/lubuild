@@ -66,6 +66,11 @@ echo '@setxkbmap -layout gb' | sudo tee -a /etc/xdg/lxsession/Lubuntu/autostart
 sudo apt-get -y install `check-language-support -l en_GB`
 # credit http://askubuntu.com/a/476719
 
+# ensure that OpenOffice recognises the en_GB thesaurus inside mythes-en-us
+cd /usr/share/mythes/
+sudo ln -s th_en_US_v2.idx th_en_GB_v2.idx
+sudo ln -s th_en_US_v2.dat th_en_GB_v2.dat
+# credit http://askubuntu.com/questions/42850/
 
 
 
