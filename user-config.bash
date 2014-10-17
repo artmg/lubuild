@@ -13,8 +13,8 @@ if \
  || [[ "${DESKTOP_SESSION} $(lsb_release -sr)" == "Lubuntu 14.10" ]] \
 ; then
   echo === change C-A-L lock shortcut to use light locker
-  cp ~/.config/openbox/lubuntu-rc.xml{,.`date +%y%m%d`}
-  sed -i 's/lxsession-default lock/light-locker-command -l/' /
+  cp ~/.config/openbox/lubuntu-rc.xml{,.`date +%y%m%d.%H%M%S`}
+  sed -i 's/lxsession-default lock/light-locker-command -l/' \
    ~/.config/openbox/lubuntu-rc.xml
 fi
 
@@ -25,7 +25,7 @@ if [[ $LUBUILD_HARDWARE_TYPE_LAPTOP -eq TRUE ]] ; then (
     [[ "${DESKTOP_SESSION} $(lsb_release -sr)" == "Lubuntu 14.04" ]] \
     ; then
     # credit > http://askubuntu.com/a/361286
-    cp ~/.config/lxsession/Lubuntu/desktop.conf{,.`date +%y%m%d`}
+    cp ~/.config/lxsession/Lubuntu/desktop.conf{,.`date +%y%m%d.%H%M%S`}
     echo modify the following setting in the named section ; \
     echo [State] ; \
     echo laptop_mode=yes ; \
