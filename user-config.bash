@@ -5,23 +5,32 @@
 # $LUBUILD_HARDWARE_TYPE_LAPTOP 
 
 
-### Screen locking issues in 14.04
+### Screen locking issues in 14.04 & 14.10
 # do we want to force screensaver to lock, or let user config manually?
 #
-# change C-A-L lock shortcut to use light locker
-sed -i 's/lxsession-default lock/light-locker-command -l/' ~/.config/openbox/lubuntu-rc.xml
+if \
+ [[ "${DESKTOP_SESSION} $(lsb_release -sr)" == "Lubuntu 14.04" ]] \
+ || [[ "${DESKTOP_SESSION} $(lsb_release -sr)" == "Lubuntu 14.10" ]] \
+; then
+  echo === change C-A-L lock shortcut to use light locker
+  cp ~/.config/openbox/lubuntu-rc.xml{,.`date +%y%m%d`}
+  sed -i 's/lxsession-default lock/light-locker-command -l/' /
+   ~/.config/openbox/lubuntu-rc.xml
+fi
 
-
-
-if [[ $LUBUILD_HARDWARE_TYPE_LAPTOP -eq TRUE ]] ; then ( 
 
 ### Set laptop mode ###
-# credit > http://askubuntu.com/a/361286
-# NB: this is already present in 14.10
-#echo modify the following setting in the named section ; \
-#echo [State] ; \
-#echo laptop_mode=yes ; \
-#sudo gnome-text-editor ~/.config/lxsession/Lubuntu/desktop.conf 
+if [[ $LUBUILD_HARDWARE_TYPE_LAPTOP -eq TRUE ]] ; then ( 
+  if \
+    [[ "${DESKTOP_SESSION} $(lsb_release -sr)" == "Lubuntu 14.04" ]] \
+    ; then
+    # credit > http://askubuntu.com/a/361286
+    cp ~/.config/lxsession/Lubuntu/desktop.conf{,.`date +%y%m%d`}
+    echo modify the following setting in the named section ; \
+    echo [State] ; \
+    echo laptop_mode=yes ; \
+    sudo leafpad ~/.config/lxsession/Lubuntu/desktop.conf 
+  fi
 ) ; fi
 
 
