@@ -9,7 +9,7 @@ sudo echo
 ####################################
 
 # backup software sources
-sudo cp /etc/apt/sources.list{,.`date +%y%m%d`}
+sudo cp /etc/apt/sources.list{,.`date +%y%m%d.%H%M%S`}
 # Add partner
 sudo add-apt-repository -y "deb http://archive.canonical.com/ $(lsb_release -sc) partner"
 # help > https://help.ubuntu.com/community/Repositories/CommandLine
