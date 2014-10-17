@@ -19,6 +19,16 @@ if [[ $AFFECTED_MODELS == *\|$MODEL_NO\|* ]] ; then
  
 fi
 
+# now fixed and backported 
+## "lxsession-default tasks" (CTRL-ALT-DEL) kills xorg / logs user out
+#  sed -i -e 's|lxsession-default tasks|lxtask|' \
+#  $HOME/.config/openbox/lubuntu-rc.xml ;
+#  openbox --reconfigure
+## http://ubuntuforums.org/showthread.php?t=2218356
+## http://askubuntu.com/questions/499036/
+## https://bugs.launchpad.net/ubuntu/+source/lxsession/+bug/1316832
+
+
 # no longer needed per user as it's fixed system-wide
 ## credit - https://bugs.launchpad.net/ubuntu/+source/pcmanfm/+bug/975152/comments/17
 ## still an issue in Lubuntu 14.10 (Beta 2)
