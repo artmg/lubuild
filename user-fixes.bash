@@ -18,3 +18,17 @@ if [[ $AFFECTED_MODELS == *\|$MODEL_NO\|* ]] ; then
   openbox --reconfigure
  
 fi
+
+# no longer needed per user as it's fixed system-wide
+## credit - https://bugs.launchpad.net/ubuntu/+source/pcmanfm/+bug/975152/comments/17
+## still an issue in Lubuntu 14.10 (Beta 2)
+#if \
+#  [[ "${DESKTOP_SESSION} $(lsb_release -sr)" == "Lubuntu 14.04" ]] \
+#  || [[ "${DESKTOP_SESSION} $(lsb_release -sr)" == "Lubuntu 14.10" ]] \
+#  ; then
+#  echo === open bash scripts in Terminal from File Manager - Lub 14.04 ;
+### This would fail anyhow, as config file not created until you go into GUI preferences
+#  sudo cp $HOME/.config/lxpanel/Lubuntu/config{,.`date +%y%m%d.%H%M%S`}
+#  sed -i -e 's|lxsession-default terminal|x-terminal-emulator|' \
+#  $HOME/.config/lxpanel/Lubuntu/config ;
+#fi
