@@ -16,9 +16,6 @@ if \
   sudo cp /usr/share/lxpanel/profile/Lubuntu/config{,.`date +%y%m%d.%H%M%S`}
   sudo sed -i -e 's|lxsession-default terminal|x-terminal-emulator|' \
    /usr/share/lxpanel/profile/Lubuntu/config ; 
-  sudo cp $HOME/.config/lxpanel/Lubuntu/config{,.`date +%y%m%d.%H%M%S`}
-  sed -i -e 's|lxsession-default terminal|x-terminal-emulator|' \
-   $HOME/.config/lxpanel/Lubuntu/config ;
 fi
 
 
