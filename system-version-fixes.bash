@@ -9,11 +9,14 @@ if \
     [[ "${DESKTOP_SESSION} $(lsb_release -sr)" == "Lubuntu 14.04" ]] \
     || [[ "${DESKTOP_SESSION} $(lsb_release -sr)" == "Lubuntu 14.10" ]] \
     ; then 
-  echo ### open bash scripts in Terminal from File Manager - Lub 14.04 ; 
+  echo === open bash scripts in Terminal from File Manager - Lub 14.04 ; 
+  sudo cp /etc/xdg/lubuntu/libfm/libfm.conf{,.`date +%y%m%d`}
   sudo sed -i -e 's|lxsession-default-terminal %s|x-terminal-emulator -e %s|' \
    /etc/xdg/lubuntu/libfm/libfm.conf ; 
+  sudo cp /usr/share/lxpanel/profile/Lubuntu/config{,.`date +%y%m%d`}
   sudo sed -i -e 's|lxsession-default terminal|x-terminal-emulator|' \
    /usr/share/lxpanel/profile/Lubuntu/config ; 
+  sudo cp $HOME/.config/lxpanel/Lubuntu/config{,.`date +%y%m%d`}
   sed -i -e 's|lxsession-default terminal|x-terminal-emulator|' \
    $HOME/.config/lxpanel/Lubuntu/config ;
 fi
