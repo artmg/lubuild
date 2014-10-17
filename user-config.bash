@@ -39,7 +39,11 @@ if [[ $LUBUILD_HARDWARE_TYPE_LAPTOP -eq TRUE ]] ; then (
 #
 ### MANUALLY ***** check screen IDs
 # 
-# use gui to activate both monitors
+# Set all connected monitors to automatic (full native) resolution
+xrandr -q | grep " connected " | while read first rest ; do
+xrandr --output $first --auto
+done
+
 # command to identify internal and external monitors
 xrandr  -q|grep connected
 # e.g.
