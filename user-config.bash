@@ -127,6 +127,55 @@ xfconf-query -c xfce4-power-manager -n -p "/xfce4-power-manager/lid-action-on-ba
 ) ; fi
 
 
+### The rest of this used to be in user-fixes.bash
+
+
+# ====Sound controls====
+# Acer One not adjusting volume with Fn VolUp and Fn VolDn keys
+# credit - http://ubuntuforums.org/archive/index.php/t-1977849.html
+# credit - https://bugs.launchpad.net/ubuntu/+source/lxpanel/+bug/1262572
+
+MODEL_NO=`sudo dmidecode -s system-product-name`
+AFFECTED_MODELS='|AO722|sample other|'
+
+if [[ $AFFECTED_MODELS == *\|$MODEL_NO\|* ]] ; then
+  sudo cp $HOME/.config/openbox/lubuntu-rc.xml{,.`date +%y%m%d.%H%M%S`}  # backup original config
+  # find the text   XF86AudioRaiseVolume
+  # after each of the three  commands   amixer -q   insert the following text before   sset
+  #   -D pulse 
+  sed -i -e 's|amixer -q sset|amixer -q -D pulse sset|' \
+  $HOME/.config/openbox/lubuntu-rc.xml ;
+
+  openbox --reconfigure
+ 
+fi
+
+# now fixed and backported 
+## "lxsession-default tasks" (CTRL-ALT-DEL) kills xorg / logs user out
+#  sed -i -e 's|lxsession-default tasks|lxtask|' \
+#  $HOME/.config/openbox/lubuntu-rc.xml ;
+#  openbox --reconfigure
+## http://ubuntuforums.org/showthread.php?t=2218356
+## http://askubuntu.com/questions/499036/
+## https://bugs.launchpad.net/ubuntu/+source/lxsession/+bug/1316832
+
+
+# no longer needed per user as it's fixed system-wide
+## credit - https://bugs.launchpad.net/ubuntu/+source/pcmanfm/+bug/975152/comments/17
+## still an issue in Lubuntu 14.10 (Beta 2)
+#if \
+#  [[ "${DESKTOP_SESSION} $(lsb_release -sr)" == "Lubuntu 14.04" ]] \
+#  || [[ "${DESKTOP_SESSION} $(lsb_release -sr)" == "Lubuntu 14.10" ]] \
+#  ; then
+#  echo === open bash scripts in Terminal from File Manager - Lub 14.04 ;
+### This would fail anyhow, as config file not created until you go into GUI preferences
+#  sudo cp $HOME/.config/lxpanel/Lubuntu/config{,.`date +%y%m%d.%H%M%S`}
+#  sed -i -e 's|lxsession-default terminal|x-terminal-emulator|' \
+#  $HOME/.config/lxpanel/Lubuntu/config ;
+#fi
+
+
+
 ### BOOKMARKS #######################
 cp ~/.gtk-bookmarks{,.`date +%y%m%d`}
 # Add local music folder to bookmarks
