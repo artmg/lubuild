@@ -175,9 +175,11 @@ freecad freecad-doc      # 3D parametric modeler (CAD)
 
 ### Utility ###
 workrave    # encourage regular breaks for posture and eyes 
-meld			     # file and folder diffs...
+meld        # file and folder diffs...
  #  alternatives: xxdiff - also kdiff3 (floss) + diffMerge (free) are Win/Nux - http://askubuntu.com/questions/312604/how-do-i-install-xxdiff-in-13-04 
 recoll      # filesystem search engine
+unetbootin  # more reliable at installing bootloader than usb-creator-gtk
+
 
 ### Internet Clients ###
 
