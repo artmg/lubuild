@@ -3,6 +3,7 @@
 # options used
 # $LUBUILD_HARDWARE_TYPE_EXTERNAL_SCREEN
 # $LUBUILD_HARDWARE_TYPE_LAPTOP 
+# LUBUILD_HARDWARE_TYPE_LIVEUSB
 
 
 #
@@ -73,15 +74,14 @@ sudo ln -s th_en_US_v2.dat th_en_GB_v2.dat
 # credit http://askubuntu.com/questions/42850/
 
 
-
-#######################
-### *** ***  Live  USB  *** *** ###
-#######################
-
-### CDROM RO issue ################
+#
+### CDROM RO issue on Live USB ###
+#
+if [[ LUBUILD_HARDWARE_TYPE_LIVEUSB -eq TRUE ]] ; then ( 
+sudo mount -o remount,rw,UID=`id -u` /cdrom
+) ; fi
 # credit > http://askubuntu.com/a/54622
 # credit > http://unix.stackexchange.com/questions/47433/mount-usb-drive-fat32-so-all-users-can-write-to-it#comment66000_47433
-sudo mount -o remount,rw,UID=`id -u` /cdrom
 
 # fix (requires manual changes)
 # http://www.pendrivelinux.com/sharing-files-between-ubuntu-flash-drive-and-windows/
@@ -90,5 +90,4 @@ sudo mount -o remount,rw,UID=`id -u` /cdrom
 
 # if it's been used in windows, but not safely removed...
 # help > http://ubuntuforums.org/showthread.php?p=7525441 
-
 
