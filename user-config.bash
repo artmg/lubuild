@@ -18,6 +18,10 @@ if \
    ~/.config/openbox/lubuntu-rc.xml
 fi
 
+# consider changing (unconditionally) shortcut from key="C-A-l" to key="W-l"
+# or at least adding in a copy (like W-p below) to use both shortcuts
+
+
 
 ### Set laptop mode ###
 if [[ $LUBUILD_HARDWARE_TYPE_LAPTOP -eq TRUE ]] ; then ( 
