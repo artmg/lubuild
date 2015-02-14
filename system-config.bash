@@ -32,9 +32,16 @@ EOF!
 ###############################################
 
 
-
-
-
+######### Defaults for Users ###########
+(# consider splitting off to seaparate script)
+# some default contents of home folder come from /etc/skel
+# many ubuntu settings are in other places...
+# e.g. The lxpanel default config file that needs to be edited for all new users is located at:
+# /usr/share/lxpanel/profile/Lubuntu/panels/panel
+# also check
+#  /etc/xdg/lxsession/Lubuntu/desktop.conf 
+# credit http://ubuntuforums.org/archive/index.php/t-2210805.html
+# /usr/share/lubuntu/openbox/
 
 
 ######### toggle external screen display using SUPER-P ###########################
