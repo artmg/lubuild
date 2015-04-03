@@ -142,7 +142,7 @@ skype     # back in the repos since 13.10 - no longer need manual script
 # for more ideas see...  https://wiki.ubuntu.com/Edubuntu/AppGuide
 childsplay gcompris tuxpaint kwordquiz ri-li # infants
 tuxtype ktouch tuxmath gbrainy kig kalgebra  # practice
-laby kturtle                                 # programming 
+laby kturtle scratch                         # programming 
 basic256                                     ### PPA required ### ppa:basic256/basic256 (version for correct syntax)
 celestia stellarium kstars marble kgeography # geo-astro
 aisleriot airstrike glchess glines gnect gnibbles gnobots2 gnome-sudoku  # play
