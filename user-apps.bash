@@ -103,35 +103,76 @@ if [[ $LUBUILD_DROPBOX_AUTOSTART -eq TRUE ]] ; then (
 
 
 
-#####################################
-### Google Drive client           ### 
-#####################################
+########################################
+## Linux Client for Google Drive sync ##
+########################################
+
+### About the Drive API ###
+# The current version is Drive API v2
+# migration from older versions: https://developers.google.com/drive/web/migration
+# Documents List API deprecated 20th April 2015: https://developers.google.com/google-apps/documents-list/
+
+### Alternative Linux Clients ###
+# lnsync is paid version only
+# Grive Tools suspended - https://www.thefanclub.co.za/how-to/ubuntu-google-drive-client-grive-and-grive-tools
+# - old links to deprecated Grive Indicator - https://github.com/Sadi58/grive-indicator
+# - also happy to do without those extra 165MB of libs it needed!
+# ocamlfuse is transient (mount lost when connection lost) like web version - https://github.com/astrada/google-drive-ocamlfuse
+
+## Go Drive ##
+#
+# git-style command to pull and push content, written in Go
+
+### Ubuntu install ###
+#
+# golang package in Ubuntu repos is deprecated - https://github.com/rakyll/drive/issues/8#issuecomment-61707616
+# install directly from: http://golang.org/doc/install
+
+# FIRST check filename at: https://golang.org/dl/
+# then set this on the following line...
+
+set GOTEMPDOWNLOAD=go1.4.2.linux-amd64.tar.gz
+
+# credit - https://www.computersnyou.com/4524/
+wget -c https://storage.googleapis.com/golang/$GOTEMPDOWNLOAD
+tar -xvzf $GOTEMPDOWNLOAD
+sudo mv go /usr/local/
+rm $GOTEMPDOWNLOAD
+
+# credit - http://www.jeffduckett.com/blog/55096fe3c6b86364cef12da5/installing-go-1-4-2-on-ubuntu-%28trusty%29-14-04.html
+# edit .profile in your home directory
+nano /etc/profile
+
+# MANUALLY add the following line
+export PATH=$PATH:/usr/local/go/bin
+
+# reload profile to avoid logout
+source /etc/profile
+
+# test
+go version
+go env
+
+# credit - http://www.howtogeek.com/196635/
+# install prereqs
+sudo apt-get install -y git mercurial
+
+# credit - https://github.com/rakyll/drive/wiki
+# prepare profile
+cat << ! >> ~/.bashrc
+export GOPATH=\$HOME/go
+export PATH=\$GOPATH:\$GOPATH/bin:\$PATH
+!
+# install drive
+go get github.com/rakyll/drive/cmd/drive
+
+# test
+drive help
+
+# For RaspberryPi issues - https://www.raspberrypi.org/forums/viewtopic.php?t=87641&p=701009
 
 # could move install to system-wide and just have user setup here
 
-## Options ##
-#
-# Grive - free, in repo, seems popular but some issues mentioned
-# InSync - $15pa, well liked
-# SyncDrive - free, more thumbs down than up!
-#
-# Grive in repos is CLI only
-# use Grive-Tools to wrap with GUI & panel icon
-#
-# credit - http://www.thefanclub.co.za/how-to/ubuntu-google-drive-client-grive-and-grive-tools
-#
-sudo add-apt-repository -y ppa:thefanclub/grive-tools
-sudo apt-get update
-sudo apt-get install -y grive-tools
-#
-# Begin setup
-#
-gksudo /bin/bash /opt/thefanclub/grive-tools/grive-setup
-#
-# or use icon in Accessories
-#
-# In the Google Drive indicator Preference prefer light icon theme for LXDE
-#
 
 
 
