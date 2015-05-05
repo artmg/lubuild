@@ -169,6 +169,12 @@ go get github.com/rakyll/drive/cmd/drive
 # test
 drive help
 
+### set up each folder
+drive init ~/Google\ Drive/MyFolder/
+
+cd ~/Google\ Drive/MyFolder/
+drive pull
+
 # For RaspberryPi issues - https://www.raspberrypi.org/forums/viewtopic.php?t=87641&p=701009
 
 # could move install to system-wide and just have user setup here
