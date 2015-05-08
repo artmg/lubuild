@@ -140,7 +140,7 @@ xfconf-query -c xfce4-power-manager -n -p "/xfce4-power-manager/lid-action-on-ba
 # credit - https://bugs.launchpad.net/ubuntu/+source/lxpanel/+bug/1262572
 
 MODEL_NO=`sudo dmidecode -s system-product-name`
-AFFECTED_MODELS='|AO722|sample other|'
+AFFECTED_MODELS='|AO722|Latitude E7240|sample other|'
 
 if [[ $AFFECTED_MODELS == *\|$MODEL_NO\|* ]] ; then
   sudo cp $HOME/.config/openbox/lubuntu-rc.xml{,.`date +%y%m%d.%H%M%S`}  # backup original config
