@@ -131,7 +131,8 @@ if [[ $LUBUILD_DROPBOX_AUTOSTART -eq TRUE ]] ; then (
 # FIRST check filename at: https://golang.org/dl/
 # then set this on the following line...
 
-set GOTEMPDOWNLOAD=go1.4.2.linux-amd64.tar.gz
+GOTEMPDOWNLOAD=go1.4.2.linux-amd64.tar.gz
+export GOTEMPDOWNLOAD
 
 # credit - https://www.computersnyou.com/4524/
 wget -c https://storage.googleapis.com/golang/$GOTEMPDOWNLOAD
@@ -141,7 +142,7 @@ rm $GOTEMPDOWNLOAD
 
 # credit - http://www.jeffduckett.com/blog/55096fe3c6b86364cef12da5/installing-go-1-4-2-on-ubuntu-%28trusty%29-14-04.html
 # edit .profile in your home directory
-nano /etc/profile
+sudo nano /etc/profile
 
 # MANUALLY add the following line
 export PATH=$PATH:/usr/local/go/bin
@@ -160,9 +161,12 @@ sudo apt-get install -y git mercurial
 # credit - https://github.com/rakyll/drive/wiki
 # prepare profile
 cat << ! >> ~/.bashrc
-export GOPATH=\$HOME/go
+export GOPATH=\$HOME/bin/go
 export PATH=\$GOPATH:\$GOPATH/bin:\$PATH
 !
+# reload bashrc to avoid starting new terminal
+source ~/.bashrc
+
 # install drive
 go get github.com/rakyll/drive/cmd/drive
 
