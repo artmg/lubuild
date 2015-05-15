@@ -47,11 +47,13 @@ if [[ $DESKTOP_SESSION == Lubuntu ]] ; then
 fi
 # credit - https://help.ubuntu.com/community/Lubuntu/Documentation/RemoveLubuntuDesktop
 
+# assuming the LibreOffice suite is installed, remove the lighter weight alternatives
 sudo apt-get remove -y abiword		# remove abiword to avoid doc corruption issues
 # sudo apt-get remove -y abiword abiword-common
 ## or will this do it all?
-# sudo apt-get autoremove
+sudo apt-get remove -y gnumeric
 
+# sudo apt-get autoremove
 
 
 ######################################
