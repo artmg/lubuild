@@ -97,10 +97,10 @@ xmlstarlet # used by LUbuild for changing XML config files
 
 ####### MultiMedia ##########
 gstreamer		 ### NO LONGER FOUND! ### # none-open formats incl DVDs - also needs post install code below # might be part of other media player like totem
-pulseaudio	 # should be in by default
-pavucontrol	# pulse volume control
-# AUDIO usually works fine out of the box unless you want to use Bluetooth Audio Sink
-
+# AUDIO usually works fine out of the box
+pulseaudio	                 # should be in by default
+pavucontrol	                 # pulse volume control
+# pulseaudio-module-bluetooth # if you want to add Bluetooth Audio Sink
 
 ### Alternative music players ###
 
