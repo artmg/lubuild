@@ -18,6 +18,7 @@ sudo add-apt-repository -y "deb http://archive.canonical.com/ $(lsb_release -sc)
 sudo add-apt-repository -y ppa:vincent-c/nevernote                # NixNote2
 sudo add-apt-repository -y ppa:freecad-maintainers/freecad-stable # FreeCAD (newer than Ubuntu version)
 sudo add-apt-repository -y ppa:basic256/basic256                  # basic256
+sudo add-apt-repository ppa:recoll-backports/recoll-1.15-on       # recoll stable
 
 # if this distros does NOT have chrome sources already...
 if [ ! -f /etc/apt/sources.list.d/google-chrome.list ]; then (
