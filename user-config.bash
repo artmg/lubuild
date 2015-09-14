@@ -48,6 +48,42 @@ if [[ $LUBUILD_HARDWARE_TYPE_LAPTOP -eq TRUE ]] ; then (
 # help - http://christian.amsuess.com/tools/arandr/
 # proc - http://askubuntu.com/questions/162028/how-to-use-shortcuts-to-switch-between-displays-in-lxde
 
+# This installs the GUI
+sudo apt-get install -y arandr
+
+# This sets up the script to cycle modes
+mkdir -P ~/.screenlayout
+cd ~/.screenlayout
+wget https://github.com/bmnz/arandr-cycle/raw/master/arandr-cycle.sh .arandr-cycle.sh
+# the script uses notify-send from this package...
+sudo apt-get install -y libnotify-bin
+
+# This sets up the Function key as Win-P 
+cat ~/.config/openbox/lubuntu-rc.xml.`date +%y%m%d` \
+| xmlstarlet ed \
+ -s "/_:openbox_config/_:keyboard" \
+   -t elem -n keybind  \
+| xmlstarlet ed \
+ -i "/_:openbox_config/_:keyboard/_:keybind[last()]" \
+   -t attr -n key -v W-p \
+ -s "/_:openbox_config/_:keyboard/_:keybind[last()]" \
+   -t elem -n action  \
+| xmlstarlet ed \
+ -i "/_:openbox_config/_:keyboard/_:keybind[last()]/_:action" \
+   -t attr -n name -v Execute \
+ -s "/_:openbox_config/_:keyboard/_:keybind[last()]/_:action" \
+   -t elem -n command  \
+| xmlstarlet ed \
+ -s "/_:openbox_config/_:keyboard/_:keybind[last()]/_:action/_:command" \
+   -t text -n text -v "~/.screenlayout/.arandr-cycle.sh" \
+> ~/.config/openbox/lubuntu-rc.xml
+
+openbox --reconfigure
+
+# Now use the GUI to save your preferred modes
+arandr
+
+
 # the solution below works well to toggle between two modes
 # for alternative scripts that can cycle between 3 or more modes, 
 # see... (in ascending order of complexity)
