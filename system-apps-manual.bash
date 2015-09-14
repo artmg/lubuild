@@ -31,6 +31,16 @@ xdg-open https://help.ubuntu.com/community/InstallKompozer
 
 # now distributed via repos
 sudo apt-get install -y hplip
+
+# *** VERSION FIXES ***
+# credit https://help.ubuntu.com/community/HpAllInOne#error:_hp-setup_requires_GUI_support
+if [[ "${DESKTOP_SESSION} $(lsb_release -sr)" == "Lubuntu 14.04" ]] then 
+   sudo apt-get install -y python-qt4 ; 
+fi
+if [[ "${DESKTOP_SESSION} $(lsb_release -sr)" == "Lubuntu 15.04" ]] then 
+   sudo apt-get install -y python3-pyqt4 ; 
+fi
+
 sudo hp-setup
 # help - https://help.ubuntu.com/community/HpAllInOne
 
