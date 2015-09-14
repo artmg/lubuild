@@ -19,6 +19,18 @@ if \
 fi
 
 
+# Notifications not clear
+# https://bugs.launchpad.net/ubuntu/+source/lubuntu-artwork/+bug/1362555
+
+if [[ "${DESKTOP_SESSION} $(lsb_release -sr)" == "Lubuntu 15.04" ]] ; then 
+  sudo rm /usr/share/themes/Lubuntu-default/gtk-2.0/images/panel-bg.png ; 
+fi
+
+# to test ...
+# sudo apt-get install -y libnotify-bin
+# notify-send -u normal "Hello" "Testing"
+# help - https://wiki.archlinux.org/index.php/Desktop_notifications
+
 
 
 ### This logic to only do this for HP Mini on 14.04 is not yet working, 
