@@ -41,6 +41,21 @@ if [[ $LUBUILD_HARDWARE_TYPE_LAPTOP -eq TRUE ]] ; then (
 
 ######### toggle external screen display using SUPER-P ###########################
 #
+# Lubuntu's (LXDE's) LXRandR gui allows you to set a specific configuration,
+# but not toggle / cycle between alternative modes you choose to predefine
+#
+# try using ARandR ?
+# help - http://christian.amsuess.com/tools/arandr/
+# proc - http://askubuntu.com/questions/162028/how-to-use-shortcuts-to-switch-between-displays-in-lxde
+
+# the solution below works well to toggle between two modes
+# for alternative scripts that can cycle between 3 or more modes, 
+# see... (in ascending order of complexity)
+# http://crunchbang.org/forums/viewtopic.php?id=10182
+# http://unix.stackexchange.com/a/168141
+# https://gist.github.com/davidfraser/4131369
+# https://awesome.naquadah.org/wiki/Using_Multiple_Screens
+
 ### MANUALLY ***** check screen IDs
 # 
 # Set all connected monitors to automatic (full native) resolution
