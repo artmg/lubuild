@@ -59,6 +59,8 @@ wget https://github.com/bmnz/arandr-cycle/raw/master/arandr-cycle.sh .arandr-cyc
 sudo apt-get install -y libnotify-bin
 
 # This sets up the Function key as Win-P 
+cp ~/.config/openbox/lubuntu-rc.xml{,.`date +%y%m%d`}
+
 cat ~/.config/openbox/lubuntu-rc.xml.`date +%y%m%d` \
 | xmlstarlet ed \
  -s "/_:openbox_config/_:keyboard" \
