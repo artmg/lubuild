@@ -2,6 +2,10 @@
 
 ### UPDATES ################
 
+# if you want to reduce the priority for these running in the background
+# set nice value for current process's PID
+renice -n 20 $$
+
 # Prepare for repository installs
 sudo apt-get update
 
