@@ -13,6 +13,12 @@
 ## sudo not required :)
 # nmcli nm sleep false
 #
+# since nmcli version 0.9.10 this should now be
+# nmcli networking on   # or simply    nmcli n on 
+#
+# and check with 
+# nmcli general   # or simply    nmcli g
+#
 if [[ $LUBUILD_HARDWARE_TYPE_LAPTOP -eq TRUE ]] ; then ( 
 sudo tee /usr/share/applications/wake-up-wifi.desktop cat <<EOF!
 [Desktop Entry]
