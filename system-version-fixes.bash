@@ -19,6 +19,17 @@ if \
 fi
 
 
+# power tray applet not appearing
+# https://bugs.launchpad.net/ubuntu/+source/xfce4-power-manager/+bug/1446247
+
+if [[ "${DESKTOP_SESSION} $RELEASE" == "Lubuntu 15.04" ]] ; then 
+  sudo apt-get install xfce4-power-manager-plugins ; 
+fi
+
+# see also http://askubuntu.com/questions/624797/problem-with-battery-indicator-in-lubuntu-15-04
+# right-click in tray - Panel Settings / Applets / Add / Battery Monitor
+
+
 # Notifications not clear
 # https://bugs.launchpad.net/ubuntu/+source/lubuntu-artwork/+bug/1362555
 
