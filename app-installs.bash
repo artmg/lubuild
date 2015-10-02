@@ -15,9 +15,9 @@ sudo add-apt-repository -y "deb http://archive.canonical.com/ $(lsb_release -sc)
 # help > https://help.ubuntu.com/community/Repositories/CommandLine
 
 ### PPAs ###
-sudo add-apt-repository -y ppa:vincent-c/nevernote                # NixNote2
-sudo add-apt-repository -y ppa:freecad-maintainers/freecad-stable # FreeCAD (newer than Ubuntu version)
-sudo add-apt-repository -y ppa:basic256/basic256                  # basic256
+# sudo add-apt-repository -y ppa:vincent-c/nevernote                # NixNote2
+# sudo add-apt-repository -y ppa:freecad-maintainers/freecad-stable # FreeCAD (newer than Ubuntu version)
+# sudo add-apt-repository -y ppa:basic256/basic256                  # basic256
 sudo add-apt-repository -y ppa:recoll-backports/recoll-1.15-on    # recoll stable
 
 # if this distros does NOT have chrome sources already...
@@ -89,19 +89,14 @@ cat > ./package_list <<EOF
 
 ######## ALL MACHINES ############
 
-### General Utilities ###
-geany      # syntax highlighting editor - # alternatives: gedit (ubuntu default), sublime text??,  xemacs21 (no app menu shortcut), vim (_really_?), gVim?
-baobab     # graphical disk usage analyser
-flashplugin-installer	 # Adobe Flash plugin for browsers - alternatives are swfdec-gnome or gnash
-cups-pdf	 	# PDF printer
-xmlstarlet # used by LUbuild for changing XML config files
-
 ####### MultiMedia ##########
 gstreamer		 ### NO LONGER FOUND! ### # none-open formats incl DVDs - also needs post install code below # might be part of other media player like totem
 # AUDIO usually works fine out of the box
 pulseaudio	                 # should be in by default
 pavucontrol	                 # pulse volume control
 # pulseaudio-module-bluetooth # if you want to add Bluetooth Audio Sink
+guvcview	# support for most webcams
+
 
 ### Alternative music players ###
 
@@ -134,12 +129,7 @@ pavucontrol	                 # pulse volume control
 
 libnss-mdns # name resolution
 cifs-utils  # mount cifs in fuse
-
-
-######## LAPTOPS ############
-guvcview		# support for most webcams
-skype     # back in the repos since 13.10 - no longer need manual script
-
+cups-pdf	 	# PDF printer
 
 ########### KIDS #############
 # for more ideas see...  https://wiki.ubuntu.com/Edubuntu/AppGuide
@@ -184,20 +174,29 @@ recoll      # filesystem search engine
 unetbootin  # more reliable at installing bootloader than usb-creator-gtk
 
 
+### General Utilities ###
+geany      # syntax highlighting editor - # alternatives: gedit (ubuntu default), sublime text??,  xemacs21 (no app menu shortcut), vim (_really_?), gVim?
+baobab     # graphical disk usage analyser
+xmlstarlet # used by LUbuild for changing XML config files
+
+
+
+######## LAPTOPS ############
+
+
 ### Internet Clients ###
 
-google-chrome-stable     ### PPA required ### Google Chrome
+google-chrome-stable    ### PPA required ### Google Chrome
 
-epiphany-browser	        # alternative lightweight browser
-transmission			          # torrent client
-gftp					                # file transfer client
+epiphany-browser	      # alternative lightweight browser
+transmission			      # torrent client
+gftp					          # file transfer client
+skype                   # back in the repos since 13.10 - no longer need manual script
 
-nixnote                  ### PPA required ### vincent-c/nevernote
-  # client help - https://www.evernote.com/pub/baumgarr/nevernote
-  #### EVERNOTE alternatives ####
-  ## You CAN use the Windows client under WINE, and at Evernote 5 it is reasonably stable
-  # Everpad Unity Lens # credit > http://handytutorial.com/install-evernote-in-ubuntu-12-10-12-04/
-  # but this is a unity lens,  so might not be any use in Lubuntu - http://askubuntu.com/questions/243049/trouble-authorizing-everpad-on-lubuntu
+# derprecated
+# flashplugin-installer	 # Adobe Flash plugin for browsers - alternatives are swfdec-gnome or gnash
+# nixnote                  ### PPA required ### vincent-c/nevernote
+#     alternatively use EverNote Windows client under WINE, and at v5 it is reasonably stable
 
 ### conversion tools ###
 pandoc	      # convert documents between markup formats # sample command # pandoc -f markdown -t html -o output.htm input.txt
@@ -215,32 +214,13 @@ poppler-utils # includes pdfimages to extract image files from PDFs
 
 ### sub-systems ###
 python					# code execution
-wine       # windows emulation
-
+wine            # windows emulation
 android-tools-adb android-tools-fastboot ### Android Tools (now in main repo - was ppa:nilarimogard/webupd8)
-  # access android app private files internal storage over adb without rooting:
-  # http://blog.shvetsov.com/2013/02/access-android-app-data-without-root.html
 
 # see lubuild manual-apps-per-user.bash for more - https://github.com/artmg/lubuild/blob/master/manual-apps-per-user.bash
 
-
-########## Other Candidates ###########
-
-# VERY comprehensive list of alternatives...
-# see - http://debianhelp.wordpress.com/2013/11/19/to-do-list-after-installing-ubuntu-13-10-aka-saucy-salamander-os-2/
-
-# decompression
-# for ubuntu, p7zip for 7z format (fits into fileroller)
-# or for xubuntu, xarchiver (includes p7zip)
-
 # jockey-gtk
 # hardware drivers 
-
-# WSYIWYG html editor - kompozer no longer in repos
-# see > https://help.ubuntu.com/community/InstallKompozer 
-# alternatives: http://www.bluegriffon.org/ although not in repos
-# What about Amaya?
-# Is BlueFish visual? Aptana is more web dev
 
 EOF
 
