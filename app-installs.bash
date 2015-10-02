@@ -155,8 +155,6 @@ libreoffice		# office - prefer to replace abiword - should we remove gnumeric to
 mythes-en-us  # english thesaurus including GB 
 
 
-
-
 ############## Specialist stuff ################
 
 thunderbird  # PIM that works well on Lubuntu AND is available on PortableApps.com, 
@@ -166,19 +164,16 @@ vym          # mind-map / notes
 ### Advanced Design ###
 freecad freecad-doc      # 3D parametric modeler (CAD)
 
-### Utility ###
+### General Utilities ###
+xmlstarlet  # NEEDED by Lubuild for changing XML config files
+geany       # syntax highlighting editor - # alternatives: gedit (ubuntu default), sublime text??,  xemacs21 (no app menu shortcut), vim (_really_?), gVim?
+baobab      # graphical disk usage analyser
 workrave    # encourage regular breaks for posture and eyes 
+keepassx
 meld        # file and folder diffs...
  #  alternatives: xxdiff - also kdiff3 (floss) + diffMerge (free) are Win/Nux - http://askubuntu.com/questions/312604/how-do-i-install-xxdiff-in-13-04 
 recoll      # filesystem search engine
-unetbootin  # more reliable at installing bootloader than usb-creator-gtk
-
-
-### General Utilities ###
-geany      # syntax highlighting editor - # alternatives: gedit (ubuntu default), sublime text??,  xemacs21 (no app menu shortcut), vim (_really_?), gVim?
-baobab     # graphical disk usage analyser
-xmlstarlet # used by LUbuild for changing XML config files
-
+# now using mkusb  (instead of)  unetbootin  # more reliable at installing bootloader than usb-creator-gtk
 
 
 ######## LAPTOPS ############
