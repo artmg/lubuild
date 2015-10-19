@@ -3,7 +3,7 @@
 # options used
 # $LUBUILD_HARDWARE_TYPE_EXTERNAL_SCREEN
 # $LUBUILD_HARDWARE_TYPE_LAPTOP 
-# LUBUILD_HARDWARE_TYPE_LIVEUSB
+# $LUBUILD_HARDWARE_TYPE_LIVEUSB
 
 
 #
@@ -11,6 +11,10 @@
 #
 ## credit - http://askubuntu.com/questions/365112/lubuntu-13-10-laptop-loses-wireless-after-sleep
 ## sudo not required :)
+# nmcli nm sleep false
+#
+# before nmcli version 0.9.10 this was
+#
 # nmcli nm sleep false
 #
 # since nmcli version 0.9.10 this should now be
@@ -24,7 +28,7 @@ sudo tee /usr/share/applications/wake-up-wifi.desktop cat <<EOF!
 [Desktop Entry]
 Type=Application
 Name=Wake up Wifi
-Exec=nmcli nm sleep false
+Exec=nmcli networking on
 Terminal=false
 Categories=System;
 Icon=nm-signal-50
@@ -39,7 +43,7 @@ EOF!
 
 
 ######### Defaults for Users ###########
-(# consider splitting off to seaparate script)
+# (consider splitting off to seaparate script) #
 # some default contents of home folder come from /etc/skel
 # many ubuntu settings are in other places...
 # e.g. The lxpanel default config file that needs to be edited for all new users is located at:
@@ -70,20 +74,23 @@ EOF!
 ###### Localisation ##########################
 ##############################################
 
-# set GB keyboard map
-setxkbmap -layout gb
-# set GB as default keyboard map in sessions 
-echo '@setxkbmap -layout gb' | sudo tee -a /etc/xdg/lxsession/Lubuntu/autostart
+LUBUILD_LOCALE_LAYOUT=gb
+LUBUILD_LOCALE_LANGUAGE=en_GB
+
+# set keyboard map
+setxkbmap -layout $LUBUILD_LOCALE_LAYOUT
+# set default keyboard map in sessions 
+echo '@setxkbmap -layout $LUBUILD_LOCALE_LAYOUT' | sudo tee -a /etc/xdg/lxsession/Lubuntu/autostart
 # credit > http://askubuntu.com/questions/102344/switching-keyboard-layouts-in-lubuntu-11-10
 
 # Add the rest of the language support
-sudo apt-get -y install `check-language-support -l en_GB`
+sudo apt-get -y install `check-language-support -l $LUBUILD_LOCALE_LANGUAGE`
 # credit http://askubuntu.com/a/476719
 
-# ensure that OpenOffice recognises the en_GB thesaurus inside mythes-en-us
+# ensure that OpenOffice recognises the language thesaurus inside mythes-en-us
 cd /usr/share/mythes/
-sudo ln -s th_en_US_v2.idx th_en_GB_v2.idx
-sudo ln -s th_en_US_v2.dat th_en_GB_v2.dat
+sudo ln -s th_en_US_v2.idx th_$LUBUILD_LOCALE_LANGUAGE_v2.idx
+sudo ln -s th_en_US_v2.dat th_$LUBUILD_LOCALE_LANGUAGE_v2.dat
 # credit http://askubuntu.com/questions/42850/
 
 
