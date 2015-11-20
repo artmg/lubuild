@@ -44,6 +44,13 @@ fi
 
 
 
+### exFAT support for 64GB SD cards
+if [[ "$(lsb_release -sr)" == "15.04" ]] ; then 
+  sudo apt-get install exfat-fuse exfat-utils ;
+fi
+
+
+
 ### This logic to only do this for HP Mini on 14.04 is not yet working, 
 # probably due to the space on the end of the model no
 
