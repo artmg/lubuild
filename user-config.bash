@@ -44,19 +44,20 @@ if [[ $LUBUILD_HARDWARE_TYPE_LAPTOP -eq TRUE ]] ; then (
 # Lubuntu's (LXDE's) LXRandR gui allows you to set a specific configuration,
 # but not toggle / cycle between alternative modes you choose to predefine
 #
-# try using ARandR ?
+# Use ARandR scripts instead... 
 # help - http://christian.amsuess.com/tools/arandr/
 # proc - http://askubuntu.com/questions/162028/how-to-use-shortcuts-to-switch-between-displays-in-lxde
 
-# This installs the GUI
-sudo apt-get install -y arandr
+if [[ $LUBUILD_HARDWARE_TYPE_LAPTOP -eq TRUE ] && [ $LUBUILD_HARDWARE_TYPE_EXTERNAL_SCREEN -eq TRUE ]] ; then ( 
+# This installs the GUI and the notify-send util the script uses for notification bubbles / toasts
+sudo apt-get install -y arandr libnotify-bin
 
 # This sets up the script to cycle modes
 mkdir -P ~/.screenlayout
 cd ~/.screenlayout
-wget https://github.com/bmnz/arandr-cycle/raw/master/arandr-cycle.sh .arandr-cycle.sh
-# the script uses notify-send from this package...
-sudo apt-get install -y libnotify-bin
+wget https://github.com/bmnz/arandr-cycle/raw/master/arandr-cycle.sh ./.arandr-cycle.sh
+mv arandr-cycle.sh .arandr-cycle.sh
+chmod +x .arandr-cycle.sh
 
 # This sets up the Function key as Win-P 
 cp ~/.config/openbox/lubuntu-rc.xml{,.`date +%y%m%d`}
@@ -82,11 +83,16 @@ cat ~/.config/openbox/lubuntu-rc.xml.`date +%y%m%d` \
 
 openbox --reconfigure
 
-# Now use the GUI to save your preferred modes
+# Now use the GUI to save one file for each of your preferred modes
 arandr
 
+) ; fi
 
-# the solution below works well to toggle between two modes
+# NB: If mouse pointer does not appear when you switch external monitor on then try the following:
+# EITHER re-awaken X by switching consoles - CTRL-ALT-F1 then CTRL-ALT-F7 - credit https://bbs.archlinux.org/viewtopic.php?pid=648767#p648767
+# OR suspend and resume
+
+
 # for alternative scripts that can cycle between 3 or more modes, 
 # see... (in ascending order of complexity)
 # http://crunchbang.org/forums/viewtopic.php?id=10182
@@ -94,74 +100,6 @@ arandr
 # https://gist.github.com/davidfraser/4131369
 # https://awesome.naquadah.org/wiki/Using_Multiple_Screens
 
-### MANUALLY ***** check screen IDs
-# 
-# Set all connected monitors to automatic (full native) resolution
-xrandr -q | grep " connected " | while read first rest ; do
-xrandr --output $first --auto
-done
-
-# command to identify internal and external monitors
-xrandr  -q|grep connected
-# e.g.
-# LVDS connected 1366x768+0+0 (normal left inverted right x axis y axis) 256mm x 144mm
-# HDMI-0 connected 1920x1080+0+0 (normal left inverted right x axis y axis) 509mm x 286mm
-# VGA-0 disconnected (normal left inverted right x axis y axis)
-
-#
-# ensure there are no trailing spaces after \\
-#
-if [[ $LUBUILD_HARDWARE_TYPE_LAPTOP -eq TRUE ] && [ $LUBUILD_HARDWARE_TYPE_EXTERNAL_SCREEN -eq TRUE ]] ; then ( 
-mkdir -p ~/bin
-cat <<-EOF! > ~/bin/toggle_external_monitor.sh
-#!/bin/bash
-# credit - http://crunchbang.org/forums/viewtopic.php?id=28846
-   INTERNAL_DEVICE=LVDS \\
-&& EXTERNAL_DEVICE=HDMI-0 \\
-&& EXTERNAL_IN_USE="HDMI.*1920x1080+0+0" \\
-&& xrandr | grep -q "\$EXTERNAL_IN_USE"  \\
-&& xrandr --output \$INTERNAL_DEVICE --auto --output \$EXTERNAL_DEVICE --off \\
-|| xrandr --output \$INTERNAL_DEVICE --auto --output \$EXTERNAL_DEVICE --auto
-# multiway options 
-# credit - http://www.thinkwiki.org/wiki/Sample_Fn-F7_script
-EOF!
-
-chmod +x ~/bin/toggle_external_monitor.sh
-
-# insert section.....
-#  <keybind key="W-p">
-#    <action name="Execute">
-#      <command>~/bin/toggle_external_monitor.sh</command>
-#    </action>
-#  </keybind>
-cp ~/.config/openbox/lubuntu-rc.xml{,.`date +%y%m%d`}
-
-cat ~/.config/openbox/lubuntu-rc.xml.`date +%y%m%d` \
-| xmlstarlet ed \
- -s "/_:openbox_config/_:keyboard" \
-   -t elem -n keybind  \
-| xmlstarlet ed \
- -i "/_:openbox_config/_:keyboard/_:keybind[last()]" \
-   -t attr -n key -v W-p \
- -s "/_:openbox_config/_:keyboard/_:keybind[last()]" \
-   -t elem -n action  \
-| xmlstarlet ed \
- -i "/_:openbox_config/_:keyboard/_:keybind[last()]/_:action" \
-   -t attr -n name -v Execute \
- -s "/_:openbox_config/_:keyboard/_:keybind[last()]/_:action" \
-   -t elem -n command  \
-| xmlstarlet ed \
- -s "/_:openbox_config/_:keyboard/_:keybind[last()]/_:action/_:command" \
-   -t text -n text -v "~/bin/toggle_external_monitor.sh" \
-> ~/.config/openbox/lubuntu-rc.xml
-
-openbox --reconfigure
-
-) ; fi
-
-# NB: If mouse pointer does not appear when you switch external monitor on then try the following:
-# EITHER re-awaken X by switching consoles - CTRL-ALT-F1 then CTRL-ALT-F7 - credit https://bbs.archlinux.org/viewtopic.php?pid=648767#p648767
-# OR suspend and resume
 ##############################################
 
 
