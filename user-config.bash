@@ -169,11 +169,3 @@ fi
 #  $HOME/.config/lxpanel/Lubuntu/config ;
 #fi
 
-
-
-### BOOKMARKS #######################
-cp ~/.gtk-bookmarks{,.`date +%y%m%d`}
-# Add local music folder to bookmarks
-echo file:///media/lubuntu/Default/Documents%20and%20Settings/UserName/Local%20Settings/Personal/Music Music.COPY | tee -a ~/.gtk-bookmarks
-
-
