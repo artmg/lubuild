@@ -1,4 +1,4 @@
-#!/bin/bash
+f#!/bin/bash
 
 # request sudo password before getting stuck in...
 sudo echo
@@ -15,11 +15,13 @@ sudo add-apt-repository -y "deb http://archive.canonical.com/ $(lsb_release -sc)
 # help > https://help.ubuntu.com/community/Repositories/CommandLine
 
 ### PPAs ###
+# NB: do NOT add comments to the end of apt-get commands, it may produce errors
 # sudo add-apt-repository -y ppa:vincent-c/nevernote                # NixNote2
 # sudo add-apt-repository -y ppa:freecad-maintainers/freecad-stable # FreeCAD (newer than Ubuntu version)
 # sudo add-apt-repository -y ppa:basic256/basic256                  # basic256
-sudo add-apt-repository -y ppa:recoll-backports/recoll-1.15-on    # recoll stable
-
+# recoll stable
+sudo add-apt-repository -y ppa:recoll-backports/recoll-1.15-on
+f
 # if this distros does NOT have chrome sources already...
 if [ ! -f /etc/apt/sources.list.d/google-chrome.list ]; then (
   # Google Key - https://www.google.com/linuxrepositories/
@@ -39,7 +41,8 @@ sudo apt-get update
 
 ### Clean up OS install
 
-sudo apt-get remove -y unity-lens-shopping  # prevent purchasable items appearing in software list
+# prevent purchasable items appearing in software list
+sudo apt-get remove -y unity-lens-shopping  
 # credit > http://www.omgubuntu.co.uk/2012/10/10-things-to-do-after-installing-ubuntu-12-10
 
 # avoid this 'dependendency only' package being removed when a dependee is removed
@@ -49,7 +52,8 @@ fi
 # credit - https://help.ubuntu.com/community/Lubuntu/Documentation/RemoveLubuntuDesktop
 
 # assuming the LibreOffice suite is installed, remove the lighter weight alternatives
-sudo apt-get remove -y abiword		# remove abiword to avoid doc corruption issues
+# remove abiword to avoid doc corruption issues
+sudo apt-get remove -y abiword
 # sudo apt-get remove -y abiword abiword-common
 ## or will this do it all?
 sudo apt-get remove -y gnumeric
@@ -86,6 +90,8 @@ sudo apt-get install `echo ${DESKTOP_SESSION,}`-restricted-extras -y
 
 #! / bin / bash
 cat > ./package_list <<EOF
+
+# NB: keep big apps on separate lines to avoid sudo credentials timing out
 
 ######## ALL MACHINES ############
 
@@ -150,16 +156,22 @@ lilypond     # notation engraver
 
 ########### General purpose ###############
 
-gimp inkscape dia-gnome scribus # Design
+# Office
 libreoffice		# office - prefer to replace abiword - should we remove gnumeric too?
 mythes-en-us  # english thesaurus including GB 
 
+# Design
+gimp          # edit images
+inkscape      # create vector graphics
+dia-gnome     # create technical diagrams
+scribus
 
 ############## Specialist stuff ################
 
 thunderbird  # PIM that works well on Lubuntu AND is available on PortableApps.com, 
 vym          # mind-map / notes
-# gnucash     # Busines app
+# gnucash    # Busines app
+# calibre    # convert docs to AZW kindle format for USB download () - on demand as qt5 still needs many many libs
 
 ### Advanced Design ###
 freecad freecad-doc      # 3D parametric modeler (CAD)
@@ -169,7 +181,7 @@ xmlstarlet  # NEEDED by Lubuild for changing XML config files
 geany       # syntax highlighting editor - # alternatives: gedit (ubuntu default), sublime text??,  xemacs21 (no app menu shortcut), vim (_really_?), gVim?
 baobab      # graphical disk usage analyser
 workrave    # encourage regular breaks for posture and eyes 
-keepassx
+keepassx    # store credentials 
 meld        # file and folder diffs...
  #  alternatives: xxdiff - also kdiff3 (floss) + diffMerge (free) are Win/Nux - http://askubuntu.com/questions/312604/how-do-i-install-xxdiff-in-13-04 
 recoll      # filesystem search engine
@@ -188,7 +200,7 @@ transmission			      # torrent client
 gftp					          # file transfer client
 skype                   # back in the repos since 13.10 - no longer need manual script
 
-# derprecated
+# deprecated
 # flashplugin-installer	 # Adobe Flash plugin for browsers - alternatives are swfdec-gnome or gnash
 # nixnote                  ### PPA required ### vincent-c/nevernote
 #     alternatively use EverNote Windows client under WINE, and at v5 it is reasonably stable
@@ -196,7 +208,6 @@ skype                   # back in the repos since 13.10 - no longer need manual 
 ### conversion tools ###
 pandoc	      # convert documents between markup formats # sample command # pandoc -f markdown -t html -o output.htm input.txt
 readpst       # convert Outlook PST mailbox file into VCards and other files containing the data from each mailbox folder # consider also pst-utils?
-calibre	  	  # convert docs to AZW kindle format for USB download
 ocrfeeder     # image to text - includes tesseract engine
 pdftk         # manipulate PDF files (e.g. split, combine) as alternative to installed GhostScript # see http://askubuntu.com/questions/195037/is-there-a-tool-to-split-a-book-saved-as-a-single-pdf-into-one-pdf-per-chapter/195044#195044
 pdfshuffler   # GUI for PDF page manipulation; PdfMod is more feature-rich but needs Mono; LibreOffice-PdfImport is already installed
@@ -210,6 +221,7 @@ poppler-utils # includes pdfimages to extract image files from PDFs
 ### sub-systems ###
 python					# code execution
 wine            # windows emulation
+
 android-tools-adb android-tools-fastboot ### Android Tools (now in main repo - was ppa:nilarimogard/webupd8)
 
 # see lubuild manual-apps-per-user.bash for more - https://github.com/artmg/lubuild/blob/master/manual-apps-per-user.bash
