@@ -21,7 +21,7 @@ sudo add-apt-repository -y "deb http://archive.canonical.com/ $(lsb_release -sc)
 # sudo add-apt-repository -y ppa:basic256/basic256                  # basic256
 # recoll stable
 sudo add-apt-repository -y ppa:recoll-backports/recoll-1.15-on
-f
+
 # if this distros does NOT have chrome sources already...
 if [ ! -f /etc/apt/sources.list.d/google-chrome.list ]; then (
   # Google Key - https://www.google.com/linuxrepositories/
