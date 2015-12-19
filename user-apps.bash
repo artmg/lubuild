@@ -234,7 +234,7 @@ ln -s /media/Windows $WINEPREFIX/dosdevices/w:
 sudo apt-get update
 sudo apt-get install -y antiword xsltproc catdoc unrtf libimage-exiftool-perl python-mutagen aspell
 
-cat > $HOME/.recoll/recoll.conf <EOF
+cat > $HOME/.recoll/recoll.conf <<EOF
 # This is the indexing configuration for the current user
 # These values override the system-wide config files in:
 #   /usr/share/recoll/examples
