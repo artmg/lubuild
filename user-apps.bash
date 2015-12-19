@@ -223,59 +223,35 @@ ln -s /media/Windows $WINEPREFIX/dosdevices/w:
 # env WINEPREFIX=/home/username/.wine32 wine "
 #* don't choose an icon
 
-# sample Start Menu shortcut / launcher
-mkdir -p ~/.local/share/applications
-cat > ~/.local/share/applications/wine-keepass.desktop<<EOF!
-[Desktop Entry]
-Name=Wine KeePass
-Comment=KeePass with wine 32
-Exec=env WINEPREFIX=$HOME/.wine32 wine $HOME/.wine32/dosdevices/w:/PortableApps/KeePassPortable/KeePassPortable.exe
-Icon=password
-Categories=Wine
-Type=Application
-EOF!
 
 
-### KeePass samples with Wine ###
-# This is the basic 'run keepass' command 
-# env WINEPREFIX=/home/amg/.wine32 wine /home/amg/.wine32/dosdevices/w:/PortableApps/KeePassPortable/KeePassPortable.exe &
+#####################################
+### RECOLL                        ### 
+#####################################
 
-# database file is first argument, no switch | keyfile is -keyfile: if no password | keyfile is -preselect: if password required
-# help - http://keepass.info/help/base/cmdline.html
- 
-# prefix unix root with Z: and either...
-# change / to \ and single quote embed OR
-# change / to \\ and double quote embed
-# credit - http://forum.winehq.org/viewtopic.php?p=57289#p57338
-# also...
-# help - http://wiki.winehq.org/FAQ#head-3b297df7a5411abe2b8d37fead01a2b8edc21619
-# help - http://www.winehq.org/docs/wine
+# add helpers - credit - http://packages.ubuntu.com/xenial/recoll
+# help - http://www.lesbonscomptes.com/recoll/features.html#doctypes
+sudo apt-get update
+sudo apt-get install -y antiword xsltproc catdoc unrtf libimage-exiftool-perl python-mutagen aspell
 
-# run Keepass with Wine environment
-# open database ...
-#    /media/amg/xxxxxxxx
-# use keyfile ...
-#    /media/amg/yyyyyyyy
-# do not wait for password
-env WINEPREFIX=/home/amg/.wine32 wine \
-/home/amg/.wine32/dosdevices/w:/PortableApps/KeePassPortable/KeePassPortable.exe \
-'Z:\media\amg\xxxxxxxx\KeePass.Database.kdb' \
--keyfile:'Z:\media\amg\yyyyyyyy\KeePass.keyfile' &
+cat > $HOME/.recoll/recoll.conf <EOF
+# This is the indexing configuration for the current user
+# These values override the system-wide config files in:
+#   /usr/share/recoll/examples
+# help - http://www.lesbonscomptes.com/recoll/usermanual/RCL.INSTALL.CONFIG.html#RCL.INSTALL.CONFIG.RECOLLCONF.FILES
+
+topdirs = ~ \
 
 
+# these try to ignore the bulk of the hidden .* folder trees under home
 
+skippedPaths = \
+~/. \
+~/.cache \
+~/.config \
+~/.dropbox \
+~/.local \
+~/.mozilla \
+~/.wine
 
-# If laptop will use external screen then create shortcut to turn off external screen if not done before unplugging
-if [[ $LUBUILD_HARDWARE_TYPE_LAPTOP -eq TRUE ] && [ $LUBUILD_HARDWARE_TYPE_EXTERNAL_SCREEN -eq TRUE ]] ; then (
-mkdir -p ~/Desktop
-cat > ~/Desktop/laptop-monitor-only.desktop<<EOF!
-[Desktop Entry]
-Name=Laptop Monitor
-Comment=turn off external monitors
-Exec=xrandr --output LVDS --auto --output HDMI-0 --off
-Icon=display
-Terminal=true
-Type=Application
-EOF!
-) ; fi
-
+EOF
