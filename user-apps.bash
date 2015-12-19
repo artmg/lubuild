@@ -255,3 +255,55 @@ skippedPaths = \
 ~/.wine
 
 EOF
+
+
+
+#### set up multiple indexes for Removeable Media ####
+
+cd <my container root folder> ###### do this for each offline container you want to index
+
+
+mkdir -P .recoll
+echo > .recoll/recoll.conf <<EOF
+# This is the Recoll configuration file for the index for this offline container
+
+##### how to use multiple indexes for Removeable Media #####
+
+# help https://bitbucket.org/medoc/recoll/wiki/MultipleIndexes
+# * Create separate index folder
+# * Create config file
+# * Build index
+# * use menu Preferences / External Index to include this index when searching
+
+# user guide Creating -  http://www.lesbonscomptes.com/recoll/usermanual/RCL.INDEXING.CONFIG.html
+# user guide Using - http://www.lesbonscomptes.com/recoll/usermanual/usermanual.html#RCL.SEARCH.GUI.MULTIDB
+# sample scripts http://www.linuxplanet.com/linuxplanet/tutorials/6512/3
+
+# Help on Config files - http://www.lesbonscomptes.com/recoll/usermanual/RCL.INSTALL.CONFIG.html#RCL.INSTALL.CONFIG.RECOLLCONF.FILES
+# Advanced options - http://www.lesbonscomptes.com/recoll/usermanual/usermanual.html#RCL.INSTALL.CONFIG.RECOLLCONF
+
+topdirs  =  $PWD
+skippedNames  =  .recoll*  .Trash*  z_DONE
+
+EOF
+
+##### refresh script in each root #####
+echo > refresh_me.sh <<EOF
+#!/bin/bash
+
+# set $DIR to folder containing current script
+# credit - http://stackoverflow.com/a/246128
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+
+recollindex -c $DIR/.recoll
+EOF
+chmod +x refresh_me.sh
+
+##### Build the index now #####
+
+recollindex -c .recoll
+
+
+
+
+# # # # # # END # # # # # # 
