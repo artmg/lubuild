@@ -22,6 +22,8 @@ sudo adduser --encrypt-home --gecos $DISPLAYNAME,,, $NEWUSER
 
 ### User rights  via group membership
 sudo usermod -a -G audio,video,plugdev,netdev,fuse,lpadmin,scanner $NEWUSER
+# separated for when it does not exist
+sudo usermod -a -G fuse $NEWUSER
 
 
 
