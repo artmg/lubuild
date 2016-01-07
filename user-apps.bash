@@ -45,6 +45,7 @@ cat > ~/.local/share/applications/dropbox.desktop<<EOF!
 Name=Dropbox
 Comment=Share your files between computers
 Exec=$HOME/$LUBUILD_DROPBOX_FOLDER/.dropbox-dist/dropboxd
+#Icon should be $HOME/$LUBUILD_DROPBOX_FOLDER/.dropbox-dist/dropbox-lnx.x86_64-x.yy.z/images/emblems/emblem-dropbox-syncing.png
 Icon=$HOME/$LUBUILD_DROPBOX_FOLDER/.dropbox-dist/images/emblems/emblem-dropbox-syncing.icon
 Categories=Network
 Type=Application
@@ -88,14 +89,22 @@ if [[ $LUBUILD_DROPBOX_AUTOSTART -eq TRUE ]] ; then (
 # https://whatbox.ca/wiki/Dropbox
 
 
-## help > http://www.dropboxwiki.com/Using_Dropbox_CLI
+## in case of issues with Ubuntu not showing panel icon try
+# sudo apt-get install libappindicator1
+## credit - http://askubuntu.com/a/359224
+## or see - http://itsfoss.com/solve-dropbox-icon-ubuntu-1310/
+
+
+### Official Dropbox CLI
+## help - http://www.dropboxwiki.com/tips-and-tricks/using-the-official-dropbox-command-line-interface-cli
+## installing - http://www.dropboxwiki.com/tips-and-tricks/install-dropbox-in-an-entirely-text-based-linux-environment
+## old help - http://www.dropboxwiki.com/Using_Dropbox_CLI
+## also - http://zeblog.co/?p=682
 #mkdir -p ~/bin
 #wget -O ~/bin/dropbox.py "http://www.dropbox.com/download?dl=packages/dropbox.py"
 #chmod +x ~/bin/dropbox.py
 ## ~/bin/dropbox.py help
 
-# in case of issues with Ubuntu not showing panel icon see
-# workaround > http://itsfoss.com/solve-dropbox-icon-ubuntu-1310/
 
 ## alternative (still requires manual config) install from repository
 #sudo apt-get install nautilus-dropbox -y
