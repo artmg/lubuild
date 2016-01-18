@@ -29,7 +29,7 @@ sudo dhclient -v $CONN
 
 # display details of lease(s) obtained
 cat /var/lib/dhcp/dhclient.leases
-`
+```
 
 ### IP Addressing issues
 
