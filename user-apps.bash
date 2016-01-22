@@ -284,15 +284,15 @@ echo > .recoll/recoll.conf <<EOF
 # * Build index
 # * use menu Preferences / External Index to include this index when searching
 
-# user guide Creating -  http://www.lesbonscomptes.com/recoll/usermanual/RCL.INDEXING.CONFIG.html
-# user guide Using - http://www.lesbonscomptes.com/recoll/usermanual/usermanual.html#RCL.SEARCH.GUI.MULTIDB
+# user guide Creating -  http://www.lesbonscomptes.com/recoll/usermanual/#RCL.INDEXING.CONFIG
+# user guide Using - http://www.lesbonscomptes.com/recoll/usermanual/#RCL.SEARCH.GUI.MULTIDB
 # sample scripts http://www.linuxplanet.com/linuxplanet/tutorials/6512/3
 
-# Help on Config files - http://www.lesbonscomptes.com/recoll/usermanual/RCL.INSTALL.CONFIG.html#RCL.INSTALL.CONFIG.RECOLLCONF.FILES
-# Advanced options - http://www.lesbonscomptes.com/recoll/usermanual/usermanual.html#RCL.INSTALL.CONFIG.RECOLLCONF
+# Help on Config files - http://www.lesbonscomptes.com/recoll/usermanual/#RCL.INSTALL.CONFIG.RECOLLCONF.FILES
+# Advanced options - http://www.lesbonscomptes.com/recoll/usermanual/#RCL.INSTALL.CONFIG.RECOLLCONF
 
 topdirs  =  $PWD
-skippedNames  =  .recoll*  .Trash*  z_DONE
+skippedNames  =  .recoll*  .Trash*  z_History
 
 EOF
 
