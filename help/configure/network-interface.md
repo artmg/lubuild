@@ -37,11 +37,11 @@ If you are having addressing issues, ARP may be able to help you diagnose. See
 [http://www.tummy.com/articles/networking-basics-how-arp-works/]
 
 Or perhaps check using an ARP scan
-
- sudo arp-scan -l -I eth0
- sudo arp-scan 192.168.1.0/24
- sudo apr-scan --arpspa=192.168.1.0/24 --destaddr=MAC
-
+```
+sudo arp-scan -l -I $INTERFACE
+sudo arp-scan 192.168.1.0/24
+sudo arp-scan --arpspa=192.168.1.0/24 --destaddr=MAC
+```
 #### temporary manual IP address
 
 should we use ifconfig to add and change config (see [http://www.tecmint.com/ifconfig-command-examples/]) instead of **ip** ?
