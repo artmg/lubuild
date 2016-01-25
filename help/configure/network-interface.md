@@ -11,21 +11,21 @@ check the [#Discovery] section a little further down.
 ```
 # other examples include wlan0 - see ifconfig for a list
 
-CONN=eth0
+INTERFACE=eth0
 
 # display current settings
-ifconfig $CONN
+ifconfig $INTERFACE
 
 # renew IP address on wired connection
-sudo dhclient -r $CONN
-sudo dhclient $CONN
-ifconfig $CONN
+sudo dhclient -r $INTERFACE
+sudo dhclient $INTERFACE
+ifconfig $INTERFACE
 ```
 
 #### Troubleshooting
 ```
 # show details of dialog with DHCP server whilst requesting lease
-sudo dhclient -v $CONN
+sudo dhclient -v $INTERFACE
 
 # display details of lease(s) obtained
 cat /var/lib/dhcp/dhclient.leases
