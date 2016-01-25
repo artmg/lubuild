@@ -17,7 +17,8 @@ traceroute host.domain.tld
 
 ### mtr
 # mtr-tiny is a console app using ncurses for a tabular display, but without needing too many dependencies
-sudo apt-get install mtr-tiny
+# should be installed by default on Lubuntu
+# sudo apt-get install mtr-tiny
 
 mtr -rw host.domain.tld
 
