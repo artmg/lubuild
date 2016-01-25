@@ -1,5 +1,5 @@
 
-## Configure inteface
+## Configure interface
 
 If you're trying to make a direct connection to a single device, this should help. 
 Otherwise, if you want to find out more about what is on your local network, 
