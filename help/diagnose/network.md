@@ -20,8 +20,11 @@ traceroute host.domain.tld
 # should be installed by default on Lubuntu
 # sudo apt-get install mtr-tiny
 
+# standard 'linear' console output
 mtr -rw host.domain.tld
 
+# interactive tabular output with quicker updates
+mtr host.domain.tld
 ```
 
 ## Discovery
