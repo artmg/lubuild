@@ -16,11 +16,13 @@ sudo add-apt-repository -y "deb http://archive.canonical.com/ $(lsb_release -sc)
 
 ### PPAs ###
 # NB: do NOT add comments to the end of apt-get commands, it may produce errors
+# recoll stable
+sudo add-apt-repository -y ppa:recoll-backports/recoll-1.15-on
+# repos now deprectated or not required
 # sudo add-apt-repository -y ppa:vincent-c/nevernote                # NixNote2
 # sudo add-apt-repository -y ppa:freecad-maintainers/freecad-stable # FreeCAD (newer than Ubuntu version)
 # sudo add-apt-repository -y ppa:basic256/basic256                  # basic256
-# recoll stable
-sudo add-apt-repository -y ppa:recoll-backports/recoll-1.15-on
+
 
 # if this distros does NOT have chrome sources already...
 if [ ! -f /etc/apt/sources.list.d/google-chrome.list ]; then (
@@ -86,8 +88,6 @@ sudo apt-get install `echo ${DESKTOP_SESSION,}`-restricted-extras -y
 ### *** *** APPLICATIONS *** *** ###
 ####################################
 
-# Supersedes list in HTML doc section - Applications - General Apps
-
 #! / bin / bash
 cat > ./package_list <<EOF
 
@@ -102,34 +102,6 @@ pulseaudio	                 # should be in by default
 pavucontrol	                 # pulse volume control
 # pulseaudio-module-bluetooth # if you want to add Bluetooth Audio Sink
 guvcview	# support for most webcams
-
-
-### Alternative music players ###
-
-# on lubuntu default player is Audacious
-# Audacious works but not great interface for finding tracks in big library
-#
-# consider alternative like:
-#
-# VLC might be getting into album art browsing
-# vlc browser-plugin-vlc vlc-plugin-fluidsynth
-## vlc-plugin-pulse to use pulse instead of ALSA is now automatically included; browser ?? not sure why! ;  
-## vlc-plugin-fluidsynth: if you need to play MIDI files, includes the large but high quality soundfont fluid-soundfont-gm 
-## libavcodec-extra # streaming codecs only if required;
-#
-# Clementine has strong fan base and rich features
-#
-# LXMusic might be too simple as well
-# Banshee does it out of the box
-# Musique is lightweight and QT-based
-# did YaRock continue developing?
-# Rhythmbox is commonly used
-## Cover Art is still a Third party plug in:
-### sudo add-apt-repository ppa:fossfreedom/rhythmbox-plugins
-### sudo apt-get update && sudo apt-get install rhythmbox-plugin-coverart-browser
-## can preset library using gsettings set org/gnome/rhythmbox/rhythmdb locations or similar
-## https://help.ubuntu.com/community/Rhythmbox#Multiple_Library_Directories
-
 
 ######## Networking ############
 
@@ -183,7 +155,6 @@ baobab      # graphical disk usage analyser
 workrave    # encourage regular breaks for posture and eyes 
 keepassx    # store credentials 
 meld        # file and folder diffs...
- #  alternatives: xxdiff - also kdiff3 (floss) + diffMerge (free) are Win/Nux - http://askubuntu.com/questions/312604/how-do-i-install-xxdiff-in-13-04 
 recoll      # filesystem search engine
 # now using mkusb  (instead of)  unetbootin  # more reliable at installing bootloader than usb-creator-gtk
 
@@ -209,14 +180,9 @@ skype                   # back in the repos since 13.10 - no longer need manual 
 pandoc	      # convert documents between markup formats # sample command # pandoc -f markdown -t html -o output.htm input.txt
 readpst       # convert Outlook PST mailbox file into VCards and other files containing the data from each mailbox folder # consider also pst-utils?
 ocrfeeder     # image to text - includes tesseract engine
-pdftk         # manipulate PDF files (e.g. split, combine) as alternative to installed GhostScript # see http://askubuntu.com/questions/195037/is-there-a-tool-to-split-a-book-saved-as-a-single-pdf-into-one-pdf-per-chapter/195044#195044
-pdfshuffler   # GUI for PDF page manipulation; PdfMod is more feature-rich but needs Mono; LibreOffice-PdfImport is already installed
+pdftk         # manipulate PDF files (e.g. split, combine)
+pdfshuffler   # GUI for PDF page manipulation; 
 poppler-utils # includes pdfimages to extract image files from PDFs
-
-# txt2tags
-# alternative GUI for editing local Contacts?
-# What about gVim with vCard syntax
-# will OpenContacts work on Wine? - http://www.fonlow.com/opencontacts/Developer/BigPictures.htm
 
 ### sub-systems ###
 python					# code execution
@@ -231,17 +197,10 @@ android-tools-adb android-tools-fastboot ### Android Tools (now in main repo - w
 
 EOF
 
-# tee the install to log file
+# install the listed packages, 
+# ignoring blanks and inline comments
+# and tee the output to a log file
 cat package_list | while read line ; do line=${line%%\#*} ; [ "$line" ] && echo && echo ======== $line ======== >> package.log && sudo apt-get install -y $line | tee -a package.log ; done 
-# was 
-#cat package_list | while read line ; do line=${line%%\#*} ; [ "$line" ] && sudo apt-get install -y $line | tee -a package.log ; done 
-#cat package_list | while read line ; do line=${line%%\#*} ; [ "$line" ] && sudo apt-get install -y $line ; done 
-#cat package_list | while read line ; do line=${line%%\#*} ; [ "$line" ] && echo $line ; done 
-# credit - http://dbaspot.com/shell/406732-ignoring-comments-blank-lines-data-file.html#post1357732
-# previously did not ignore blanks or handle inline comments....
-# while read -r line; do [[ $line = \#* ]] && continue; sudo apt-get install -y $line; done < package_list
-# while read -r line; do [[ $line = \#* ]] && continue; echo -e "$line"; done < package_list
-# credit > http://mywiki.wooledge.org/BashFAQ/001
 
 
 ################################
