@@ -23,6 +23,10 @@
 # and check with 
 # nmcli general   # or simply    nmcli g
 #
+## if nmcli n on does not bring it out of sleep (check with nmcli -f state g)
+## there appears to be no way with nmcli to turn STATE asleep into anything else
+## so just restart the service
+# sudo service network-manager restart
 if [[ $LUBUILD_HARDWARE_TYPE_LAPTOP -eq TRUE ]] ; then ( 
 sudo tee /usr/share/applications/wake-up-wifi.desktop cat <<EOF!
 [Desktop Entry]
@@ -34,11 +38,6 @@ Categories=System;
 Icon=nm-signal-50
 EOF!
 ) ; fi
-## alternative
-## https://bugs.launchpad.net/ubuntu/+source/systemd-shim/+bug/1184262
-#sudo restart network-manager
-## or   sudo killall NetworkManager
-## and this article may have a bugfix to help
 ###############################################
 
 
