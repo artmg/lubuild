@@ -78,4 +78,9 @@ If you later need to delete the temporary address use
 
 see also [https://wiki.archlinux.org/index.php/Wireless_network_configuration#Troubleshooting]
 
+### change DNS order
+
+sudo leafpad /etc/nsswitch.conf
+hosts:          files dns mdns4_minimal mdns4 [NOTFOUND=return]
+# help - http://manpages.ubuntu.com/manpages/wily/man5/nsswitch.conf.5.html
 

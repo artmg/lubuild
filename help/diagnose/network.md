@@ -1,8 +1,16 @@
 # Lubuild / Help / Diagnose / Network
 
+For some background on network interfaces and utilities you may find [https://wiki.openwrt.org/doc/networking/network.interfaces] interesting - its NOT specific to Lubuntu, but practical and applicable nonetheless. 
+
 ## Connectivity
 
 ```
+HOST_NAME=host.domain.tld
+
+# tracepath - installed in lubuntu - by default ?
+tracepath $HOST_NAME
+
+# other tools
 # Choose between traceroute and mtr
 # * introduction to the two - https://www.digitalocean.com/community/tutorials/how-to-use-traceroute-and-mtr-to-diagnose-network-issues
 # * one professional's view - https://blog.thousandeyes.com/caveats-of-popular-network-tools-traceroute/
@@ -13,7 +21,7 @@
 # not installed by default on Lubuntu
 sudo apt-get install traceroute
 
-traceroute host.domain.tld
+traceroute $HOST_NAME
 
 ### mtr
 # mtr-tiny is a console app using ncurses for a tabular display, but without needing too many dependencies
@@ -21,11 +29,111 @@ traceroute host.domain.tld
 # sudo apt-get install mtr-tiny
 
 # standard 'linear' console output
-mtr -rw host.domain.tld
+mtr -rw $HOST_NAME
 
 # interactive tabular output with quicker updates
-mtr host.domain.tld
+mtr $HOST_NAME
 ```
+
+## Names and Addresses
+
+
+```
+### DHCP addressing
+
+#### All interfaces
+# list of interfaces
+nmcli dev
+
+# details of each interface
+nmcli dev show
+
+# the next two commands look better on a wider console
+# display the interfaces available
+ip link show
+
+# show the amount of traffic that has passed through each interface
+cat /proc/net/dev
+
+# check if an IP address is assigned to your interface
+ip addr
+# ifconfig # works but is deprecated in favour of ip addr
+
+# see if the interface has any manually assigned parameters
+cat /etc/network/interfaces
+
+# display details of lease(s) obtained
+cat /var/lib/dhcp/dhclient.leases
+
+# /var/lib/dh* 
+# no longer seems to hold anything useful
+
+# dhclient
+# doesn't do much on its own - see 
+
+#### Renew DHCP address
+
+# when renewing DHCP, try purging locally cached lease file
+sudo dhclient -r -v && sudo rm /var/lib/dhcp/dhclient.* ; sudo dhclient -v
+# credit - http://askubuntu.com/a/431385
+# if you're still having issues, check the lease has been removed from the DHCP server too
+
+
+#### Specific interface
+
+INTERFACE=eth0
+
+# display current settings
+nmcli dev show $INTERFACE
+# nmcli dev list iface $INTERFACE - old syntax
+# ifconfig $INTERFACE - deprecated
+
+### DNS Resolution
+
+# By default, since around 12.04, NetworkManager has relied on a local DNS cache provided by
+# dnsmasq running on localhost, which passes requests out when the host is not cached.
+# credit - http://askubuntu.com/a/368935
+# help - https://help.ubuntu.com/community/Dnsmasq
+# FAQ - http://thekelleys.org.uk/dnsmasq/docs/FAQ
+
+# Check the configuration
+cat /etc/NetworkManager/NetworkManager.conf
+# if you update this config (e.g. comment out dns=dnsmasq) then you need to restart nm afterwards
+sudo restart network-manager
+# To see this running check
+dig -x 127.0.0.1
+# and note the response comes from ;; SERVER: 127.0.1.1#53
+
+# check the (dynamically generated) resolver settings
+cat /run/resolvconf/resolv.conf 
+# check the order of name resolution
+cat /etc/nsswitch.conf
+# help - http://manpages.ubuntu.com/manpages/wily/man5/nsswitch.conf.5.html
+
+#### resolving
+
+# Advanced options for attempting to resolve names
+
+HOST_NAME=host.domain.tld
+
+# verbose host output
+host -v $HOST_NAME
+
+nslookup -debug $HOST_NAME
+
+# "domain information groper" from dnsutils (included by default in Lubuntu?)
+dig $HOST_NAME
+# use @a.b.c.d before other parameters to specify dns server
+# help - http://manpages.ubuntu.com/manpages/trusty/man1/dig.1.html
+# examples - http://www.tecmint.com/10-linux-dig-domain-information-groper-commands-to-query-dns/
+```
+
+## Wireless
+
+# iwconfig # deprecated in favour of iw
+iw dev
+
+
 
 ## Discovery
 
