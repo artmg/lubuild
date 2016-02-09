@@ -205,6 +205,32 @@ _ moved out from [https://github.com/artmg/lubuild/blob/master/app-installs.bash
     * can preset library using gsettings set org/gnome/rhythmbox/rhythmdb locations or similar
     * https://help.ubuntu.com/community/Rhythmbox#Multiple_Library_Directories
 
+#### playlist creation
+
+##### manual
+
+```
+## bash script to create M3U playlist files
+
+# create one M3U file for each subfolder of current, with sorted entries, using relative paths from current folder
+for D in *; do
+    if [ -d "${D}" ]; then
+        echo \#EXTM3U >"${D}.m3u";
+        find "${D}" -type f \( -iname \*.mp3 -o -iname \*.wma  -o -iname \*.ogg \) | sort >>"${D}.m3u";
+    fi
+done
+
+### old notes
+
+# various at...
+# http://linuxreviews.org/quicktips/playlists/index.html.en
+
+find . -name ‘*.mp3′ -execdir bash -c ‘file=”{}”; printf “%s\n” “${file##*/}” >> “${PWD##*/}.m3u”‘ \;
+# http://jgiffard.wordpress.com/2013/06/04/create-m3u-playlists-from-the-command-line-on-mac-os-x/
+
+find . -name "*.wma" -printf "%f\n" -or -name "*.mp3" -printf "%f\n"
+```
+
 
 ### CD ripping 
 
