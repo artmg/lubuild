@@ -26,7 +26,7 @@ sudo apt-get install poppler-utils
 
 pdfimages source-file-name.PDF /path/to/output/image-files
 # -j will write JPEGs as such
-
+```
 
 ### Reduce PDF filesize by reducing image quality
 
