@@ -110,6 +110,29 @@ cat /run/resolvconf/resolv.conf
 cat /etc/nsswitch.conf
 # help - http://manpages.ubuntu.com/manpages/wily/man5/nsswitch.conf.5.html
 
+# check what DNS server is set on your network interface(s)
+nmcli dev show | grep DNS
+
+#### dnsmasq
+
+# if your Network Manager conf (see above) uses dnsmasq then ...
+
+# flush dns cache
+/etc/init.d/dnsmasq restart
+# is this a generic alternative? - sudo /etc/init.d/dns-clean    (  add option:    start    ??)
+
+# temporarily switch name server by killing and hardcoding during restart
+killall dnsmasq
+dnsmasq --server=192.168.2.1
+# credit - http://askubuntu.com/a/682058
+
+
+#### browser dns cache
+
+# ?? chrome://net-internals/#dns  - Clear Host Cache
+
+
+
 #### resolving
 
 # Advanced options for attempting to resolve names
