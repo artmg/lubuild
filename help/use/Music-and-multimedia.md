@@ -2,7 +2,14 @@
 This page is all about **Using** Music and Other Multimedia files (such as Video) 
 and manipulating the files for the best size and markup (tags or metadata).
 
-For creating music or playing instruments see [Creating Music.md]
+See also:
+
+* [Creating Music.md]
+    * For creating music or playing instruments see 
+* 
+    * for ripping CDs DVDs Blu Rays etc
+*  [https://github.com/artmg/lubuild/blob/master/help/manipulate/films-and-songs.md]
+
 
 ### Music file conversion
 
@@ -231,56 +238,53 @@ find . -name ‘*.mp3′ -execdir bash -c ‘file=”{}”; printf “%s\n” �
 find . -name "*.wma" -printf "%f\n" -or -name "*.mp3" -printf "%f\n"
 ```
 
-
-### CD ripping 
-
-Options
-* Asunder is simple, does MP3s and is in repos - gets some +1s (like apparently a lot of rippers) uses CDparanoia under covers  
-* Sound Juicer is Ubuntu default but has had issues in past
-* abcde CLI that gets lots of +1s
-* RubyRipper well +1ed but not in repos
-
-#### asunder
-
-```
-sudo apt-get install -y asunder
-
-# Now installs into options when inserting CD  via MimeType=x-content/audio-cdda
-# sudo leafpad /usr/share/applications/asunder.desktop
-
-# Not sure about getting LAME working for MP3 output so use ogg
-
-# changes to config stored in ~/.config/asunder
-```
-
-* Destination Folder: choose Media.IN/Music.IN/RIP.IN
-* Create Playlist: No
-* Eject when finished: Yes
-* Album Directory (folder name): %A/%L
-* Music Filenames: %N %T
-* OGG Quality: 1 (or 6 for Oversize)
-
-
 ### DVD ripping 
 
-```
-# MakeMKV wraps to single file (nicely for XBMC) but no compression
-## see MKV Extractor Qt as GUI
-# Handbrake supports MKV too but excellent balance of quality and compression in h264
-# these also work with Blu Ray
-# AcidRip and dvd::rip are in multiverse 
-# help - https://help.ubuntu.com/community/RestrictedFormats/RippingDVDs
-sudo apt-get install dvdrip
-```
-for more details on how to Rip Blu Rays using MakeMKV and Handbrake, 
-see [Lub App Kodi.md]
+see [https://github.com/artmg/lubuild/blob/master/help/manipulate/films-and-songs.md]
+
+
+
+### uPNP discovery and clients
+
+Avahi discovery (_link to Support Network_) supports mDNS (tcp/udp 5353) and DNS-SD (like apple bonjour) but not SSDP. 
+Simple Service Discovery Protocol (tcp/udp1900) is how DNLA (over uPNP) advertises Service Types and Names using 
+NOTIFY HHTP to multicast groups.
+
+Note: this is about uPNP AV solutions, like DLNA, rather than UPnP Internet Gateway Device (IGD) port management.
+
+* Discovery is one function of Media Controllers
+    * upplay (qt-based) - in jfdockes PPA - http://lesbonscomptes.com/upplay/downloads.html
+    * gupnp-tools in ubuntu repos
+        * control point gupnp-av-cp 
+        * cli discovery - gssdp-discover
+    * (rather old) [uPNP-Inspector](http://coherence.beebits.net/wiki/UPnP-Inspector)
+
+* Media Renderers (players)
+    * local
+        * VLC
+        * Kodi
+        * Gnome Totem player (needs grilo plugin)
+        * upmpdcli - front end for MPD
+        * compere - may be old
+    * remote (i.e. may be connected to over network for rendering)
+        * Kodi
+        * ???
+        * NB: one Windows 10 there is no longer any built-in DLNA Renderer, and even WMP now comes without
+
+* Media Servers - some DNLA compliant uPNP server software:
+    * ReadyMedia (was miniDLNA) used by Volumio - see [Pi Volumio.md]
+    * [MediaTomb](https://help.ubuntu.com/community/MediaTomb)
+    * [Ps3MediaServer](https://help.ubuntu.com/community/Ps3MediaServer)
+
+* Further reading
+    * [http://lesbonscomptes.com/pages/homenet-audio.html]
+    * [http://elinux.org/UPnP]
+
 
 
 ### remote control ###
 
 #### candidates ####
-
-see also [Lub App Kodi.md]
 
 
 Android Apps:
@@ -322,6 +326,9 @@ Android Apps:
         * MyAV
             * reasonable set of features
             * trialware - check others before buying Pro
+* Windows Media Player
+    * MyRemote ?
+    * MultiRemote ?
 
 Feed back into:
 
