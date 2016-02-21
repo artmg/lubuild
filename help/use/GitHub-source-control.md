@@ -1,5 +1,10 @@
 
 
+## TTD
+
+* how to use tokens or certificates to authenticate scripted git push
+
+
 ## Using GitHub ##
 
 ### Basics
