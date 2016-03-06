@@ -79,8 +79,8 @@ Some people suggest increasing the priority of the java executable in task manag
 #### java
 
 The minecraft program code uses the java system to translate it to work properly on your specific hardware and operating system. 
-By default ubuntu comes with OpenJRE (open source) however it is suggested that 
-performance may increase when using Oracle's closed code Java Runtime Environment (JRE), either version 7 or 8. 
+By default ubuntu comes with OpenJRE (open source) however the minecraft vendors do NOT support OpenJRE 
+and recommend using Oracle's closed code Java Runtime Environment (JRE), either version 7 or 8. 
 
 Notes:
 * you may have more that one type of JRE installed at the same time (if you really want), and more than one version too
@@ -104,9 +104,16 @@ You can find more about Java and about the choices at https://help.ubuntu.com/co
 sudo add-apt-repository ppa:webupd8team/java
 sudo apt-get update
 echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections
+### EITHER: install JRE only
 sudo apt-get install oracle-java8-installer
-# NB this installs JRE &JDK
+### OR: install JDK (which includes JRE)
+sudo apt-get install oracle-jdk8-installer
+# For info on including browser (e.g. Firefox) plugins see http://askubuntu.com/q/48468
 ```
+
+NB: If you install Oracle Java in Windows for Minecraft clients, the plugins are included. 
+For help with removing the plugins (e.g. to only enable Java for local programs like Minecraft) 
+see [http://www.howtogeek.com/122934] and  [http://www.ghacks.net/2010/04/25/how-to-remove-the-java-deployment-toolkit-from-firefox/]
 
 #### graphics driver
 
