@@ -258,18 +258,32 @@ Note: this is about uPNP AV solutions, like DLNA, rather than UPnP Internet Gate
         * control point gupnp-av-cp 
         * cli discovery - gssdp-discover
     * (rather old) [uPNP-Inspector](http://coherence.beebits.net/wiki/UPnP-Inspector)
+    * Android Apps (especially open source) 
+        * Kazoo (+ predecessor Kinsky) [https://oss.linn.co.uk/trac/wiki/Kinsky] = FOSS multi-platform by high end h/w vendor
+        * ControlDLNA = works but not smooth, slightly buggy and original branch now abandoned
+        * YAACC – Yet Another Android Client Controller [http://www.yaacc.de/] = 'A flexible UPnP media device controller'
+        * SlickDLNA [https://github.com/KernelCrap/android-dlna/] = abandoned?
+        * [https://sourceforge.net/projects/droiddlnaplayer/] = 3 years old
+
 
 * Media Renderers (players)
     * local
         * VLC
         * Kodi
         * Gnome Totem player (needs grilo plugin)
-        * upmpdcli - front end for MPD
         * compere - may be old
+        * minidlna
     * remote (i.e. may be connected to over network for rendering)
         * Kodi
+            * see UPnP / DLNA Services in [https://github.com/artmg/MuGammaPi/wiki/Media-Center]
+        * gmediarenderer (gmrender-resurrect on Pi)
+        * upmpdcli (front end for MPD) or is this local only?
         * ???
         * NB: one Windows 10 there is no longer any built-in DLNA Renderer, and even WMP now comes without
+        * bubbleupnpserver?
+    * Android Apps
+        * FireAir Receiver (e.g. on [Justop Droibox](Android Justop Droibox Media Center box XBMC.md) )
+        * NB: for Miracast Receivers (HMDI over WifiDirect) see [Android Apps.md] or [Lub App TV streaming.md]
 
 * Media Servers - some DNLA compliant uPNP server software:
     * ReadyMedia (was miniDLNA) used by Volumio - see [Pi Volumio.md]
@@ -278,7 +292,9 @@ Note: this is about uPNP AV solutions, like DLNA, rather than UPnP Internet Gate
 
 * Further reading
     * [http://lesbonscomptes.com/pages/homenet-audio.html]
+    * [http://elinux.org/DLNA_Open_Source_Projects]
     * [http://elinux.org/UPnP]
+    * [https://en.wikipedia.org/wiki/List_of_UPnP_AV_media_servers_and_clients]
 
 
 

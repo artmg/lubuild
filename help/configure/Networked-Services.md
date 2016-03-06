@@ -1,6 +1,7 @@
-=Networked Services=
+Networked Services
+==================
 
-== Autodiscovery ==
+## Autodiscovery ##
 
 To set allow basic local autodiscovery of services on your device...
 
@@ -14,21 +15,137 @@ sudo apt-get install -y libnss-mdns
 # later perhaps consider the full Avihi / ZeroConf stack
 ```
 
-For information about discovering services see https://github.com/artmg/lubuild/wiki/Troubleshooting#troubleshooting-networking
+For information about discovering services 
+see [https://github.com/artmg/lubuild/wiki/Troubleshooting#troubleshooting-networking]
 
-== SSH - (remote) Secure SHell ==
+
+##Sharing Folders##
+
+###Locally###
+ # to share folders locally use bindfs to mount a location in different places
+ sudo apt-get install bindfs
+ # help > https://help.ubuntu.com/community/Bindfs-SharedDirectoryLocalUsers
+
+ # use symlinks if you want it to appear elsewhere for the other users
+ # .e.g. ...
+ ln -s -T /home/shared /home/username/Documents/Pictures
+
+###Across LAN###
+
+####Prepare####
+
+ ## FIRST Ensure underlying disks are mounted at logon
+ ##  - via GUI using Disks program
+ # gnome-disks
+ ##  - - Partition / Settings / Edit Mount Options
+ ##  - - uncheck automount  |  choose UUID= option  |  edit mount point to use Label
+ ##  - via CLI in /etc/fstab
+ # sudo editor /etc/fstab
+ ##  - - then Create the mount point and mount it
+ # sudo mkdir /mnt/Label1
+ # sudo mount -a
+
+####Choices####
+; Samba
+: Heavier | Windows compatible | ??Secure?? | common | simple from client
+; STFP (FTP over SSH)
+: 
+; NFS
+: lightwight | can automount in fstab or avahi (https://wiki.archlinux.org/index.php/avahi#NFS)
+: see https://help.ubuntu.com/community/SettingUpNFSHowTo
+; Avahi - Giver
+: Push only!
+
+#### Share with Samba ####
+
+Below are simple instructions for setting up a basic Samba share in Lubuntu. 
+For more explanation, background, and further examples of advanced use 
+such as multiple shares, sharing printers and optical drives, see 
+please see [https://github.com/artmg/lubuild/blob/master/help/configure/network-shares-with-Samba.md]
+
+```
+### SAMBA ### 
+sudo apt-get install -y samba
+
+# back up original
+sudo cp /etc/samba/smb.conf /etc/samba/smb.conf.original
+# save as master
+sudo cp /etc/samba/smb.conf /etc/samba/smb.conf.master
+# edit master file
+sudo gnome-text-editor /etc/samba/smb.conf.master
+
+
+### Sample shares ####
+# unauthenticated access to a share
+cat <<EOF | sudo tee /etc/samba/smb.conf.master 
+[ShareName]
+path = /path/to/files
+comment = my readonly guest viewable share
+# at samba version 3.6.3 the following are defaults
+available = yes
+guest ok = yes
+browsable = yes
+read only = yes
+# deprecated options
+# writable = (opposite of read only = )
+# public = (equivalent to guest ok = )
+EOF
+
+# test the master file, create real conf file and restart
+testparm -s /etc/samba/smb.conf.master && testparm -s /etc/samba/smb.conf.master | sudo tee /etc/samba/smb.conf && sudo /etc/init.d/samba restart
+```
+####Access them from Linux####
+
+See Name Resolution above for dependencies on mDNS
+ 
+ ### GUI Access
+ # help - https://help.ubuntu.com/community/Lubuntu/PCManFM#Browse_Windows_PCs_with_Samba
+ 
+ ### CLI Access
+ # allow mounting samba / CIFS 
+ sudo apt-get install -y cifs-utils
+ 
+ ### prepare mount
+ sudo mkdir -p /media/mylocalmount
+ sudo mount -t cifs -o -ro //otherpc.local/sharename /media/mylocalmount
+
+ # sync contents
+ # NB this is TEST ONLY MODE with dry run
+ rsync --dry-run -av --modify-window=3605 /media/mylocalmount/ /media/localdrive/localcopy/ 
+ 
+#### Troubleshooting ####=
+
+* Device not showing in Windows browse lists
+    * From device running Samba try
+ smbclient -L localhost
+    * Does the Workgroup setting on the clients match Samba config Workgroup?
+    * Does NMB service need to be running too?
+    * In some cases you may need to modify settings on the Windows client, e.g.
+        * Network and Sharing Center / Advanced sharing settings (on left-hand pane)
+            * All Networks / File sharing connections / **check** Enable file sharing for 40 & 56 bit encryption
+        * Network Connections / (right-click network adapter) / Properties / 
+        * Internet Protocol Version 4 / Advanced... / WINS / Enable NetBios over TCP/IP = TRUE
+        * Check the firewall allows traffic on the specific network including "File and Printer Sharing (LLMNR-UDP-In)"
+        * flush caches for DNS / NetBIOS / ARP from **Admin** command prompt with
+ ipconfig /flushdns & nbtstat -R & arp -d *
+
+
+
+
+
+## SSH - (remote) Secure SHell ##
 
 The examples below use the 'default' choice of OpenSSH-Server.
 
 You should configure SSH to work ONLY with Certificates, to remove the risk of attacking passwords with brute-force, and this should render it reasonably secure, even when accessible from the public internet. If you wanted to go a step further you could use Port Knocking (see https://help.ubuntu.com/community/PortKnocking), but don't forget that obscurity is not a replacement for true security (see http://bsdly.blogspot.co.uk/2012/04/why-not-use-port-knocking.html).
 
-=== Private and Public Keys ===
+### Private and Public Keys ###
 
-==== Recommendations ====
+#### Recommendations ####
 
 * Realms 
 ** Use a different key for each administrative boundary you wish to maintain. 
-** Use the same key for all servers within that realm 
+** Use the same key for all servers within that realm 
 ** Of course, ONLY distribute the public key, NEVER the private key! 
 * Passphrase 
 ** Might you ever copy or insert this key into a non-secure location? 
@@ -40,7 +157,7 @@ You should configure SSH to work ONLY with Certificates, to remove the risk of a
 *** Microsoft - http://technet.microsoft.com/en-us/library/cc740209%28v=ws.10%29.aspx
 *** Apache - http://www.apache.org/dev/release-signing Apache
 
-==== Generate a keypair ====
+#### Generate a keypair ####
 
 ```
 # Usually done on client, before the public key is securely transferred to the server
@@ -52,20 +169,20 @@ chmod 700 ~/.ssh
 ssh-keygen -t rsa -b 4096
 
 # Enter to accept the default location. 
-# You may choose NOT to enter a passphrase, 
+# You may choose NOT to enter a passphrase, 
 # but then you must keep your keys stored securely. 
 # if you need no passphrase then just Enter Enter
 ```
 
 Please see also the section on [https://github.com/artmg/lubuild/wiki/Networked-Services#managing-encryption-keys Managing Encryption Keys] below
 
-==== generate keys on Windows ====
+#### generate keys on Windows ####
 
 Use PuttyGen to import and convert it to a PPK file - credit - http://linux-sxs.org/networking/openssh.putty.html
 
 * Run PuttyGen 
 * Accept SSH-2 RSA default keytype 
-* Enter 4096 as number of bits 
+* Enter 4096 as number of bits 
 * Click Generate and wiggle the mouse for randomness 
 * Enter a comment indicating your Identity and the Realm of this key 
 * Consider entering a passhrase (as per recommendations above) 
@@ -74,7 +191,7 @@ Use PuttyGen to import and convert it to a PPK file - credit - http://linux-sxs.
 * From the menu choose Conversions / Export OpenSSH key and save with same name but no extension 
 
 
-=== set up server ===
+### set up server ###
 
 ```
 # Install SSH Server
@@ -92,7 +209,7 @@ sudo gnome-text-editor /etc/ssh/sshd_config
 # man sshd_config
 ```
 
-==== sshd_config Recommendations ====
+#### sshd_config Recommendations ####
 
 ```
 # Choose a non-default port
@@ -115,7 +232,7 @@ UsePAM no
 AuthorizedKeysFile    /etc/ssh/%u/authorized_keys
 ```
 
-==== install keys ====
+#### install keys ####
 
 ```
 ## if you SSH to the machine you can use...
@@ -136,11 +253,11 @@ cat id_rsa.pub | sudo tee -a /etc/ssh/$REMOTEUSER/authorized_keys
 
 ```
 
-==== restart to read new config ====
+#### restart to read new config ####
 
  sudo /etc/init.d/ssh restart
 
-==== set server start ====
+#### set server start ####
 
 ```
 # If you want manual start instead of automatic,
@@ -151,7 +268,7 @@ sudo mv /etc/init/ssh.conf /etc/init/ssh.conf.disabled
 # echo 'manual' > /etc/init/mysqld.override
 ```
 
-=== connecting from client ===
+### connecting from client ###
 
 ```
 # # This should normally be installed by default on Ubuntu distros
@@ -167,9 +284,9 @@ ssh user@computer
 # see also https://help.ubuntu.com/community/SSH/OpenSSH/ConnectingTo
 ```
 
-=== Troubleshooting ===
+### Troubleshooting ###
 
-==== startup issues ====
+#### startup issues ####
 
 ```
 # start the service with
@@ -198,14 +315,14 @@ sudo /usr/sbin/sshd -Dd
 
 ```
 
-==== more ====
+#### more ####
 
 see ...
 * https://help.ubuntu.com/community/SSH/OpenSSH/Keys#Troubleshooting
 * https://help.ubuntu.com/community/SSH/OpenSSH/Configuring#Troubleshooting
 
 
-=== Managing Encryption Keys ===
+### Managing Encryption Keys ###
 
 ```
 #### Create ring and pair
@@ -228,13 +345,13 @@ cp -R ~/.gnupg ./gnupg
 #### Restore an old key ring
 ```
 
-== Remote Desktop Server ==
+## Remote Desktop Server ##
 
-=== Vino ====
+### Vino ####
 
 Ubuntu now incorporates '''vino''' by befault - see https://help.ubuntu.com/community/VNC/Servers#vino
 
-=== Starting VNC over SSH ===
+### Starting VNC over SSH ###
 
 Using SSH tunnelling is recommended as a more secure way to allow VNC over the internet.<br />
 
@@ -253,17 +370,17 @@ Session - Save as &quot;SSH Session&quot;</pre>
 Either open the session to connect via secure shell and execute the following command or
 
 <pre>x11vnc -safer -localhost -nopw -once -display :0</pre>
-Alternatively load the &quot;SSH Session&quot; you saved and add this as the  
+Alternatively load the &quot;SSH Session&quot; you saved and add this as the  
 
 <pre>Connection - SSH - Remote Command:</pre>
 before saving the session as &quot;VNC Session&quot; <br /><br />Now you can start your VNC client connection to '''localhost::5900'''
 
-=== Debugging SSH connections ===
+### Debugging SSH connections ###
 
 If Putty gives you the error:
 
 <pre>Network error: Connection refused</pre>
-then first of all ensure that your destination IP address is still valid (e.g. no IP duplication or accidental changes due to missing reservations)<br /><br />If you have other issues with your Putty connection, try the following...
+then first of all ensure that your destination IP address is still valid (e.g. no IP duplication or accidental changes due to missing reservations)<br /><br />If you have other issues with your Putty connection, try the following...
 
 * Remember usernames on linux are case SENSITIVE
 * Choose SSH type 2-only and try removing extra options (GSSetc?)
@@ -278,14 +395,14 @@ chmod 700 ~/.ssh
 chmod 600 ~/.ssh/authorized_keys</pre>
 help &gt; https://help.ubuntu.com/community/SSH/OpenSSH/Configuring<br />help &gt; https://help.ubuntu.com/community/SSH/OpenSSH/Keys
 
-=== Debugging VNC over SSH ===
+### Debugging VNC over SSH ###
 
 If you get the error &quot;<code>XOpenDisplay failed</code>&quot; then try replacing <code>-display :0</code> with <code>-find</code> instead<br />help &gt; http://www.karlrunge.com/x11vnc/faq.html#faq-xperms<br />If that doesn't work you will need to work out the location of your XAuthority 'MIT cookie file' and add that as an -auth option, e.g. (for lightdm):
 
 <pre>-auth /var/run/lightdm/root/:0 </pre>
 <br /><br />
 
-==== Others ====
+#### Others ####
 
 credit &gt; [https://help.ubuntu.com/community/VNC/Servers https://help.ubuntu.com/community/VNC/Servers]
 
@@ -307,7 +424,7 @@ Exec=x11vnc -safer -allow 192.168.3. -usepw -ncache' &gt;~/.config/autostart/x11
 
 chmod +x ~/.config/autostart/x11vnc.desktop
 
-===== old Ubuntu =====
+####= old Ubuntu ####=
 
 Credit &gt; http://ubuntuforums.org/showthread.php?t=1068793
 
@@ -329,112 +446,84 @@ then add to your startup
 
 
 
-==Sharing Folders==
+## syslog
 
-===Locally===
- # to share folders locally use bindfs to mount a location in different places
- sudo apt-get install bindfs
- # help > https://help.ubuntu.com/community/Bindfs-SharedDirectoryLocalUsers
+### Architecture and Options
 
- # use symlinks if you want it to appear elsewhere for the other users
- # .e.g. ...
- ln -s -T /home/shared /home/username/Documents/Pictures
+* syslogd
+    * default system logging on ubuntu and many linux distros
+    * defaults to writing locally
+    * 
+* rsyslogd
+    * comes pre-installed on ubuntu and raspbian
+* syslog-ng
+    * server
+    * FOSS with added functionality on freemium model with Premium Edition available
+    * 
+* ELK (ElasticSearch, Logstash, Kibana) 
+    * FOSS stack to collect, store, search and visualise logs
+* 
 
-===Across LAN===
+see also:
 
-====Prepare====
+* logging in ubuntu [https://help.ubuntu.com/community/LinuxLogFiles]
+* [http://askubuntu.com/a/55495] for further comparison
 
- ## FIRST Ensure underlying disks are mounted at logon
- ##  - via GUI using Disks program
- # gnome-disks
- ##  - - Partition / Settings / Edit Mount Options
- ##  - - uncheck automount  |  choose UUID= option  |  edit mount point to use Label
- ##  - via CLI in /etc/fstab
- # sudo editor /etc/fstab
- ##  - - then Create the mount point and mount it
- # sudo mkdir /mnt/Label1
- # sudo mount -a
+### rsyslogd server
 
-====Choices====
-; Samba
-: Heavier | Windows compatible | ??Secure?? | common | simple from client
-; STFP (FTP over SSH)
-: 
-; NFS
-: lightwight | can automount in fstab or avahi (https://wiki.archlinux.org/index.php/avahi#NFS)
-: see https://help.ubuntu.com/community/SettingUpNFSHowTo
-; Avahi - Giver
-: Push only!
+sudo nano /etc/rsyslog.conf
+## uncomment the following lines to allow listeners on default UDP & TCP ports
+#$ModLoad imudp
+#$UDPServerRun 514
+#
+#$ModLoad imtcp
+#$InputTCPServerRun 514
 
-====Share with Samba====
+# restart service
+sudo service rsyslog restart
 
- ### SAMBA ### 
- sudo apt-get install -y samba
- 
- # back up original
- sudo cp /etc/samba/smb.conf /etc/samba/smb.conf.original
- # save as master
- sudo cp /etc/samba/smb.conf /etc/samba/smb.conf.master
- # edit master file
- sudo gnome-text-editor /etc/samba/smb.conf.master
- 
- 
- ### Sample shares ####
- # unauthenticated access to a share
- [ShareName]
- path = /path/to/files
- comment = my readonly guest viewable share
- # at samba version 3.6.3 the following are defaults
- available = yes
- guest ok = yes
- browsable = yes
- read only = yes
- # deprecated options
- # writable = (opposite of read only = )
- # public = (equivalent to guest ok = )
- 
- # test the master file and create real conf file
- testparm -s /etc/samba/smb.conf.master && testparm -s /etc/samba/smb.conf.master | sudo tee /etc/samba/smb.conf
- # credit - http://ubuntuforums.org/showthread.php?t=1462926
- 
- ### Restart services with new config ###
- sudo /etc/init.d/samba restart
- ## OR alternatively
- # sudo smbd reload
- # sudo service smbd restart
+# by default this will send ALL logs received to syslog
+# you may want to separate these out using conf files as below
 
-====Access them from Linux====
+# This gives one log file for all
+LOG_FILE=/var/log/mylogs.log
+sudo touch $LOG_FILE
+sudo tee /etc/rsyslog.d/60-network.conf cat <<EOF!
+\$template NetworkLog, "/var/log/netgear.log"
+*.* -?NetworkLog
+& ~
+EOF
 
-See Name Resolution above for dependencies on mDNS
- 
- ### GUI Access
- # help - https://help.ubuntu.com/community/Lubuntu/PCManFM#Browse_Windows_PCs_with_Samba
- 
- ### CLI Access
- # allow mounting samba / CIFS 
- sudo apt-get install -y cifs-utils
- 
- ### prepare mount
- sudo mkdir -p /media/mylocalmount
- sudo mount -t cifs -o -ro //otherpc.local/sharename /media/mylocalmount
+# This gives a log file per source hostname
+# credit - http://www.rsyslog.com/article60/
+LOG_LOCATION=/var/log/network
+sudo mkdir -p $LOG_LOCATION
+sudo tee /etc/rsyslog.d/60-network.conf cat <<EOF!
+\$template DynaFile,"$LOG_LOCATION/%HOSTNAME%.log"
+*.* -?DynaFile
+& ~
+EOF!
 
- # sync contents
- # NB this is TEST ONLY MODE with dry run
- rsync --dry-run -av --modify-window=3605 /media/mylocalmount/ /media/localdrive/localcopy/ 
- 
-==== Troubleshooting =====
+# you can choose which host sends to which file with...
+# :fromhost-ip, isequal, "192.168.0.1" -?NetworkLog
 
-* Device not showing in Windows browse lists
-    * From device running Samba try
- smbclient -L localhost
-    * Does the Workgroup setting on the clients match Samba config Workgroup?
-    * Does NMB service need to be running too?
-    * In some cases you may need to modify settings on the Windows client, e.g.
-        * Network and Sharing Center / Advanced sharing settings (on left-hand pane)
-            * All Networks / File sharing connections / **check** Enable file sharing for 40 & 56 bit encryption
-        * Network Connections / (right-click network adapter) / Properties / 
-        * Internet Protocol Version 4 / Advanced... / WINS / Enable NetBios over TCP/IP = TRUE
-        * Check the firewall allows traffic on the specific network including "File and Printer Sharing (LLMNR-UDP-In)"
-        * flush caches for DNS / NetBIOS / ARP from **Admin** command prompt with
- ipconfig /flushdns & nbtstat -R & arp -d *
+
+# consider log rotation - http://www.aelog.org/use-the-raspberry-pi-as-a-syslog-server-using-rsyslog/
+
+
+### syslog clients
+
+## set your syslog server ip with...
+#*.* @x.x.x.x
+sudo nano /etc/rsyslog.conf
+
+sudo service rsyslog restart
+
+### syslog-ng
+
+# syslog-ng is in repos
+sudo apt-get install syslog-ng
+nano /etc/syslog-ng/syslog-ng.conf
+# credit - http://resources.intenseschool.com/raspberry-pi-as-a-syslog-server/
+service syslog-ng restart
 

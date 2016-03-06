@@ -131,7 +131,8 @@ dnsmasq --server=192.168.2.1
 
 # ?? chrome://net-internals/#dns  - Clear Host Cache
 
-
+# firefox - either restart browser
+# or use DNS Flusher addon - https://addons.mozilla.org/en-us/firefox/addon/dns-flusher/
 
 #### resolving
 
