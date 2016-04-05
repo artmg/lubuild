@@ -1,4 +1,10 @@
 
+See also:
+
+* Lubuild / Help / Diagnose / Network
+    * diagnosing issues with connectivity, resolution, addressing or performance
+
+
 ## Configure interface
 
 If you're trying to make a direct connection to a single device, this should help. 
@@ -73,10 +79,6 @@ If you later need to delete the temporary address use
 
  sudo ip addr del $IP_ADDRESS dev $INTERFACE
 
-
-### diagnosing wifi connection issues
-
-see also [https://wiki.archlinux.org/index.php/Wireless_network_configuration#Troubleshooting]
 
 ### change DNS order
 

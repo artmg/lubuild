@@ -2,6 +2,32 @@
 
 For some background on network interfaces and utilities you may find [https://wiki.openwrt.org/doc/networking/network.interfaces] interesting - its NOT specific to Lubuntu, but practical and applicable nonetheless. 
 
+## Physical and Transport
+
+### diagnosing wifi connection issues
+
+see also [https://wiki.archlinux.org/index.php/Wireless_network_configuration#Troubleshooting]
+
+### diagnosing Network Manager Connections
+```
+# check the connection state
+nmcli d
+
+sudo less /var/log/syslog
+
+## for full debug logging, edit the configuration to add (without comments)
+# [logging]
+# level=DEBUG
+sudo editor /etc/NetworkManager/NetworkManager.conf
+
+# then restart nm afterwards
+sudo service network-manager restart
+
+# check log contents
+sudo cat /var/log/syslog
+
+```
+
 ## Connectivity
 
 ```

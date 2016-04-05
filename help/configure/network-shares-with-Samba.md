@@ -5,15 +5,24 @@
     * sharing printers - [https://github.com/artmg/MuGammaPi/wiki/Print-server]
     * sharing optical drives - WIP see below
 * please see also [https://github.com/artmg/lubuild/blob/master/help/configure/Networked-Services.md]
-    * For samba clients
     * For other Networked Services
 
+NB: for linux **samba clients** see towards the end of this document
 
 ## Introduction
 
-Samba is an SMB server. It runs a daemon listening at port 445 that uses Server Message Blocks to share files and printers across a network. It has also been known as CIFS, the Common Internet File System. Because it is the default way for Windows to share files, it is commonly used as a cross-platform solution from Linux servers (rather than just using the NFS Network File System that only Unix understands). See more info at [https://en.wikipedia.org/wiki/Server_Message_Block]
+Samba is an SMB server. 
+It runs a daemon listening at port 445 that uses Server Message Blocks 
+to share files and printers across a network. 
+It has also been known as CIFS, the Common Internet File System. 
+Because it is the default way for Windows to share files, 
+it is commonly used as a cross-platform solution from Linux servers 
+(rather than just using the NFS Network File System that only Unix understands). 
+See more info at [https://en.wikipedia.org/wiki/Server_Message_Block]
 
-This Samba config file also turns on WINS, the Windows Internet Naming Service, so that computer names are broadcast and can be used instead of IP addresses
+This Samba config file also turns on WINS, 
+the Windows Internet Naming Service, 
+so that computer names are broadcast and can be used instead of IP addresses
 
 (_copied from [https://github.com/artmg/MuGammaPi/wiki/Shared-files]_)
 
@@ -25,8 +34,8 @@ This Samba config file also turns on WINS, the Windows Internet Naming Service, 
 
 ### advertising shares with Avahi
 
-for basics on avahi please see ...
-
+for basics on avahi ...
+* please see [https://github.com/artmg/lubuild/blob/master/help/configure/Networked-Services.md]
 
 
 ### SAMBA ### 
@@ -256,3 +265,72 @@ sudo mount -t cifs //$SERVER_HOSTNAME/DRIVE_DEVICE /media/$USER/disc
 sudo umount /media/$USER/disc
 ```
 
+## Client Access to Samba shares
+
+### Access them from Linux ###
+
+See Name Resolution above for dependencies on mDNS
+``` 
+### GUI Access
+# help - https://help.ubuntu.com/community/Lubuntu/PCManFM#Browse_Windows_PCs_with_Samba
+
+### CLI Access
+# allow mounting samba / CIFS 
+sudo apt-get install -y cifs-utils
+
+### prepare mount
+MOUNT_LOCAL=/media/mylocalmount
+MOUNT_SHARE=//otherpc.local/sharename
+MOUNT_OPTIONS=-o -ro 
+sudo mkdir -p $MOUNT_LOCAL
+sudo mount -t cifs $MOUNT_OPTIONS $MOUNT_SHARE $MOUNT_LOCAL
+
+# sync contents
+# NB this is TEST ONLY MODE with dry run
+rsync --dry-run -av --modify-window=3605 $MOUNT_LOCAL /media/localdrive/localcopy/ 
+```
+ 
+### Troubleshooting ####
+
+* Device not showing in Windows browse lists
+    * From device running Samba try
+ smbclient -L localhost
+    * Does the Workgroup setting on the clients match Samba config Workgroup?
+    * Does NMB service need to be running too?
+    * In some cases you may need to modify settings on the Windows client, e.g.
+        * Network and Sharing Center / Advanced sharing settings (on left-hand pane)
+            * All Networks / File sharing connections / **check** Enable file sharing for 40 & 56 bit encryption
+        * Network Connections / (right-click network adapter) / Properties / 
+        * Internet Protocol Version 4 / Advanced... / WINS / Enable NetBios over TCP/IP = TRUE
+        * Check the firewall allows traffic on the specific network including "File and Printer Sharing (LLMNR-UDP-In)"
+        * flush caches for DNS / NetBIOS / ARP from **Admin** command prompt with
+ ipconfig /flushdns & nbtstat -R & arp -d *
+
+
+### Other Troubleshooting ###
+
+If you cannot see the server or share under "Windows Network" then check smb.conf 
+to ensure  you have set
+
+ Workgroup = WORKGROUP
+
+at least in the global section (and you could even try adding it against the share for testing)
+
+other settings that may help include
+
+ local master = yes
+ preferred master = yes
+ wins support = yes
+
+ multicast dns register = yes      # register itself with mDNS services like Avahi
+
+
+#### issues with linux samba client
+
+If you cannot browse samba servers on the network via a linux client such as ubuntu
+edit the following file on the client /etc/samba/smb.conf
+
+ # add this in global to use broadcast FIRST
+ name resolve order = bcast host
+
+service samba restart

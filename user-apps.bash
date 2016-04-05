@@ -256,6 +256,7 @@ topdirs = ~ \
 
 skippedPaths = \
 ~/. \
+~/.bin \
 ~/.cache \
 ~/.config \
 ~/.dropbox \
@@ -272,7 +273,7 @@ EOF
 cd <my container root folder> ###### do this for each offline container you want to index
 
 
-mkdir -P .recoll
+mkdir .recoll
 echo > .recoll/recoll.conf <<EOF
 # This is the Recoll configuration file for the index for this offline container
 
@@ -294,6 +295,15 @@ echo > .recoll/recoll.conf <<EOF
 topdirs  =  $PWD
 skippedNames  =  .recoll*  .Trash*  z_History
 
+# once the container reaches this % full, indexing will stop
+maxfsoccuppc = 95 
+
+# KB Size limit for compressed files. -1 defaults to no limit, 0 ignore compressed
+compressedfilemaxkbs = -1
+
+# MB Max text file size - as very large are usually logs, default 20MB - to disable -1 
+textfilemaxmbs = 20
+
 EOF
 
 ##### refresh script in each root #####
@@ -313,6 +323,14 @@ chmod +x refresh_me.sh
 recollindex -c .recoll
 
 
+##### Add these as external indexes available
+
+# although the history file in the recoll folder lists entries under allExtDbs section, 
+# these are not cleartext paths so cannot be set by editing the files. 
+# Use this variable instead...
+export RECOLL_EXTRA_DBS=/path/to/index1/recoll/xapiandb/:/media/$USER/volume2/.recoll/xapiandb/:/media/$USER/Volume3/.recoll/xapiandb/
+# NB: this will only stick for a single instance
+# - how to make these permanent options of external indexes??
 
 
 # # # # # # END # # # # # # 

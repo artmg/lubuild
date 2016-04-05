@@ -155,8 +155,13 @@ baobab      # graphical disk usage analyser
 workrave    # encourage regular breaks for posture and eyes 
 keepassx    # store credentials 
 meld        # file and folder diffs...
-recoll      # filesystem search engine
 # now using mkusb  (instead of)  unetbootin  # more reliable at installing bootloader than usb-creator-gtk
+
+### Search ###
+recoll      # filesystem search engine
+# helpers for common doctypes
+antiword xsltproc catdoc unrtf libimage-exiftool-perl python-mutagen aspell
+
 
 
 ######## LAPTOPS ############

@@ -19,33 +19,35 @@ For information about discovering services
 see [https://github.com/artmg/lubuild/wiki/Troubleshooting#troubleshooting-networking]
 
 
-##Sharing Folders##
+## Sharing Folders ##
 
-###Locally###
- # to share folders locally use bindfs to mount a location in different places
- sudo apt-get install bindfs
- # help > https://help.ubuntu.com/community/Bindfs-SharedDirectoryLocalUsers
+### Locally ###
+```
+# to share folders locally use bindfs to mount a location in different places
+sudo apt-get install bindfs
+# help > https://help.ubuntu.com/community/Bindfs-SharedDirectoryLocalUsers
 
- # use symlinks if you want it to appear elsewhere for the other users
- # .e.g. ...
- ln -s -T /home/shared /home/username/Documents/Pictures
+# use symlinks if you want it to appear elsewhere for the other users
+# .e.g. ...
+ln -s -T /home/shared /home/username/Documents/Pictures
+```
+### Across LAN ###
 
-###Across LAN###
-
-####Prepare####
-
- ## FIRST Ensure underlying disks are mounted at logon
- ##  - via GUI using Disks program
- # gnome-disks
- ##  - - Partition / Settings / Edit Mount Options
- ##  - - uncheck automount  |  choose UUID= option  |  edit mount point to use Label
- ##  - via CLI in /etc/fstab
- # sudo editor /etc/fstab
- ##  - - then Create the mount point and mount it
- # sudo mkdir /mnt/Label1
- # sudo mount -a
-
+#### Prepare ####
+```
+## FIRST Ensure underlying disks are mounted at logon
+##  - via GUI using Disks program
+# gnome-disks
+##  - - Partition / Settings / Edit Mount Options
+##  - - uncheck automount  |  choose UUID= option  |  edit mount point to use Label
+##  - via CLI in /etc/fstab
+# sudo editor /etc/fstab
+##  - - then Create the mount point and mount it
+# sudo mkdir /mnt/Label1
+# sudo mount -a
+```
 ####Choices####
+
 ; Samba
 : Heavier | Windows compatible | ??Secure?? | common | simple from client
 ; STFP (FTP over SSH)
@@ -60,7 +62,8 @@ see [https://github.com/artmg/lubuild/wiki/Troubleshooting#troubleshooting-netwo
 
 Below are simple instructions for setting up a basic Samba share in Lubuntu. 
 For more explanation, background, and further examples of advanced use 
-such as multiple shares, sharing printers and optical drives, see 
+such as multiple shares, sharing printers and optical drives, 
+or for details on accessing them with linux clients 
 please see [https://github.com/artmg/lubuild/blob/master/help/configure/network-shares-with-Samba.md]
 
 ```
@@ -94,42 +97,6 @@ EOF
 # test the master file, create real conf file and restart
 testparm -s /etc/samba/smb.conf.master && testparm -s /etc/samba/smb.conf.master | sudo tee /etc/samba/smb.conf && sudo /etc/init.d/samba restart
 ```
-####Access them from Linux####
-
-See Name Resolution above for dependencies on mDNS
- 
- ### GUI Access
- # help - https://help.ubuntu.com/community/Lubuntu/PCManFM#Browse_Windows_PCs_with_Samba
- 
- ### CLI Access
- # allow mounting samba / CIFS 
- sudo apt-get install -y cifs-utils
- 
- ### prepare mount
- sudo mkdir -p /media/mylocalmount
- sudo mount -t cifs -o -ro //otherpc.local/sharename /media/mylocalmount
-
- # sync contents
- # NB this is TEST ONLY MODE with dry run
- rsync --dry-run -av --modify-window=3605 /media/mylocalmount/ /media/localdrive/localcopy/ 
- 
-#### Troubleshooting ####=
-
-* Device not showing in Windows browse lists
-    * From device running Samba try
- smbclient -L localhost
-    * Does the Workgroup setting on the clients match Samba config Workgroup?
-    * Does NMB service need to be running too?
-    * In some cases you may need to modify settings on the Windows client, e.g.
-        * Network and Sharing Center / Advanced sharing settings (on left-hand pane)
-            * All Networks / File sharing connections / **check** Enable file sharing for 40 & 56 bit encryption
-        * Network Connections / (right-click network adapter) / Properties / 
-        * Internet Protocol Version 4 / Advanced... / WINS / Enable NetBios over TCP/IP = TRUE
-        * Check the firewall allows traffic on the specific network including "File and Printer Sharing (LLMNR-UDP-In)"
-        * flush caches for DNS / NetBIOS / ARP from **Admin** command prompt with
- ipconfig /flushdns & nbtstat -R & arp -d *
-
-
 
 
 
@@ -470,7 +437,7 @@ see also:
 * [http://askubuntu.com/a/55495] for further comparison
 
 ### rsyslogd server
-
+```
 sudo nano /etc/rsyslog.conf
 ## uncomment the following lines to allow listeners on default UDP & TCP ports
 #$ModLoad imudp
@@ -509,21 +476,21 @@ EOF!
 
 
 # consider log rotation - http://www.aelog.org/use-the-raspberry-pi-as-a-syslog-server-using-rsyslog/
-
+```
 
 ### syslog clients
-
+```
 ## set your syslog server ip with...
 #*.* @x.x.x.x
 sudo nano /etc/rsyslog.conf
 
 sudo service rsyslog restart
-
+```
 ### syslog-ng
-
+```
 # syslog-ng is in repos
 sudo apt-get install syslog-ng
 nano /etc/syslog-ng/syslog-ng.conf
 # credit - http://resources.intenseschool.com/raspberry-pi-as-a-syslog-server/
 service syslog-ng restart
-
+```
