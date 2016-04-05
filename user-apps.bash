@@ -22,7 +22,7 @@
 # NB: it appears this must be INSTALLED in user folder for EACH USER
 # and then individually run for each user too
 
-LUBUILD_DROPBOX_FOLDER=bin
+LUBUILD_BIN_FOLDER=.bin
 export LUBUILD_DROPBOX_FOLDER
 
 LUBUILD_DROPBOX_AUTOSTART=TRUE
@@ -31,10 +31,10 @@ export LUBUILD_DROPBOX_AUTOSTART
 # help > download URLs from https://www.dropbox.com/install?os=lnx
 case $(uname -m) in
  x86_64)
-   (mkdir ~/$LUBUILD_DROPBOX_FOLDER ; cd ~/$LUBUILD_DROPBOX_FOLDER && wget -O - "https://www.dropbox.com/download?plat=lnx.x86_64" | tar xzf -)
+   (mkdir ~/$LUBUILD_BIN_FOLDER ; cd ~/$LUBUILD_BIN_FOLDER && wget -O - "https://www.dropbox.com/download?plat=lnx.x86_64" | tar xzf -)
  ;;
  i?86)
-   (mkdir ~/$LUBUILD_DROPBOX_FOLDER ; cd ~/$LUBUILD_DROPBOX_FOLDER && wget -O - "https://www.dropbox.com/download?plat=lnx.x86" | tar xzf -)
+   (mkdir ~/$LUBUILD_BIN_FOLDER ; cd ~/$LUBUILD_BIN_FOLDER && wget -O - "https://www.dropbox.com/download?plat=lnx.x86" | tar xzf -)
  ;;
 esac
 
@@ -44,9 +44,9 @@ cat > ~/.local/share/applications/dropbox.desktop<<EOF!
 [Desktop Entry]
 Name=Dropbox
 Comment=Share your files between computers
-Exec=$HOME/$LUBUILD_DROPBOX_FOLDER/.dropbox-dist/dropboxd
-#Icon should be $HOME/$LUBUILD_DROPBOX_FOLDER/.dropbox-dist/dropbox-lnx.x86_64-x.yy.z/images/emblems/emblem-dropbox-syncing.png
-Icon=$HOME/$LUBUILD_DROPBOX_FOLDER/.dropbox-dist/images/emblems/emblem-dropbox-syncing.icon
+Exec=$HOME/$LUBUILD_BIN_FOLDER/.dropbox-dist/dropboxd
+#Icon should be $HOME/$LUBUILD_BIN_FOLDER/.dropbox-dist/dropbox-lnx.x86_64-x.yy.z/images/emblems/emblem-dropbox-syncing.png
+Icon=$HOME/$LUBUILD_BIN_FOLDER/.dropbox-dist/images/emblems/emblem-dropbox-syncing.icon
 Categories=Network
 Type=Application
 Terminal=false
@@ -69,7 +69,7 @@ if [[ $LUBUILD_DROPBOX_AUTOSTART -eq TRUE ]] ; then (
 # If you choose "Advanced" setup you can choose where to store your files locally
 
 # this will launch the daemon
-~/$LUBUILD_DROPBOX_FOLDER/.dropbox-dist/dropboxd &
+~/$LUBUILD_BIN_FOLDER/.dropbox-dist/dropboxd &
 
 ## alternative or supplementary lines
 # Version=1.0
@@ -170,7 +170,7 @@ sudo apt-get install -y git mercurial
 # credit - https://github.com/rakyll/drive/wiki
 # prepare profile
 cat << ! >> ~/.bashrc
-export GOPATH=\$HOME/bin/go
+export GOPATH=\$HOME/$LUBUILD_BIN_FOLDER/go
 export PATH=\$GOPATH:\$GOPATH/bin:\$PATH
 !
 # reload bashrc to avoid starting new terminal
