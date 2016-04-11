@@ -1,15 +1,16 @@
 
-See also:
-
-* Lubuild / Help / Diagnose / Network
-    * diagnosing issues with connectivity, resolution, addressing or performance
-
-
 ## Configure interface
 
-If you're trying to make a direct connection to a single device, this should help. 
-Otherwise, if you want to find out more about what is on your local network, 
-check the [#Discovery] section a little further down.
+If want to set up a direct connection to a single device, this should help. 
+
+Otherwise, for:
+
+* diagnosing issues with connectivity, resolution, addressing or performance - [General Network troubleshooting](https://github.com/artmg/lubuild/blob/master/help/diagnose/network.md)
+* If you want to find out more about what is on your local network, see [Network Discovery](https://github.com/artmg/lubuild/wiki/Troubleshooting#Discovery) 
+* For issues turning radios on and off, see [Hardware Troubleshooting](https://github.com/artmg/lubuild/wiki/Troubleshooting#Hardware) 
+* For configuring Network Services [https://github.com/artmg/lubuild/wiki/Networked-Services]
+
+
 
 ### Using DHCP
 

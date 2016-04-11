@@ -23,7 +23,7 @@
 # and then individually run for each user too
 
 LUBUILD_BIN_FOLDER=.bin
-export LUBUILD_DROPBOX_FOLDER
+export LUBUILD_BIN_FOLDER
 
 LUBUILD_DROPBOX_AUTOSTART=TRUE
 export LUBUILD_DROPBOX_AUTOSTART

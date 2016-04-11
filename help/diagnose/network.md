@@ -4,10 +4,6 @@ For some background on network interfaces and utilities you may find [https://wi
 
 ## Physical and Transport
 
-### diagnosing wifi connection issues
-
-see also [https://wiki.archlinux.org/index.php/Wireless_network_configuration#Troubleshooting]
-
 ### diagnosing Network Manager Connections
 ```
 # check the connection state
@@ -15,7 +11,7 @@ nmcli d
 
 sudo less /var/log/syslog
 
-## for full debug logging, edit the configuration to add (without comments)
+#### for full debug logging, edit the configuration to add (without comments)
 # [logging]
 # level=DEBUG
 sudo editor /etc/NetworkManager/NetworkManager.conf
@@ -26,6 +22,51 @@ sudo service network-manager restart
 # check log contents
 sudo cat /var/log/syslog
 
+```
+
+### diagnosing wireless connection issues
+
+#### Wifi (WLAN)
+
+see also [https://wiki.archlinux.org/index.php/Wireless_network_configuration#Troubleshooting]
+
+#### WWAN (Mobile Broadband)
+
+If it does not connect up automatically, try using 
+Network Manager to Edit Connections then Add 
+to create a new "Mobile Broadband" Connection 
+```
+# list connections#
+nmcli c
+# bring one of them up by name
+nmcli c up "Connection Name"
+# or by uuid
+nmcli c up uuid aaaaaaa-bbbb-cccc-dddddddd
+# credit http://askubuntu.com/a/451964
+
+##### using wvdial...
+
+
+##### check modem manager
+# list modems
+mmcli -L
+# using last number in path from list, view settings
+mmcli -m 9
+# using bearer number returned, check details
+nmcli -b 22
+
+
+
+```
+
+see generic information [https://wiki.archlinux.org/index.php/USB_3G_Modem]
+
+Search also for device specifics (e.g. [https://wiki.archlinux.org/index.php/Huawei_E220] )
+or for network specifics (e.g. the {now defunct} [https://www.howtoforge.com/vodafone_mobile_connect_card_driver_linux] )
+
+Ater the basic diagnostics above...
+```
+ls -l /dev/ttyUSB*
 ```
 
 ## Connectivity
