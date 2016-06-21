@@ -5,8 +5,9 @@
 ### install packages ###
 
 # now in official repos
-sudo apt-get-install -Y android-tools-adb android-tools-fastboot
-
+```
+sudo apt-get install -y android-tools-adb android-tools-fastboot
+```
 
 ### prepare your PC for device connection ###
 ```
