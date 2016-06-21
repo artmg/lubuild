@@ -69,6 +69,19 @@ Ater the basic diagnostics above...
 ls -l /dev/ttyUSB*
 ```
 
+### diagnosing ethernet connection issues
+```
+ip link show
+# credit http://serverfault.com/q/15776
+
+grep "" /sys/class/net/enp6s0/*
+# http://stackoverflow.com/a/808599
+
+sudo apt-get install ethtool
+ethtool enp6s0
+
+```
+
 ## Connectivity
 
 ```
@@ -325,9 +338,12 @@ wget 'http://mirror.skylink-datacenter.de/ubuntu-releases/13.10/ubuntu-13.10-des
 
 ### Internal bandwidth tests 
 
+```
+sudo apt-get install iperf
 server: iperf -s
 
 client: iperf -c x.x.x.x
+```
 
 ### What's using my bandwidth ? 
 

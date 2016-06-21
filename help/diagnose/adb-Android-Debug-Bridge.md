@@ -17,7 +17,7 @@ lsusb
 DEVICE_VENDOR_ID=04e8
 DEVICE_PRODUCT_ID=6860
 
-echo SUBSYSTEM==\"usb\", ATTR{idVendor}==\"$DEVICE_VENDOR_ID\", ATTR{idProduct}==\"$DEVICE_PRODUCT_ID\", MODE=\"0600\", GROUP=\"plugdev\" | sudo tee -a /etc/udev/rules.d/51-android.rules
+echo SUBSYSTEM==\"usb\", ATTR{idVendor}==\"$DEVICE_VENDOR_ID\", ATTR{idProduct}==\"$DEVICE_PRODUCT_ID\", MODE=\"0666\", GROUP=\"plugdev\" | sudo tee -a /etc/udev/rules.d/51-android.rules
 # sudo chmod a+r /etc/udev/rules.d/51-android.rules
 
 # reload udev for new rules
@@ -40,13 +40,19 @@ adb start-server
 # Tap About - Build Number several times repeatedly until Developer Mode appears
 
 adb devices
+# troubleshooting http://askubuntu.com/a/644222
 
 adb shell
 
-# inspect device properties
+
+#### inspect device properties ####
 
 cat /system/build.prop | grep "ro.product.model"
 cat /proc/version
+
+# simple way to check many common device properties
+adb shell getprop | grep "model\|version.sdk\|manufacturer\|hardware\|platform\|revision\|serialno\|product.name\|brand"
+# credit http://stackoverflow.com/a/31623988
 
 
 ### how to read app data ###
