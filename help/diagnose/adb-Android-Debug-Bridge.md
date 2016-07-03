@@ -4,8 +4,8 @@
 
 ### install packages ###
 
-# now in official repos
 ```
+# now in official repos
 sudo apt-get install -y android-tools-adb android-tools-fastboot
 ```
 
@@ -51,7 +51,7 @@ adb shell
 cat /system/build.prop | grep "ro.product.model"
 cat /proc/version
 
-# simple way to check many common device properties
+# simple way to check many common device properties including hardware versions
 adb shell getprop | grep "model\|version.sdk\|manufacturer\|hardware\|platform\|revision\|serialno\|product.name\|brand"
 # credit http://stackoverflow.com/a/31623988
 
