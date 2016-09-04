@@ -38,7 +38,8 @@ for basics on avahi ...
 * please see [https://github.com/artmg/lubuild/blob/master/help/configure/Networked-Services.md]
 
 
-### SAMBA ### 
+### SAMBA
+
 ```
 sudo apt-get install -y samba
 
@@ -50,7 +51,7 @@ sudo cp /etc/samba/smb.conf /etc/samba/smb.conf.master
 sudo gnome-text-editor /etc/samba/smb.conf.master
 
 
-### Sample shares ####
+#### Sample shares
 # unauthenticated access to a share
 cat <<EOF | sudo tee /etc/samba/smb.conf.master 
 EOF
