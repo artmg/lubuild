@@ -112,14 +112,135 @@ sudo fdisk /dev/sdb
 
 if that doesn't work use syslinux to install bootloader
 
-Diagnostics and Troubleshooting
--------------------------------
 
-see **boot-repair** for great and powerful GUI
+## Diagnostics and Troubleshooting
 
-### List devices
+If you are having trouble with an installed system, 
+see **boot-repair** for a powerful GUI designed to get it working again
 
-`lsblk`
+The rest of this section introduces useful commands for understanding 
+disks and other storage devices.
+
+### GUI
+
+The '''gnome-disks''' utility is a handy GUI for most diagnostics
+
+
+### Discover the attached devices
+```
+# see which partitions are currently in use and check how full
+df
+# if you prefer 'human readable' gigs and megs 
+df -H
+
+# view details of disk partitioning
+sudo fdisk -l
+
+# show all devices whether or not mounted
+lsblk
+
+# by disk (partition) Label, show mounted devices
+ls -l /dev/disk/by-label/
+# and all devices
+lsblk -o name,mountpoint,label,size
+```
+
+### Simple checks
+```
+# provided the filesystem is UNMOUNTED, check it
+sudo umount /dev/sdbX
+sudo fsck -t ext4 /dev/sdbX 
+
+# sudo badblocks /dev/sdbX
+```
+If you need to do full check on a filesystem that is in use, 
+reboot to a Live USB so they are not mounted.
+
+For help on disk and partition diagnostics see 
+http://www.howtogeek.com/howto/37659/the-beginners-guide-to-linux-disk-utilities/
+
+### In from lubuild/wiki/Troubleshooting/
+
+#### Capcity - disk full?
+
+```
+# check available space on mounted disks
+df -H
+
+# check the first level folders
+du --max-depth=1
+# sort it
+du --max-depth=1 -a | sort -nr | head
+
+### GUI to identify space hogs (esp in home folders) ###
+baobab &
+```
+
+#### Specifics to clean up 
+
+```
+### Clean up root ###
+
+## local package cache ##
+# display cache size
+du -sh /var/cache/apt/archives
+# credit - http://www.howtogeek.com/howto/28502/
+# purge
+sudo apt-get clean
+
+
+## crash logs ##
+# display cache size
+du -sh /var/log
+# purge
+sudo rm -fR /var/log/*
+
+
+## If you delete large files but they are still in use 
+# in process handles the space cannot be freed
+# until you flush one of these handles - 
+# credit - http://unix.stackexchange.com/a/64737
+lsof | grep deleted | grep MyBigFile
+# pick one of the pids and check its handles
+ls -l /proc/<Pid>/fd
+# flush the relevant handle by sending it 'nothing' 
+> /proc/<Pid>/fd/<HandleId>
+
+
+## old kernels ##
+# purge
+sudo apt-get update         # re-read package repositories
+sudo dpkg --configure -a    # complete any installations previously aborted 
+sudo apt-get -f install     # sort out packages not correctly installed due to space issues 
+sudo apt-get -y autoremove  # remove any items no longer required, including kernels
+sudo apt-get clean          # re-purge cache for any items just downloaded
+
+
+# re-check available space on mounted disks
+df -H
+
+```
+
+#### SMART tests 
+
+```
+gnome-disks
+# highlight the drive and check in the Drive Settings menu for SMART Data and Self Tests
+
+# if this is greyed outon External USB devices, you may need a separate utility to send
+# the SMART ATA commands via the USB interface
+sudo apt-get install -y smartmontools
+
+# check that SMART is available on the device 
+sudo smartctl -i /dev/sdX
+# you may need the -d sat option if the drive is not in the smartctl database
+# for USB device compatibility see http://www.smartmontools.org/wiki/Supported_USB-Devices 
+
+# check the health
+sudo smartctl -H /dev/sdX
+# if you have issues refer to http://blog.shadypixel.com/monitoring-hard-drive-health-on-linux-with-smartmontools/
+```
+
 
 ### Media devices using MTP
 
