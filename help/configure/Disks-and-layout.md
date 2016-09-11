@@ -118,6 +118,8 @@ if that doesn't work use syslinux to install bootloader
 =======
 see also GitHub/Lubuild.wiki/Troubleshooting.mediawiki
 
+see also GitHub/Lubuild.wiki/Troubleshooting.mediawiki
+
 see **boot-repair** for great and powerful GUI
 >>>>>>> Stashed changes
 
