@@ -50,6 +50,7 @@ sudo gnome-text-editor /etc/samba/smb.conf.master
 #### Sample shares
 # unauthenticated access to a share
 cat <<EOF | sudo tee /etc/samba/smb.conf.master 
+<put sample config here> !!!!
 EOF
 
 # help - https://www.samba.org/samba/docs/man/manpages/smb.conf.5.html
@@ -308,18 +309,21 @@ rsync --dry-run -av --modify-window=3605 $MOUNT_LOCAL /media/localdrive/localcop
 
 * Device not showing in Windows browse lists
     * From device running Samba try
+
 ```
 smbclient -L localhost
 ```
-    * Does the Workgroup setting on the clients match Samba config Workgroup?
-    * Does NMB service need to be running too?
-    * In some cases you may need to modify settings on the Windows client, e.g.
-        * Network and Sharing Center / Advanced sharing settings (on left-hand pane)
-            * All Networks / File sharing connections / **check** Enable file sharing for 40 & 56 bit encryption
-        * Network Connections / (right-click network adapter) / Properties / 
-        * Internet Protocol Version 4 / Advanced... / WINS / Enable NetBios over TCP/IP = TRUE
-        * Check the firewall allows traffic on the specific network including "File and Printer Sharing (LLMNR-UDP-In)"
-        * flush caches for DNS / NetBIOS / ARP from **Admin** command prompt with
+
+ * Does the Workgroup setting on the clients match Samba config Workgroup?
+ * Does NMB service need to be running too?
+ * In some cases you may need to modify settings on the Windows client, e.g.
+     * Network and Sharing Center / Advanced sharing settings (on left-hand pane)
+         * All Networks / File sharing connections / **check** Enable file sharing for 40 & 56 bit encryption
+     * Network Connections / (right-click network adapter) / Properties / 
+     * Internet Protocol Version 4 / Advanced... / WINS / Enable NetBios over TCP/IP = TRUE
+     * Check the firewall allows traffic on the specific network including "File and Printer Sharing (LLMNR-UDP-In)"
+     * flush caches for DNS / NetBIOS / ARP from **Admin** command prompt with
+
 ```
 ipconfig /flushdns & nbtstat -R & arp -d *
 ```
