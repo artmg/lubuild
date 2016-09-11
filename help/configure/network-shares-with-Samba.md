@@ -1,5 +1,5 @@
 
-## references
+## References
 
 * For other recipes, please see also:
     * sharing printers - [https://github.com/artmg/MuGammaPi/wiki/Print-server]
@@ -20,7 +20,7 @@ it is commonly used as a cross-platform solution from Linux servers
 (rather than just using the NFS Network File System that only Unix understands). 
 See more info at [https://en.wikipedia.org/wiki/Server_Message_Block]
 
-This Samba config file also turns on WINS, 
+The Samba config file may also turn on WINS, 
 the Windows Internet Naming Service, 
 so that computer names are broadcast and can be used instead of IP addresses
 
@@ -32,13 +32,9 @@ so that computer names are broadcast and can be used instead of IP addresses
 * create master conf
 * testparm to copy to main conf
 
-### advertising shares with Avahi
+Although you may directly edit the configuration file **/etc/samba/smb.conf** the recommended process above ensures you are warned of any configuration errors. 
 
-for basics on avahi ...
-* please see [https://github.com/artmg/lubuild/blob/master/help/configure/Networked-Services.md]
-
-
-### SAMBA
+### setting up SAMBA
 
 ```
 sudo apt-get install -y samba
@@ -70,6 +66,18 @@ sudo /etc/init.d/samba restart
 # sudo service smbd restart
 ```
 
+
+### advertising shares with Avahi
+
+for basics on avahi ...
+* please see [https://github.com/artmg/lubuild/blob/master/help/configure/Networked-Services.md]
+
+Include the following configuration directive...
+
+```
+[global]
+    multicast dns register = yes      # register itself with mDNS services like Avahi
+```
 
 ## Optical Drives
 
@@ -296,9 +304,13 @@ rsync --dry-run -av --modify-window=3605 $MOUNT_LOCAL /media/localdrive/localcop
  
 ### Troubleshooting ####
 
+#### Windows access issues
+
 * Device not showing in Windows browse lists
     * From device running Samba try
- smbclient -L localhost
+```
+smbclient -L localhost
+```
     * Does the Workgroup setting on the clients match Samba config Workgroup?
     * Does NMB service need to be running too?
     * In some cases you may need to modify settings on the Windows client, e.g.
@@ -308,33 +320,41 @@ rsync --dry-run -av --modify-window=3605 $MOUNT_LOCAL /media/localdrive/localcop
         * Internet Protocol Version 4 / Advanced... / WINS / Enable NetBios over TCP/IP = TRUE
         * Check the firewall allows traffic on the specific network including "File and Printer Sharing (LLMNR-UDP-In)"
         * flush caches for DNS / NetBIOS / ARP from **Admin** command prompt with
- ipconfig /flushdns & nbtstat -R & arp -d *
+```
+ipconfig /flushdns & nbtstat -R & arp -d *
+```
 
-
-### Other Troubleshooting ###
+#### Other Troubleshooting ###
 
 If you cannot see the server or share under "Windows Network" then check smb.conf 
-to ensure  you have set
-
- Workgroup = WORKGROUP
-
+to ensure you have set
+```
+Workgroup = WORKGROUP
+```
 at least in the global section (and you could even try adding it against the share for testing)
 
 other settings that may help include
+```
+local master = yes
+preferred master = yes
+wins support = yes
 
- local master = yes
- preferred master = yes
- wins support = yes
-
- multicast dns register = yes      # register itself with mDNS services like Avahi
-
+multicast dns register = yes      # register itself with mDNS services like Avahi
+```
 
 #### issues with linux samba client
+
+##### browsing
 
 If you cannot browse samba servers on the network via a linux client such as ubuntu
 edit the following file on the client /etc/samba/smb.conf
 
- # add this in global to use broadcast FIRST
- name resolve order = bcast host
+```
+# add this in global to use broadcast FIRST
+name resolve order = bcast host
 
 service samba restart
+```
+
+##### authentication and authorisation
+
