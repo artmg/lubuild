@@ -100,7 +100,11 @@ testparm -s /etc/samba/smb.conf.master && testparm -s /etc/samba/smb.conf.master
 
 ### old notes
 
-to be filed...
+* to be filed and deduped into ...
+ * here
+ * Samba [https://github.com/artmg/lubuild/blob/master/help/configure/network-shares-with-Samba.md]
+  * including WINS and Windows access
+ * sharing printers - [https://github.com/artmg/MuGammaPi/wiki/Print-server]
 
 #### Sharing folders between computers ==
 
