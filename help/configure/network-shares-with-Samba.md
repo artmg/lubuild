@@ -270,7 +270,10 @@ sudo umount /media/$USER/disc
 
 ### Access them from Linux ###
 
-See Name Resolution above for dependencies on mDNS
+* for issues with Autodiscovery (including local Name Resolution) using mDNS:
+   * see _Autodiscovery_ above for server-side issues
+   * for client-side issues see [https://github.com/artmg/lubuild/blob/master/help/configure/Networked-Services.md]
+
 ``` 
 ### GUI Access
 # help - https://help.ubuntu.com/community/Lubuntu/PCManFM#Browse_Windows_PCs_with_Samba
