@@ -98,6 +98,94 @@ EOF
 testparm -s /etc/samba/smb.conf.master && testparm -s /etc/samba/smb.conf.master | sudo tee /etc/samba/smb.conf && sudo /etc/init.d/samba restart
 ```
 
+### old notes
+
+to be filed...
+
+#### Sharing folders between computers ==
+
+If you want to begin sharing in either direction, you should install the features you require:
+
+```
+# ACCESS REMOTE SHARES
+# smbfs access remote windows CIFS shares
+# winbind use WINS to resolve windows hostnames
+# smbclient access remote windows CIFS shares
+sudo apt-get install -y smbfs winbind smbclient
+```
+
+#### Accessing Windows shares ==
+
+##### Prepare name resolution and CIFS ===
+
+Before you access Windows machine for the first time you should
+
+```
+# set up WINS name resolution
+sudo nano /etc/nsswitch.conf
+# on the hosts line add wins before dns </pre>
+Then to mount the share...
+
+<pre>sudo mkdir /mnt/sharefolder
+sudo mount -t cifs //servername/sharename /mnt/sharefolder -o username=xxx,password=yyy</pre>
+or you may have to specify the domain too
+
+<pre>sudo mount -t cifs //servername/sharename /mnt/sharefolder -o username=xxx,password=yyy,domain=zzzz</pre>
+NB: don't forget that the C$ admin share is often locked down in modern Windows versions
+```
+
+#####  Making shares accessible to Windows ===
+
+see Lubuild / Collector / Services / Sharing Folders
+###### Sample global ====
+```
+[global]
+# Allow use of computer names
+wins support = yes
+# don't insist on authenticating users
+security = share</pre>
+```
+###### Temporary shares ====
+
+ sudo shares-admin
+
+#####  WebDAV ===
+
+For ideas about using WebDAV on ubuntu, for instance to keep files syncronised with rsync, see  [http://tomalison.com/reference/2010/04/03/webdav/ http://tomalison.com/reference/2010/04/03/webdav/]
+
+There is also the Konqueror WebDAV client for KDE 
+
+### Sharing printers ===
+
+If you want to share printers you will need to
+```
+<pre>sudo apt-get install -Y samba system-config-samba
+#if you want to run it without rebooting then just
+smbd start
+# to validate it's running
+pcmanfm smb://localhost
+# (or nautilus or whatever)
+system-config-printer
+# go into Server / Settings and check (Show shared by others and) Publish
+# right-click on the printer and ensure all three Policies are checked
+sudo system-config-samba
+# if you want it open 
+# right-click on the print$ share and in the access tab leave it open
+# if you want it locked down...
+# in the server settings set the samba user passwords
+# to have the drivers download automatically on Windows systems
+# find the path to the drivers from the [print$] section at the end of
+less /etc/samba/smb.conf
+# e.g. /var/lib/samba/printers
+# for XP etc go into W32X86
+sudo pcmanfm /var/lib/samba/printers/W32X86
+# and copy in the files as guided by hpxxxx0n.cat
+# e.g. hpxxxx0n.*, i386 amd64 sobfolders, *.gpd, *.inf
+# http://www.samba.org/samba/docs/man/Samba-HOWTO-Collection/classicalprinting.html#id2626650
+#
+# etc etc
+# or just copy the files to the share and access them file print$ from the windows client</pre>
+```
 
 
 ## SSH - (remote) Secure SHell ##
