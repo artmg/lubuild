@@ -1,14 +1,18 @@
 
 see also:
 
-* uPNP discovery and clients
-    * _where?_
+*  [https://github.com/artmg/lubuild/blob/master/help/use/Music-and-multimedia.md]
+    * playing multimedia files including discs CDs DVDs Blu Rays etc
+    * metadata tagging to make collections convenient
+    * playlists
+    * uPNP discovery and clients
+
 
 ## IN
 
 
 
-### CD ripping 
+## CD ripping 
 
 Options
 * Asunder is simple, does MP3s and is in repos - gets some +1s (like apparently a lot of rippers) uses CDparanoia under covers  
@@ -16,7 +20,7 @@ Options
 * abcde CLI that gets lots of +1s
 * RubyRipper well +1ed but not in repos
 
-#### asunder
+### asunder
 
 ```
 sudo apt-get install -y asunder
@@ -38,7 +42,7 @@ sudo apt-get install -y asunder
 * OGG Quality: 1 (or 6 for Oversize)
 
 
-### DVD ripping 
+## DVD ripping 
 ```
 # MakeMKV wraps to single file (nicely for XBMC) but no compression
 ## see MKV Extractor Qt as GUI
@@ -48,6 +52,119 @@ sudo apt-get install -y asunder
 # help - https://help.ubuntu.com/community/RestrictedFormats/RippingDVDs
 sudo apt-get install dvdrip
 ```
+
+
+## Music file conversion
+
+### Objective 
+
+* re-encode music files (yeh, I know lossy to lossy is sub-optimal)
+* to compress (reduce file size) an allow for more music 
+    * on players with limited storage media space 
+    * whilst maintaining ID3 and other metadata
+
+
+### Candidates 
+
+* Sound Converter (GNU)
+    * should retain metadata
+    * soundconverter should be in repos 
+* soundkonverter (QT)
+    * is in repos
+    * currently requires too many additional libs (c 400MB)
+    * try again when QT5 is mainline
+* ffmpeg
+    * to preserve metadate use 
+        * -map_metadata 0 -id3v2_version 3 
+        * credit http://stackoverflow.com/a/26109838
+    * winff GUI is in repos
+* Handbrake ?
+* fre:ac (formally BonkEnc)
+
+* Audacity ("chain" feature)
+* gnac ?
+* does qmmp batch convert ?
+
+see also "MultiOS Data Music Metadata.txt"
+
+
+### re-encoding tests
+
+* as per cd ripping below, currently using **asunder** to rip
+    * default to OGG as not worked out LAME config yet to produce MP3s
+        * need to check Windows and Android compatibility for OGG, may not be natively supported
+        * defaulting to quality 1 for compact or 6 for oversize
+    * uses CDParanioa for album art and track metadata
+
+#### soundconverter
+
+* sudo apt-get install soundconverter gstreamer0.10-plugins-ugly
+* help - http://askubuntu.com/questions/468875/plugins-ugly-and-bad
+* Preferences
+    * Into folder Media.IN/Music.IN/_compressed
+    * Create subfolders : Artist / Album
+    * Delete original: do NOT check
+    * Replace Messy: CHECK
+    * Format: OGG
+    * Quality: Very Low (64kbps)
+        * Low (96kbps) resulted in 3-4MB files
+* 
+
+* later try handbrake ?
+
+
+## AV File Conversion
+
+Move the relevant detail from [### Music file conversion]
+
+This is about the decoding and re-encoding utilities themselves, 
+more than the front-ends that make them easy to use
+
+* Demux / mux - handle the container format 
+* Decode / encode - handle the compression and storage of each image
+
+
+### ffmpeg vs Libav/avconv
+
+At their basis these are 'religious differences' 
+
+* Libav forked from ffmepg in 2011, and was widely used at the time by OSes whose maintainers followed the fork
+* a cursory glance at the situation in 2016 suggests that ffmepg is more actively contributed to
+* or is it that ffmpeg gets more commits but libav do more testing?
+* ffmeg _might_ be in popular use again
+* NB: Libav project does NOT equal the libavcodec package - don't get confused (check for l vs L)
+
+? if you have one or the other, how do you tell _which_ package your ffmpeg command utility comes from
+
+
+#### ffmeg
+
+sudo apt-get install ffmpeg
+
+Examples:
+* Video Cutter - extract timed sequence from VOB files
+    * VOB is Video Object container format for DVD
+    * it contains MPEG program stream video, audio & subtitles (limited variety of compression standards)
+    * to demux the video and audio stream, 
+    * and Cut them from the start to end frame/time, 
+        * -ss <duration> -i input -t <duration>
+    * but not to re-encode
+        * ffmpeg stream copy mode '-c(odec) copy' omits decoding and encoding
+ ffmpeg -ss 00:04:30 -i VTS_01_1.VOB -t 00:07:00 -codec copy My_Movie_Cut.MPG
+
+
+* (command documentation)[https://www.ffmpeg.org/ffmpeg.html]
+* (some useful samples)[http://www.labnol.org/internet/useful-ffmpeg-commands/28490/]
+* (load more useful samples)[https://wiki.archlinux.org/index.php/FFmpeg]
+
+### others
+
+* mencoder - nicely matched to mplayer 
+
+* xvidenc ?
+* h264enc ?
+
+* what's below the covers of Handbrake and MakeMKV?
 
 ## Films
 

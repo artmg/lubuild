@@ -46,3 +46,16 @@ Name=${NAME[i]}" >> ~/Desktop/${NAME[i]}.desktop
 chmod a+rx ~/Desktop/${NAME[i]}.desktop
 
 # credit - https://lists.ubuntu.com/archives/lubuntu-users/2014-September/008496.html
+
+
+## Fonts
+
+# install fonts
+# cp *.ttf ~/.fonts/fontname
+# sudo cp /usr/share/fonts/fontname
+# or copy by hand  -  alt-f2   gksu pcmanfm /usr/share/fonts/
+
+# refresh font cache to use new fonts immediately
+sudo fc-cache -f -v
+# credit http://askubuntu.com/a/3706
+

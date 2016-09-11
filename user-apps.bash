@@ -247,7 +247,7 @@ cat > $HOME/.recoll/recoll.conf <<EOF
 # This is the indexing configuration for the current user
 # These values override the system-wide config files in:
 #   /usr/share/recoll/examples
-# help - http://www.lesbonscomptes.com/recoll/usermanual/RCL.INSTALL.CONFIG.html#RCL.INSTALL.CONFIG.RECOLLCONF.FILES
+# help - [http://www.lesbonscomptes.com/recoll/usermanual/usermanual.html#RCL.INSTALL.CONFIG.RECOLLCONF]
 
 topdirs = ~ \
 

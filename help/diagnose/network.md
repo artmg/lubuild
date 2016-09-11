@@ -168,7 +168,10 @@ nmcli dev show $INTERFACE
 # nmcli dev list iface $INTERFACE - old syntax
 # ifconfig $INTERFACE - deprecated
 
+
 ### DNS Resolution
+
+#### local
 
 # By default, since around 12.04, NetworkManager has relied on a local DNS cache provided by
 # dnsmasq running on localhost, which passes requests out when the host is not cached.
@@ -231,6 +234,30 @@ dig $HOST_NAME
 # help - http://manpages.ubuntu.com/manpages/trusty/man1/dig.1.html
 # examples - http://www.tecmint.com/10-linux-dig-domain-information-groper-commands-to-query-dns/
 ```
+
+#### network DNS
+
+If you are having issues on your local network where the local DNS server 
+(or the locally 'recommended' server from your ISP) is failing to resolve 
+
+```
+# compare your own name response with google
+nslookup domain.tld
+
+nslookup domain.tld 8.8.8.8
+
+# and more info from dig
+dig domain.tld
+
+dig @8.8.8.8 domain.tld
+
+```
+
+##### choosing alternate DNS providers
+
+use **namebench** or *DNS benchmark* utilities to identify optimal 
+
+
 
 ## Wireless
 
@@ -323,6 +350,9 @@ x-www-browser http://speedof.me
 speedtest-cli
 # install instructions?
 
+#### MTU
+# have you checked your MTU is set to ISP recommended (e.g. 1492 instead of Auto)
+
 
 #### old Network download speed tests ####
 
@@ -336,13 +366,29 @@ wget 'http://www.mirrorservice.org/sites/cdimage.ubuntu.com/cdimage/lubuntu/rele
 wget 'http://mirror.skylink-datacenter.de/ubuntu-releases/13.10/ubuntu-13.10-desktop-amd64.iso' -O /dev/null
 ```
 
+
 ### Internal bandwidth tests 
 
 ```
+# to set up network performance tests
 sudo apt-get install iperf
 server: iperf -s
 
-client: iperf -c x.x.x.x
+client: iperf -c <hostname or ip>
+
+#### Interface issues?
+
+# Latest NIC drivers? Correct drivers for card?
+# does dmesg show errors?
+
+# Duplex
+sudo /sbin/ethtool eth0
+sudo /sbin/ethtool -s eth0 full
+sudo /sbin/ethtool -s eth0 half
+# http://askubuntu.com/questions/277805/why-does-my-internet-speed-roughly-double-when-switching-from-ubuntu-to-win-xp
+
+# Wifi power management 
+sudo iwconfig wlan0 power off 
 ```
 
 ### What's using my bandwidth ? 

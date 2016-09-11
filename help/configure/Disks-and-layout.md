@@ -113,7 +113,13 @@ sudo fdisk /dev/sdb
 if that doesn't work use syslinux to install bootloader
 
 
+<<<<<<< Updated upstream
 ## Diagnostics and Troubleshooting
+=======
+see also GitHub/Lubuild.wiki/Troubleshooting.mediawiki
+
+see **boot-repair** for great and powerful GUI
+>>>>>>> Stashed changes
 
 If you are having trouble with an installed system, 
 see **boot-repair** for a powerful GUI designed to get it working again
