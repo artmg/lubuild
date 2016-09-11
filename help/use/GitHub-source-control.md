@@ -7,6 +7,7 @@
 
 ## Using GitHub ##
 
+
 ### Basics
 
 #### install
@@ -26,6 +27,7 @@ sudo apt-get install -y git
 git clone https://github.com/artmg/nixnote2-packaging.git
 ```
 
+
 ### check what has changed
 
 # breif overview
@@ -39,6 +41,11 @@ git diff --cached
 
 # difference between local and most recent commit
 git diff HEAD
+
+# check multiple local folders
+# credit http://stackoverflow.com/a/12495234
+find . -mindepth 1 -maxdepth 1 -type d -print -exec git -C "{}" status \;
+
 
 
 ### loading changes back into the git repo ###
@@ -57,6 +64,7 @@ git config --global credential.helper 'cache --timeout=3600'
 git config --global user.email "artmg@users.noreply.github.com"
 ```
 
+
 #### sync recent changes
 
 ```
@@ -70,6 +78,15 @@ git push
 
 # credit [commiting to git from linux command-line](http://blog.udacity.com/2015/06/a-beginners-git-github-tutorial.html)
 ```
+
+
+#### refresh all local folders from master
+
+```
+# credit http://stackoverflow.com/a/12495234
+find . -mindepth 1 -maxdepth 1 -type d -print -exec git -C "{}" pull \;
+```
+
 
 ### working with upstream
 
