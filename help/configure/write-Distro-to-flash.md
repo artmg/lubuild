@@ -70,7 +70,8 @@ may look complex but essentially boil down to a simple dd write of the entire de
 Note that this process will essentially overany additional partitions which may have existed on the media, 
 which of course will erase any data previously stored there. 
 
-You can use **mkusb** above for a more controlled approach, which makes it more likely you will select the right device
+You can use **mkusb** above for a more controlled approach, which makes it more likely you will select the right device. If you have a zipped image you could pipe it directly to the disk with `unzip -p xxx.zip xxx.img | dd bs=4M of=/dev/yyy` 
+
 
 ### expand the second partition
 
