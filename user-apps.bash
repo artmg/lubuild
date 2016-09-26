@@ -262,7 +262,11 @@ skippedPaths = \
 ~/.dropbox \
 ~/.local \
 ~/.mozilla \
-~/.wine
+~/.wine \
+/*/.dropbox.cache \
+/*/.dropbox-dist 
+
+skippedPathsFnmPathname = 0
 
 EOF
 
