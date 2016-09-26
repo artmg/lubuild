@@ -84,6 +84,9 @@ find . -name "*.wma" -printf "%f\n" -or -name "*.mp3" -printf "%f\n"
 
 Note: this is about uPNP AV solutions, like DLNA, rather than UPnP Internet Gateway Device (IGD) port management.
 
+For a general introduction to Hifi UPnP / DNLA Network Audio see [http://www.computeraudiophile.com/content/524-complete-guide-hifi-upnp-dlna-network-audio/]
+
+
 ### uPNP discovery 
 
 Avahi discovery (_link to Support Network_) supports mDNS (tcp/udp 5353) and DNS-SD (like apple bonjour) but not SSDP. 
