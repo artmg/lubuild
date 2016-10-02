@@ -19,6 +19,8 @@ md5sum -c MD5SUMS
 
 Browsing in pcmanfm in the folder containing the ISO image, press F4 for a terminal
 
+### Choice = Safer - mkusb
+
 ```
 # type and tab after this to choose filename
 IMAGE_FILENAME=
@@ -36,29 +38,64 @@ sudo echo
 sudo apt-get install -y udisks2 mtools
 
 
-# write to USB
+# IF CHOICE = write to USB
 sudo -H mkusb $IMAGE_FILENAME $IMAGE_PERSISTENCE 
 # and enter 100 for persistence %
+```
+
+
+### Choice = Simpler - dd
+
+```
+# type and tab after this to choose filename
+IMAGE_FILENAME=
+
+# enter the label you want for this device
+MEDIA_LABEL=
 
 # check the output for the dev name set as **vfat**
-IMAGE_DEVICE=sdX9
+MEDIA_DEVICE=sdX9
 
-# credit - https://help.ubuntu.com/community/RenameUSBDrive
-sudo mlabel -i /dev/$IMAGE_DEVICE ::$IMAGE_LABEL
+# enter your password for su
+sudo echo
 
-# Troubleshooting
-# if you get error "not a mulliple of sectors"
-# echo mtools_skip_check=1 >> ~/.mtoolsrc
-# and repeat the command
+# udisks2 is probably installed by default on ubuntu
+sudo apt-get install -y udisks2 mtools
+# avoid the error "not a multiple of sectors"
+echo mtools_skip_check=1 > ~/.mtoolsrc
 
-# display label
-sudo mlabel -i /dev/$IMAGE_DEVICE -s ::
+# now swap the file extension as the image is unzipped directly to the device
+unzip -p $IMAGE_FILENAME ${IMAGE_FILENAME%.*}.img | sudo dd bs=4M of=/dev/${MEDIA_DEVICE:0:3}
+
+# flush cache before re-insertion
+sync 
+# eject
+udisksctl unmount --block-device /dev/$MEDIA_DEVICE
+udisksctl unmount --block-device /dev/${MEDIA_DEVICE:0:3}1
+udisksctl power-off --block-device /dev/${MEDIA_DEVICE:0:3}
+# help - https://udisks.freedesktop.org/docs/latest/udisksctl.1.html
+echo please eject and re-insert media
+
+# The partition arrangement here is for Raspbian
+# see [https://github.com/artmg/MuGammaPi/wiki/Rasbian-basics]
+
+# Setting name on both partitions so Ext4 shows up on booted Pi and FAT shows up when inserted on other system
+# Rename 1 FAT and 2 Ext4 
+sudo mlabel  -i /dev/${MEDIA_DEVICE:0:3}1 ::$MEDIA_LABEL-OS
+sudo e2label    /dev/${MEDIA_DEVICE:0:3}2 $MEDIA_LABEL-disk
+
+# display labels
+sudo mlabel  -i /dev/${MEDIA_DEVICE:0:3}1 -s ::
+sudo e2label    /dev/${MEDIA_DEVICE:0:3}2 
+# Set name / display name - does it REALLY need sudo?
 
 # eject
-udisksctl unmount --block-device /dev/$IMAGE_DEVICE
-udisksctl power-off --block-device /dev/${IMAGE_DEVICE:0:3}
+udisksctl unmount --block-device /dev/$MEDIA_DEVICE
+udisksctl unmount --block-device /dev/${MEDIA_DEVICE:0:3}1
+udisksctl power-off --block-device /dev/${MEDIA_DEVICE:0:3}
 # help - https://udisks.freedesktop.org/docs/latest/udisksctl.1.html
 ```
+
 
 
 ## Raspberry Pi ##
@@ -81,9 +118,9 @@ you should do this AFTER the umount above but before any device eject / power-of
 # credit - http://elinux.org/RPi_Resize_Flash_Partitions
 # the article also explains why as well as various options for how
 
-IMAGE_DEVICE=sdX9
+MEDIA_DEVICE=sdX9
 
-# sudo parted /dev/$IMAGE_DEVICE resize 
+# sudo parted /dev/$MEDIA_DEVICE resize 
 # help
 
 # WIP #################
@@ -93,14 +130,24 @@ IMAGE_DEVICE=sdX9
 # for now use fdisk 
 # * delete paritition (2) and create new 
 # * accepting defaults will fill to end as type 83
-fdisk /dev/${IMAGE_DEVICE:0:3}
+sudo fdisk /dev/${MEDIA_DEVICE:0:3}
 
-udisksctl unmount --block-device /dev/${IMAGE_DEVICE:0:3}2
-sudo e2fsck -f /dev/${IMAGE_DEVICE:0:3}2
-sudo resize2fs /dev/${IMAGE_DEVICE:0:3}2
+udisksctl unmount --block-device /dev/${MEDIA_DEVICE:0:3}2
+sudo e2fsck -f /dev/${MEDIA_DEVICE:0:3}2
+sudo resize2fs /dev/${MEDIA_DEVICE:0:3}2
 
 
 ```
+
+### Partition start improvement?
+
+NB: The image has the starting sector of the first partition at 8192. 
+If the flash media came partitioned with a start sector of 32768 
+this was presumably the best alignment for the media...
+How can we move the first partition to this alternate start sector? 
+any ideas from [http://askubuntu.com/a/491097] 
+or [https://www.linux.com/news/how-modify-raw-disk-image-your-custom-linux-distro]
+
 
 ### other
 
