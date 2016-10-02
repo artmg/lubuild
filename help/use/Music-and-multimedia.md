@@ -43,10 +43,14 @@ _ moved out from [https://github.com/artmg/lubuild/blob/master/app-installs.bash
     * 
 * QT-based
     * Clementine has strong fan base and rich features
+        * no native WMA support - needs packages depending on gstreamer version it uses
+            * Clementine v1.2 needed gstreamer0.10-ffmpeg e.g. from ppa:mc3man/gstffmpeg-keep
+            * v1.3 gstreamer1.0-libav
     * Musique is lightweight and QT-based
     * sayonara-player
     * did YaRock continue developing?
     * qmmp? - http://qmmp.ylsoftware.com/
+    * SMPlayer - generic player including video formats
 * LXMusic might be too simple as well
 * Banshee does it out of the box
 * Rhythmbox is commonly used

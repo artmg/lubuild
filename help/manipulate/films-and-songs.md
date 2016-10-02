@@ -123,6 +123,11 @@ more than the front-ends that make them easy to use
 * Demux / mux - handle the container format 
 * Decode / encode - handle the compression and storage of each image
 
+GStreamer is the back-end that handles interaction between many codecs and the application software
+Some older app versions relied on the Gstreamer legacy libraries (e.g. gstreamer0.10-xxxx) 
+but fortunately most have moved onto mainstream versions now 
+
+
 
 ### ffmpeg vs Libav/avconv
 
