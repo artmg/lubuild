@@ -37,7 +37,10 @@ Although you may directly edit the configuration file **/etc/samba/smb.conf** th
 ### setting up SAMBA
 
 ```
+# install samba
+sudo apt-get update
 sudo apt-get install -y samba
+# ensure install samba-common-bin is installed for testparm to work
 
 # back up original
 sudo cp /etc/samba/smb.conf /etc/samba/smb.conf.original
@@ -47,10 +50,16 @@ sudo cp /etc/samba/smb.conf /etc/samba/smb.conf.master
 sudo gnome-text-editor /etc/samba/smb.conf.master
 
 
+set SHARES_ROOT=/srv/samba/MySharedFolder
+
+# create standard location for samba data (unless you plan to use a mounted device)
+sudo mkdir -p $SHARES_ROOT
+
 #### Sample shares
 # unauthenticated access to a share
 cat <<EOF | sudo tee /etc/samba/smb.conf.master 
 <put sample config here> !!!!
+
 EOF
 
 # help - https://www.samba.org/samba/docs/man/manpages/smb.conf.5.html

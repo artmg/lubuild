@@ -12,12 +12,11 @@ To set allow basic local autodiscovery of services on your device...
  
 sudo apt-get install -y libnss-mdns
 # this also auto-adds the mdns entries to /etc/nsswitch.conf
-# later perhaps consider the full Avihi / ZeroConf stack
+# later perhaps consider the full Avahi / ZeroConf stack
 ```
 
-For information about discovering services 
-see [https://github.com/artmg/lubuild/wiki/Troubleshooting#troubleshooting-networking]
-
+For clients you can use to discover services advertised via mDNS 
+see Discovery / Services in Network Diagnostics [https://github.com/artmg/lubuild/blob/master/help/diagnose/network.md#Discovery]
 
 ## Sharing Folders ##
 
@@ -66,8 +65,16 @@ such as multiple shares, sharing printers and optical drives,
 or for details on accessing them with linux clients 
 please see [https://github.com/artmg/lubuild/blob/master/help/configure/network-shares-with-Samba.md]
 
+##### OUT
+
+* dedupe between ...
+ * here
+ * Samba [https://github.com/artmg/lubuild/blob/master/help/configure/network-shares-with-Samba.md]
+  * including WINS and Windows access
+ * sharing printers - [https://github.com/artmg/MuGammaPi/wiki/Print-server]
+
 ```
-### SAMBA ### 
+##### SAMBA ### 
 sudo apt-get install -y samba
 
 # back up original
@@ -78,7 +85,7 @@ sudo cp /etc/samba/smb.conf /etc/samba/smb.conf.master
 sudo gnome-text-editor /etc/samba/smb.conf.master
 
 
-### Sample shares ####
+##### Sample shares ####
 # unauthenticated access to a share
 cat <<EOF | sudo tee /etc/samba/smb.conf.master 
 [ShareName]
@@ -98,15 +105,7 @@ EOF
 testparm -s /etc/samba/smb.conf.master && testparm -s /etc/samba/smb.conf.master | sudo tee /etc/samba/smb.conf && sudo /etc/init.d/samba restart
 ```
 
-### old notes
-
-* to be filed and deduped into ...
- * here
- * Samba [https://github.com/artmg/lubuild/blob/master/help/configure/network-shares-with-Samba.md]
-  * including WINS and Windows access
- * sharing printers - [https://github.com/artmg/MuGammaPi/wiki/Print-server]
-
-#### Sharing folders between computers ==
+#### Sharing folders between computers 
 
 If you want to begin sharing in either direction, you should install the features you require:
 
@@ -118,9 +117,9 @@ If you want to begin sharing in either direction, you should install the feature
 sudo apt-get install -y smbfs winbind smbclient
 ```
 
-#### Accessing Windows shares ==
+#### Accessing Windows shares 
 
-##### Prepare name resolution and CIFS ===
+##### Prepare name resolution and CIFS 
 
 Before you access Windows machine for the first time you should
 
@@ -155,9 +154,9 @@ security = share</pre>
 
 #####  WebDAV ===
 
-For ideas about using WebDAV on ubuntu, for instance to keep files syncronised with rsync, see  [http://tomalison.com/reference/2010/04/03/webdav/ http://tomalison.com/reference/2010/04/03/webdav/]
+For ideas about using WebDAV on ubuntu, for instance to keep files syncronised with rsync, see  [http://tomalison.com/reference/2010/04/03/webdav/ http://tomalison.com/reference/2010/04/03/webdav/]
 
-There is also the Konqueror WebDAV client for KDE 
+There is also the Konqueror WebDAV client for KDE 
 
 ### Sharing printers ===
 
