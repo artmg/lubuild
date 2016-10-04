@@ -88,7 +88,7 @@ find . -name "*.wma" -printf "%f\n" -or -name "*.mp3" -printf "%f\n"
 
 Note: this is about uPNP AV solutions, like DLNA, rather than UPnP Internet Gateway Device (IGD) port management.
 
-For a general introduction to Hifi UPnP / DNLA Network Audio see [http://www.computeraudiophile.com/content/524-complete-guide-hifi-upnp-dlna-network-audio/]
+For a general introduction to Hifi UPnP / DNLA Network Audio see [http://www.computeraudiophile.com/content/524-complete-guide-hifi-upnp-dlna-network-audio/]. For simpler audio-only solutions see MPD below.
 
 
 ### uPNP discovery 
@@ -128,10 +128,6 @@ but also:
         * Kodi
             * see UPnP / DLNA Services in [https://github.com/artmg/MuGammaPi/wiki/Media-Center]
         * gmediarenderer (gmrender-resurrect on Pi)
-        * MPD clients - see also [??????]
-            * Cantata - QT-based and feature rich
-            * Quimup
-            * upmpdcli (front end for MPD) or is this local only?
         * ???
         * NB: one Windows 10 there is no longer any built-in DLNA Renderer, and even WMP now comes without
         * bubbleupnpserver?
@@ -143,6 +139,7 @@ but also:
     * ReadyMedia (was miniDLNA) used by Volumio - see [Pi Volumio.md]
     * [MediaTomb](https://help.ubuntu.com/community/MediaTomb)
     * [Ps3MediaServer](https://help.ubuntu.com/community/Ps3MediaServer)
+    * upmpdcli provides a UPnP interface to DNLA control points, but it is actually a client for an underlying MPD service
 
 * Further reading
     * [http://lesbonscomptes.com/pages/homenet-audio.html]
@@ -150,6 +147,24 @@ but also:
     * [http://elinux.org/UPnP]
     * [https://en.wikipedia.org/wiki/List_of_UPnP_AV_media_servers_and_clients]
 
+## MPC Clients (MPD)
+
+Music Player Daemon (MPD) is a Linux service allowing remote control of rendering music. It is a simpler model than UPnP, but it does have the advantage that the playlist is held by the rendering server, instead being sent track by track by the remote control point client. This makes it more of a room-based solution, rather than 'follow-me' controller-based listening.
+
+For more on MPD, see [https://github.com/artmg/MuGammaPi/wiki/Audio-Hub]
+
+Music Player Clients (MPC), often referred to as MPD clients, include:
+* Linux
+    * Cantata - QT-based and feature rich
+    * Quimup
+    * QMpdClient
+    * 
+* Android
+    * MPDroid
+
+**upmpdcli** is a special case, as it is client for MPD that exposes itself as a UPnP interface to DNLA control points
+
+For an exhaustive list of MPC clients see [http://mpd.wikia.com/wiki/Clients]
 
 
 ## remote control ###
