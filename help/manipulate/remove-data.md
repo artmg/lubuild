@@ -28,7 +28,7 @@ dd if=/dev/zero of=/dev/sdXY
 # if you plan to use encryption, then it is recommended you fill the space with random data first 
 # to reduce the ability for others to understand anything about the size of contents of the encrypted area 
 
-# rather SLOW overwrite with quality psuedo-random data stream
+# this traditional method is rather SLOW to overwrite, using quality psuedo-random data stream
 dd if=/dev/urandom of=/dev/sdXY bs=1M
 
 # use openssl to encrypt the zeros (much QUICKER simple pseudo-RANDOM - better than patterns)
@@ -40,7 +40,7 @@ sudo cryptsetup open --type plain /dev/sdXY container --key-file /dev/random
 dd if=/dev/zero of=/dev/mapper/container
 sudo cryptsetup close container 
 # credit - https://wiki.archlinux.org/index.php/Dm-crypt/Drive_preparation#dm-crypt_wipe_on_an_empty_disk_or_partition
-
+# if you want a second pass, close then re-open so the random key file changes what will be written
 
 ```
 ### multiple overwrite
