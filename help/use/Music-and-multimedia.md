@@ -1,6 +1,6 @@
 
 This page is all about **Using** Music and Other Multimedia files (such as Video) 
-and manipulating the files for the best size and markup (tags or metadata).
+including some bash commands for generating playlists
 
 NB: this file also includes details of Android Applications used for:
 * rendering media including audio
@@ -13,8 +13,9 @@ See also:
     * For creating music or playing instruments see 
 *  [https://github.com/artmg/lubuild/blob/master/help/manipulate/films-and-songs.md]
     * for ripping CDs DVDs Blu Rays etc
-    * moved the AV file conversion out there too
-        * perhaps the metataging too? or manybe not
+    * manipulating files for the best size and markup
+        * including metadata tagging to make collections convenient
+    * other kinds of AV file conversion
 
 
 
@@ -252,78 +253,5 @@ Android Candidates:
 - CrossDJ (Freemium)
 
 For hardware search "Behringer BCD3000"
-
-
-## Music Metadata tagging
-
-see also:
-* [MultiOS Data Music Metadata.md] for metadata editors
-    * and _old_ notes on Windows apps for compressing oversized music files
-
-### Meta data organisers 
-
-The most popular... do not support WMA!
-
-* easytag - good range of features, in repos
-* puddletag - see below
-
-Other candidates:
-* mp3tag on Windows! ... under Wine?
-* Picard for MusicBrainz metadata http://musicbrainz.org/doc/MusicBrainz_Picard/
-* TagScanner under Wine (can put cover art into folder not files)
-* kid3 (WMA support?) under wine or using KDE4
-* entagged (java but supports WMA)
-* coquillo - QT-based
-    * not sure if there is a debian / ubuntu repo
-* Amarok, although more a player and format convertor, has been reported to update WMA tags successfully
-* 
-
-NB: if you simply want a CLI tool to view a single file's metadata properties see **exiftool** in [../manipulate/PDF files.md]
-
-
-#### Picard 
-
-```
-# credit https://musicbrainz.org/doc/Picard_Linux_Install
-# available in repos
-
-sudo apt-get install picard
-
-# help http://picard.musicbrainz.org/docs/basics/
-```
-
-
-#### kid3-qt 
-
-* use QT version in Lubuntu to avoid KDE dependencies
-* Also has CLI: http://kid3.sourceforge.net/kid3_en.html
-* uses TagLib for WMA support
-
-```
-sudo apt-get install kid3-qt
-```
-
-
-#### puddletag 
-
-Feature limitations:
-* Since 0.10.2 WMA support has been dropped (to avoid risk of corruption)
-* 1.02 ('current' in 15.04 repos) does not show Album Art
-* 1.05 source on github released May 2015
-
-Review: www.ubuntugeek.com/linux-finally-gets-a-great-audio-tagger.html
-See: https://fanart.tv/2012/06/organizing-your-xbmc-music-library/
-
-* Edit / Preferences
-    * Tag Panel / Add
-        * A&lbum Artist
-        * albumartist
-        * 0
-    * Tag Panel / Add
-        * Disc &Number
-        * discnumber
-        * 2
-* Columns
-    * (add the same two as above)
 
 
