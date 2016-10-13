@@ -31,7 +31,9 @@ sudo apt-get install -y asunder
 # Now installs into options when inserting CD  via MimeType=x-content/audio-cdda
 # sudo leafpad /usr/share/applications/asunder.desktop
 
-# Not sure about getting LAME working for MP3 output so use ogg
+# If you want to be able to output to MP3 as well as OGG
+sudo apt-get install -y lame
+# does this include the dependency libmp3lame0 ?
 
 # changes to config stored in ~/.config/asunder
 # this example is for very small file sizes (at the cost of quality)
