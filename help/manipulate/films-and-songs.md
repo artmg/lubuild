@@ -9,6 +9,8 @@ see also:
     * creating playlists
     * uPNP discovery and clients
     * other AV remote control software 
+* [https://github.com/artmg/lubuild/blob/master/help/manipulate/music-and-instruments.md]
+    * For creating music or playing instruments 
 
 
 ## IN
@@ -18,12 +20,18 @@ see also:
 ## CD ripping 
 
 Options
-* Asunder is simple, does MP3s and is in repos - gets some +1s (like apparently a lot of rippers) uses CDparanoia under covers  
+* Asunder is simple, does MP3s and is in repos - gets some +1s
+    * uses CDparanoia under covers (like apparently a lot of rippers) 
+    * does not search or save cover art images
+    * GTK-based
 * Sound Juicer is Ubuntu default but has had issues in past
 * abcde CLI that gets lots of +1s
 * RubyRipper well +1ed but not in repos
 
+
 ### asunder
+
+NB: Asunder does not search or save cover art images
 
 ```
 sudo apt-get install -y asunder
@@ -279,6 +287,17 @@ Other candidates:
 NB: if you simply want a CLI tool to view a single file's metadata properties see **exiftool** in [../manipulate/PDF files.md]
 
 
+#### kid3-qt 
+
+* use QT version in Lubuntu to avoid KDE dependencies
+* Also has CLI: http://kid3.sourceforge.net/kid3_en.html
+* uses TagLib for WMA support
+
+```
+sudo apt-get install kid3-qt
+```
+
+
 #### Picard 
 
 ```
@@ -291,18 +310,9 @@ sudo apt-get install picard
 ```
 
 
-#### kid3-qt 
-
-* use QT version in Lubuntu to avoid KDE dependencies
-* Also has CLI: http://kid3.sourceforge.net/kid3_en.html
-* uses TagLib for WMA support
-
-```
-sudo apt-get install kid3-qt
-```
-
-
 #### puddletag 
+
+QT-based
 
 Feature limitations:
 * Since 0.10.2 WMA support has been dropped (to avoid risk of corruption)

@@ -9,9 +9,9 @@ NB: this file also includes details of Android Applications used for:
 
 See also:
 
-* [Creating Music.md]
+* [https://github.com/artmg/lubuild/blob/master/help/manipulate/music-and-instruments.md]
     * For creating music or playing instruments see 
-*  [https://github.com/artmg/lubuild/blob/master/help/manipulate/films-and-songs.md]
+* [https://github.com/artmg/lubuild/blob/master/help/manipulate/films-and-songs.md]
     * for ripping CDs DVDs Blu Rays etc
     * manipulating files for the best size and markup
         * including metadata tagging to make collections convenient
