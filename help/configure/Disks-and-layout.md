@@ -433,11 +433,19 @@ other PCs
 Install with generic build user, add real users with encrypted homes
 later
 
+
 ### OpenELEC multiboot
 
 If you want a really fast-loading media player which has a browser
 available, then you could have OpenELEC as an additional GRUB option on
 your multi-boot menu
+
+For other installation and configuration procedures, 
+see [https://github.com/artmg/MuGammaPi/wiki/Media-Centre]
+
+NB: Some sections have been added IN below from Media-Centre 
+so might need rationalising / de-duping
+
 
 #### prepare
 
@@ -451,25 +459,39 @@ For flexibility these can be Logical in an Extended Partition
 Kernel and System are aparently all there is to the OpenELEC build, so
 the size of data depends on your usage.
 
-#### download OpenELEC
+#### Partitions ###
 
-<http://openelec.tv/get-openelec>
+Here is information about install OpenELEC 
+as Triple Boot on top of Windows and Ubuntu. 
 
-circa 150MB
+* OE_BOOT
+    * required
+    * bootable
+    * recommended 1GB
+    * contents: KERNEL and SYSTEM files from distro image
+* OE_DATA
+    * required (for persisting data - will it work 'live' without??)
+    * state data like thumbnails and meta-databases
+    * **also stores config??**
+    * using 6GB in this example
 
-Open the archive and copy the files to the SYS partition
+credit - [http://wiki.openelec.tv/index.php/Dual_Boot]
 
-#### add to GRUB
 
-see Dual Boot article
+#### Partitioning issues ####
 
-#### install Browser
+* No free (unpartitioned) space on HDD.
+* can shrink Windows Partition to make space
+* This will put OpenELEC between Windows & Ubuntu
+* Need to expand the Extended Partition to make space for two new logical partitions at the start of the Extended
+* Must leave current partitions AS THEY ARE at the end of the repartitioning, so that data is left intact (non-destructively)
+* deleting partitions in FDISK and recreating them did NOT put the partitions back in the same places
+* had to use **gparted** to resize the Extended Partition forward to insert the two extra partitions required
+    * found gparted on Lubuntu "Live USB Installer"
+* 
 
-Opera -
-<http://mymediaexperience.com/how-to-install-xbmc-linux-in-15-minutes-with-openelec/>
 
-LiveUSB
--------
+## LiveUSB
 
 ### Creating a LiveUSB startup disk
 
