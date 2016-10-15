@@ -605,8 +605,7 @@ Once CDROM is remounted as RW add to File Mgr as Places
 `/cdrom     ALLP root`\
 `/cdrom/Media/In.various        ALLP.IN`
 
-Multiboot ISOs
---------------
+### Multiboot ISOs
 
 Here are some articles explaining how to take ISOs for multiple linux
 distros, and create Grub menus to allow you to boot directly into
@@ -627,3 +626,242 @@ data.
     <https://wiki.archlinux.org/index.php/GRUB>
 -   GNU GRUB full manual - <http://www.gnu.org/software/grub/manual/>
 
+
+## IN
+
+The following sections have been moved IN from the old Service Set up Ubuntu files
+They need to be rationalised and reformatted
+
+### Appendix E - Advanced disk configuration =
+
+#### Reducing the number of Primary Partitions ==
+
+Some manufacturers (such as HP) may use up all 4 available Primary Partitions in their factory-shipped configuration. This means that when you try to create a new partition (Primary OR Logical) you get an error saying &quot;it is not possible to create more than 4 Primary Partitions&quot;.
+
+This workaround is based on the comprehensive article [http://h30434.www3.hp.com/t5/Other-Notebook-PC-Questions/How-to-repartition-HDD-of-HP-notebook-with-pre-installed/td-p/742019 How to repartition HDD of HP notebook with pre-installed Windows 7] by MVP Daniel Potyrala, which explains the various options with pros and cons and recommends the option to remove the System Partition (sda1). By making the OS partition (sda2) bootable directly, Windows works, the Recovery (sda3) partition is still intact for a full restore, and the HP_tools (sda4) partition is still available. The System Partition contains boot files and the WinRE (Windows Recovery Environment) whichallows you to do Startup Repair, System Restore, Complete PC Restore and Windows Memory Diagnostic Tool . However, the same tasks are performed much better by the tools contained in these other partitions, and you can access the different partitions just by marking them as active using a parition table tool (like GPartEd).
+
+Note we do NOT create a Windows 7 System Repair disc as no optical drive is available. You CAN however back up the System Parition. Use GPartEd to ensure that the System partiton IS /dev/sda1 first...
+
+```
+# Back up HP SYSTEM partition prior to removal
+# ===create folder to store files===
+SystemBackup=/media/mysdcard/Media.IN/HP_SYSTEM
+mkdir $SystemBackup
+cd $SystemBackup
+# Backup the MBR code only
+sudo dd if=/dev/sda of=./mbr.bin bs=446 count=1
+# Backup the MBR including primary partition table: 
+sudo dd if=/dev/sda of=./mbr.bin.plusPrimaryPartitionTable bs=512 count=1
+# to Restore the MBR 
+# e.g. sudo dd if=/media/sda/mbr.bin of=/dev/sda bs=446 count=1
+===Whole Partition copy===
+# credit &gt; http://www.backuphowto.info/linux-backup-hard-disk-clone-dd
+# Back up the System partition
+sudo dd if=/dev/sda1 of=./HP.SYSTEM.partition
+```
+
+Before proceeding you should prepare your Windows by shrinking the main OS partition to make space for the Ubuntu partitions, as you will need to install Ubuntu to give a bootloader in place of the old HP System parition.
+
+Once you have done this you can use GPartEd to delete the System Partition. Create the new Ubuntu partitons in the space freed up by shrinking the OS partition (as the System partition was too small to use for this) Finally proceed with the Ubuntu installation
+
+== Backing up MBR and EISA install partition ==
+
+best done BEFORE installing ubuntu (to preserve initial MBR)
+
+```
+#===History===
+# booted into ubuntu
+# ran Disk Utility to identify details of /dev/sda1
+# (e.g. partition type 0x27, capacity 9.7gb 9,664,671,744b)
+# or just use ...
+sudo cfdisk -Pt /dev/sda
+# other commands to investigate disk setup...
+# show all partitions
+sudo fdisk -l
+# show mounted devices
+df -Th
+#
+# copy contents of PQSERVICE partition to C:\Backup\PQSERVICE...
+
+##### create folder to store files
+BackupFolder=/media/Acer/Backup/PQSERVICE
+mkdir $BackupFolder
+cd $BackupFolder
+# credit &gt; https://help.ubuntu.com/community/WindowsDualBoot#Master%20Boot%20Record%20backup%20and%20re-replacement
+# Backup the MBR code only
+sudo dd if=/dev/sda of=./mbr.bin bs=446 count=1
+# Backup the MBR including primary partition table: 
+sudo dd if=/dev/sda of=./mbr.bin.plusPrimaryPartitionTable bs=512 count=1
+# to Restore the MBR 
+# e.g. sudo dd if=/media/sda/mbr.bin of=/dev/sda bs=446 count=1
+
+#### Whole Partition copy
+
+# credit &gt; http://www.backuphowto.info/linux-backup-hard-disk-clone-dd
+# Back up the hidden partition
+sudo dd if=/dev/sda1 of=./PQSERVICE.partition
+# view progress using...
+# sudo pkill -SIGUSR1 ^dd$
+# alternatives
+# help (error handling) &gt; http://www.inference.phy.cam.ac.uk/saw27/notes/backup-hard-disk-partitions.html
+# idea &gt; consider setting blocksize to match (hard disk or partition) blocksize
+# idea &gt; partimage ?
+# idea &gt; ntfsclone http://www.linux-ntfs.org/doku.php?id=ntfsclone
+# sample (command included in ubuntu 10.4)
+sudo ntfsclone -s -o ./PQSERVICE.ntfsclone /dev/sda1
+===Content files copy===
+# (not yet complete)
+sudo dd if=/dev/sda1 of=./PQSERVICE.bootsect.bin bs=512 count=1
+```
+
+#### Boot configuration ==
+
+''WARNING: Do not upgrade or modify grub in dual boot configurations when Windows is HIBERNATED!''
+
+NB: Left Ubuntu as default – some machines should make Windows default (see ''Set Up PC.htm'')
+
+<pre>If performance on device has ever been in question: </pre>
+<ul>
+<li><pre>default Grub to Ubuntu</pre></li></ul>
+
+##### Advanced Grub2 ===
+
+###### Install if required 
+
+```
+# Check which version(s) of grub is installed, looking for lines beginning 'ii' in the list...
+dpkg --list 'grub*'
+
+# Check which version is active using:
+grub-install -v
+
+# If required, upgrade to the new version using:
+sudo apt-get install grub-pc
+# Then TAB to choose OK, choose Yes, accept overwriting
+
+###### Configure 
+
+# credit &gt; [http://www.linuxquestions.org/blog/drask-180603/2009/12/5/howmany-for-grub-2-2466/ http://www.linuxquestions.org/blog/drask-180603/2009/12/5/howmany-for-grub-2-2466/]
+sudo cp /usr/sbin/grub-mkconfig /usr/sbin/grub-mkconfig_backup
+sudo cp /etc/grub.d/10_linux /etc/grub.d/10_linux_backup
+sudo chmod a-x /etc/grub.d/10_linux_backup
+sudo cp /etc/grub.d/30_os-prober /etc/grub.d/30_os-prober_backup
+sudo chmod a-x /etc/grub.d/30_os-prober_backup
+sudo gedit /usr/sbin/grub-mkconfig
+
+# after export GRUB_DEFAULT \
+# GRUB_HOWMANY_LINUX \
+
+sudo gedit /etc/grub.d/10_linux
+
+# replace code with what's in '''10_linux''' in Service Procs folder (wallet or online in FM)
+
+# (was [http://www.linuxquestions.org/blog/drask-180603/2009/12/5/howmany-for-grub-2-2466/ www.linuxquestions.org/blog/drask-180603/2009/12/5/howmany-for-grub-2-2466/]
+
+# but then had to make sure you change the HOWMANYs to GRUB_HOWMANY_LINUX)
+sudo gedit /etc/default/grub
+
+# GRUB_HOWMANY_LINUX=1
+sudo os-prober
+
+# to check for exact wording
+sudo gedit /etc/grub.d/30_os-prober
+
+# after
+
+echo &quot;Found ${LONGNAME} on ${DEVICE}&quot; &gt;&amp;2
+
+# found_other_os=1
+
+# insert the code:
+
+if [ &quot;${LONGNAME}&quot; = &quot;Windows NT/2000/XP (loader)&quot; ]; then
+LONGNAME=&quot;Windows XP&quot;
+fi
+
+# then run
+
+sudo update-grub
+```
+
+##### Remove grub bootloader 
+
+```
+# install boot-repair tool to remove grub boot loader and reinstall Windows Master Boot Record (MBR) with NTBootloader
+# credit &gt; https://help.ubuntu.com/community/Boot-Repair
+sudo add-apt-repository ppa:yannubuntu/boot-repair &amp;&amp; sudo apt-get update
+sudo apt-get install -y boot-repair &amp;&amp; (sudo boot-repair &amp;)
+# for alternative consider ms-sys &gt; http://ubuntuforums.org/showthread.php?t=622828
+```
+
+##### Restore Acer MBR for windows restore partition ===
+
+```
+# REPLACE X in sdX with the letter for the disk you need
+# Check the current partition table
+sudo cfdisk -Pt /dev/sdX
+# Backup the MBR including primary partition table: 
+sudo dd if=/dev/sdX of=./mbr.bin.plusPrimaryPartitionTable bs=512 count=1
+# find the file RTMBR.bin from the PQSERVICE hidden partition /acer/tools folder
+cd /media/art/PQSERVICE/acer/tools
+# Restore the MBR *including* primary partition table: 
+sudo dd if=RTMBR.bin of=/dev/sdX bs=512 count=1
+# to Restore JUST the MBR 
+# sudo dd of=RTMBR.bin if=/dev/sdX bs=446 count=1
+```
+#### Automount disks 
+
+==== Xbuntu/Myth Check the NTFS driver is installed ====
+
+```
+apt-cache search ntfs-3g
+```
+
+==== Identify disks ====
+```
+sudo fdisk -l<br />(or)<br />ls -l /dev/disk/by-uuid/
+sudo editor /etc/fstab
+# Ubuntu:
+sudo gedit /etc/fstab
+# Xbuntu/Myth:
+sudo mousepad /etc/fstab
+```
+
+##### Add mount lines 
+
+```
+/dev/sda2 /media/Windows ntfs-3g rw,auto,user,fmask=0111,dmask=0000 0 0
+/dev/sda3 /media/shared vfat rw,auto,user,fmask=0111,dmask=0000 0 0
+# or using UUIDs:
+
+# /dev/sda2
+UUID=7C84665A846616C4 /media/Windows ntfs-3g rw,auto,user,fmask=0111,dmask=0000 0 0
+# /dev/sda3
+UUID=3C72F85E72F81E78 /media/shared vfat rw,auto,user,fmask=0111,dmask=0000 0 0
+```
+''Sample of original fstab contents:''
+
+```
+# /dev/sda2
+UUID=7C84665A846616C4 /media/sda2 ntfs defaults,umask=007,gid=46 0 0
+# /dev/sda3
+UUID=91A1-25A1 /media/open vfat defaults,utf8,umask=007,gid=46 0 1
+sudo mkdir /media/Windows
+sudo mkdir /media/shared
+sudo mount -a
+credit &gt; https://help.ubuntu.com/community/AutomaticallyMountPartitions
+```
+##### NTFS Permissions 
+```
+#==mount options==
+# help &gt; http://www.tuxera.com/community/ntfs-3g-manual/
+ntfs-3g
+users = any user can mount, different user can dismount
+uid=1000
+gid=100
+# less permissive dmask=027,fmask=137
+# more permissive dmask=000,fmask=111
+# totally permissive umask=000
+utf8
+user mapping with windows &gt; http://www.tuxera.com/community/ntfs-3g-manual/#7
+```
