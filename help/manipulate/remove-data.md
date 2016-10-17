@@ -65,10 +65,18 @@ Perhaps this is why people and organisations who want to take NO risk will physi
 # * part of GNU Coreutils
 # * installed by default under Lubuntu
 # * help - [https://www.gnu.org/software/coreutils/manual/html_node/shred-invocation.html]
+# these examples leave the default 3 pass overwrite, fine unless you're hyper-paranoid
 
-# basic example
+##### basic example
 shred -vu MyFiles*
 
+##### current folder tree
+# make sure you CD into the folder first
+find . -type f -print0 | xargs -0 shred -fuzv
+# credit http://askubuntu.com/a/146003
+# however this does not "shred" the folder names in the same way
+
+##### full drive
 # select the device from which you want to totally wipe the filesystem  (but leave dev node intact)
 MY_DRIVE=/dev/sdX
 # Make totally SURE this is the right device FIRST
@@ -87,5 +95,13 @@ shred -v $MY_DRIVE
 # wipe man pages recommends telling the util how much to overwrite as floppies don't always correctly report their dimensions
 wipe -l 1440k /dev/sdX
 # wipe can follow symlinks (if you have a psuedo-device like /dev/floppy) with option  -D
+
+
+#### secure-delete
+
+sudo apt-get install secure-delete
+srm -rfll folderPathToRemove
+# credit http://askubuntu.com/a/122562
+# single pass only
 
 ```
