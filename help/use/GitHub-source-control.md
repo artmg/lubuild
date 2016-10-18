@@ -1,9 +1,5 @@
 
 
-## TTD
-
-* how to use tokens or certificates to authenticate scripted git push
-
 
 ## Using GitHub ##
 
@@ -11,10 +7,25 @@
 ### Basics
 
 #### install
+
+##### cli
+
 ```
 sudo apt-get install -y git
 # no longer require git-core, see - http://askubuntu.com/a/5935
 ```
+
+##### gui
+
+options for graphical git clients:
+
+* git-cola
+    * qt-based
+* QGit
+    * qt-based
+* 
+
+
 
 #### clone 
 ```
@@ -51,6 +62,9 @@ find . -mindepth 1 -maxdepth 1 -type d -print -exec git -C "{}" status \;
 ### loading changes back into the git repo ###
 
 #### Caching your GitHub password in Git
+
+as an alternative to this, see Authentication below
+
 ```
 # If you're cloning GitHub repositories using HTTPS and git v>=1.7.10
 # credit - https://help.github.com/articles/caching-your-github-password-in-git/
@@ -152,3 +166,63 @@ gollum .
 # open browser to the local server
 x-www-browser http://localhost:4567/
 ```
+
+## Authentication
+
+see also:
+* caching your github password (above)
+
+How to avoid keep entering your password to authenticate with GitHub, 
+especailly when using scripted git push, 
+instead using tokens or certificates or other means to authenticate 
+
+The article [https://git-scm.com/book/en/v2/Git-Tools-Credential-Storage] 
+explains two broad methods:
+* use SSH transport instead
+* use one of the Credential Storage options over HTTP(S) transport
+
+
+### stored Personal Access token
+
+Note that you should guard these tokens as if they were passwords, 
+as they allow wide ranging access to your repos. 
+
+
+
+* Generate a new Personal Access Token 
+    * [https://github.com/settings/tokens/new]
+* Give it a name 
+    * you might have different ones for different devices, to cut off any compromises
+* Choose a scope
+    * for now **repo** is enough (or even **public_repo** ?)
+* credit [https://help.github.com/articles/creating-an-access-token-for-command-line-use/] 
+
+
+# paste the token into the editor in the form
+# http[s]://<username>:<password>@<host>
+editor ~/.git-personal-access-token
+
+
+# now include that credential helper
+git config --global credential.helper 'store --file ~/.git-personal-access-token'
+
+
+Now all your local git access should include these credentials automatically
+
+Periodically review the tokens you have at [https://github.com/settings/tokens]
+
+#### other
+
+see also:
+* [http://superuser.com/a/683651]
+    * switching between HTTPS and SSL methods of access
+* 
+
+
+### deploy keys
+
+[https://developer.github.com/guides/managing-deploy-keys/#deploy-keys]
+
+can be set up per repo
+
+
