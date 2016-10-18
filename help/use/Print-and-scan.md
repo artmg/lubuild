@@ -19,13 +19,16 @@ x-www-browser http://hplipopensource.com/hplip-web/gethplip.html
 # validate installation
 hp-check -r
 
-# check your device is set up properly using HP Device Manager 
+# check your device is set up properly using HP Device Manager - Info pages (GUI)
 hp-info
 # and if not set it up
 hp-setup
 
 # check ink levels
 hp-levels
+
+# if you want to open the main device manager GUI
+hp-toolbox
 ```
 
 ### Scanners
