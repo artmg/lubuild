@@ -52,7 +52,11 @@ sudo apt-get install ghostscript
 # credit http://askubuntu.com/a/477798
 gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dNOPAUSE -dQUIET -dBATCH \
    -dPDFSETTINGS=/screen -sOutputFile=small.pdf original.pdf
-# default (full quality) -dPDFSETTINGS = /prepress - slightly lower /printer - lower = /ebook - lowest = /screen 
+# -dPDFSETTINGS = 
+# /prepress   (default) is full quality
+# /printer    slightly lower (300dpi)
+# /ebook      lower (150dpi)
+# /screen     lowest (72dpi)
 # help - http://ghostscript.com/doc/current/Ps2pdf.htm
 
 gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dNOPAUSE -dQUIET -dBATCH \
