@@ -105,7 +105,16 @@ but also:
 ### uPNP clients
 
 * Media Controllers / "Control Point"
-    * upplay (qt-based) - in jfdockes PPA - http://lesbonscomptes.com/upplay/downloads.html
+    * upplay
+        * qt-based
+        * in jfdockes PPA [http://lesbonscomptes.com/upplay/downloads.html]
+        * maintainer active but would prefer not to be
+    * madrigal
+        * qt5 OpenHome control point for linux, mac, windows
+        * new-ish project
+        * author previously developed cantata MPD client
+        * [https://github.com/CDrummond/madrigal]
+        * no PPA yet
     * gupnp-tools in ubuntu repos
         * control point gupnp-av-cp 
         * cli discovery - gssdp-discover
@@ -156,7 +165,12 @@ For more on MPD, see [https://github.com/artmg/MuGammaPi/wiki/Audio-Hub]
 
 Music Player Clients (MPC), often referred to as MPD clients, include:
 * Linux
-    * Cantata - QT-based and feature rich
+    * Cantata
+        * QT-based and feature rich
+        * active development
+        * version in repos may be old KDE version 1.x
+        * for qt version 2.x use PPA
+            * [http://ubuntuhandbook.org/index.php/2016/01/install-mpd-client-cantata-2-0-via-ppa-in-ubuntu/]
     * Quimup
     * QMpdClient
     * 
