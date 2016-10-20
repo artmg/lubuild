@@ -1,6 +1,21 @@
 
 ## file types ##
 
+### common types
+
+```
+# display the type of known files, based on their signature
+file <path/filename.ext>
+```
+
+### common file signatures
+
+Use a hex editor to read the header bytes at the beginning of a file and check against:
+
+* [http://www.garykessler.net/library/file_sigs.html]
+* 
+
+
 ### type identifier software
 
 read the header bytes at the beginning of a file 
@@ -9,6 +24,9 @@ to understand what filetype it is
 and which programmes may be used to open / view / extract data 
 
 * Detect It Easy (DIE) - QT app with extensible signatures (programmable in java)
+    * Download from [http://ntinfo.biz/index.php/detect-it-easy]
+    * Unpack
+    * `sh lin64/die`
 
 
 ## Data Carving ##
@@ -51,7 +69,7 @@ sudo photorec
 # also - http://www.cgsecurity.org/wiki/Image_Creation
 ```
 
-## loop files ##
+## raw partition and loop files ##
 
 ```
 # trying to mount an image file as a loop...
@@ -82,5 +100,27 @@ cryptsetup luksUUID /dev/loop9
 head -c 256 < /dev/loop2 | hd
 
 # consider a forensic data carving tool
+
+# see also [https://major.io/2010/12/14/mounting-a-raw-partition-file-made-with-dd-or-dd_rescue-in-linux/]
+
+
 ```
+
+## Recovering from damaged optical media
+
+DVDisaster is in the Ubuntu repos
+and can read as much of CDs and DVDs as possible despite physical damage
+[http://dvdisaster.net/en/index.html]
+
+
+## IN - Using LiveUSB for Data Recovery
+
+_from old Set Up Ubuntu_
+
+Data recovery tools (in universe repository):
+* testdisk
+* foremost
+* scalpel
+
+source [http://www.howtogeek.com/howto/15761/recover-data-like-a-forensics-expert-using-an-ubuntu-live-cd/]
 
