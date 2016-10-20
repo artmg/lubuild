@@ -8,8 +8,8 @@ the most important task is to ensure that ALL data is physically, actually overw
 
 See also:
 
-* why you need to overwrite [GitHub/Lubuild.files/help/manipulate/disk-recovery-and-forensics.md]
-* how proper total wiping is hard on flash [GitHub/Lubuild.files/help/manipulate/flash-drives-and-SSDs.md]
+* why you need to overwrite [https://github.com/artmg/lubuild/blob/master/help/manipulate/disk-recovery-and-forensics.md]
+* how proper total wiping is hard on flash [https://github.com/artmg/lubuild/blob/master/help/manipulate/flash-drives-and-SSDs.md]
 
 
 ### simple overwrites with dd
