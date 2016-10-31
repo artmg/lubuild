@@ -24,8 +24,15 @@ The following are on the default list of Lubuild apps
 # requires poppler-utils
 sudo apt-get install poppler-utils
 
-pdfimages source-file-name.PDF /path/to/output/image-files
+#### raster images
+
+pdfimages -all source-file-name.PDF /path/to/output/image-files
 # -j will write JPEGs as such
+# -all will extract all raster image types - equivalent to -png -tiff -j -jp2 -jbig2 -ccitt
+
+#### vector graphics
+pdftocairo -svg source-file-name.PDF /path/to/output/image-files.SVG
+
 ```
 
 ### Reduce PDF filesize by reducing image quality
