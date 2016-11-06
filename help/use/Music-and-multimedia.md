@@ -33,6 +33,7 @@ _ moved out from [https://github.com/artmg/lubuild/blob/master/app-installs.bash
 
 * on lubuntu default player is Audacious
     * Audacious works but not great interface for finding tracks in big library
+    * Not much use for editing playlists (see below) 
     * What will be default app with Lubuntu on LxQt?
 * VLC might be getting into album art browsing
     * vlc browser-plugin-vlc vlc-plugin-fluidsynth
@@ -83,6 +84,25 @@ find . -name ‘*.mp3′ -execdir bash -c ‘file=”{}”; printf “%s\n” �
 # http://jgiffard.wordpress.com/2013/06/04/create-m3u-playlists-from-the-command-line-on-mac-os-x/
 find . -name "*.wma" -printf "%f\n" -or -name "*.mp3" -printf "%f\n"
 ```
+
+### Playlist editing
+
+If you bluk create playlists using scripts or commands like above, 
+you may decide you wish to refine these playlists, 
+perhaps filtering out songs you don't appreciate as much
+
+* Requirements - a music player that:
+    * easily accepts playlists
+    * changes easily saved whilst playing
+    * not too fussy about relative or absolute paths
+* Clementine
+    * Effective solution
+    * M3U playlists output are reasonably robust
+    * Player interface makes it relatively easy to manipulate as you listen
+* Audacious
+    * NOT suitable
+    * output to M3U was substandard - Space -> %20 and no #EXTINF directives
+
 
 
 ## uPNP / DLNA
