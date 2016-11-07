@@ -1,5 +1,15 @@
-Partitions
-----------
+
+
+NB: This file is rather large, and perhaps it could be separated into different files 
+to cover different subjects
+
+See also:
+* [https://github.com/artmg/lubuild/blob/master/help/manipulate/storage-in-connected-devices.md]
+    * for device storage (MTP and PTP) and mounting
+
+
+
+## Partitions
 
 ### Rename USB
 ```
@@ -249,25 +259,6 @@ sudo smartctl -H /dev/sdX
 # if you have issues refer to http://blog.shadypixel.com/monitoring-hard-drive-health-on-linux-with-smartmontools/
 ```
 
-
-### Media devices using MTP
-
-13.10 includes support for MTP devices (*via GVFS?*), but by default
-devices appear in PCManFM under the **mtp:** protocol, e.g.
-*mtp://$$usb:001,003$$/Card*, however they also appear under a *real*
-filesystem location under...
-
-```
-ls $XDG_RUNTIME_DIR/gvfs
-# /run/user/<user>/gvfs
-# credit - http://askubuntu.com/a/233123
-#
-# for a bash script to get this path deterministically, see http://askubuntu.com/a/342549 
-```
-
-NB: some proprietary MTP implementations (such as Samsung Galaxy S4) may
-not allow command line access. Perhaps **go-mtpfs** might have slightly
-better support?
 
 ### Speed and Capacity tests
 
