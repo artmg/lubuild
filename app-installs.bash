@@ -68,6 +68,13 @@ sudo apt-get remove -y gnumeric
 ######################################
 
 # including some proprietary (non-libre) packages
+
+sudo apt-get install `echo ${DESKTOP_SESSION,}`-restricted-extras -y
+# help > https://help.ubuntu.com/community/RestrictedFormats
+
+
+### FONTS ###
+
 # pre-answer the accept EULA to avoid the install waiting
 sudo debconf-set-selections <<EOF
 msttcorefonts msttcorefonts/defoma note
@@ -80,8 +87,13 @@ EOF
 # previously....
 # sudo sh -c "echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | debconf-set-selections"
 ## credit > http://askubuntu.com/questions/16225/how-can-i-accept-microsoft-eula-agreement-for-ttf-mscorefonts-installer
-sudo apt-get install `echo ${DESKTOP_SESSION,}`-restricted-extras -y
-# help > https://help.ubuntu.com/community/RestrictedFormats
+
+# Google metric-equivalent fonts for Calibri and Cambrian
+sudo apt-get install -y fonts-crosextra-carlito fonts-crosextra-caladea
+# see also [https://github.com/artmg/lubuild/blob/master/help/use/Office-documents.md]
+
+# rebuild Font Cache (just in case)
+sudo fc-cache -f -v
 
 
 ####################################
