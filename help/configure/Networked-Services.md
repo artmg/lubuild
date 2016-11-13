@@ -190,6 +190,42 @@ sudo pcmanfm /var/lib/samba/printers/W32X86
 # or just copy the files to the share and access them file print$ from the windows client</pre>
 ```
 
+#### NFS
+
+Networked File System is the native Linux means to share files across networks, 
+and is simple and easy to use with Linux devices including Apple OSes. 
+Windows has had some support for extensions that can mount or present NFS shares, 
+but in most cases you will find it easier to use the SMB / CIFS protocol with Samba to support Windows clients. 
+
+The NFS server "Exports" the volumes that can be "Mounted" by NFS clients.
+
+##### Server
+
+```
+sudo apt-get install -y nfs-kernel-server
+```
+
+# NFS filesystem access control list
+/etc/exports	
+
+# you could share specific folders directly, but best practice suggests 
+# collecting them into one place and setting up specific permissions
+
+/srv/exports/
+
+# https://help.ubuntu.com/community/SettingUpNFSHowTo
+# https://www.digitalocean.com/community/tutorials/how-to-set-up-an-nfs-mount-on-ubuntu-14-04
+# https://www.howtoforge.com/nfs-server-on-ubuntu-14.10
+
+##### Client
+
+```
+sudo apt-get install -y nfs-common
+```
+
+
+
+
 
 ## SSH - (remote) Secure SHell ##
 
