@@ -69,15 +69,16 @@ sudo apt-get install dvdrip
 
 ## Music file conversion
 
-### Objective 
+### Re-encoding into smaller files
 
-* re-encode music files (yeh, I know lossy to lossy is sub-optimal)
+Objective:
+* re-encode music files (yeah, I know lossy to lossy is sub-optimal)
 * to compress (reduce file size) an allow for more music 
     * on players with limited storage media space 
     * whilst maintaining ID3 and other metadata
 
 
-### Candidates 
+#### Candidates 
 
 * Sound Converter (GNU)
     * should retain metadata
@@ -101,7 +102,7 @@ sudo apt-get install dvdrip
 see also "MultiOS Data Music Metadata.txt"
 
 
-### re-encoding tests
+#### re-encoding tests
 
 * as per cd ripping below, currently using **asunder** to rip
     * default to OGG as not worked out LAME config yet to produce MP3s
@@ -109,7 +110,7 @@ see also "MultiOS Data Music Metadata.txt"
         * defaulting to quality 1 for compact or 6 for oversize
     * uses CDParanioa for album art and track metadata
 
-#### soundconverter
+##### soundconverter
 
 * sudo apt-get install soundconverter gstreamer0.10-plugins-ugly
 * help - http://askubuntu.com/questions/468875/plugins-ugly-and-bad
@@ -124,6 +125,20 @@ see also "MultiOS Data Music Metadata.txt"
 * 
 
 * later try handbrake ?
+
+
+### cutting an audio track
+
+if you want to extract a short clip of audio from a track, 
+for instance to create a ringtone or alert, 
+you can use the exact same syntax of ffmpeg as for Video Cutting, 
+below, because it does NOT re-encode.
+
+```
+ffmpeg -ss <duration> -i input_file.mp3 -t <duration> -codec copy output_file.mp3
+# where <duration> is hh:mm:ss (e.g. 01:10:30)
+# of the start and length of the segment you want to extract
+```
 
 
 ## AV File Conversion
