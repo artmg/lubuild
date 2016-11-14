@@ -11,6 +11,8 @@ see also:
     * other AV remote control software 
 * [https://github.com/artmg/lubuild/blob/master/help/manipulate/music-and-instruments.md]
     * For creating music or playing instruments 
+* [https://github.com/artmg/lubuild/blob/master/help/manipulate/photos.md]
+    * for working with your own captured images
 
 
 ## IN
@@ -299,7 +301,17 @@ Other candidates:
 * Amarok, although more a player and format convertor, has been reported to update WMA tags successfully
 * 
 
-NB: if you simply want a CLI tool to view a single file's metadata properties see **exiftool** in [../manipulate/PDF files.md]
+#### Exiftool
+
+Although not a specific candidate for the functionality mentioned here, 
+**exiftool** is a great CLI utility for basic file metadata manipulation
+
+see:
+* [https://github.com/artmg/lubuild/blob/master/help/manipulate/PDF files.md]
+    * to view a single file's metadata properties
+* [https://github.com/artmg/lubuild/blob/master/help/manipulate/photos.md]
+    * to bulk rename files based on meta properties (e.g. date photo or video was taken)
+* 
 
 
 #### kid3-qt 
