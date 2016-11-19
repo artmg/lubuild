@@ -237,6 +237,10 @@ sudo apt-get clean          # re-purge cache for any items just downloaded
 # re-check available space on mounted disks
 df -H
 
+# if you still think you can reclaim more, try bleach bit system cleaner
+sudo apt-get install bleachbit
+# as well as locations above, it also checks locations for well-known apps (like browser caches)
+
 ```
 
 #### SMART tests 

@@ -190,6 +190,8 @@ sudo pcmanfm /var/lib/samba/printers/W32X86
 # or just copy the files to the share and access them file print$ from the windows client</pre>
 ```
 
+
+
 #### NFS
 
 Networked File System is the native Linux means to share files across networks, 
@@ -199,30 +201,71 @@ but in most cases you will find it easier to use the SMB / CIFS protocol with Sa
 
 The NFS server "Exports" the volumes that can be "Mounted" by NFS clients.
 
+
 ##### Server
 
 ```
+# NB: some Raspbian distros have issues with rpcinfo -p showing "can't contact portmapper"
+# before install use      sudo apt-get purge -y rpcbind
+
+###### Base software install
 sudo apt-get install -y nfs-kernel-server
+
+###### best practice to collect export points
+# you could share specific folders directly, but best practice suggests 
+# collecting them into one place using bind mounts 
+# and setting up specific permissions 
+
+# srv is linux filesystem hierarchy standard, some people use nfs or nfsexports as alternative subfolder
+sudo mkdir -p /srv/exports/myExportName
+
+###### Bind the data into the nfs exports directory
+cat <<EOF | sudo tee -a /etc/fstab
+/mnt/myMediaLocation/myDataDir      /srv/exports/myExportName    none   bind   0   0
+EOF
+sudo mount -a
+
+###### add to NFS filesystem access control list
+cat <<EOF | sudo tee -a /etc/exports
+/srv/exports/myExportName   *(rw,sync,no_root_squash,no_subtree_check)
+EOF
+
+###### refresh the exports and start the server
+sudo exportfs -a
+sudo service nfs-kernel-server start
+
 ```
 
-# NFS filesystem access control list
-/etc/exports	
+# [https://help.ubuntu.com/community/SettingUpNFSHowTo]
 
-# you could share specific folders directly, but best practice suggests 
-# collecting them into one place and setting up specific permissions
+# [https://www.digitalocean.com/community/tutorials/how-to-set-up-an-nfs-mount-on-ubuntu-14-04]
+# [https://www.howtoforge.com/nfs-server-on-ubuntu-14.10]
 
-/srv/exports/
 
-# https://help.ubuntu.com/community/SettingUpNFSHowTo
-# https://www.digitalocean.com/community/tutorials/how-to-set-up-an-nfs-mount-on-ubuntu-14-04
-# https://www.howtoforge.com/nfs-server-on-ubuntu-14.10
 
 ##### Client
 
 ```
 sudo apt-get install -y nfs-common
+
+sudo mkdir -p /mnt/nfs/myMountName
+mount -t nfs myServerName:/myExportPath /mnt/nfs/myMountName/
+# test
+mount -t nfs
+
+# for a permanent mount that should avoid issues if unavailble...
+cat <<EOF | sudo tee -a /etc/fstab
+myServerName:/myExportPath   /mnt/nfs/myMountName/    nfs   defaults,timeo=14,soft   0   0
+EOF
+
+sudo mount -a
+
 ```
 
+##### Troublshooting NFS
+
+[http://www.tldp.org/HOWTO/NFS-HOWTO/troubleshooting.html]
+[https://wiki.archlinux.org/index.php/NFS/Troubleshooting]
 
 
 
