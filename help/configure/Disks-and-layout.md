@@ -3,10 +3,20 @@
 NB: This file is rather large, and perhaps it could be separated into different files 
 to cover different subjects
 
+e.g. Layout reasoning sections separate from precise commands to maipulate
+
+
+
 See also:
 * [https://github.com/artmg/lubuild/blob/master/help/manipulate/storage-in-connected-devices.md]
     * for device storage (MTP and PTP) and mounting
-
+* [https://github.com/artmg/lubuild/blob/master/help/configure/write-Distro-to-flash.md]
+    * creating LiveUSB installation media
+* [https://github.com/artmg/lubuild/blob/master/help/manipulate/flash-drives-and-SSDs.md]
+    * special info about how to work with flash (non-mechanical) storage devices
+* [https://github.com/artmg/lubuild/blob/master/help/manipulate/remove-data.md]
+    * removing data, securely if necessary
+* 
 
 
 ## Partitions
@@ -176,6 +186,59 @@ sudo fdisk /dev/sdb
 ```
 
 if that doesn't work use syslinux to install bootloader
+
+
+### Backing up MBR and EISA install partition
+
+best done BEFORE installing ubuntu (to preserve initial MBR)
+
+```
+#===History===
+# booted into ubuntu
+# ran Disk Utility to identify details of /dev/sda1
+# (e.g. partition type 0x27, capacity 9.7gb 9,664,671,744b)
+# or just use ...
+sudo cfdisk -Pt /dev/sda
+# other commands to investigate disk setup...
+# show all partitions
+sudo fdisk -l
+# show mounted devices
+df -Th
+#
+# copy contents of PQSERVICE partition to C:\Backup\PQSERVICE...
+
+##### create folder to store files
+BackupFolder=/media/Acer/Backup/PQSERVICE
+mkdir $BackupFolder
+cd $BackupFolder
+# credit &gt; https://help.ubuntu.com/community/WindowsDualBoot#Master%20Boot%20Record%20backup%20and%20re-replacement
+# Backup the MBR code only
+sudo dd if=/dev/sda of=./mbr.bin bs=446 count=1
+# Backup the MBR including primary partition table: 
+sudo dd if=/dev/sda of=./mbr.bin.plusPrimaryPartitionTable bs=512 count=1
+# to Restore the MBR 
+# e.g. sudo dd if=/media/sda/mbr.bin of=/dev/sda bs=446 count=1
+
+#### Whole Partition copy
+
+# credit &gt; http://www.backuphowto.info/linux-backup-hard-disk-clone-dd
+# Back up the hidden partition
+sudo dd if=/dev/sda1 of=./PQSERVICE.partition
+# view progress using...
+# sudo pkill -SIGUSR1 ^dd$
+# alternatives
+# help (error handling) &gt; http://www.inference.phy.cam.ac.uk/saw27/notes/backup-hard-disk-partitions.html
+# idea &gt; consider setting blocksize to match (hard disk or partition) blocksize
+# idea &gt; partimage ?
+# idea &gt; ntfsclone http://www.linux-ntfs.org/doku.php?id=ntfsclone
+# sample (command included in ubuntu 10.4)
+sudo ntfsclone -s -o ./PQSERVICE.ntfsclone /dev/sda1
+===Content files copy===
+# (not yet complete)
+sudo dd if=/dev/sda1 of=./PQSERVICE.bootsect.bin bs=512 count=1
+```
+
+
 
 
 <<<<<<< Updated upstream
@@ -406,20 +469,48 @@ use for their filesystem benchmarking. You can find examples at
 comparison with fio and bonnie at
 [http://www.slashroot.in/linux-file-system-read-write-performance-test]
 
-## Erasing data
-
-see [https://github.com/artmg/lubuild/help/manipulate/remove-data.md]
 
 
-Flash drives
-------------
 
-see [GitHub/Lubuild.files/help/manipulate/flash-drives-and-SSDs.md]
 
-Layouts
--------
+## Layouts  #############################################
 
 Here are some sample disk layouts depending on your needs
+
+### IN
+
+### Formatting for large hard drives ==
+
+Previously chose NTFS format for large partitions for compatibility 
+with Windows devices. Unfortunately filesystem repair tools under Linux 
+are not as "NTFS friendly". As most home devices are NOT Windows-based 
+the new proposed large FS is EXT4. Windows drivers for ext4 include 
+Ext2Fsd, and the device can have an initial liveCD partition to boot 
+into linux and copy data to other locally attached (e.g. NTFS) drives 
+for access by Windows. 
+
+Issues:
+WDTV supports only FAT32/NTFS - http://wdc.custhelp.com/app/answers/detail/a_id/2726
+Android (which didn't support NTFS) does not have across the board support for extX
+Permissions could be an issue unless umasks are sep up or root is used 
+
+
+10GB boot partition = FAT32 ??
+
+Although this is WAY bigger than needed for a live install, 
+it does allow space for retrofitting the drive to also boot on UEFI PCs
+https://help.ubuntu.com/community/Installation/UEFI-and-BIOS
+
+Being FAT32 it is limited to 4GB persistence file, but could consider 
+changing to ext4 if supported or making a separate casper-rw partition 
+http://askubuntu.com/questions/138356/
+
+Use Startup Disk Creator to load live image and make this bootable 
+ 
+ 
+<The Rest>GB Data partition = EXT4
+
+
 
 ### full encryption using LVM
 
@@ -540,55 +631,51 @@ credit - [http://wiki.openelec.tv/index.php/Dual_Boot]
     * found gparted on Lubuntu "Live USB Installer"
 * 
 
+#### Reducing the number of Primary Partitions ==
+
+Some manufacturers (such as HP) may use up all 4 available Primary Partitions in their factory-shipped configuration. This means that when you try to create a new partition (Primary OR Logical) you get an error saying &quot;it is not possible to create more than 4 Primary Partitions&quot;.
+
+This workaround is based on the comprehensive article [http://h30434.www3.hp.com/t5/Other-Notebook-PC-Questions/How-to-repartition-HDD-of-HP-notebook-with-pre-installed/td-p/742019 How to repartition HDD of HP notebook with pre-installed Windows 7] by MVP Daniel Potyrala, which explains the various options with pros and cons and recommends the option to remove the System Partition (sda1). By making the OS partition (sda2) bootable directly, Windows works, the Recovery (sda3) partition is still intact for a full restore, and the HP_tools (sda4) partition is still available. The System Partition contains boot files and the WinRE (Windows Recovery Environment) whichallows you to do Startup Repair, System Restore, Complete PC Restore and Windows Memory Diagnostic Tool . However, the same tasks are performed much better by the tools contained in these other partitions, and you can access the different partitions just by marking them as active using a parition table tool (like GPartEd).
+
+Note we do NOT create a Windows 7 System Repair disc as no optical drive is available. You CAN however back up the System Parition. Use GPartEd to ensure that the System partiton IS /dev/sda1 first...
+
+```
+# Back up HP SYSTEM partition prior to removal
+# ===create folder to store files===
+SystemBackup=/media/mysdcard/Media.IN/HP_SYSTEM
+mkdir $SystemBackup
+cd $SystemBackup
+# Backup the MBR code only
+sudo dd if=/dev/sda of=./mbr.bin bs=446 count=1
+# Backup the MBR including primary partition table: 
+sudo dd if=/dev/sda of=./mbr.bin.plusPrimaryPartitionTable bs=512 count=1
+# to Restore the MBR 
+# e.g. sudo dd if=/media/sda/mbr.bin of=/dev/sda bs=446 count=1
+===Whole Partition copy===
+# credit &gt; http://www.backuphowto.info/linux-backup-hard-disk-clone-dd
+# Back up the System partition
+sudo dd if=/dev/sda1 of=./HP.SYSTEM.partition
+```
+
+Before proceeding you should prepare your Windows by shrinking the main OS partition to make space for the Ubuntu partitions, as you will need to install Ubuntu to give a bootloader in place of the old HP System parition.
+
+Once you have done this you can use GPartEd to delete the System Partition. Create the new Ubuntu partitons in the space freed up by shrinking the OS partition (as the System partition was too small to use for this) Finally proceed with the Ubuntu installation
+
+
 
 ## LiveUSB
 
-### Creating a LiveUSB startup disk
-
-If you find the (L)ubuntu built-in *Startup Disk Creator* does not
-reliably create bootable live usb drives, try the alternative mkusb
-script 
-```
-# NB: mkusb will REPARTITION your flash drive
-# you may wish to note the original vendor optimised formatting layout
-# (especially the start sector) before wiping it out
-
-sudo fdisk -l
-
-# help https://help.ubuntu.com/community/mkusb
-sudo add-apt-repository -y ppa:mkusb/ppa
-sudo apt-get update
-sudo apt-get install mkusb
-
-# specify an ISO file and (optionally) add persistence (casper-rw) volume using the blank space on the drive 
-sudo -H mkusb path/to/imagefile.ISO p
-```
-
-#### startup disk creator troubleshooting
-
-If you are having issues with usb-creator-gtk crashing, then ensure that
-your FAT partition covers the whole disk (no small empty slice at the
-beginning) or reboot
-
-### only check systems on USB
-```
-# if you are installing to a 'portable'
-# usb drive and want to ignore 'local' drives...
-# <http://ubuntuforums.org/showthread.php?t=1412654&page=2>
-
-echo "GRUB\_DISABLE\_OS\_PROBER=true" | sudo tee -a /etc/default/grub
-```
-### Live Boot Parameters
-
-Although this list is specifically for TAILS, it does explain a wide
-variety of available boot-time settings you can make on a LiveUSB
-
-<https://craftedflash.com/info/live-distro-boot-parameters>
+see also:
+* [https://github.com/artmg/lubuild/blob/master/help/configure/write-Distro-to-flash.md]
+    * For creating a LiveUSB install or trial flash-drive 
+    * Adding a Persistence volume
+    * troubleshooting
 
 ### Alternative to Live USB for regular use
 
 If you always use a Live USB in the same PC, then there is no advantage.
-Also, there are restictions using encrypted home with Live USB
+Also, there are restictions using encrypted home with Live USB. 
+Instead you could Install to the flash drive, as if it were an SSD. 
 
 In this case we have an 8GB USB and a PC with 8GB RAM.
 
@@ -645,31 +732,6 @@ sudo update-initramfs -u
 ```
 Reboot!
 
-### Live Persistent
-
-=
-
-Once CDROM is remounted as RW add to File Mgr as Places
-
-`Browse to      Add Bookmark as `\
-`/cdrom     ALLP root`\
-`/cdrom/Media/In.various        ALLP.IN`
-
-### Multiboot ISOs
-
-Here are some articles explaining how to take ISOs for multiple linux
-distros, and create Grub menus to allow you to boot directly into
-whichever you prefer. This assumes the ISOs are created for Live boot
-and run - this technique might not support persistence of settings or
-data.
-
--   simple - <http://www.circuidipity.com/multi-boot-usb.html>
--   generic - <http://ubuntuforums.org/showthread.php?t=2276498>
--   extensive -
-    <https://wiki.archlinux.org/index.php/Multiboot_USB_drive>
--   other ISOBOOT samples -
-    <https://help.ubuntu.com/community/Grub2/ISOBoot/Examples>
-
 ### Grub reference
 
 -   archwiki Grub reference -
@@ -677,92 +739,15 @@ data.
 -   GNU GRUB full manual - <http://www.gnu.org/software/grub/manual/>
 
 
-## IN
+
+
+
+## IN ###################################################################################
 
 The following sections have been moved IN from the old Service Set up Ubuntu files
 They need to be rationalised and reformatted
 
 ### Appendix E - Advanced disk configuration =
-
-#### Reducing the number of Primary Partitions ==
-
-Some manufacturers (such as HP) may use up all 4 available Primary Partitions in their factory-shipped configuration. This means that when you try to create a new partition (Primary OR Logical) you get an error saying &quot;it is not possible to create more than 4 Primary Partitions&quot;.
-
-This workaround is based on the comprehensive article [http://h30434.www3.hp.com/t5/Other-Notebook-PC-Questions/How-to-repartition-HDD-of-HP-notebook-with-pre-installed/td-p/742019 How to repartition HDD of HP notebook with pre-installed Windows 7] by MVP Daniel Potyrala, which explains the various options with pros and cons and recommends the option to remove the System Partition (sda1). By making the OS partition (sda2) bootable directly, Windows works, the Recovery (sda3) partition is still intact for a full restore, and the HP_tools (sda4) partition is still available. The System Partition contains boot files and the WinRE (Windows Recovery Environment) whichallows you to do Startup Repair, System Restore, Complete PC Restore and Windows Memory Diagnostic Tool . However, the same tasks are performed much better by the tools contained in these other partitions, and you can access the different partitions just by marking them as active using a parition table tool (like GPartEd).
-
-Note we do NOT create a Windows 7 System Repair disc as no optical drive is available. You CAN however back up the System Parition. Use GPartEd to ensure that the System partiton IS /dev/sda1 first...
-
-```
-# Back up HP SYSTEM partition prior to removal
-# ===create folder to store files===
-SystemBackup=/media/mysdcard/Media.IN/HP_SYSTEM
-mkdir $SystemBackup
-cd $SystemBackup
-# Backup the MBR code only
-sudo dd if=/dev/sda of=./mbr.bin bs=446 count=1
-# Backup the MBR including primary partition table: 
-sudo dd if=/dev/sda of=./mbr.bin.plusPrimaryPartitionTable bs=512 count=1
-# to Restore the MBR 
-# e.g. sudo dd if=/media/sda/mbr.bin of=/dev/sda bs=446 count=1
-===Whole Partition copy===
-# credit &gt; http://www.backuphowto.info/linux-backup-hard-disk-clone-dd
-# Back up the System partition
-sudo dd if=/dev/sda1 of=./HP.SYSTEM.partition
-```
-
-Before proceeding you should prepare your Windows by shrinking the main OS partition to make space for the Ubuntu partitions, as you will need to install Ubuntu to give a bootloader in place of the old HP System parition.
-
-Once you have done this you can use GPartEd to delete the System Partition. Create the new Ubuntu partitons in the space freed up by shrinking the OS partition (as the System partition was too small to use for this) Finally proceed with the Ubuntu installation
-
-== Backing up MBR and EISA install partition ==
-
-best done BEFORE installing ubuntu (to preserve initial MBR)
-
-```
-#===History===
-# booted into ubuntu
-# ran Disk Utility to identify details of /dev/sda1
-# (e.g. partition type 0x27, capacity 9.7gb 9,664,671,744b)
-# or just use ...
-sudo cfdisk -Pt /dev/sda
-# other commands to investigate disk setup...
-# show all partitions
-sudo fdisk -l
-# show mounted devices
-df -Th
-#
-# copy contents of PQSERVICE partition to C:\Backup\PQSERVICE...
-
-##### create folder to store files
-BackupFolder=/media/Acer/Backup/PQSERVICE
-mkdir $BackupFolder
-cd $BackupFolder
-# credit &gt; https://help.ubuntu.com/community/WindowsDualBoot#Master%20Boot%20Record%20backup%20and%20re-replacement
-# Backup the MBR code only
-sudo dd if=/dev/sda of=./mbr.bin bs=446 count=1
-# Backup the MBR including primary partition table: 
-sudo dd if=/dev/sda of=./mbr.bin.plusPrimaryPartitionTable bs=512 count=1
-# to Restore the MBR 
-# e.g. sudo dd if=/media/sda/mbr.bin of=/dev/sda bs=446 count=1
-
-#### Whole Partition copy
-
-# credit &gt; http://www.backuphowto.info/linux-backup-hard-disk-clone-dd
-# Back up the hidden partition
-sudo dd if=/dev/sda1 of=./PQSERVICE.partition
-# view progress using...
-# sudo pkill -SIGUSR1 ^dd$
-# alternatives
-# help (error handling) &gt; http://www.inference.phy.cam.ac.uk/saw27/notes/backup-hard-disk-partitions.html
-# idea &gt; consider setting blocksize to match (hard disk or partition) blocksize
-# idea &gt; partimage ?
-# idea &gt; ntfsclone http://www.linux-ntfs.org/doku.php?id=ntfsclone
-# sample (command included in ubuntu 10.4)
-sudo ntfsclone -s -o ./PQSERVICE.ntfsclone /dev/sda1
-===Content files copy===
-# (not yet complete)
-sudo dd if=/dev/sda1 of=./PQSERVICE.bootsect.bin bs=512 count=1
-```
 
 #### Boot configuration ==
 
