@@ -17,16 +17,6 @@ md5sum -c MD5SUMS
 
 ## Ubuntu and derivatives ##
 
-### Disks utility
-
-If you prefer a GUI alternative, you may find the gnome Disks utility's 
-"Restore Partition Image" option simple. It works for partition images.
-
-Still need to validate if it works for whole disk (multi-partition including table) images. 
-Also, as it installs no bootloader, it might only work with UEFI, 
-not with older BIOS-only systems, depending on whether the image includes a bootloader. 
-
-
 ### Choice = Safer - mkusb
 
 Browsing in pcmanfm in the folder containing the ISO image, press F4 for a terminal
@@ -107,6 +97,23 @@ udisksctl power-off --block-device /dev/${MEDIA_DEVICE:0:3}
 # help - https://udisks.freedesktop.org/docs/latest/udisksctl.1.html
 ```
 
+### Choice = GUI - gnome Disks utility
+
+If you prefer a GUI alternative, you may find the gnome Disks utility's 
+Image Restore options pratical. 
+
+However these offer you NO features to avoid you accidentally choosing the wrong 
+destination and inadvertently **wiping all your data**, so beware!
+
+If you have a paritition image then choose the destination partition and choose 
+"Restore Partition Image". If you have a Disk image then select the drive unit 
+and use the top right hand menu to choose "Restore Disk Image". 
+
+NB: This technique does NOT add any bootloader, so whether it works also 
+depends on the image you choose to use, unless you have UEFI-enabled systems. 
+
+If you get errors such as _isolinux.bin missing or corrupt_ then perhaps 
+you tried to write a Disk image to a Partition?
 
 
 ## Raspberry Pi ##
