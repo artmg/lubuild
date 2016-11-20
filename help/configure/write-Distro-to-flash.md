@@ -17,6 +17,7 @@ md5sum -c MD5SUMS
 
 ## Ubuntu and derivatives ##
 
+
 ### Choice = Safer - mkusb
 
 Browsing in pcmanfm in the folder containing the ISO image, press F4 for a terminal
@@ -114,6 +115,15 @@ depends on the image you choose to use, unless you have UEFI-enabled systems.
 
 If you get errors such as _isolinux.bin missing or corrupt_ then perhaps 
 you tried to write a Disk image to a Partition?
+
+
+### about memtest
+
+Note that the install media for most Ubuntu distros includes the memtest86+ memory test utility, 
+however it is **not** UEFI-compatible, and will not be available when you boot dfirectly from a GPT partition. 
+It will only appear when you boot from a device's BIOS-compatible partition table using legacy boot, 
+and you may also need to hold SHIFT to ensure that the menu appears. 
+
 
 
 ## Raspberry Pi ##
