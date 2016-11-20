@@ -113,3 +113,34 @@ other DAW:
 
 * see also extensive lists by category at http://linux-sound.org/
 
+
+## File Extensions
+
+Here are typical contents and specific editing software for file extensions you might commonly see:
+
+* WAV - used for recordings and samples
+
+* MID - generic MIDI files
+* SMF - alternative MIDI container (Standard Midi File)
+
+* CSD - CSound files contain both Score and Orchestra (instruments as functions) elements
+* LilyPond - score format for engraving musical notation or outputing MIDI
+* MusicXML - notation format
+
+* AIFF - may contain recordings, samples and MIDI-style "Apple Loops" http://en.wikipedia.org/wiki/Audio_Interchange_File_Format#AIFF_Apple_Loops
+* REX2 - compressed audio sample loops with tempo matching markers
+
+open source DAW formats
+* RGD - Rosegarden
+* ARDOUR - Ardour
+
+proprietary Digital Audio Workstation (DAW) software formats
+* A?? - Albeton - various files for https://www.ableton.com/en/articles/filetypes-used-by-ableton/
+* LOGIC - Apple Logic Pro (originally C-Lab)
+* REASON - PropellerHeads Reason 
+* FL_STUDIO - previously known as Fruity Loops
+* Native Instruments - "Komplete" 
+
+see also:
+* http://www.native-instruments.com/en/products/komplete/drums/battery-4/sample-formats/
+
