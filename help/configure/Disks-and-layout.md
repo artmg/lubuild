@@ -11,11 +11,66 @@ See also:
 
 ## Partitions
 
-### Rename USB
+### Rename 
 ```
-# Rename USB drive or flash / SD card to change label:
+#!/bin/bash
+# Rename partition to change label and automount path
 # help > [https://help.ubuntu.com/community/RenameUSBDrive](https://help.ubuntu.com/community/RenameUSBDrive)
+
+# enter your password for su
+sudo echo
+
+# install tools for FAT and for exFAT
+sudo apt-get install -y udisks mtools exfat_utils
+
+# identify your media's device name
+lsblk
+
+# check for the dev name
+echo -n "Enter device node (e.g. sdc1 ) : "
+read MEDIA_DEVICE
+
+#### relabel partition
+
+# enter your password for su
+sudo echo
+
+# enter the label you want for this device
+echo -n "Enter new label for Media : " && read MEDIA_LABEL
+
+
+#### Troubleshooting FAT
+## if below you get error "not a multiple of sectors"
+# echo mtools_skip_check=1 >> ~/.mtoolsrc
+
+# determine filesystem type then set display label accordingly
+case $(lsblk -o FSTYPE -n /dev/$MEDIA_DEVICE) in
+    vfat)
+        sudo mlabel -i /dev/$MEDIA_DEVICE ::$MEDIA_LABEL
+        sudo mlabel -i /dev/$MEDIA_DEVICE -s ::     ;;
+    exfat)
+        sudo exfatlabel /dev/$MEDIA_DEVICE $MEDIA_LABEL
+        sudo exfatlabel /dev/$MEDIA_DEVICE          ;;
+    ntfs)
+        echo NOT AVAILABLE      ;;
+    ext*)
+        echo NOT AVAILABLE      ;;
+esac
+
+
+#### List out the parition table
+fdisk -l /dev/${MEDIA_DEVICE:0:3}
+
+## mount
+udisksctl mount -b /dev/$MEDIA_DEVICE
+## this alternative mount goes to /media NOT /media/$user
+# udisks --mount /dev/$MEDIA_DEVICE
+
+## eject
+#udisks --unmount /dev/$MEDIA_DEVICE && udisks --detach /dev/${MEDIA_DEVICE:0:3}
 ```
+
+
 ### Align partitions
 
 Gnome disk utility does not currently create partitions that are
