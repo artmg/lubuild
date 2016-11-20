@@ -17,9 +17,19 @@ md5sum -c MD5SUMS
 
 ## Ubuntu and derivatives ##
 
-Browsing in pcmanfm in the folder containing the ISO image, press F4 for a terminal
+### Disks utility
+
+If you prefer a GUI alternative, you may find the gnome Disks utility's 
+"Restore Partition Image" option simple. It works for partition images.
+
+Still need to validate if it works for whole disk (multi-partition including table) images. 
+Also, as it installs no bootloader, it might only work with UEFI, 
+not with older BIOS-only systems, depending on whether the image includes a bootloader. 
+
 
 ### Choice = Safer - mkusb
+
+Browsing in pcmanfm in the folder containing the ISO image, press F4 for a terminal
 
 ```
 # type and tab after this to choose filename
@@ -46,6 +56,7 @@ sudo -H mkusb $IMAGE_FILENAME $IMAGE_PERSISTENCE
 
 ### Choice = Simpler - dd
 
+Browsing in pcmanfm in the folder containing the ISO image, press F4 for a terminal
 ```
 # type and tab after this to choose filename
 IMAGE_FILENAME=
