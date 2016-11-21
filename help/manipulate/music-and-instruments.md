@@ -2,24 +2,15 @@
 This is mainly concerned with creating your own music or playing instruments, 
 rather than playing pre-recorded media
 
-
-## Ubuntu Studio ##
-
-Distro ready with lots of things for making music
-
 see also:
-
-* [https://github.com/artmg/lubuild/wiki/Ubuntu-Studio]
-* Service.IN/Setup/Ubuntu Studio setup.md
-
-
-## App Candidates ##
-
-see:
-
-* Lub App candidates.md
-    * general music and media players
-* MultiOS Data Music Metadata.txt
+* [https://github.com/artmg/lubuild/blob/master/help/configure/Ubuntu-Studio.md]
+    * setting up a distro that has a lot of these apps ready to use
+* [https://github.com/artmg/lubuild/blob/master/help/understand/about-Sound-software-in-Ubuntu.mediawiki]
+    * what audio components in the operating system help these apps
+*  [https://github.com/artmg/lubuild/blob/master/help/use/Music-and-multimedia.md]
+    * listening to music someone else has already created
+* [https://github.com/artmg/lubuild/blob/master/help/manipulate/films-and-songs.md]
+    * audio file conversion and metadata tagging 
 
 
 
