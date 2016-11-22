@@ -2,6 +2,74 @@
 
 For some background on network interfaces and utilities you may find [https://wiki.openwrt.org/doc/networking/network.interfaces] interesting - its NOT specific to Lubuntu, but practical and applicable nonetheless. 
 
+## Basic Connectivity
+
+Usually the first diagnostic step is to determine whether a connection can be made to a remote server, 
+by trying out the end-to-end connectivity. 
+
+```
+# Name (or IP address) of remote server to test
+HOST_NAME=host.domain.tld
+# if you are not sure which specific server to try testing against, 
+# use 8.8.8.8 which is Google's (highly available) Public DNS service
+
+
+### PING
+# This uses Internet Control Message Protocol (ICMP) error reporting
+# which is quick and easy, but some servers may be configured to ignore these
+# As well as showing if the connection works at all, it also shows the latency, 
+# which means how long it took to get there and back, and this can indicate
+# the quality of connection
+ping $HOST_NAME
+
+
+### TracePath
+# This simple utility is installed by default in Lubuntu. 
+# It can take a while to show results as it resolves each name as it goes, 
+# but it will show you each node your traffic passes through on its way
+# which helps you understand where any disconnect happens
+tracepath $HOST_NAME
+
+
+### MTR - MyTraceRoute
+# mtr-tiny is a console app using ncurses for a tabular display, with few dependencies
+# It should be installed by default on Lubuntu, but if not present then
+# sudo apt-get install mtr-tiny
+# For a speedy, interactive, tabular output that updates as it goes along
+mtr $HOST_NAME
+
+# or for a standard 'linear' console output (e.g. to pipe to a file)
+mtr -rw $HOST_NAME
+
+
+### TraceRoute
+# This is the linux terminal equivalent of Windows TRACERT command (not installed by default)
+# To compare and contract TraceRoute and MTR see
+# * introduction to the two - https://www.digitalocean.com/community/tutorials/how-to-use-traceroute-and-mtr-to-diagnose-network-issues
+# * one professional's view - https://blog.thousandeyes.com/caveats-of-popular-network-tools-traceroute/
+# * several people's views - http://serverfault.com/questions/585862/why-mtr-is-much-faster-than-traceroute
+sudo apt-get install traceroute
+
+traceroute $HOST_NAME
+
+
+### test remote server response
+# if ping fails, but tracing the route seems to work, 
+# you can test the response at the remote server, 
+# as long as you know the Port you expect it to respond on
+# - if not see http://www.networksorcery.com/enp/protocol/ip/ports00000.htm 
+PORT_NO=xx
+
+# simply, using telnet
+telnet $HOST_NAME $PORT_NO
+
+# quickly and definitively using netcat
+nc -zv $HOST_NAME $PORT_NO
+# you can also specify multiple port numbers, or even a range
+
+```
+
+
 ## Physical and Transport
 
 ### diagnosing Network Manager Connections
@@ -80,39 +148,6 @@ grep "" /sys/class/net/enp6s0/*
 sudo apt-get install ethtool
 ethtool enp6s0
 
-```
-
-## Connectivity
-
-```
-HOST_NAME=host.domain.tld
-
-# tracepath - installed in lubuntu - by default ?
-tracepath $HOST_NAME
-
-# other tools
-# Choose between traceroute and mtr
-# * introduction to the two - https://www.digitalocean.com/community/tutorials/how-to-use-traceroute-and-mtr-to-diagnose-network-issues
-# * one professional's view - https://blog.thousandeyes.com/caveats-of-popular-network-tools-traceroute/
-# * several people's views - http://serverfault.com/questions/585862/why-mtr-is-much-faster-than-traceroute
-
-### traceroute
-# linux terminal equivalent of Windows tracert command
-# not installed by default on Lubuntu
-sudo apt-get install traceroute
-
-traceroute $HOST_NAME
-
-### mtr
-# mtr-tiny is a console app using ncurses for a tabular display, but without needing too many dependencies
-# should be installed by default on Lubuntu
-# sudo apt-get install mtr-tiny
-
-# standard 'linear' console output
-mtr -rw $HOST_NAME
-
-# interactive tabular output with quicker updates
-mtr $HOST_NAME
 ```
 
 ## Names and Addresses
