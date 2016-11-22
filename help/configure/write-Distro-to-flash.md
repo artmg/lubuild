@@ -257,7 +257,7 @@ variety of available boot-time settings you can make on a LiveUSB
 # create your partition with fdisk
 
 # then create the filesystem
-sudo mkfs.ext3 -b 4096 -L casper-rw /dev/sdXn
+sudo mkfs.ext4 -b 4096 -L casper-rw /dev/sdXn
 # credit - https://help.ubuntu.com/community/LiveCD/Persistence#Creating_the_.22casper-rw.22_File_System
 
 
