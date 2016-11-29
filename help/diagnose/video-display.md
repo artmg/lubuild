@@ -24,14 +24,11 @@ lspci -k | grep -A3 VGA
 ### Detailed video config ###
 sudo lshw -C video
 
+# Check driver details
+modinfo drivername 
+
 ```
 
-To update to proprietary drivers use Start / Preferences / Additional Drivers to detect and install
-* either the base package 
-* or the updates 
-
-To check the details of the driver use
- modinfo drivername 
 
 ## Choosing Video Drivers
 
@@ -52,13 +49,89 @@ There are three types of (video) drivers you can use:
  + access to the latest features (and sometime bugfixes)
  - only supported by Third Party hardware vendor
 
-Use these in descending order of preference. 
-Stick to open source unless you have good reason - 
-see [[https://help.ubuntu.com/community/BinaryDriverHowto]]
+* Use these in descending order of preference. 
+    * Stick to open source unless you have good reason - 
+    * see [[https://help.ubuntu.com/community/BinaryDriverHowto]]
+
+To update to proprietary drivers use Start / Preferences / Additional Drivers to detect and install
+* either the base package 
+* or the updates 
+
+
+
+### NVidia drivers
+
+The simplest way is by accessing the Additional Drivers GUI, but if you have issues 
+you may need to drop directly to a shell or even use ssh
+
+The repo for NVidia proprietary drivers is [https://launchpad.net/~graphics-drivers/+archive/ubuntu/ppa] which you add:
 
 ```
+# check the drivers available 
+sudo ubuntu-drivers devices
+
+# Add the repo for NVidia proprietary drivers [https://launchpad.net/~graphics-drivers/+archive/ubuntu/ppa] 
+sudo add-apt-repository ppa:graphics-drivers/ppa
+sudo apt-get update
+sudo apt-get upgrade
+
+# You could simply reboot then choose the driver from the Additional Drivers GUI 
+# or install from command prompt (if you know which you want)
+sudo apt-get install nvidia-370
+
+# recheck the drivers 
+sudo ubuntu-drivers devices
+
+
+#### Troubleshooting
+
+# The best recent place to find out about NVidia driver installation is: 
+# help - [http://askubuntu.com/a/61433]
+# as the old ubuntu comminuty pages are ancient [https://help.ubuntu.com/community/BinaryDriverHowto/Nvidia] 
+
+# ensure your xorg conf file exists and create if not
+sudo nvidia-xconfig
+
+##### Reinstalling drivers and or XOrg
+
+# make sure all your package depenencies are at the correct level
+sudo apt-get update
+sudo apt-get upgrade
+# check which packages you have installed
+dpkg -l | grep nvidia
+
+# Reinstalling the driver solves several issues (replace XXX with your version number)
+sudo apt-get install --reinstall nvidia-XXX
+
+# Reinstalling Xorg also helps in other cases:
+sudo apt-get remove --purge xserver-xorg
+sudo apt-get install xserver-xorg
+sudo dpkg-reconfigure xserver-xorg
+# now reinstall drivers as above, just to make sure
+
+##### Remove 
+
+sudo apt-get purge bumblebee primus   
+sudo rm -fr /etc/modprobe.d/bumblebee.conf
+sudo reboot
+
+
+# see also the archive of proprietary NVidia linux drivers [http://www.nvidia.com/object/unix.html]
+
+
+
+```
+
+
+
+#### Phoronix Test Suite
+
+sudo apt-get install phoronix-test-suite
+#run benchmarks ...
+
+
 ### AMD Catalyst driver install 
-#
+```
 #### manual install 
 # When trying to install the latest Radeon HD drivers from 
 # http://support.amd.com/en-us/download/desktop?os=Linux%20x86_64
@@ -100,4 +173,85 @@ sudo apt-get install fglrx
 # credit - http://forums.linuxmint.com/viewtopic.php?f=49&t=134112
 
 ```
+
+## Advanced troubleshooting
+
+### example circumstances
+
+#### example 1
+
+Xorg laggy - spikes to "over 100%" cpu
+https://bugs.launchpad.net/ubuntu/+source/xorg/+bug/1372116
+
+Improve bug report or find similar
+[HD 6290] 
+
+xserver-xorg-video-radeon 
+
+/usr/lib/xorg/modules/drivers/radeon_drv.so
+compiled for 1.15.1, module version = 7.3.0
+
+Especially when switching windows or tabs
+Issue whether or not external HDMI is attached as duplicate output
+
+https://help.ubuntu.com/community/RadeonDriver
+
+#### example 2
+
+[Radeon HD 6290] xorg freezes when turning on external monitor
+Steps to reproduce:
+Insert HDMI cable
+Start Menu / Preferences / Monitor Settings
+Quick Options / Show the same screen on both laptop LCD and external monitor
+X will freeze immediately, mouse is blocked, CTRL-ALT-F1 does not respond, only direct hardware function keys (like screen brightness / disable wifi) respond
+
+### gather diags 
+
+Set up SSH using 
+https://github.com/artmg/lubuild/wiki/Networked-Services#SSH__remote_Secure_SHell
+
+logged into SSH using
+ssh MyUser@MyHostName.local -p PortNum
+
+# prepare
+mkdir -p ~/BugDiags
+cd ~/BugDiags
+
+sudo lshw -C video > lshw_video.txt
+
+# credit - https://wiki.ubuntu.com/X/Troubleshooting/Freeze#Reporting_GPU_lockup_Bugs
+sudo apt-get install radeontool
+sudo avivotool regs all > regdump_good.txt
+
+#### Reporting issues
+
+# provoke the issue, then...
+# credit - https://wiki.ubuntu.com/X/Troubleshooting/Freeze#Gathering_Register_Dumps
+dmesg > dmesg.txt
+cp /var/log/Xorg.0.log Xorg.0.log
+sudo avivotool regs all > regdump_broke.txt
+
+# credit https://help.ubuntu.com/community/ReportingBugs
+# bug with no crash
+apport-cli -f -p xorg --save bug.apport
+
+# then log back into your main system and
+apport-bug -c bug.apport   
+
+# or if you cannot manage to get a crash report then
+http://bugs.launchpad.net/ubuntu/+source/xorg/+filebug?no-redirect
+
+## The following is NO USE unless a crash has occured (i.e. no good if only frozen)
+# credit - https://wiki.ubuntu.com/X/Reporting#Reporting_Bugs_from_a_Different_Machine
+apport-bug --save foo.apport   
+ 
+
+#### Reporting to NVidia
+
+The forum for logging issues with NVidia is [https://devtalk.nvidia.com/default/board/98/linux/]
+
+[https://devtalk.nvidia.com/default/topic/522835/linux/if-you-have-a-problem-please-read-this-first/]
+* how to gather logs locally or via SSH
+* how to describe issues when logging faults
+
 
