@@ -63,7 +63,7 @@ adb shell getprop | grep "model\|version.sdk\|manufacturer\|hardware\|platform\|
 run-as com.your.package ls -l /data/data/com.your.package
 ```
 
-### explore and save current flash images ###
+### explore your device and storage 
 
 _needs root!_
 
@@ -83,7 +83,10 @@ ls -al /dev/block/platform/msm_sdcc.1/by-name
 # check partition details - http://www.all-things-android.com/content/review-android-partition-layout
 blkid 
 
-# save them and drag themn back [credit](http://androidcreations.weebly.com/how-to-get-android-mounts-and-partition-images.html)
+### save current flash images 
+
+# To back up your current ROM images, you save them and drag themn back 
+# credit - [http://androidcreations.weebly.com/how-to-get-android-mounts-and-partition-images.html]
 cd /sdcard
 mkdir -p ADB_Images
 cd ADB_Images
@@ -98,7 +101,6 @@ dd if=/dev/block/platform/msm_sdcc.1/by-name/XXXXXXXX of=XXXXXXX.img
 adb pull /sdcard/ADB_Images/ ~/Desktop/ADB_Images/
 
 # NB: Odin images are compressed to tar - adb flash images are simply .img files
-
 
 
 #### Samsung example ####
