@@ -304,9 +304,11 @@ http://www.howtogeek.com/howto/37659/the-beginners-guide-to-linux-disk-utilities
 df -H
 
 # check the first level folders
-du --max-depth=1
+du --max-depth=1 -ah
 # sort it
-du --max-depth=1 -a | sort -nr | head
+du --max-depth=1 -a | sort -nr
+# human readable sort
+du --max-depth=1 -ah | sort -hr | head
 
 ### GUI to identify space hogs (esp in home folders) ###
 baobab &
