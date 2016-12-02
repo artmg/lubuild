@@ -2,6 +2,11 @@
 
 For some background on network interfaces and utilities you may find [https://wiki.openwrt.org/doc/networking/network.interfaces] interesting - its NOT specific to Lubuntu, but practical and applicable nonetheless. 
 
+see also:
+* [General hardware diagnostics](https://github.com/artmg/lubuild/blob/master/help/diagnose/hardware.md) including radio devices
+* 
+
+
 ## Basic Connectivity
 
 Usually the first diagnostic step is to determine whether a connection can be made to a remote server, 

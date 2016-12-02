@@ -1,6 +1,14 @@
 Networked Services
 ==================
 
+see also:
+* [General Network troubleshooting](https://github.com/artmg/lubuild/blob/master/help/diagnose/network.md)
+* If you're trying to make a direct connection to a single device, see [Configure inteface](https://github.com/artmg/lubuild/blob/master/help/configure/network-interface.md)
+* If you want to find out more about what is on your local network, see Discovery / Services in Network Diagnostics [https://github.com/artmg/lubuild/blob/master/help/diagnose/network.md#Discovery] 
+* For issues turning radios on and off, see [Hardware Troubleshooting](https://github.com/artmg/lubuild/blob/master/help/diagnose/hardware.md) 
+* Samba server [https://github.com/artmg/lubuild/blob/master/help/configure/network-shares-with-Samba.md]
+
+
 ## Autodiscovery ##
 
 To set allow basic local autodiscovery of services on your device...
