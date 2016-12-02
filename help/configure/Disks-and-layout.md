@@ -239,17 +239,10 @@ sudo dd if=/dev/sda1 of=./PQSERVICE.bootsect.bin bs=512 count=1
 ```
 
 
-
-
-<<<<<<< Updated upstream
 ## Diagnostics and Troubleshooting
-=======
-see also GitHub/Lubuild.wiki/Troubleshooting.mediawiki
 
-see also GitHub/Lubuild.wiki/Troubleshooting.mediawiki
 
-see **boot-repair** for great and powerful GUI
->>>>>>> Stashed changes
+For issues low-level issues see [Hardware Troubleshooting](https://github.com/artmg/lubuild/blob/master/help/diagnose/hardware.md) 
 
 If you are having trouble with an installed system, 
 see **boot-repair** for a powerful GUI designed to get it working again
