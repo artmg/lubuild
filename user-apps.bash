@@ -137,6 +137,11 @@ if [[ $LUBUILD_DROPBOX_AUTOSTART -eq TRUE ]] ; then (
 # golang package in Ubuntu repos is deprecated - https://github.com/rakyll/drive/issues/8#issuecomment-61707616
 # install directly from: http://golang.org/doc/install
 
+# needs variable     LUBUILD_BIN_FOLDER
+# e.g.
+# LUBUILD_BIN_FOLDER=.bin
+# export LUBUILD_BIN_FOLDER
+
 # FIRST check filename at: https://golang.org/dl/
 # then set this on the following line...
 
@@ -176,8 +181,9 @@ export PATH=\$GOPATH:\$GOPATH/bin:\$PATH
 # reload bashrc to avoid starting new terminal
 source ~/.bashrc
 
-# install drive
-go get github.com/rakyll/drive/cmd/drive
+# install drive **from new fork**
+go get github.com/odeke-em/drive/drive-gen && drive-gen
+# go get github.com/rakyll/drive/cmd/drive
 
 # test
 drive help
