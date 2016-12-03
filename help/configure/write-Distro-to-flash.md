@@ -84,7 +84,7 @@ sudo echo
 # help https://help.ubuntu.com/community/mkusb
 sudo add-apt-repository -y ppa:mkusb/ppa
 sudo apt-get update
-sudo apt-get install mkusb
+sudo apt-get install -y mkusb
 
 # IF CHOICE = write to USB
 sudo -H mkusb $IMAGE_FILENAME $IMAGE_PERSISTENCE 
