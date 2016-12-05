@@ -31,6 +31,7 @@ options for graphical git clients:
 
 
 #### clone 
+
 ```
 # Clone a repository to your computer
 # This will create a local copy of the source files on your computer
@@ -39,7 +40,6 @@ options for graphical git clients:
 
 # e.g.
 git clone https://github.com/artmg/nixnote2-packaging.git
-```
 
 
 ### check what has changed
@@ -60,6 +60,7 @@ git diff HEAD
 # credit http://stackoverflow.com/a/12495234
 find . -mindepth 1 -maxdepth 1 -type d -print -exec git -C "{}" status \;
 
+```
 
 
 ### loading changes back into the git repo ###
