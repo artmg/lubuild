@@ -24,6 +24,8 @@ options for graphical git clients:
 * QGit
     * qt-based
     * minimal install - few dependencies
+    * visually helpful
+    * need to manually set up actions like merge or push!
 * 
 
 
@@ -198,7 +200,7 @@ as they allow wide ranging access to your repos.
     * for now **repo** is enough (or even **public_repo** ?)
 * credit [https://help.github.com/articles/creating-an-access-token-for-command-line-use/] 
 
-
+```
 # paste the token into the editor in the form
 # http[s]://<username>:<password>@<host>
 # (so username goes before domain)
@@ -208,7 +210,9 @@ editor ~/.git-personal-access-token
 # now include that credential helper
 git config --global credential.helper 'store --file ~/.git-personal-access-token'
 
-
+# and do email if you have not already
+git config --global user.email "artmg@users.noreply.github.com"
+```
 Now all your local git access should include these credentials automatically
 
 Periodically review the tokens you have at [https://github.com/settings/tokens]
