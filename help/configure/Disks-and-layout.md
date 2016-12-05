@@ -3,7 +3,7 @@
 NB: This file is rather large, and perhaps it could be separated into different files 
 to cover different subjects
 
-e.g. Layout reasoning sections separate from precise commands to maipulate
+e.g. Layout reasoning sections separate from precise commands to manipulate
 
 
 
@@ -17,6 +17,47 @@ See also:
 * [https://github.com/artmg/lubuild/blob/master/help/manipulate/remove-data.md]
     * removing data, securely if necessary
 * 
+
+
+## Install
+
+There are various options for layout explained later in this article, but here is a common scenario 
+- dual boot with full disk encryption on Ubuntu partition
+
+* Boot from Install Media
+* Connect to network
+	* recommended even if you do not wish to install updates or extras 
+	* ubiquity can download recent fixes to installation issues
+	* e.g. grub-install sometimes fails with encrypted root unless network available
+
+```
+# turn off extra ('unsafe') swap to avoid errors during install
+cat /proc/swaps
+sudo swapoff -a
+cat /proc/swaps
+
+# launch installer
+ubiquity
+```
+
+* Basics
+   * choose language
+	* I don't want to connect to internet
+	* do not install third-party software
+
+* Disk config 
+	* Something else
+	* select the root of the drive for boot loader
+	* select small volume ax ext4 /boot
+	* larger volume as Physical Volume for Encryption and enter pass phrase twice
+	* Afterwards you will find a crypt mapper device at the top of the list
+	* set this as the root
+	* (if you get swap issues you may need to select other swap partitions and change to not used)
+
+* Install Now
+	* accept warnings about no swap and partitions to format
+
+
 
 
 ## Partitions

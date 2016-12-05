@@ -156,6 +156,7 @@ thunderbird  # PIM that works well on Lubuntu AND is available on PortableApps.c
 vym          # mind-map / notes
 # gnucash    # Busines app
 # calibre    # convert docs to AZW kindle format for USB download () - on demand as qt5 still needs many many libs
+retext       # visual editor for Markdown
 
 ### Advanced Design ###
 freecad freecad-doc      # 3D parametric modeler (CAD)

@@ -53,7 +53,7 @@ if [[ $LUBUILD_HARDWARE_TYPE_LAPTOP -eq TRUE ] && [ $LUBUILD_HARDWARE_TYPE_EXTER
 sudo apt-get install -y arandr libnotify-bin
 
 # This sets up the script to cycle modes
-mkdir -P ~/.screenlayout
+mkdir -p ~/.screenlayout
 cd ~/.screenlayout
 wget https://github.com/bmnz/arandr-cycle/raw/master/arandr-cycle.sh ./.arandr-cycle.sh
 mv arandr-cycle.sh .arandr-cycle.sh
