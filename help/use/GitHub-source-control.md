@@ -23,6 +23,7 @@ options for graphical git clients:
     * qt-based
 * QGit
     * qt-based
+    * minimal install - few dependencies
 * 
 
 
@@ -200,6 +201,7 @@ as they allow wide ranging access to your repos.
 
 # paste the token into the editor in the form
 # http[s]://<username>:<password>@<host>
+# (so username goes before domain)
 editor ~/.git-personal-access-token
 
 
