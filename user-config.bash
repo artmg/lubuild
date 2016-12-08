@@ -125,8 +125,8 @@ xfconf-query -c xfce4-power-manager -n -p "/xfce4-power-manager/lid-action-on-ba
 ### The rest of this used to be in user-fixes.bash
 
 
-# ====Sound controls====
-# Acer One not adjusting volume with Fn VolUp and Fn VolDn keys
+#### Sound controls
+# some Laptops not adjusting volume with Fn VolUp and Fn VolDn keys
 # credit - http://ubuntuforums.org/archive/index.php/t-1977849.html
 # credit - https://bugs.launchpad.net/ubuntu/+source/lxpanel/+bug/1262572
 
@@ -144,6 +144,24 @@ if [[ $AFFECTED_MODELS == *\|$MODEL_NO\|* ]] ; then
   openbox --reconfigure
  
 fi
+
+##### Power cord beep
+# Acer One has a loudly annoying beep when inserting or removing the power cord.
+# credit - http://housegeekatheart.blogspot.co.uk/2011/10/disable-ac-adaptor-beep-in-portables-in.html
+# Windows-side fix: [http://www.jdhodges.com/blog/disable-beep-on-acer-ao722-netbook-solved-two-ways/]
+
+MODEL_NO=`sudo dmidecode -s system-product-name`
+AFFECTED_MODELS='|AO722|'
+
+if [[ $AFFECTED_MODELS == *\|$MODEL_NO\|* ]] ; then
+  # check which card is the non HD audio card with 
+  cat /proc/asound/cards 
+  # set the card's Beep setting to almost silent
+  amixer -c 1 sset Beep 1
+fi
+
+
+
 
 # now fixed and backported 
 ## "lxsession-default tasks" (CTRL-ALT-DEL) kills xorg / logs user out
