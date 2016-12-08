@@ -64,14 +64,11 @@ sudo apt-get remove -y gnumeric
 
 
 ######################################
-### *** *** *** BASICS *** *** *** ###
+###  *** *** BASIC EXTRAS *** ***  ###
 ######################################
 
-# including some proprietary (non-libre) packages
-
-sudo apt-get install `echo ${DESKTOP_SESSION,}`-restricted-extras -y
-# help > https://help.ubuntu.com/community/RestrictedFormats
-
+### helper app for below
+sudo apt-get install -y debconf-utils
 
 ### FONTS ###
 
@@ -81,16 +78,20 @@ msttcorefonts msttcorefonts/defoma note
 ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula boolean true
 ttf-mscorefonts-installer msttcorefonts/present-mscorefonts-eula note
 EOF
-# credit - https://code.google.com/p/installit/source/browse/install.ubuntu-restricted-extras.sh
+# credit - https://raw.github.com/panticz/installit/master/install.ubuntu-restricted-extras.sh
 # NOTES: to check the input to set selections use --checkonly
-# to see what is set install debconf-get-selections using sudo apt-get install debconf-utils
-# previously....
-# sudo sh -c "echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | debconf-set-selections"
-## credit > http://askubuntu.com/questions/16225/how-can-i-accept-microsoft-eula-agreement-for-ttf-mscorefonts-installer
+# to see what is set install debconf-get-selections
+# if this fails see https://ubuntuforums.org/showthread.php?t=2323229&p=13483643#post13483643
 
 # Google metric-equivalent fonts for Calibri and Cambrian
 sudo apt-get install -y fonts-crosextra-carlito fonts-crosextra-caladea
 # see also [https://github.com/artmg/lubuild/blob/master/help/use/Office-documents.md]
+
+# including some proprietary (non-libre) packages
+
+sudo apt-get install `echo ${DESKTOP_SESSION,}`-restricted-extras -y
+# help > https://help.ubuntu.com/community/RestrictedFormats
+
 
 # rebuild Font Cache (just in case)
 sudo fc-cache -f -v
@@ -204,7 +205,7 @@ poppler-utils # includes pdfimages to extract image files from PDFs
 
 ### sub-systems ###
 python					# code execution
-wine            # windows emulation
+# wine                  # windows compatibility moved to user apps
 
 android-tools-adb android-tools-fastboot ### Android Tools (now in main repo - was ppa:nilarimogard/webupd8)
 
