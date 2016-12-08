@@ -1,6 +1,12 @@
 
 
-# Games
+see also:
+* [https://github.com/artmg/lubuild/blob/master/help/use/games.md]
+    * other games
+* [https://github.com/artmg/lubuild/blob/master/help/diagnose/video-display.md]
+    * many gaming issues are down to the video output devices
+
+
 
 ## Minecraft 
 
@@ -64,6 +70,24 @@ changing the Video Settings inside the game itself.
 
 credit - [http://www.minecraftforum.net/forums/support/unmodified-minecraft-client/tutorials-and-faqs/1871641-minecraft-and-ubuntu-the-guide-v1-0]
 
+
+#### graphics driver
+
+The Graphics Processing Unit (GPU) in your computer does a lot of work to 
+render (draw) each frame you see as you move around the minecraft world. 
+You should at least make sure the Graphics driver is the latest version. 
+
+A lot of people recommend using Closed Source drivers from the GPU manufacturer 
+(like Intel or NVidea) to get the best performance from the hardware they make, 
+but there are a handful of people who suggest they get better results 
+with the open source drivers (perhaps because they interact better with the open source X system 
+or linux kernel that are both an important part of the software stack on your PC).
+
+For more info and help see 
+* [https://github.com/artmg/lubuild/blob/master/help/diagnose/video-display.md]
+
+
+
 #### memory settings
 
 If you tell Java how much memory you wish it to use, this may help
@@ -114,20 +138,6 @@ sudo apt-get install oracle-jdk8-installer
 NB: If you install Oracle Java in Windows for Minecraft clients, the plugins are included. 
 For help with removing the plugins (e.g. to only enable Java for local programs like Minecraft) 
 see [http://www.howtogeek.com/122934] and  [http://www.ghacks.net/2010/04/25/how-to-remove-the-java-deployment-toolkit-from-firefox/]
-
-#### graphics driver
-
-The Graphics Processing Unit (GPU) in your computer does a lot of work to render (draw) each frame you see 
-as you move around the minecraft world. You should at least make sure the Graphics driver is the latest version. 
-A lot of people recommend using Closed Source drivers from the GPU manufacturer (like Intel or NVidea) 
-to get the best performance from the hardware they make, but there are a handful of people who suggest they 
-get better results with the open source drivers (perhaps because they interact better with the open source X system 
-or linux kernel that are both an important part of the software stack on your PC).
-
-For more info and help see https://github.com/artmg/lubuild/wiki/Troubleshooting#Drivers 
-
-For getting the very latest versions of the open source drivers see http://www.makeuseof.com/tag/top-7-ppas-repositories-add-ubuntu-based-systems/
-
 
 ##### mods
 

@@ -29,6 +29,16 @@ modinfo drivername
 
 ```
 
+### other diagnostics
+
+_What do these do?_
+```
+sudo apt-get install mesa-utils
+
+glxinfo 
+```
+
+
 
 ## Choosing Video Drivers
 
@@ -56,6 +66,42 @@ There are three types of (video) drivers you can use:
 To update to proprietary drivers use Start / Preferences / Additional Drivers to detect and install
 * either the base package 
 * or the updates 
+
+
+### Open Source drivers
+
+
+see also:
+* [http://www.makeuseof.com/tag/top-7-ppas-repositories-add-ubuntu-based-systems/]
+    * PPAs for the very latest versions of the open source drivers
+* https://launchpad.net/~oibaf/+archive/ubuntu/graphics-drivers
+
+
+
+#### Intel Open Source Drivers
+
+Intel have their own Open Source Drivers, published on https://01.org/linuxgraphics/downloads
+
+You need to add a couple of repos, but then you just download their installer that takes
+care of all the downloads and sets you up. Great! - EXCEPT they run a few months behind
+the ubuntu cycle
+
+e.g. https://01.org/linuxgraphics/downloads/intel-graphics-installer-linux-1.1.0
+v1.1.0 released 15 June 2015 supports 14.04 and 14.10 - NOT 15.04!
+
+Apparently you can use the repo to download for other derivatives manually
+http://www.webupd8.org/2013/04/how-to-use-intel-linux-graphics-drivers.html
+but will this work for later versions?
+
+They do also publish a whole stack of individual drivers
+e.g. 31 mar 2015 they released https://01.org/linuxgraphics/downloads/2015/2015q1-intel-graphics-stack-release
+not sure which bits to take!
+
+* XF86-Video-Intel - 2D accelerated driver for X11 
+* Mesa - 3D OpenGL 
+* VAAPI - Video Acceleration API for video processing
+* Kernel driver and LibDRM which interfaces the other drivers
+
 
 
 

@@ -1,6 +1,11 @@
 
 see also:
 * [https://github.com/artmg/lubuild/blob/master/help/use/games-Minecraft.md]
+    * Microsoft / Mojang Minecraft specifics
+* [https://github.com/artmg/lubuild/blob/master/help/diagnose/video-display.md]
+    * many gaming issues are down to the video output devices
+* []
+
 
 
 ## Steam
