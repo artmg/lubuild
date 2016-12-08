@@ -205,8 +205,17 @@ drive pull
 ###   W I N E                     ### 
 #####################################
 
-# main install now in app-installs.bash - https://github.com/artmg/lubuild/blob/master/app-installs.bash
-# sudo apt-get install wine
+## NB: original package wine has been replaced by win1.6 wine64 and others
+## currently using development branch
+## https://wiki.winehq.org/Ubuntu
+# If your system is 64 bit, enable 32 bit architecture (if you haven't already):
+sudo dpkg --add-architecture i386 
+# Add the repository:
+sudo add-apt-repository -y ppa:wine/wine-builds
+# Update packages:
+sudo apt-get update
+# Then install (example for the development branch):
+sudo apt-get install -y --install-recommends winehq-devel
 
 ### to get the VERY latest version ###  # credit > http://www.winehq.org/download/ubuntu
 # sudo add-apt-repository ppa:ubuntu-wine/ppa && sudo apt-get update && sudo apt-get install wine1.5
