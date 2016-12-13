@@ -57,3 +57,37 @@ it does not yet support DirectX11 - see "What Runs" link to recheck specific app
 
 * about CodeWeavers involvement in DX11 development for Wine [https://bbs.archlinux.org/viewtopic.php?id=214771]
 
+
+
+## simulators
+
+Games based on controlling vehicles in a partially realistic way
+
+### combined
+
+* Rigs of Rods
+    * variety of vehicles, not just airborne but road and water-based craft
+
+### flight
+
+* FlightGate
+    * Works well in Linux & Windows with variety of graphics adapters
+    * supposedly realistic, but not the simplest
+* GoogleEarth
+    * in-browser version for Chrome
+    * much simpler
+    * 
+* Vega Strike
+    * space-based flying game more than flying sim
+    * Linux / Windows / OSX
+    * trading game elements like Elite
+* YSFlight
+    * Windows Yes, Linux ???
+    * 
+* Thunder&Lightning
+    * Linux/OSX/Win Fighter flight with tank strategy
+    * incomplete with development hiatus between 2007 & 2015
+* 
+
+
+

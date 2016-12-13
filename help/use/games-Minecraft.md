@@ -51,6 +51,11 @@ lxpanelctl restart
 
 ```
 
+As an alternative, there was the `minecraft-installer-peeps` ubuntu package 
+that does the download from mojang for you, on top of the OpenJDK runtime. 
+Not sure if this has been maintained - see [http://www.omgubuntu.co.uk/2013/04/minecraft-installer-for-ubuntu]
+
+
 ### Performance ##
 
 The graphical performance of minecraft client is measured in FPS (frames per second) 
