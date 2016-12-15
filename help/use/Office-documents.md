@@ -113,6 +113,28 @@ like Gimp or Inkscape, see [??]
 
 ### Scribus
 
+Scribus is in the official Ubuntu repos, and is a reasonably well-developed program 
+for the advanced layout of documents. There is a wiki covering many of the features 
+but if you look on YouTube you'll find some handy intros for total newbies. 
+Kevin Pugh has a useful series of short intros to get you going [https://www.youtube.com/user/HumpyCreature007] 
+
+`sudo apt-get install scribus`
+
+Admittedly it lacks some features compared with commercial packages, 
+but there is a lot of development going on, so keep your eye on the development 
+candidates for bleeding-edge features [https://launchpad.net/~scribus/+archive/ubuntu/ppa] 
+either with the **scribus-ng** (more stable) or **scribus-trunk** (daily build from head).
+
+```
+sudo add-apt-repository -y ppa:scribus/ppa
+sudo apt-get update
+sudo apt-get install -y scribus-ng
+```
+
+You should bear in mind that Scribus looks at documents from a different perspective than 
+LibreOffice Writer and other word-processors. The focus in Writer is the content and structure, 
+then you can use Styles and Page Layout to make it look better on the page. Scribus on the other hand 
+starts from the overall Page Layout, then allows you to fill it with content, styling it the way you want. 
 
 
 ### Other Candidates
