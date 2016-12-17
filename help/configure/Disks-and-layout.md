@@ -329,6 +329,16 @@ reboot to a Live USB so they are not mounted.
 For help on disk and partition diagnostics see 
 http://www.howtogeek.com/howto/37659/the-beginners-guide-to-linux-disk-utilities/
 
+### ISOs
+```
+# If you have an ISO image and want to know if it is bootable...
+# display the disk label and whether the Bootable flag is set
+file MyImage.ISO
+# for much more comprehensive info
+isoinfo -d -i MyImage.ISO
+# credit [http://askubuntu.com/a/31903]
+
+```
 ### In from lubuild/wiki/Troubleshooting/
 
 #### Capcity - disk full?
