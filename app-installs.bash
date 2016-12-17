@@ -149,7 +149,8 @@ mythes-en-us  # english thesaurus including GB
 gimp          # edit images
 inkscape      # create vector graphics
 dia-gnome     # create technical diagrams
-scribus
+scribus       # desktop publishing
+krita         # digital painting
 
 ############## Specialist stuff ################
 
@@ -164,6 +165,9 @@ freecad freecad-doc      # 3D parametric modeler (CAD)
 
 ### General Utilities ###
 xmlstarlet  # NEEDED by Lubuild for changing XML config files
+p7zip-full  # 7z handler for archive manager (fileroller) - use xarchiver for XFCE
+
+
 geany       # syntax highlighting editor - # alternatives: gedit (ubuntu default), sublime text??,  xemacs21 (no app menu shortcut), vim (_really_?), gVim?
 baobab      # graphical disk usage analyser
 workrave    # encourage regular breaks for posture and eyes 
