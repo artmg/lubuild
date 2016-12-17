@@ -18,6 +18,16 @@ The following are on the default list of Lubuild apps
 
 ## working with images in PDF files
 
+### Selectively print area of large diagram
+
+* Open PDF in GIMP 
+* Use the Rectangle Selection tool to highlight your print area 
+* Menu / Image / Fit Canvas to Selection 
+* File / Print / Image Settings - check the preview 
+* you may need to change Page Setup / Orientation to match the proportions of the canvas area 
+* now print directly, or to a PDF if you want to extract that selection for later 
+* if you want multiple areas, just CTRL-Z to undo and select again 
+
 ```
 ### Copy image files out from PDF documents ##
 
