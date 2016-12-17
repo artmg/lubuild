@@ -114,11 +114,30 @@ like Gimp or Inkscape, see [??]
 ### Scribus
 
 Scribus is in the official Ubuntu repos, and is a reasonably well-developed program 
-for the advanced layout of documents. There is a wiki covering many of the features 
-but if you look on YouTube you'll find some handy intros for total newbies. 
-Kevin Pugh has a useful series of short intros to get you going [https://www.youtube.com/user/HumpyCreature007] 
+for the advanced layout of documents. 
+
+You should bear in mind that Scribus looks at documents from a different perspective than 
+LibreOffice Writer and other word-processors. The focus in Writer is the content and structure, 
+then you can use Styles and Page Layout to make it look better on the page. Scribus on the other hand 
+starts from the overall Page Layout, then allows you to fill it with content, styling it the way you want. 
 
 `sudo apt-get install scribus`
+
+
+#### Getting Started
+
+There is a wiki covering many of the features but if you look on YouTube 
+you'll find some handy intros for total newbies. 
+Kevin Pugh has a useful series of short intros to get you familiar with the interface 
+[https://www.youtube.com/user/HumpyCreature007] 
+
+You can just pick up one of the Templates as a starting point. However, if you want to 
+control your layout accurately and easily, you should follow a simple but effective 
+set of steps that make a pragmatic workflow 
+[http://www.ocsmag.com/2015/11/12/the-art-of-layout-according-to-scribus-i-master-pages/]
+
+
+#### Functionality and features
 
 Admittedly it lacks some features compared with commercial packages, 
 but there is a lot of development going on, so keep your eye on the development 
@@ -130,12 +149,6 @@ sudo add-apt-repository -y ppa:scribus/ppa
 sudo apt-get update
 sudo apt-get install -y scribus-ng
 ```
-
-You should bear in mind that Scribus looks at documents from a different perspective than 
-LibreOffice Writer and other word-processors. The focus in Writer is the content and structure, 
-then you can use Styles and Page Layout to make it look better on the page. Scribus on the other hand 
-starts from the overall Page Layout, then allows you to fill it with content, styling it the way you want. 
-
 
 ### Other Candidates
 
