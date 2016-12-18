@@ -1,7 +1,7 @@
 
 see also:
-* [https://github.com/artmg/lubuild/blob/master/help/use/games-Minecraft.md]
-    * Microsoft / Mojang Minecraft specifics
+* [https://github.com/artmg/lubuild/blob/master/help/configure/VM GPU Passthrough.md]
+    * How to play Windows-only games with your powerful graphics card
 * [https://github.com/artmg/lubuild/blob/master/help/diagnose/video-display.md]
     * many gaming issues are down to the video output devices
 * []
@@ -35,12 +35,9 @@ Would Windows XP or Vista work?
 * Windows KVM with GPU passthrough (and much other speculation) [http://us.battle.net/forums/en/overwatch/topic/20744354240]
 * Confirmation of good FPS on Windows 10 VM, with link to tips on GPU passthrough [http://us.battle.net/forums/en/overwatch/topic/20744875204]
 
-#### Windows 7 VM
+To set up a VM to run your graphics card in Windows see 
+[https://github.com/artmg/lubuild/blob/master/help/configure/VM GPU Passthrough.md]
 
-For step-by-step instructions to create a Windows Virtual Machine on your PC under Ubuntu using virtualbox see [https://itsfoss.com/install-windows-10-virtualbox-linux/] 
-NB: you can just install **virtualbox** with no version specifier
-
-[http://vfio.blogspot.com/2015/05/vfio-gpu-how-to-series-part-1-hardware.html]
 
 
 ### Wine 

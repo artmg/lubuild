@@ -1,5 +1,10 @@
 
 
+see also:
+* [https://github.com/artmg/lubuild/blob/master/help/configure/VM GPU Passthrough.md]
+    * How to play Windows-only games with your powerful graphics card
+
+
 ## discover monitors
 
 ```
@@ -157,8 +162,12 @@ sudo dpkg-reconfigure xserver-xorg
 
 ##### Remove 
 
+dpkg -l | grep nvidia
+sudo apt-get purge nvidia*
+# only in ?? cases?
 sudo apt-get purge bumblebee primus   
 sudo rm -fr /etc/modprobe.d/bumblebee.conf
+#
 sudo reboot
 
 
