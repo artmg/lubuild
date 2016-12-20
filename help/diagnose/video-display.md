@@ -1,7 +1,7 @@
 
 
 see also:
-* [https://github.com/artmg/lubuild/blob/master/help/configure/VM GPU Passthrough.md]
+* [https://github.com/artmg/lubuild/blob/master/help/configure/VM-GPU-Passthrough.md]
     * How to play Windows-only games with your powerful graphics card
 
 

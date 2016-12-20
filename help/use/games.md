@@ -1,6 +1,6 @@
 
 see also:
-* [https://github.com/artmg/lubuild/blob/master/help/configure/VM GPU Passthrough.md]
+* [https://github.com/artmg/lubuild/blob/master/help/configure/VM-GPU-Passthrough.md]
     * How to play Windows-only games with your powerful graphics card
 * [https://github.com/artmg/lubuild/blob/master/help/diagnose/video-display.md]
     * many gaming issues are down to the video output devices
