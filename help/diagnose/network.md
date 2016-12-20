@@ -101,7 +101,15 @@ sudo cat /var/log/syslog
 
 #### Wifi (WLAN)
 
-see also [https://wiki.archlinux.org/index.php/Wireless_network_configuration#Troubleshooting]
+```
+# credit [https://www.cyberciti.biz/tips/linux-find-out-wireless-network-speed-signal-strength.html]
+watch -n 1 cat /proc/net/wireless
+```
+
+see also:
+* iperf below
+* **wavemon** cli utility
+* [https://wiki.archlinux.org/index.php/Wireless_network_configuration#Troubleshooting]
 
 #### WWAN (Mobile Broadband)
 
@@ -412,9 +420,12 @@ wget 'http://mirror.skylink-datacenter.de/ubuntu-releases/13.10/ubuntu-13.10-des
 ```
 # to set up network performance tests
 sudo apt-get install iperf
-server: iperf -s
-
-client: iperf -c <hostname or ip>
+# server: iperf -s
+# client: iperf -c <hostname or ip> (options)
+# e.g. iperf -c myIperfSvr -i 1 -t 100  # report every second for 100 seconds
+# Android clients include: ???
+# install as daemon:
+# sudo iperf -s -D > ??? tee
 
 #### Interface issues?
 
