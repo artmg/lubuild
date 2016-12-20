@@ -13,6 +13,21 @@ see also:
 The SteamOS is debian-based, and includes the proprietary Steam client. 
 Do they publish instructions for loading the client onto other debian-based systems?
 
+http://steamcommunity.com/groups/steamuniverse/discussions/1/648814395741989999/
+
+Use Debian Installer method via USB 
+ensure there is an alternative to "Automated Install" to avoid wasting the entire HDD
+
+### Stream to Pi 
+
+Although the Pi's ARM CPU with OpenGL rendering is too underpowered for
+playing modern games with any more realism than Minecraft, it could be 
+used to Stream games from the real PC running them
+
+see http://www.pcgamer.com/turning-the-raspberry-pi-2-into-a-35-streaming-pc/
+for how to Stream NVidia-based games onto RPi2 using the vendor's Limelight software
+
+
 ### Rocket
 
 but the source code [https://github.com/steamos-community/stephensons-rocket] 

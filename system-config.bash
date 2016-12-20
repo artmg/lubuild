@@ -110,3 +110,9 @@ sudo mount -o remount,rw,UID=`id -u` /cdrom
 # if it's been used in windows, but not safely removed...
 # help > http://ubuntuforums.org/showthread.php?p=7525441 
 
+
+### suppress Boot messages
+
+# For informative thread on hiding the text messages which appear during boot...
+# [https://lists.ubuntu.com/archives/lubuntu-users/2014-December/008989.html]
+# See esp the end solution and the archwiki link
