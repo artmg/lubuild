@@ -30,6 +30,23 @@ fi
 # right-click in tray - Panel Settings / Applets / Add / Battery Monitor
 
 
+# Suspend on timeout fails with "Power Manager: GDBus.Error:org.freedesktop.DBus.Error.NoReply: Method call timed out."
+# http://askubuntu.com/a/817106
+# https://bugs.launchpad.net/ubuntu/+source/systemd/+bug/1605189
+if [[ "${DESKTOP_SESSION} $(lsb_release -sr)" == "Lubuntu 16.10" ]] ; then 
+  sudo tee /etc/polkit-1/localauthority/50-local.d/com.0.allow-suspend-on-timeout.pkla <<EOF!
+[Allow suspend on timeout]
+Identity=unix-user:*
+Action=org.freedesktop.login1.suspend;org.freedesktop.login1.suspend-multiple-sessions
+ResultInactive=yes
+EOF!
+fi
+# http://askubuntu.com/a/700713
+# could have used xmlstarlet on actions/org.freedesktop.login1.policy but adding localauthority is more atomic way to intervene
+# for more on polkit and overides see [https://github.com/artmg/lubuild/blob/master/help/configure/Desktop.md]
+
+
+
 # Notifications not clear
 # https://bugs.launchpad.net/ubuntu/+source/lubuntu-artwork/+bug/1362555
 
