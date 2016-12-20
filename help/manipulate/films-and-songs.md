@@ -287,12 +287,13 @@ see also:
 
 The most popular... do not support WMA!
 
+* kid3-qt - simple and relatively light
 * easytag - good range of features, in repos
 * puddletag - see below
 
 Other candidates:
 * mp3tag on Windows! ... under Wine?
-* Picard for MusicBrainz metadata http://musicbrainz.org/doc/MusicBrainz_Picard/
+* Picard for MusicBrainz (does MWA?) metadata http://musicbrainz.org/doc/MusicBrainz_Picard/
 * TagScanner under Wine (can put cover art into folder not files)
 * kid3 (WMA support?) under wine or using KDE4
 * entagged (java but supports WMA)
