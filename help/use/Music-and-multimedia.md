@@ -16,11 +16,19 @@ See also:
     * manipulating files for the best size and markup
         * including metadata tagging to make collections convenient
     * other kinds of AV file conversion
+* For details of some ways to make Music and Multimedia available around your house:
+    * [Volumio and MPD](https://github.com/artmg/MuGammaPi/wiki/Volumio-and-MPD)
+        * Dedicated headless music player distro based on MPD - see intro below
+    * [Media Centre](https://github.com/artmg/MuGammaPi/wiki/Media-Center)
+        * Full media centre solutions for Pi, rather than simple audio
+    * [Audio-Hub](https://github.com/artmg/MuGammaPi/wiki/Audio-Hub)
+        * Other generic solutions for playing music 
 
 
 
 ## basic media library players 
 
+Requirements:
 * build index of local (-ly attached) media files 
 ** including cover art
 * allow browsing by artist / album etc
@@ -29,7 +37,7 @@ See also:
 
 ### Alternative music players
 
-_ moved out from [https://github.com/artmg/lubuild/blob/master/app-installs.bash] _
+For current installs see [https://github.com/artmg/lubuild/blob/master/app-installs.bash] 
 
 * on lubuntu default player is Audacious
     * Audacious works but not great interface for finding tracks in big library
@@ -42,7 +50,6 @@ _ moved out from [https://github.com/artmg/lubuild/blob/master/app-installs.bash
     * libavcodec-extra # streaming codecs only if required;
     * Popular choice on Windows and Android platforms too 
         * (where it is used to play WMAs if unspported by Stock player)
-    * 
 * QT-based
     * Clementine has strong fan base and rich features
         * no native WMA support - needs packages depending on gstreamer version it uses
@@ -181,7 +188,7 @@ but also:
 
 Music Player Daemon (MPD) is a Linux service allowing remote control of rendering music. It is a simpler model than UPnP, but it does have the advantage that the playlist is held by the rendering server, instead being sent track by track by the remote control point client. This makes it more of a room-based solution, rather than 'follow-me' controller-based listening.
 
-For more on MPD, see [https://github.com/artmg/MuGammaPi/wiki/Audio-Hub]
+For more on MPD, see [https://github.com/artmg/MuGammaPi/wiki/Volumio-and-MPD]
 
 Music Player Clients (MPC), often referred to as MPD clients, include:
 * Linux
@@ -196,6 +203,12 @@ Music Player Clients (MPC), often referred to as MPD clients, include:
     * 
 * Android
     * MPDroid
+        * slightly quirky setup for connecting to the server, but a good reliable contender for controlling music
+        * does not have a simple way to switch between multiple MPD servers
+    * Sound @ Home ?
+    * RuneAudio ?
+    * MPD Remote ?
+    * see also [http://www.androidmeta.com/keyword/volumio]
 
 **upmpdcli** is a special case, as it is client for MPD that exposes itself as a UPnP interface to DNLA control points
 
