@@ -101,6 +101,14 @@ sudo cat /var/log/syslog
 
 #### Wifi (WLAN)
 
+##### Issues Connecting
+```
+# iwconfig # deprecated in favour of iw
+iw dev
+```
+
+##### Limited Bandwidth 
+
 ```
 # credit [https://www.cyberciti.biz/tips/linux-find-out-wireless-network-speed-signal-strength.html]
 watch -n 1 cat /proc/net/wireless
@@ -304,13 +312,6 @@ dig @8.8.8.8 domain.tld
 ##### choosing alternate DNS providers
 
 use **namebench** or *DNS benchmark* utilities to identify optimal 
-
-
-
-## Wireless
-
-# iwconfig # deprecated in favour of iw
-iw dev
 
 
 
