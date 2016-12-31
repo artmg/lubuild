@@ -168,6 +168,45 @@ If you get errors such as _isolinux.bin missing or corrupt_ then perhaps
 you tried to write a Disk image to a Partition?
 
 
+## Troubleshooting boot issues
+
+Here are some pointers to help you boot into the flash media you have written. 
+When you start your computer you usually need to press a key to choose an alternative 
+boot medium. The key depends on the BIOS but could be **DEL** or **F2** or **F12**. 
+
+If you have a UEFI that is set to boot only EFI partitions, it might not recognise the boot medium, 
+but this lack of backwards compatibility is rare. 
+
+
+### ISO not hybrid
+
+Hybrid ISOs include a Master Boot Record (MBR) to allow them to boot from USB devices 
+as well as from optical drives. If you have used one of the methods above to write 
+an ISO file to a drive, but it fails to boot it could be because it is NOT a hybrid ISO. 
+
+```
+# Detect if ISO is hybrid using fdisk:
+fdisk -l path/to/file/filename.iso
+
+# If you see a partition table, then the ISO is a hybrid iso. 
+# If NOT then continue onto steps below to fix this 
+
+sudo apt-get install syslinux-utils
+# or just  syslinux  in Trusty and previous versions
+
+# IMPORTANT: you must ONLY run isohybrid once on an ISO, 
+# and only if you are sure it is not already hybrid
+
+# ensure you keep the original iso file
+cp -p filename.iso filename-hybrid.iso
+
+# the actual command
+isohybrid filename-hybrid.iso
+# credit [https://help.ubuntu.com/community/mkusb/isohybrid]
+# if you want to install to a partition, rather than a whole disk, add option -partok 
+```
+
+
 
 ## Using Live Media
 
