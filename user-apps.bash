@@ -285,6 +285,28 @@ skippedPathsFnmPathname = 0
 
 EOF
 
+##### General knowledge on Mime Types in Recoll
+
+# on your system, the Mime Types are defined in either:
+# /etc/mime.types
+# /usr/share/mime/types
+# ~/.local/share/mime/types
+# and the applications associated are
+# /usr/share/applications/defaults.list
+# ~/.local/share/applications/mimeapps.list 
+
+# To change the recoll config (including mime types) ...
+# make changes locally ~/.recoll
+# make changes globally /usr/share/recoll/examples
+
+cat > $HOME/.recoll/mimeview <<EOF
+# This is the fix for the error in Lubuntu where Recoll reacts to Open Folder/Parent with
+# "The viewer specified in mimeview for inode/directory" dolphin "is not found" "Do you want to start the preferences dialog"
+[view]
+inode/directory = pcmanfm %f
+inode/directory|parentopen = pcmanfm %f
+# help [http://www.lesbonscomptes.com/recoll/usermanual/RCL.INSTALL.CONFIG.html]
+EOF
 
 
 #### set up multiple indexes for Removeable Media ####
