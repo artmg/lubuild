@@ -3,8 +3,14 @@
 NB: This file is rather large, and perhaps it could be separated into different files 
 to cover different subjects
 
-e.g. Layout reasoning sections separate from precise commands to manipulate
-
+e.g.
+* configure Disks (here)
+	* install, partitioning, ???
+* diagnose disks
+	* Troubleshooting
+* understand Layout 
+	* reasoning sections separate from precise commands to manipulate
+	* specific examples like OpenElec
 
 
 See also:
@@ -90,7 +96,7 @@ sudo echo
 echo -n "Enter new label for Media : " && read MEDIA_LABEL
 
 
-#### Troubleshooting FAT
+#### Troubleshooting FAT relabeling
 ## if below you get error "not a multiple of sectors"
 # echo mtools_skip_check=1 >> ~/.mtoolsrc
 
@@ -170,7 +176,7 @@ the front, to ensure they are properly aligned, and use Partition ID
 # mkfs.fat /dev/sdX1 -n LABEL
 ```
 
-### do it with parted
+#### do it with parted
 
 as an alternative 
 ```
@@ -196,6 +202,13 @@ sudo mkfs.fat -n U50 ${MYDEVICE}1
 
 ```
 
+### resize partition and move data
+
+This is easiest using the Graphical Interface (GUI) utility GParted. 
+It guides you through the whole procedure and is easy to use. 
+```
+sudo apt-get install gparted
+```
 
 ### choose Boot Parititon
 
