@@ -194,10 +194,8 @@ Music Player Clients (MPC), often referred to as MPD clients, include:
 * Linux
     * Cantata
         * QT-based and feature rich
-        * active development
-        * version in repos may be old KDE version 1.x
-        * for qt version 2.x use PPA
-            * [http://ubuntuhandbook.org/index.php/2016/01/install-mpd-client-cantata-2-0-via-ppa-in-ubuntu/]
+        * still some active development
+        * Qt version 2.x now upstream in debian repos
     * Quimup
     * QMpdClient
     * 
@@ -212,7 +210,7 @@ Music Player Clients (MPC), often referred to as MPD clients, include:
 
 **upmpdcli** is a special case, as it is client for MPD that exposes itself as a UPnP interface to DNLA control points
 
-For an exhaustive list of MPC clients see [http://mpd.wikia.com/wiki/Clients]
+For an exhaustive (though rather old) list of MPC clients see [http://mpd.wikia.com/wiki/Clients]
 
 
 ## remote control ###
