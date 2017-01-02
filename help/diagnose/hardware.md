@@ -18,6 +18,24 @@ see [[https://github.com/artmg/lubuild/blob/master/help/diagnose/hardware.md]]
 sudo dmidecode -s system-product-name
 ```
 
+### general commands
+
+```
+# To discover the hardware in your system, and the and drivers in use...
+
+# e.g. vga video wireless network etc
+HW_TYPE=vga
+
+lspci -nnk | grep -i $HW_TYPE -A3
+# credit [http://askubuntu.com/a/254877]
+
+HW_TYPE=video
+# Check which driver file is being used
+modinfo -F filename `lshw -c $HW_TYPE | awk '/configuration: driver/{print $2}' | cut -d= -f2`
+# credit [http://askubuntu.com/a/23240]
+
+```
+
 ### CPU 
 ```
 # check hardware details
