@@ -8,6 +8,8 @@ see also:
 * [https://github.com/artmg/lubuild/blob/master/help/manipulate/films-and-songs.md]
 * [https://github.com/artmg/lubuild/blob/master/help/manipulate/photos.md]
 * [https://github.com/artmg/lubuild/blob/master/help/manipulate/FreeCAD-plans-and-designs.md]
+* [https://github.com/artmg/lubuild/blob/master/help/manipulate/disk-recovery-and-forensics.md]
+	* Check File Signatures ('Magic Characters') to discover what type of file you are looking at
 * 
 
 

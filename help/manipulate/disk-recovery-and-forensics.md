@@ -1,4 +1,9 @@
 
+See also:
+* [https://github.com/artmg/lubuild/blob/master/help/manipulate/films-and-songs.md]
+	* how to find out details (metadata and contents) of media files
+
+
 ## file types ##
 
 ### common types

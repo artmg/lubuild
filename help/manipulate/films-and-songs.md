@@ -18,6 +18,21 @@ see also:
 ## IN
 
 
+## Identifying contents
+
+If you have a media file, there are a couple of utilities that can reveal 
+useful details about the contents:
+
+* exiftool
+	* Metadata - information about what device made the file, when, under what conditions, and into what format
+* mediainfo 
+	* specific details about what contents are in the media file, formats and encodings, and whether it is encrypted
+
+NB: If the media file is encrypted, and you don't have the DRM decryption keys, 
+you will not be able to see the contents. 
+For example, if you record onto USB storage from a PVR, 
+most devices make it so you must watch the recordings on that same device.
+
 
 ## CD ripping 
 
