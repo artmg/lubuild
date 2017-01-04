@@ -1,6 +1,9 @@
 
 ## core applications
 
+The default PDF veiwer in Lubuntu is called "Document Viewer" 
+also known as GNOME Evince, which handles other common book, scan and fax formats. 
+
 The following are on the default list of Lubuild apps
 
 * pdftk
@@ -17,6 +20,22 @@ The following are on the default list of Lubuild apps
 
 
 ## working with images in PDF files
+
+### zoom in closer
+
+Evince (and Okular, a common alternative PDF viewer) have zoom limits 
+that you may find troublesome on extremely large or small documents. 
+
+You can open vector PDFs in **Inkscape**, although large and complex diagrams 
+can take quite a long time to redraw as you move in this application 
+designed for editing rather than just viewing. Some people suggest 
+the open source alternative viewers xpdf and mupdf, 
+but others say they can glitch on complex vector diagrams. 
+
+Since Adobe stopped supporting their Reader for Linux in 2014, the best 
+closed source (but gratis-free) alternative offering better zoom is
+[Foxit Reader](https://www.foxitsoftware.com/downloads/) 
+
 
 ### Selectively print area of large diagram
 
