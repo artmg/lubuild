@@ -319,7 +319,7 @@ ln -s /media/Windows $WINEPREFIX/dosdevices/w:
 sudo apt-get update
 sudo apt-get install -y antiword xsltproc catdoc unrtf libimage-exiftool-perl python-mutagen aspell
 
-cat > $HOME/.recoll/recoll.conf <<EOF
+cat > $HOME/.recoll/recoll.conf <<EOF!
 # This is the indexing configuration for the current user
 # These values override the system-wide config files in:
 #   /usr/share/recoll/examples
@@ -344,7 +344,7 @@ skippedPaths = \
 
 skippedPathsFnmPathname = 0
 
-EOF
+EOF!
 
 ##### General knowledge on Mime Types in Recoll
 
@@ -360,14 +360,37 @@ EOF
 # make changes locally ~/.recoll
 # make changes globally /usr/share/recoll/examples
 
-cat > $HOME/.recoll/mimeview <<EOF
+##### Some local config fixes
+
+cat > $HOME/.recoll/mimeview <<EOF!
 # This is the fix for the error in Lubuntu where Recoll reacts to Open Folder/Parent with
 # "The viewer specified in mimeview for inode/directory" dolphin "is not found" "Do you want to start the preferences dialog"
 [view]
 inode/directory = pcmanfm %f
 inode/directory|parentopen = pcmanfm %f
 # help [http://www.lesbonscomptes.com/recoll/usermanual/RCL.INSTALL.CONFIG.html]
-EOF
+EOF!
+
+cat > $HOME/.recoll/mimeconf <<EOF!
+# This is part of the fix for the error in Lubuntu where Recoll ignores .md files
+# and recollindex shows error "mimetype: can't interpret 'file' output:"
+[index]
+text/x-markdown = internal text/plain
+text/x-basic = internal text/plain
+text/x-powershell = internal text/plain
+EOF!
+
+cat > $HOME/.recoll/mimemap <<EOF!
+# This is part of the fix for the error in Lubuntu where Recoll ignores .md files
+# and recollindex shows error "mimetype: can't interpret 'file' output:"
+.md = text/x-markdown
+.mediawiki = text/x-markdown
+.bash = application/x-shellscript
+.bas  = text/x-basic
+.cls  = text/x-basic
+.ps1 = text/x-powershell
+EOF!
+# some of these last couple may be needed in other indexes below
 
 
 #### set up multiple indexes for Removeable Media ####
@@ -408,15 +431,31 @@ textfilemaxmbs = 20
 
 EOF!
 
+##### missing mimetypes copied from main config
+cat > .recoll/mimeconf <<EOF!
+[index]
+text/x-markdown = internal text/plain
+text/x-basic = internal text/plain
+text/x-powershell = internal text/plain
+EOF!
+cat > .recoll/mimemap <<EOF!
+.md = text/x-markdown
+.mediawiki = text/x-markdown
+.bash = application/x-shellscript
+.bas = text/x-basic
+.cls = text/x-basic
+.ps1 = text/x-powershell
+EOF!
+
 ##### refresh script in each root #####
 cat > refresh_me.sh <<EOF!
 #!/bin/bash
 
 # set $DIR to folder containing current script
 # credit - http://stackoverflow.com/a/246128
-DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+DIR=\$( cd "\$( dirname "\${BASH_SOURCE[0]}" )" && pwd )
 
-recollindex -c $DIR/.recoll
+recollindex -c \$DIR/.recoll
 EOF!
 chmod +x refresh_me.sh
 
