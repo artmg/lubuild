@@ -1,3 +1,6 @@
+# Troubleshooting Hardware 
+
+[https://github.com/artmg/lubuild/blob/master/help/diagnose/hardware.md]
 
 This article is for help with general internal hardware components, including radios, etc
 
@@ -8,20 +11,13 @@ See also:
 * [operating system diagnostics](https://github.com/artmg/lubuild/blob/master/help/diagnose/operating-system.md)
 * 
 
-## Troubleshooting Hardware 
-
-see [[https://github.com/artmg/lubuild/blob/master/help/diagnose/hardware.md]] 
-
-
-```
-# display computer model number
-sudo dmidecode -s system-product-name
-```
-
-### general commands
+## Basic discovery
 
 ```
 # To discover the hardware in your system, and the and drivers in use...
+
+# display computer model number
+sudo dmidecode -s system-product-name
 
 # e.g. vga video wireless network etc
 HW_TYPE=vga
@@ -36,7 +32,8 @@ modinfo -F filename `lshw -c $HW_TYPE | awk '/configuration: driver/{print $2}' 
 
 ```
 
-### CPU 
+## CPU 
+
 ```
 # check hardware details
 cat /proc/cpuinfo
@@ -47,7 +44,24 @@ grep -c processor /proc/cpuinfo
 sudo lshw | less
 ```
 
-### RAM 
+### Temperature
+
+```
+# install the senors
+sudo apt-get install lm-sensors
+# check what sensors are enabled by default
+sensors
+# see what other sensors your hardware makes available
+sudo sensors-detect
+# if you want to enable these sensors you have to say YES to update /etc/modules then restart
+
+# for example of a monitoring and alerting system (monit) based on these
+# see [http://www.htpcbeginner.com/monit-cpu-temperature-monitoring/]
+```
+
+
+## RAM 
+
 ```
 # check hardware details
 cat /proc/meminfo
@@ -57,7 +71,7 @@ sudo dmidecode -t memory
 sudo lshw | less
 ```
 
-### BIOS Version
+## BIOS Version
 
 ```
 # check the BIOS version
@@ -74,17 +88,17 @@ sudo fwts
 # view the logs appended to a log file "results.log"
 ```
 
-#### BIOS Upgrade
+### BIOS Upgrade
 Quote from [[https://wiki.ubuntu.com/BIOSandUbuntu]]
  A buggy BIOS can cause many different and subtle problems to Linux, ranging from reboot problems, incorrect battery power readings, suspend/resume not working correctly, and strange ACPI issues
 
 You should also bear in mind that system or driver bug reports might get rejected if the BIOS has been superseded. For help with BIOS Upgrades see [[https://help.ubuntu.com/community/BIOSUpdate]], which includes links to using '''FreeDos over USB''' disk to run vendors' DOS-based BIOS update utility
 
-### Disks 
+## Disks 
 
 see [[https://github.com/artmg/lubuild/blob/master/help/configure/Disks-and-layout.md]]
 
-#### Low level disk check 
+### Low level disk check 
 
 ```
 # start basic tests
@@ -109,11 +123,11 @@ sudo badblocks -v /dev/sdX
 
 ```
 
-### Radios 
+## Radios 
 
 see also [General Network troubleshooting](https://github.com/artmg/lubuild/blob/master/help/diagnose/network.md)
 
-#### enabled/disabled 
+### enabled/disabled 
 
 ```
 # show the current state of any hardware switch options
@@ -121,7 +135,7 @@ see also [General Network troubleshooting](https://github.com/artmg/lubuild/blob
 rfkill list all
 ```
 
-#### Wifi won't turn on
+### Wifi won't turn on
 
 NB: this is separate from the Wifi issue upon restoring from suspend/hibernate, which is now resolved by a shortcut to '''nmcli'''
 ```
@@ -136,7 +150,7 @@ sudo reboot
 # credit - http://ubuntuforums.org/showthread.php?t=1793994
 ```
 
-#### Bluetooth devices 
+### Bluetooth devices 
 
 (see also Audio section below for Audio Bluetooth issues) 
 ``` 
@@ -167,11 +181,12 @@ cat /var/log/syslog|grep -i blue|tail
 sudo hciconfig hci0 reset
 # credit - https://help.ubuntu.com/community/BluetoothSetup
 ```
-### HIDs (Human Input Devices) 
+## HIDs (Human Input Devices) 
 
-#### Keyboard 
+### Keyboard 
 
-##### devices 
+#### devices 
+
 ``` 
 # simple list of input devices
 xinput -list
@@ -193,7 +208,8 @@ lsmod
 # credit - https://wiki.ubuntu.com/DebuggingKeyboardDetection#In_case_your_keyboard_doesn.27t_work_at_all
 ```
 
-##### layouts 
+#### layouts 
+
 ```
 # to get an on screen keyboard under Menu / Universal Access
 sudo apt-get install -y onboard
