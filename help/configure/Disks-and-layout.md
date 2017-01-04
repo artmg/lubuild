@@ -69,6 +69,7 @@ ubiquity
 ## Partitions
 
 ### Rename 
+
 ```
 #!/bin/bash
 # Rename partition to change label and automount path
@@ -310,6 +311,7 @@ The '''gnome-disks''' utility is a handy GUI for most diagnostics
 
 
 ### Discover the attached devices
+
 ```
 # see which partitions are currently in use and check how full
 df
@@ -329,6 +331,7 @@ lsblk -o name,mountpoint,label,size
 ```
 
 ### Simple checks
+
 ```
 # provided the filesystem is UNMOUNTED, check it
 sudo umount /dev/sdbX
@@ -343,6 +346,7 @@ For help on disk and partition diagnostics see
 http://www.howtogeek.com/howto/37659/the-beginners-guide-to-linux-disk-utilities/
 
 ### ISOs
+
 ```
 # If you have an ISO image and want to know if it is bootable...
 # display the disk label and whether the Bootable flag is set
@@ -690,7 +694,9 @@ credit - [http://wiki.openelec.tv/index.php/Dual_Boot]
     * found gparted on Lubuntu "Live USB Installer"
 * 
 
-#### Reducing the number of Primary Partitions ==
+
+
+### Reducing the number of Primary Partitions
 
 Some manufacturers (such as HP) may use up all 4 available Primary Partitions in their factory-shipped configuration. This means that when you try to create a new partition (Primary OR Logical) you get an error saying &quot;it is not possible to create more than 4 Primary Partitions&quot;.
 
@@ -946,6 +952,7 @@ sudo mount -a
 credit &gt; https://help.ubuntu.com/community/AutomaticallyMountPartitions
 ```
 ##### NTFS Permissions 
+
 ```
 #==mount options==
 # help &gt; http://www.tuxera.com/community/ntfs-3g-manual/
