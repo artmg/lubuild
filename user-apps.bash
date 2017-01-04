@@ -113,6 +113,67 @@ if [[ $LUBUILD_DROPBOX_AUTOSTART -eq TRUE ]] ; then (
 
 
 ########################################
+##   Linux CLI client for Evernote    ##
+########################################
+
+### GeekNote (JeffKowalski) ###
+
+#### Input variables 
+# set up location
+BINFOLDER=$HOME/.bin
+# get sudo password required later
+sudo echo
+
+
+#### Prepare
+# prepare locations and extra dependencies
+mkdir -p $BINFOLDER/geeknote
+cd $BINFOLDER
+sudo apt-get install git 
+
+#### Current instructions from README in repo
+##################
+
+# Install dependencies. (This example for Debian-based systems):
+sudo apt-get update; sudo apt-get -y install python-setuptools
+
+# Download the repository.
+git clone git://github.com/jeffkowalski/geeknote.git
+
+cd geeknote
+
+# Installation
+python setup.py build
+sudo pip install .
+
+##################
+
+# if last line failed because you have never installed pip, do NOT install python-pip from apt-get
+# as it also loads a heap of build, make and other dev dependencies (over 125MB)
+# either install pip (how) or simply use easy_install (main downside is no ability to uninstall)
+sudo easy_install .
+
+
+#### Authenticate
+
+cd geeknote
+echo SUGGESTION: if authenticating with Username fails then try Email Address instead
+geeknote login
+
+
+#### Geeknote refresh command
+
+#!/bin/bash
+# sync into path of this script
+LOG_FILE=$HOME/.geeknote/GeekNoteSync.log
+echo Check $LOG_FILE for progress...
+gnsync --path "$(dirname "$0")" --logpath $LOG_FILE --all --download-only --format markdown
+# help - http://www.geeknote.me/documentation/
+
+
+
+
+########################################
 ## Linux Client for Google Drive sync ##
 ########################################
 
