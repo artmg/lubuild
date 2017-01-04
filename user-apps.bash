@@ -315,7 +315,7 @@ cd <my container root folder> ###### do this for each offline container you want
 
 
 mkdir .recoll
-echo > .recoll/recoll.conf <<EOF
+cat > .recoll/recoll.conf <<EOF!
 # This is the Recoll configuration file for the index for this offline container
 
 ##### how to use multiple indexes for Removeable Media #####
@@ -345,10 +345,10 @@ compressedfilemaxkbs = -1
 # MB Max text file size - as very large are usually logs, default 20MB - to disable -1 
 textfilemaxmbs = 20
 
-EOF
+EOF!
 
 ##### refresh script in each root #####
-echo > refresh_me.sh <<EOF
+cat > refresh_me.sh <<EOF!
 #!/bin/bash
 
 # set $DIR to folder containing current script
@@ -356,7 +356,7 @@ echo > refresh_me.sh <<EOF
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 recollindex -c $DIR/.recoll
-EOF
+EOF!
 chmod +x refresh_me.sh
 
 ##### Build the index now #####
