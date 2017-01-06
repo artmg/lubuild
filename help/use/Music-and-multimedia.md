@@ -16,6 +16,8 @@ See also:
     * manipulating files for the best size and markup
         * including metadata tagging to make collections convenient
     * other kinds of AV file conversion
+* [https://github.com/artmg/lubuild/blob/master/help/manipulate/photos.md]
+	* image recognition (OCR, QR codes etc)
 * For details of some ways to make Music and Multimedia available around your house:
     * [Volumio and MPD](https://github.com/artmg/MuGammaPi/wiki/Volumio-and-MPD)
         * Dedicated headless music player distro based on MPD - see intro below

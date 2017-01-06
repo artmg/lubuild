@@ -1,3 +1,8 @@
+See also:
+
+* [https://github.com/artmg/lubuild/blob/master/help/manipulate/photos.md]
+	* image recognition (OCR, QR codes etc)
+* 
 
 ## Printers and Scanners
 

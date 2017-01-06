@@ -26,3 +26,55 @@ exiftool -s myPhoto.jpg
 # rename to "YYYYmmdd_HHMMSS.ext" and move into folder "renamed"
 exiftool "-FileName<DateTimeOriginal" -d "%Y%m%d_%H%M%S.%%e" -directory=renamed .
 
+
+
+## document recognition
+
+For interpreting the data stored in image files
+
+### Optical Character Recognition (OCR)
+
+* ocrfeeder, including the tesseract engine, is installed by [Lubuild app-installs]
+
+
+### QR codes
+
+Quick Response (QR) codes are square pixellated barcodes used to read information 
+from mobile devices with a camera. 
+
+#### interpreting
+
+* zbar-tools
+	- command line read from file or webcam
+	- zbarimg to decode image files
+	- zbarcam to use webcam
+	- a few dependencies
+* qtqr
+	- Gui to decode and encode
+	- uses zbar library
+	- 
+
+Note that your image may need some preprocessing to regularise:
+* brightness and contrast
+* rotation and skew
+* image file encoding (format/type)
+
+
+#### creating
+
+To generate QR codes consider:
+
+* qrencode
+	- create a png file from text supplied on the command line
+	- also creates EPS and Ascii text files
+* qreator
+	- similar
+* qtqr
+	- Gui to create, view and save QR codes
+	- built on Qt and Python
+	- 
+* Portable QR-Code Generator
+	- also supports Geo or Wifi Access protocol codes
+	* written in Java (so requires JRE runtime)
+* 
+
