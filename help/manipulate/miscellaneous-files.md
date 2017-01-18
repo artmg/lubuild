@@ -7,6 +7,7 @@ see also:
 * [https://github.com/artmg/lubuild/blob/master/help/manipulate/PDF-files.md]
 * [https://github.com/artmg/lubuild/blob/master/help/manipulate/films-and-songs.md]
 * [https://github.com/artmg/lubuild/blob/master/help/manipulate/photos.md]
+	* working with individual photos and creating videos from them
 * [https://github.com/artmg/lubuild/blob/master/help/manipulate/FreeCAD-plans-and-designs.md]
 * [https://github.com/artmg/lubuild/blob/master/help/manipulate/disk-recovery-and-forensics.md]
 	* Check File Signatures ('Magic Characters') to discover what type of file you are looking at
@@ -26,12 +27,13 @@ munpack mimefilename.ext
 
 # example in loop
 for f in *.mht; do mkdir -p "unpack/$f"; munpack "../../$f" -C "unpack/$f" ; done
-```
 
 # alternatives:
 # * mu-extract from maildir-utils 
 # * base64 -d from gnu
 # * 
+
+```
 
 
 ## File and Folder syncronisation
@@ -71,13 +73,19 @@ help > http://live.gnome.org/Conduit/Documentation/UserDocumentation
 
 
 ##open source tools##
+
 ###code ideas###
+
 Synchrorep http://www.iceberg.0rg.fr/ is Python based and supports ftp, samba & ssh mounted shares
 Conduit http://live.gnome.org/Conduit/Development is Python based with many customm data providers
+
 ###arch ideas###
+
 GNU usbsync http://klingspor-thueringen.de/usbsync/ uses file in root to automatically sync USBs with multiple PCs
 https://wiki.ubuntu.com/MultipleComputersSynchronization
+
 ###others###
+
 http://sourceforge.net/projects/freefilesync/ C++ wxWidgets
 
 

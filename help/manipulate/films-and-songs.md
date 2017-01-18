@@ -13,6 +13,7 @@ see also:
     * For creating music or playing instruments 
 * [https://github.com/artmg/lubuild/blob/master/help/manipulate/photos.md]
     * for working with your own captured images
+    * includes converting them into videos
 
 
 ## IN

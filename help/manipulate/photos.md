@@ -1,11 +1,11 @@
 
 Although some of the tools for working with photos also apply to films and songs, 
 they are treated separately here as we assume films and songs are bought, 
-whereas photos are captured, unique and irreplacable. 
+whereas photos are captured, unique and irreplaceable. 
 
 See also:
 * [https://github.com/artmg/lubuild/blob/master/help/manipulate/films-and-songs.md]
-    * For ripping, converting and metataging films and songs
+    * For ripping, converting and metatagging films and songs
 * 
 
 
@@ -17,6 +17,7 @@ based on the date and time that the photo was taken (metadata)
 
 Exiftool is a great way to do this
 
+```
 # show the metadata for a single file
 exiftool myPhoto.jpg
 # help - http://www.sno.phy.queensu.ca/~phil/exiftool/
@@ -25,7 +26,29 @@ exiftool -s myPhoto.jpg
 
 # rename to "YYYYmmdd_HHMMSS.ext" and move into folder "renamed"
 exiftool "-FileName<DateTimeOriginal" -d "%Y%m%d_%H%M%S.%%e" -directory=renamed .
+```
 
+## Creating videos from images
+
+### Candidates
+
+* OpenShot
+	- this is the Ubuntu Studio default video creation app
+* ffDiaporama
+	- Qt-based
+	- no recent development (2014)
+* FFmpegYAG
+	- simple graphical front end (GUI) for ffmepg
+* VLMC
+	- from the VideoLAN stable that created VLC
+* The following are more Video Editing less video creation:
+	- (sometimes referred to as Non-Linear Editing or NLE)
+	- Cinelerra
+	- LiVES
+	- KDEnlive
+	- PiTiVi
+	- Shotcut
+	- Blender (also includes editing features)
 
 
 ## document recognition
