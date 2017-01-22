@@ -29,6 +29,7 @@ see Discovery / Services in Network Diagnostics [https://github.com/artmg/lubuil
 ## Sharing Folders ##
 
 ### Locally ###
+
 ```
 # to share folders locally use bindfs to mount a location in different places
 sudo apt-get install bindfs
@@ -38,9 +39,11 @@ sudo apt-get install bindfs
 # .e.g. ...
 ln -s -T /home/shared /home/username/Documents/Pictures
 ```
+
 ### Across LAN ###
 
 #### Prepare ####
+
 ```
 ## FIRST Ensure underlying disks are mounted at logon
 ##  - via GUI using Disks program
@@ -53,17 +56,47 @@ ln -s -T /home/shared /home/username/Documents/Pictures
 # sudo mkdir /mnt/Label1
 # sudo mount -a
 ```
-####Choices####
+
+#### Choices ####
+
 
 ; Samba
 : Heavier | Windows compatible | ??Secure?? | common | simple from client
-; STFP (FTP over SSH)
-: 
+; STFP (SSH File Transfer Protocol)
+: quick and easy if SSH already set up 
 ; NFS
 : lightwight | can automount in fstab or avahi (https://wiki.archlinux.org/index.php/avahi#NFS)
 : see https://help.ubuntu.com/community/SettingUpNFSHowTo
 ; Avahi - Giver
 : Push only!
+
+
+#### SFTP ####
+
+If you are connecting to a device that already serves SSH, 
+e.g. you know you can connect to a remote command line, 
+then it will be very easy to use SSH File Transfer Protocol, 
+all you need is a suitable client. 
+
+If you are connecting from a Ubuntu or Lubuntu client, 
+it's already built in via your file manager. 
+Nautilus, Thunar and PCManFM all use the underlying gvfs and 
+sshfs services to mount and display remote folders over SFTP. 
+
+Look for the option "**Connect to Server...**".
+
+If you're on Windows then you can use WinSCP, and a number 
+of FTP clients also support SFTP. 
+
+NB: if you can use the same credentials to connect to SSH 
+but fail to connect to SFTP, then you should ensure your server 
+does not have file transfer explicitly disabled
+
+Technical Notes: SFTP here refers to SSH File Transfer Protocol,  
+not to the deprecated Simple File Transfer Protocol. 
+SFTP is technically different from both FTPS and FTP over SSH, 
+fortunately however many FTP clients have been written to also use SFTP.
+
 
 #### Share with Samba ####
 
@@ -148,7 +181,9 @@ NB: don't forget that the C$ admin share is often locked down in modern Windows 
 #####  Making shares accessible to Windows ===
 
 see Lubuild / Collector / Services / Sharing Folders
+
 ###### Sample global ====
+
 ```
 [global]
 # Allow use of computer names
@@ -156,9 +191,10 @@ wins support = yes
 # don't insist on authenticating users
 security = share</pre>
 ```
+
 ###### Temporary shares ====
 
- sudo shares-admin
+`sudo shares-admin`
 
 #####  WebDAV ===
 
@@ -242,14 +278,13 @@ EOF
 sudo exportfs -a
 sudo service nfs-kernel-server start
 
-```
 
+## see also
 # [https://help.ubuntu.com/community/SettingUpNFSHowTo]
-
 # [https://www.digitalocean.com/community/tutorials/how-to-set-up-an-nfs-mount-on-ubuntu-14-04]
 # [https://www.howtoforge.com/nfs-server-on-ubuntu-14.10]
 
-
+```
 
 ##### Client
 
@@ -272,10 +307,8 @@ sudo mount -a
 
 ##### Troublshooting NFS
 
-[http://www.tldp.org/HOWTO/NFS-HOWTO/troubleshooting.html]
-[https://wiki.archlinux.org/index.php/NFS/Troubleshooting]
-
-
+* [http://www.tldp.org/HOWTO/NFS-HOWTO/troubleshooting.html]
+* [https://wiki.archlinux.org/index.php/NFS/Troubleshooting]
 
 
 ## SSH - (remote) Secure SHell ##
@@ -615,6 +648,7 @@ see also:
 * [http://askubuntu.com/a/55495] for further comparison
 
 ### rsyslogd server
+
 ```
 sudo nano /etc/rsyslog.conf
 ## uncomment the following lines to allow listeners on default UDP & TCP ports
@@ -657,6 +691,7 @@ EOF!
 ```
 
 ### syslog clients
+
 ```
 ## set your syslog server ip with...
 #*.* @x.x.x.x
@@ -664,7 +699,9 @@ sudo nano /etc/rsyslog.conf
 
 sudo service rsyslog restart
 ```
+
 ### syslog-ng
+
 ```
 # syslog-ng is in repos
 sudo apt-get install syslog-ng
