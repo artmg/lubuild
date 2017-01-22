@@ -355,6 +355,7 @@ EOF!
 # and the applications associated are
 # /usr/share/applications/defaults.list
 # ~/.local/share/applications/mimeapps.list 
+# for more info on Mime Types see [https://github.com/artmg/lubuild/blob/master/help/configure/Desktop.md]
 
 # To change the recoll config (including mime types) ...
 # make changes locally ~/.recoll
