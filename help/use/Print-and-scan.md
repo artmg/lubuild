@@ -36,6 +36,10 @@ hp-levels
 hp-toolbox
 ```
 
+If you get a QT error, then you probably need an extra module
+such as `python3-pyqt4` or `python3-pyqt5` 
+- see [https://github.com/artmg/lubuild/blob/master/system-apps-manual.bash]
+
 ### Scanners
 
 ```

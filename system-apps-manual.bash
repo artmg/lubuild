@@ -40,6 +40,9 @@ fi
 if [[ "${DESKTOP_SESSION} $(lsb_release -sr)" == "Lubuntu 15.04" ]] then 
    sudo apt-get install -y python3-pyqt4 ; 
 fi
+if [[ "${DESKTOP_SESSION} $(lsb_release -sr)" == "ubuntustudio 16.10" ]] then 
+   sudo apt-get install -y python3-pyqt5 ; 
+fi
 
 sudo hp-setup
 # help - https://help.ubuntu.com/community/HpAllInOne

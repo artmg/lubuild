@@ -92,7 +92,7 @@ sudo apt-get install -y gstreamer0.10    # media codecs for listening to or watc
 sudo apt-get install -y cups-pdf
 sudo apt-get install -y cifs-utils       # is this needed? libnss-mdns is already in there
 sudo apt-get install -y tuxtype ktouch   # touch typing practice apps
-sudo apt-get install -y python3-pyqt4    # hplip (incl xsane) is installed but need QT4 to fix GUI
+sudo apt-get install -y python3-pyqt4 python3-pyqt5    # hplip (incl xsane) is installed but need QT4/5 to fix GUI
 sudo apt-get install -y unrar            # add rar capability to gnome archive manager
 
 
