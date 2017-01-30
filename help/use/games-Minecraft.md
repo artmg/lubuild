@@ -112,7 +112,14 @@ By default ubuntu comes with OpenJRE (open source) however the minecraft vendors
 and recommend using Oracle's closed code Java Runtime Environment (JRE), either version 7 or 8. 
 
 Notes:
+
 * you may have more that one type of JRE installed at the same time (if you really want), and more than one version too
+* Oracle Java 9 is only supported if change your JVM Arguments
+	- if it fails with `Error: Game ended with bad state (Exit Code 1)`
+	- Edit Profile / Check JVM arguments
+	- remove the option clause `-XX:+CMSIncrementalMode`
+	- save and re-execute game
+	- credit [http://minecraft.gamepedia.com/Tutorials/Update_Java] 
 
 ```
 # check the current JRE(s) installed
@@ -144,6 +151,8 @@ NB: If you install Oracle Java in Windows for Minecraft clients, the plugins are
 For help with removing the plugins (e.g. to only enable Java for local programs like Minecraft) 
 see [http://www.howtogeek.com/122934] and  [http://www.ghacks.net/2010/04/25/how-to-remove-the-java-deployment-toolkit-from-firefox/]
 
+
+
 ##### mods
 
 OptiFine Lite - http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/1272953-1-8-4-optifine-hd-d4-fps-boost-hd-textures-aa-af
@@ -153,13 +162,77 @@ OptiFine Lite - http://www.minecraftforum.net/forums/mapping-and-modding/minecra
 
 still laggy? - for more ideas see optimise - http://www.makeuseof.com/tag/7-steps-install-optimize-minecraft-linux/
 
-### Server ##
+## Minecraft Server
+
+### Download jar
+
+Get the latest server jar file from 
+[https://minecraft.net/en-us/download/server]
 
 URL example: https://s3.amazonaws.com/Minecraft.Download/versions/1.8.7/minecraft_server.1.8.7.jar
 
-Mojang server download page recommends the following instructions: http://minecraft.gamepedia.com/Setting_up_a_server
+NB: As at version 1.11.2 this starts fine with Oracle Java 9 
+but connecting clients with Java 9 reports
+`Unable to access address of buffer`
+- fall back to Java 8 which is better supported for now
 
-#### IN
+
+### Configure 
+
+Mojang server download page recommends the following instructions: [http://minecraft.gamepedia.com/Setting_up_a_server]
+
+You should consider setting the following in `server.properties`
+
+```
+# help - [http://minecraft.gamepedia.com/Server.properties]
+#
+### Basics
+#
+# what's the level (and folder) called
+level-name=my-world
+# how does the world name appear to players
+motd=My Minecraft World
+#
+### Online settings
+#
+# full flexibility with allowing clients without rechecking each ID online when they join
+online-mode=false
+# Players don't kill each other (i.e. PvE players vs Environment, not Player vs Player)
+pvp=false
+# opt out of submitting details about the environment (e.g. OS & Java version) you run in
+snooper-enabled=false
+#
+### Gameplay
+#
+# Decrease your chances of getting killed
+spawn-monsters=false
+# Go from Easy to Peaceful (see [http://minecraft.gamepedia.com/Difficulty])
+difficulty=0
+# set Creative mode (see [http://minecraft.gamepedia.com/Game_mode])
+gamemode=1 
+# with flight
+allow-flight=true
+```
+
+### Advertise
+
+Minecraft server advertising does not use any of the usual suspects, 
+like `avahi` or `bonjour`, but broadcasts `MOTD` to port 4445... 
+
+* Copy the python code from [http://gaming.stackexchange.com/a/238680]
+* set your server(s) in the array variable
+* create a .desktop file to launch it with `python`
+
+### Troubleshoot
+
+If you need to check which is your java executable:
+
+```
+readlink -e `which java`
+```
+
+
+## IN
 
 The following sections have been extracted from old Ubuntu Setup notes and may need some tidying. 
 
