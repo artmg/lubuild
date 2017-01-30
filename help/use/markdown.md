@@ -19,6 +19,7 @@ For Android Apps see the section below.
 	- installed via [Lubuild app-installs.bash](https://github.com/artmg/lubuild/blob/master/app-installs.bash)
     * built-in highlighting for markdown
         * **could be improved?**
+        * although "Kate" editor might offer marginally better support, that relies on KDE
 	* also allows mediawiki-format highlighting
 		* scite ?
     * plugin for live reviewing sidebar
