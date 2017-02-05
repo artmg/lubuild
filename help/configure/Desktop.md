@@ -2,7 +2,9 @@
 _Consider moving out diagnostic and User sections_
 
 ## Display Manager (login screen)
+
 ### Auto login
+
 ```
 ### Lubuntu LightDM autologon 
 # edit the global config file
@@ -21,7 +23,9 @@ update-alternatives --get-selections|grep lxdm
 # then edit it, e.g.
 sudo gedit /etc/xdg/lubuntu/lxdm/lxdm.conf
 ```
+
 ### Auto Start 
+
 ```
 # XFCE & LXDE use .desktop files in
 # 
@@ -34,7 +38,9 @@ ls ~/Desktop/Autostart/
 # Ubuntu: System / Preferences / Startup applications
 # Xubuntu: Applications / Settings / Session and Startup / Application Autostart
 ```
+
 ### Switch DM
+
 ```
 # which Display Manager (login screen) are you currently using?
 sudo cat /etc/X11/default-display-manager
@@ -54,20 +60,87 @@ sudo /usr/lib/lightdm/lightdm-set-defaults -s New-Session-Name
 # so you should install lightdm and lightdm-gtk-greeter
 # credit - https://launchpad.net/~fingerprint/+archive/ubuntu/fingerprint-gui
 ```
-## User Sessions
 
-### Other users logged in
+### Troubleshooting the Desktop
+
+#### LXPanel menu bar 
+
+##### Simple restart 
+
+ lxpanelctl restart
+
+##### kill and restart 
+
 ```
-# see who else is loged in
-who
-
-# log off / logout other user session (force to them end)
-sudo pkill -KILL -u username
+# restart lxpanel
+killall lxpanel && lxpanel --profile default &
+# not perfect but may get you out of a jam
 ```
 
-## From Collector 
+##### reset all panel settings 
 
-### Launchers
+```
+# Reset the user's panel to default
+# credit - http://ubuntuforums.org/showthread.php?t=1490938&p=9557050#post9557050
+sudo cp /usr/share/lxpanel/profile/Lubuntu/panels/panel ~/.config/lxpanel/Lubuntu/panels
+sudo chown $USER:$USER  ~/.config/lxpanel/Lubuntu/panels/panel
+lxpanelctl restart
+
+
+# NB do not attempt to back up the old file into the same folder
+# as the file with the incorrect settings will clash with the refreshed version!
+```
+
+##### help with lxpanel confiuration 
+
+```
+# view man pages locally
+man lxpanel.hints
+```
+Or view them at http://manpages.ubuntu.com/manpages/saucy/man5/lxpanel.hints.5.html
+
+Also see http://wiki.lxde.org/en/LXPanel 
+and https://wiki.archlinux.org/index.php/LXDE
+but bear in mind that the "session" config folder name is likely to be Lubuntu not LXDE
+
+
+## File types, icons, shortcuts
+
+### Mime Types
+
+On your system, the Mime Types are defined in either:
+
+* /etc/mime.types
+* /usr/share/mime/types
+* ~/.local/share/mime/types
+
+and the applications associated are
+
+* /usr/share/applications/defaults.list
+* ~/.local/share/applications/mimeapps.list 
+
+You can make changes to these manually, but then you will need to refresh the 
+mime info cache using `sudo update-desktop-database`. Alternatively you can 
+add entries directly using the command:
+
+`xdg-mime default myapp.desktop application/myapp`
+
+To see the mimetype for a given file use
+
+`file --mime-type -b path/myfile`
+
+For more details on hierarchy and implementation please see:
+
+* [https://lkubaski.wordpress.com/2012/10/29/understanding-file-associations-in-lxde-and-pcmanfm/]
+* [http://askubuntu.com/questions/16580/where-are-file-associations-stored]
+* [https://specifications.freedesktop.org/shared-mime-info-spec/shared-mime-info-spec-0.18.html]
+
+### Desktop Launchers
+
+These are the equivalent of Windows "Shortcut" files
+
+#### Application launchers appearing in your Start Menu
+
 ```
 # alternative means to create programmatically...
 # EITHER...
@@ -106,10 +179,33 @@ cd /usr/share/applications/
 sudo mv ~/.local/share/applications/myprog.desktop ./
 sudo chown --reference=defaults.list myprog.desktop
 # sudo chgrp --reference=defaults.list myprog.desktop
+```
+
+### Create New ...
+
+To add new file templates into the menu Create New in PCManFM file manager, 
+see [https://wiki.lxde.org/en/PCManFM#Create_New...]
+
+
+## User Sessions
+
+### Other users logged in
+
+```
+# see who else is loged in
+who
+
+# log off / logout other user session (force to them end)
+sudo pkill -KILL -u username
+```
+
+## From Collector 
+
 
 ### Sessions & Users
 #### Desktop Session settings
 
+```
 # Lubuntu session settings (valid at v13.10)
 # lxsession system DEFAULTS
 sudo editor /etc/xdg/lxsession/Lubuntu/desktop.conf
@@ -156,6 +252,7 @@ e.g.
 
 
 #### Polkit rules
+
 ```
  # http://www.freedesktop.org/software/polkit/docs/latest/polkit.8.html
  # Actions are defined by applications
@@ -251,6 +348,7 @@ System policy prevents:
 
 ### add new admin user 
 
+```
  # credit - http://askubuntu.com/a/70240
  # first boot into recovery mode, then:
  mount -rw -o remount / 
@@ -276,3 +374,4 @@ System policy prevents:
  ls -l /home
  ls -lA /home/$NEW_USER
 
+```
