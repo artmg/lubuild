@@ -1,5 +1,4 @@
-Networked Services
-==================
+# Networked Services
 
 see also:
 * [General Network troubleshooting](https://github.com/artmg/lubuild/blob/master/help/diagnose/network.md)
@@ -9,7 +8,7 @@ see also:
 * Samba server [https://github.com/artmg/lubuild/blob/master/help/configure/network-shares-with-Samba.md]
 
 
-## Autodiscovery ##
+## Autodiscovery
 
 To set allow basic local autodiscovery of services on your device...
 
@@ -26,9 +25,9 @@ sudo apt-get install -y libnss-mdns
 For clients you can use to discover services advertised via mDNS 
 see Discovery / Services in Network Diagnostics [https://github.com/artmg/lubuild/blob/master/help/diagnose/network.md#Discovery]
 
-## Sharing Folders ##
+## Sharing Folders
 
-### Locally ###
+### Locally
 
 ```
 # to share folders locally use bindfs to mount a location in different places
@@ -40,9 +39,9 @@ sudo apt-get install bindfs
 ln -s -T /home/shared /home/username/Documents/Pictures
 ```
 
-### Across LAN ###
+### Across LAN
 
-#### Prepare ####
+#### Prepare
 
 ```
 ## FIRST Ensure underlying disks are mounted at logon
@@ -57,7 +56,7 @@ ln -s -T /home/shared /home/username/Documents/Pictures
 # sudo mount -a
 ```
 
-#### Choices ####
+#### Choices
 
 
 ; Samba
@@ -71,7 +70,7 @@ ln -s -T /home/shared /home/username/Documents/Pictures
 : Push only!
 
 
-#### SFTP ####
+#### SFTP
 
 If you are connecting to a device that already serves SSH, 
 e.g. you know you can connect to a remote command line, 
@@ -98,7 +97,7 @@ SFTP is technically different from both FTPS and FTP over SSH,
 fortunately however many FTP clients have been written to also use SFTP.
 
 
-#### Share with Samba ####
+#### Share with Samba
 
 Below are simple instructions for setting up a basic Samba share in Lubuntu. 
 For more explanation, background, and further examples of advanced use 
@@ -115,7 +114,7 @@ please see [https://github.com/artmg/lubuild/blob/master/help/configure/network-
  * sharing printers - [https://github.com/artmg/MuGammaPi/wiki/Print-server]
 
 ```
-##### SAMBA ### 
+##### SAMBA
 sudo apt-get install -y samba
 
 # back up original
@@ -178,11 +177,11 @@ or you may have to specify the domain too
 NB: don't forget that the C$ admin share is often locked down in modern Windows versions
 ```
 
-#####  Making shares accessible to Windows ===
+#####  Making shares accessible to Windows
 
 see Lubuild / Collector / Services / Sharing Folders
 
-###### Sample global ====
+###### Sample global
 
 ```
 [global]
@@ -192,17 +191,17 @@ wins support = yes
 security = share</pre>
 ```
 
-###### Temporary shares ====
+###### Temporary shares
 
 `sudo shares-admin`
 
-#####  WebDAV ===
+#####  WebDAV
 
 For ideas about using WebDAV on ubuntu, for instance to keep files syncronised with rsync, see  [http://tomalison.com/reference/2010/04/03/webdav/ http://tomalison.com/reference/2010/04/03/webdav/]
 
 There is also the Konqueror WebDAV client for KDE 
 
-### Sharing printers ===
+### Sharing printers
 
 If you want to share printers you will need to
 ```
@@ -249,10 +248,16 @@ The NFS server "Exports" the volumes that can be "Mounted" by NFS clients.
 ##### Server
 
 ```
-# NB: some Raspbian distros have issues with rpcinfo -p showing "can't contact portmapper"
-# before install use      sudo apt-get purge -y rpcbind
+# Prepare variables
+NFS_MOUNT_POINT=/mnt/myMediaLocation/myDataDir
+NFS_EXPORT_NAME=myExportName
+NFS_EXPORT_PERMS=usr:grp
 
 ###### Base software install
+# workaround for Raspbian distros `rpcinfo -p` showing "can't contact portmapper"
+. /etc/*-release
+if [[ "${ID}" == "raspbian" ]] ; then sudo apt-get purge -y rpcbind ; fi ;
+# software install
 sudo apt-get install -y nfs-kernel-server
 
 ###### best practice to collect export points
@@ -261,22 +266,30 @@ sudo apt-get install -y nfs-kernel-server
 # and setting up specific permissions 
 
 # srv is linux filesystem hierarchy standard, some people use nfs or nfsexports as alternative subfolder
-sudo mkdir -p /srv/exports/myExportName
+sudo mkdir -p /srv/exports/$NFS_EXPORT_NAME
+
+# the mount seems to set the correct perms itself, otherwise
+# sudo chown $NFS_EXPORT_PERMS /srv/exports/Libraries
 
 ###### Bind the data into the nfs exports directory
 cat <<EOF | sudo tee -a /etc/fstab
-/mnt/myMediaLocation/myDataDir      /srv/exports/myExportName    none   bind   0   0
+$NFS_MOUNT_POINT      /srv/exports/$NFS_EXPORT_NAME    none   bind   0   0
 EOF
 sudo mount -a
 
-###### add to NFS filesystem access control list
+###### make the export available - add to NFS filesystem access control list
 cat <<EOF | sudo tee -a /etc/exports
-/srv/exports/myExportName   *(rw,sync,no_root_squash,no_subtree_check)
+/srv/exports/$NFS_EXPORT_NAME *(rw,sync,no_root_squash,no_subtree_check)
 EOF
 
 ###### refresh the exports and start the server
 sudo exportfs -a
 sudo service nfs-kernel-server start
+
+
+# or refresh and restart if config changed
+# sudo exportfs -ra
+# sudo service nfs-kernel-server restart
 
 
 ## see also
@@ -286,19 +299,68 @@ sudo service nfs-kernel-server start
 
 ```
 
+###### Issues with Debian Jesse
+
+```
+# Original [https://lists.debian.org/debian-devel/2014/05/msg00618.html]
+# credit [https://www.raspberrypi.org/forums/viewtopic.php?f=28&t=149002&p=980161]
+
+cat <<EOF | sudo tee -a /etc/systemd/system/nfs-common.services
+[Unit]
+Description=NFS Common daemons
+Wants=remote-fs-pre.target
+DefaultDependencies=no
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/etc/init.d/nfs-common start
+ExecStop=/etc/init.d/nfs-common stop
+
+[Install]
+WantedBy=sysinit.target
+EOF
+
+cat <<EOF | sudo tee -a /etc/systemd/system/rpcbind.service
+[Unit]
+Description=RPC bind portmap service
+After=systemd-tmpfiles-setup.service
+Wants=remote-fs-pre.target
+Before=remote-fs-pre.target
+DefaultDependencies=no
+
+[Service]
+ExecStart=/sbin/rpcbind -f -w
+KillMode=process
+Restart=on-failure
+
+[Install]
+WantedBy=sysinit.target
+Alias=portmap
+EOF
+
+sudo systemctl enable nfs-common
+sudo systemctl enable rpcbind
+sudo reboot 
+```
+
+
 ##### Client
 
 ```
+NFS_SERVER=myServerName
+NFS_EXPORT=myExportFolder
+LOCAL_MOUNT=myMountName
 sudo apt-get install -y nfs-common
 
-sudo mkdir -p /mnt/nfs/myMountName
-mount -t nfs myServerName:/myExportPath /mnt/nfs/myMountName/
+sudo mkdir -p /mnt/nfs/$LOCAL_MOUNT
+sudo mount -t nfs $NFS_SERVER:/srv/exports/$NFS_EXPORT /mnt/nfs/$LOCAL_MOUNT
 # test
 mount -t nfs
 
-# for a permanent mount that should avoid issues if unavailble...
+# for a permanent mount that should avoid issues if unavailable...
 cat <<EOF | sudo tee -a /etc/fstab
-myServerName:/myExportPath   /mnt/nfs/myMountName/    nfs   defaults,timeo=14,soft   0   0
+$NFS_SERVER:/srv/exports/$NFS_EXPORT /mnt/nfs/$LOCAL_MOUNT nfs  defaults,timeo=14,soft   0   0
 EOF
 
 sudo mount -a
@@ -311,15 +373,15 @@ sudo mount -a
 * [https://wiki.archlinux.org/index.php/NFS/Troubleshooting]
 
 
-## SSH - (remote) Secure SHell ##
+## SSH - (remote) Secure SHell
 
 The examples below use the 'default' choice of OpenSSH-Server.
 
 You should configure SSH to work ONLY with Certificates, to remove the risk of attacking passwords with brute-force, and this should render it reasonably secure, even when accessible from the public internet. If you wanted to go a step further you could use Port Knocking (see https://help.ubuntu.com/community/PortKnocking), but don't forget that obscurity is not a replacement for true security (see http://bsdly.blogspot.co.uk/2012/04/why-not-use-port-knocking.html).
 
-### Private and Public Keys ###
+### Private and Public Keys
 
-#### Recommendations ####
+#### Recommendations
 
 * Realms 
 ** Use a different key for each administrative boundary you wish to maintain. 
@@ -335,7 +397,7 @@ You should configure SSH to work ONLY with Certificates, to remove the risk of a
 *** Microsoft - http://technet.microsoft.com/en-us/library/cc740209%28v=ws.10%29.aspx
 *** Apache - http://www.apache.org/dev/release-signing Apache
 
-#### Generate a keypair ####
+#### Generate a keypair
 
 ```
 # Usually done on client, before the public key is securely transferred to the server
@@ -354,7 +416,7 @@ ssh-keygen -t rsa -b 4096
 
 Please see also the section on [https://github.com/artmg/lubuild/wiki/Networked-Services#managing-encryption-keys Managing Encryption Keys] below
 
-#### generate keys on Windows ####
+#### generate keys on Windows
 
 Use PuttyGen to import and convert it to a PPK file - credit - http://linux-sxs.org/networking/openssh.putty.html
 
@@ -369,7 +431,7 @@ Use PuttyGen to import and convert it to a PPK file - credit - http://linux-sxs.
 * From the menu choose Conversions / Export OpenSSH key and save with same name but no extension 
 
 
-### set up server ###
+### set up server
 
 ```
 # Install SSH Server
@@ -387,7 +449,7 @@ sudo gnome-text-editor /etc/ssh/sshd_config
 # man sshd_config
 ```
 
-#### sshd_config Recommendations ####
+#### sshd_config Recommendations
 
 ```
 # Choose a non-default port
@@ -410,7 +472,7 @@ UsePAM no
 AuthorizedKeysFile    /etc/ssh/%u/authorized_keys
 ```
 
-#### install keys ####
+#### install keys
 
 ```
 ## if you SSH to the machine you can use...
@@ -431,11 +493,11 @@ cat id_rsa.pub | sudo tee -a /etc/ssh/$REMOTEUSER/authorized_keys
 
 ```
 
-#### restart to read new config ####
+#### restart to read new config
 
  sudo /etc/init.d/ssh restart
 
-#### set server start ####
+#### set server start
 
 ```
 # If you want manual start instead of automatic,
@@ -446,7 +508,7 @@ sudo mv /etc/init/ssh.conf /etc/init/ssh.conf.disabled
 # echo 'manual' > /etc/init/mysqld.override
 ```
 
-### connecting from client ###
+### connecting from client
 
 ```
 # # This should normally be installed by default on Ubuntu distros
@@ -462,9 +524,9 @@ ssh user@computer
 # see also https://help.ubuntu.com/community/SSH/OpenSSH/ConnectingTo
 ```
 
-### Troubleshooting ###
+### Troubleshooting
 
-#### startup issues ####
+#### startup issues
 
 ```
 # start the service with
@@ -493,14 +555,14 @@ sudo /usr/sbin/sshd -Dd
 
 ```
 
-#### more ####
+#### more
 
 see ...
 * https://help.ubuntu.com/community/SSH/OpenSSH/Keys#Troubleshooting
 * https://help.ubuntu.com/community/SSH/OpenSSH/Configuring#Troubleshooting
 
 
-### Managing Encryption Keys ###
+### Managing Encryption Keys
 
 ```
 #### Create ring and pair
@@ -523,13 +585,13 @@ cp -R ~/.gnupg ./gnupg
 #### Restore an old key ring
 ```
 
-## Remote Desktop Server ##
+## Remote Desktop Server
 
-### Vino ####
+### Vino
 
 Ubuntu now incorporates '''vino''' by befault - see https://help.ubuntu.com/community/VNC/Servers#vino
 
-### Starting VNC over SSH ###
+### Starting VNC over SSH
 
 Using SSH tunnelling is recommended as a more secure way to allow VNC over the internet.<br />
 
@@ -553,7 +615,7 @@ Alternatively load the &quot;SSH Session&quot; you saved and add this as the
 <pre>Connection - SSH - Remote Command:</pre>
 before saving the session as &quot;VNC Session&quot; <br /><br />Now you can start your VNC client connection to '''localhost::5900'''
 
-### Debugging SSH connections ###
+### Debugging SSH connections
 
 If Putty gives you the error:
 
@@ -573,14 +635,14 @@ chmod 700 ~/.ssh
 chmod 600 ~/.ssh/authorized_keys</pre>
 help &gt; https://help.ubuntu.com/community/SSH/OpenSSH/Configuring<br />help &gt; https://help.ubuntu.com/community/SSH/OpenSSH/Keys
 
-### Debugging VNC over SSH ###
+### Debugging VNC over SSH
 
 If you get the error &quot;<code>XOpenDisplay failed</code>&quot; then try replacing <code>-display :0</code> with <code>-find</code> instead<br />help &gt; http://www.karlrunge.com/x11vnc/faq.html#faq-xperms<br />If that doesn't work you will need to work out the location of your XAuthority 'MIT cookie file' and add that as an -auth option, e.g. (for lightdm):
 
 <pre>-auth /var/run/lightdm/root/:0 </pre>
 <br /><br />
 
-#### Others ####
+#### Others
 
 credit &gt; [https://help.ubuntu.com/community/VNC/Servers https://help.ubuntu.com/community/VNC/Servers]
 
@@ -602,7 +664,7 @@ Exec=x11vnc -safer -allow 192.168.3. -usepw -ncache' &gt;~/.config/autostart/x11
 
 chmod +x ~/.config/autostart/x11vnc.desktop
 
-####= old Ubuntu ####=
+##### old Ubuntu
 
 Credit &gt; http://ubuntuforums.org/showthread.php?t=1068793
 
@@ -621,6 +683,115 @@ Always display icon
 then add to your startup
 
 /usr/lib/vino vino-server
+
+
+
+## DLNA / UPnP Media Server
+
+Digital Livingroom Network Alliance (DLNA) extends the 
+Universal Plug and Play (UPnP) network standard to provide audio services. 
+This is to set up a **Media Server**, but to find out 
+more about other components see
+[https://github.com/artmg/lubuild/blob/master/help/use/Music-and-multimedia.md]
+
+For alternatives to ReadyMedia see [https://www.reddit.com/r/linux/comments/4zh324/how_dead_is_minidlna_readymedia_too_dead/]
+
+### ReadyMedia
+
+This uses a package that may be rather old...
+to compile from the latest source see 
+[http://www.htpcguides.com/install-readymedia-minidlna-1-1-4-raspberry-pi/]
+
+see also [https://wiki.archlinux.org/index.php/ReadyMedia]
+
+```
+# On a bare system this adds about 75MB of dependencies
+sudo apt-get install -y minidlna
+sudo cp /etc/minidlna.conf /etc/minidlna.original.conf
+sudo editor /etc/minidlna.conf
+
+# sudo service minidlna force-reload is supposed to rebuild database
+# but it doesn't appear to - is this a symptom of context/permissions issues?
+# example perms
+# drwxr-xr-x  minidlna minidlna /var/cache/minidlna
+# drwxr-xr-x  root     root     /var/cache/minidlna/art_cache
+# -rw-r--r--  root     root     /var/cache/minidlna/files.db
+
+sudo service minidlna stop
+sudo minidlnad -R
+sudo service minidlna restart
+
+```
+
+see also 
+
+* []
+	- avahi if needed (for DLNA and or SAMBA)
+	- album art
+* album art publishing
+* 
+
+#### Announce
+
+UPnP Content Directory Services make themselves known to Control Points 
+using Simple Service Discovery Protocol (SSDP). Therefore it should not really 
+be necessary to announce them through Avahi, which uses Multicast DNS-SD (mDNS).
+
+```
+# Avahi ports for MiniDLNA (NOT required for Control Points to discover Services!)
+cat > /etc/avahi/services/minidlna.service <<EOF!
+<?xml version="1.0" standalone='no'?>
+<!DOCTYPE service-group SYSTEM "avahi-service.dtd">
+<service-group>
+ <name replace-wildcards="yes">%h</name>
+ <service>
+   <type>_ssdp._udp</type>
+   <port>1900</port>
+ </service>
+ <service>
+   <type>_trivnet1._tcp</type>
+   <port>8200</port>
+ </service>
+</service-group>
+EOF!
+
+# restart the Avahi service
+service avahi-daemon restart
+```
+
+
+
+
+
+### Media Player Daemon (MPD)
+
+
+```
+# mkdir /media/Music
+# chmod -R 777 /media/Music
+# credit - http://www.raspyfi.com/ho-to-install-mpd-on-an-existing-debian-installation-on-raspberry-pi/
+
+# credit - http://www.instructables.com/id/Linux-music-server-controlled-by-an-Android-device/
+sudo apt-get update && sudo apt-get install -y mpd
+
+sudo nano /etc/mpd.conf
+# ? bind_to_address "any"
+
+sudo /etc/init.d/mpd restart
+
+# other packages required?
+
+# does this sort perms issues? - http://www.reddit.com/r/raspberry_pi/comments/1w8ia0/raspberry_pi_mpd_server/
+
+# alternative using archlinux (quicker boot if you don't need HDMI)
+# http://hempeldesigngroup.com/embedded/stories/raspberry-pi-setup-as-mpd-sever/
+
+# troubleshooting - http://mpd.wikia.com/wiki/Music_Player_Daemon_HOWTO_Troubleshoot
+# ArchLinux page on setup - https://wiki.archlinux.org/index.php/Music_Player_Daemon
+# ArchLinux page on troubleshooting https://wiki.archlinux.org/index.php/Music_Player_Daemon/Troubleshooting
+# or consider whether mopidy might be simpler https://docs.mopidy.com/en/latest/installation/raspberrypi/
+```
+
 
 
 

@@ -25,6 +25,8 @@ See also:
         * Full media centre solutions for Pi, rather than simple audio
     * [Audio-Hub](https://github.com/artmg/MuGammaPi/wiki/Audio-Hub)
         * Other generic solutions for playing music 
+	* DNLA / UPnp Media Server
+		* [https://github.com/artmg/lubuild/blob/master/help/configure/Networked-Services.md]
 
 
 
@@ -175,10 +177,15 @@ but also:
         * NB: for Miracast Receivers (HMDI over WifiDirect) see [Android Apps.md] or [Lub App TV streaming.md]
 
 * Media Servers - some DNLA compliant uPNP server software:
-    * ReadyMedia (was miniDLNA) used by Volumio - see [Pi Volumio.md]
+    * ReadyMedia (was miniDLNA) 
+    		- used by Volumio - see [Pi Volumio.md]
+    		- see also [https://github.com/artmg/lubuild/blob/master/help/configure/Networked-Services.md]
     * [MediaTomb](https://help.ubuntu.com/community/MediaTomb)
     * [Ps3MediaServer](https://help.ubuntu.com/community/Ps3MediaServer)
     * upmpdcli provides a UPnP interface to DNLA control points, but it is actually a client for an underlying MPD service
+
+
+
 
 * Further reading
     * [http://lesbonscomptes.com/pages/homenet-audio.html]
