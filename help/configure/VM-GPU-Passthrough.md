@@ -67,6 +67,7 @@ e.g. 01:00.0,01:00.1
 * "vt-d = Enabled"
 
 ### set up VFIO
+
 ```
 # credit - https://www.evonide.com/non-root-gpu-passthrough-setup/
 # this is simpler than old pci-stub.ids= in grub [https://davidyat.es/2016/09/08/gpu-passthrough/]
@@ -103,6 +104,7 @@ https://01.org/linuxgraphics/intel-linux-graphics-firmwares
 
 
 ### reboot
+
 ```
 # check it's enabled
 dmesg | grep -e DMAR -e IOMMU
