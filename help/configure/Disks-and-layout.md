@@ -112,7 +112,9 @@ case $(lsblk -o FSTYPE -n /dev/$MEDIA_DEVICE) in
     ntfs)
         echo NOT AVAILABLE      ;;
     ext*)
-        echo NOT AVAILABLE      ;;
+		sudo apt-get install -y e2fsprogs
+        sudo e2label /dev/$MEDIA_DEVICE $MEDIA_LABEL
+        sudo e2label /dev/$MEDIA_DEVICE
 esac
 
 
