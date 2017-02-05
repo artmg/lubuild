@@ -12,7 +12,7 @@ NB: for linux **samba clients** see towards the end of this document
 NB: see locally stored [Samba Tests.md] for other attempts including Optical Drives and Linux client Read-write
 
 
-## Introduction
+## Introduction 
 
 Samba is an SMB server. 
 It runs a daemon listening at port 445 that uses Server Message Blocks 
@@ -93,7 +93,7 @@ sudo editor /etc/samba/smb.conf.master
 for basics on avahi ...
 * please see [https://github.com/artmg/lubuild/blob/master/help/configure/Networked-Services.md]
 
-Include the following configuration directive...
+The following configuration directive is YES by default ...
 
 ```
 [global]
@@ -111,20 +111,20 @@ Include the following configuration directive...
    * see _Autodiscovery_ above for server-side issues
    * for client-side issues see [https://github.com/artmg/lubuild/blob/master/help/configure/Networked-Services.md]
 
-``` 
+```
 ### GUI Access
 # help - https://help.ubuntu.com/community/Lubuntu/PCManFM#Browse_Windows_PCs_with_Samba
 
 ### CLI Access
-# allow mounting samba / CIFS 
+# allow mounting samba / CIFS
 sudo apt-get install -y cifs-utils
 
 ### prepare mount
 MOUNT_LOCAL=/media/mylocalmount
 MOUNT_SHARE=//otherpc.local/sharename
-MOUNT_OPTIONS=-o -ro 
+MOUNT_OPTIONS="-o -ro"
 sudo mkdir -p $MOUNT_LOCAL
-sudo mount -t cifs $MOUNT_OPTIONS $MOUNT_SHARE $MOUNT_LOCAL
+sudo mount -t cifs --verbose $MOUNT_OPTIONS $MOUNT_SHARE $MOUNT_LOCAL
 
 # sync contents
 # NB this is TEST ONLY MODE with dry run
