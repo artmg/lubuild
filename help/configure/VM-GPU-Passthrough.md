@@ -32,12 +32,12 @@ GPU Passthrough involves dedicating a GPU to a guest virtual machine,
 so the main hosting desktop will not be able to use it. 
 Physically the main desktop will be plugged into the onboard graphics controller.
 
-QEMU is used to run virtual machine "guests" on this host desktop
-IOMMU is the hardware mapping technology that allows passthrough
-VFIO is the PCI passthrough technique recommended with QEMU 
+* QEMU is used to run virtual machine "guests" on this host desktop
+* IOMMU is the hardware mapping technology that allows passthrough
+* VFIO is the PCI passthrough technique recommended with QEMU 
 
 Note that if I was going to do this all over again, I would probably 
-choose to use virtlib and virt-manager (maybe qt version) as a nicer front end
+choose to use virtlib and virt-manager (maybe qt version) as a nicer front end to QEMU.
 
 
 ### Prepare
@@ -218,6 +218,34 @@ http://vfio.blogspot.co.uk/2014/08/vfiovga-faq.html
 https://tekwiki.beylix.co.uk/index.php/VGA_Passthrough_with_UEFI%2BVirt-Manager#Nvidia_code_43_error
 http://awilliam.github.io/presentations/KVM-Forum-2016/#/4/2
 https://wiki.archlinux.org/index.php/PCI_passthrough_via_OVMF#.22Error_43_:_Driver_failed_to_load.22_on_Nvidia_GPUs_passed_to_Windows_VMs
+
+
+### USB Devices
+
+You might want to pass through other USB devices to your guest OS. 
+Some people say you should do this with your mouse and keyboard, 
+to improve responsiveness, if you find too much lag using the QXL option. 
+Other reasons could include things like headsets with microphones, 
+if you want to use them in game (rather than in generic social apps). 
+
+* First identify your device(s) using `lsusb` in the host OS
+* Choose whether you want to connect:
+	* a specific usb port (bus/address) whatever is plugged in
+	* a specific usb device (PNP ID) wherever it is plugged in
++ add the relevant options into your QEMU script...
+
+```
+# credit [https://www.pugetsystems.com/labs/articles/Multiheaded-NVIDIA-Gaming-using-Ubuntu-14-04-KVM-585/#Step7AddUSBsupport]
+
+# specific USB Device (ID XXXX:YYYY from lsusb)
+-usb -usbdevice host:XXXX:YYYY \
+
+# specific USB Port (Bus XXX Device YYY from lsusb)
+-usb -device usb-host,hostbus=X,hostaddr=Y \
+
+# if you have multiple items repeat the sections after -usb
+# i.e.    -usbdevice host...   or    -device usb-host...
+```
 
 
 ## other help
