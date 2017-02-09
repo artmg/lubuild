@@ -134,8 +134,8 @@ echo please eject and re-insert media
 
 # Setting name on both partitions so Ext4 shows up on booted Pi and FAT shows up when inserted on other system
 # Rename 1 FAT and 2 Ext4 
-sudo mlabel  -i /dev/${MEDIA_DEVICE:0:3}1 ::$MEDIA_LABEL-OS
-sudo e2label    /dev/${MEDIA_DEVICE:0:3}2 $MEDIA_LABEL-disk
+sudo mlabel  -i /dev/${MEDIA_DEVICE:0:3}1 ::${MEDIA_LABEL:0:8}\_OS
+sudo e2label    /dev/${MEDIA_DEVICE:0:3}2 $MEDIA_LABEL\_disk
 
 # display labels
 sudo mlabel  -i /dev/${MEDIA_DEVICE:0:3}1 -s ::
