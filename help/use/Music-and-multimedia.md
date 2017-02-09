@@ -20,7 +20,9 @@ See also:
 	* image recognition (OCR, QR codes etc)
 * For details of some ways to make Music and Multimedia available around your house:
     * [Volumio and MPD](https://github.com/artmg/MuGammaPi/wiki/Volumio-and-MPD)
-        * Dedicated headless music player distro based on MPD - see intro below
+        * Dedicated headless music player distro based on MPD
+        * Also work multi-room using snapcast to send and sync audio
+        * see intro below
     * [Media Centre](https://github.com/artmg/MuGammaPi/wiki/Media-Center)
         * Full media centre solutions for Pi, rather than simple audio
     * [Audio-Hub](https://github.com/artmg/MuGammaPi/wiki/Audio-Hub)
@@ -120,7 +122,9 @@ perhaps filtering out songs you don't appreciate as much
 
 Note: this is about uPNP AV solutions, like DLNA, rather than UPnP Internet Gateway Device (IGD) port management.
 
-For a general introduction to Hifi UPnP / DNLA Network Audio see [http://www.computeraudiophile.com/content/524-complete-guide-hifi-upnp-dlna-network-audio/]. For simpler audio-only solutions see MPD below.
+For a general introduction to Hifi UPnP / DNLA Network Audio see [http://www.computeraudiophile.com/content/524-complete-guide-hifi-upnp-dlna-network-audio/]. 
+
+For simpler audio-only solutions see MPD below.
 
 
 ### uPNP discovery 
@@ -164,7 +168,6 @@ but also:
         * Kodi
         * Gnome Totem player (needs grilo plugin)
         * compere - may be old
-        * minidlna
     * remote (i.e. may be connected to over network for rendering)
         * Kodi
             * see UPnP / DLNA Services in [https://github.com/artmg/MuGammaPi/wiki/Media-Center]
@@ -192,6 +195,8 @@ but also:
     * [http://elinux.org/DLNA_Open_Source_Projects]
     * [http://elinux.org/UPnP]
     * [https://en.wikipedia.org/wiki/List_of_UPnP_AV_media_servers_and_clients]
+
+
 
 ## MPC Clients (MPD)
 
