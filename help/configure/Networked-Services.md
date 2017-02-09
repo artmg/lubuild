@@ -345,7 +345,7 @@ sudo reboot
 ```
 
 
-##### Client
+##### NFS Client
 
 ```
 NFS_SERVER=myServerName
