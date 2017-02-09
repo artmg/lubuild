@@ -16,12 +16,11 @@ sudo add-apt-repository -y "deb http://archive.canonical.com/ $(lsb_release -sc)
 
 ### PPAs ###
 # NB: do NOT add comments to the end of apt-get commands, it may produce errors
-# recoll stable
-sudo add-apt-repository -y ppa:recoll-backports/recoll-1.15-on
 # repos now deprectated or not required
 # sudo add-apt-repository -y ppa:vincent-c/nevernote                # NixNote2
 # sudo add-apt-repository -y ppa:freecad-maintainers/freecad-stable # FreeCAD (newer than Ubuntu version)
 # sudo add-apt-repository -y ppa:basic256/basic256                  # basic256
+# sudo add-apt-repository -y ppa:recoll-backports/recoll-1.15-on    # now in user-apps.bash
 
 
 # if this distros does NOT have chrome sources already...
@@ -175,11 +174,7 @@ keepassx    # store credentials
 meld        # file and folder diffs...
 # now using mkusb  (instead of)  unetbootin  # more reliable at installing bootloader than usb-creator-gtk
 
-### Search ###
-recoll      # filesystem search engine
-# helpers for common doctypes
-antiword xsltproc catdoc unrtf libimage-exiftool-perl python-mutagen aspell
-
+# Search now in user-apps.bash
 
 
 ######## LAPTOPS ############

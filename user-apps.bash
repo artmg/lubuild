@@ -314,10 +314,17 @@ ln -s /media/Windows $WINEPREFIX/dosdevices/w:
 ### RECOLL                        ### 
 #####################################
 
-# add helpers - credit - http://packages.ubuntu.com/xenial/recoll
-# help - http://www.lesbonscomptes.com/recoll/features.html#doctypes
+# recoll stable PPA
+sudo add-apt-repository -y ppa:recoll-backports/recoll-1.15-on
 sudo apt-get update
-sudo apt-get install -y antiword xsltproc catdoc unrtf libimage-exiftool-perl python-mutagen aspell
+
+# install filesystem search engine
+# plus helpers for common doctypes
+# help - http://www.lesbonscomptes.com/recoll/features.html#doctypes
+# see also - http://packages.ubuntu.com/xenial/recoll
+sudo apt-get install -y recoll \
+ antiword xsltproc catdoc unrtf libimage-exiftool-perl python-mutagen aspell
+
 
 cat > $HOME/.recoll/recoll.conf <<EOF!
 # This is the indexing configuration for the current user
@@ -360,6 +367,9 @@ EOF!
 # To change the recoll config (including mime types) ...
 # make changes locally ~/.recoll
 # make changes globally /usr/share/recoll/examples
+
+# to add new viewers/editors onto Recoll **Open With** Context menu see
+# https://bitbucket.org/medoc/recoll/wiki/UsingOpenWith
 
 ##### Some local config fixes
 
@@ -448,8 +458,8 @@ cat > .recoll/mimemap <<EOF!
 .ps1 = text/x-powershell
 EOF!
 
-##### refresh script in each root #####
-cat > refresh_me.sh <<EOF!
+##### recoll index refresh script in each device root
+cat > reindex_me.sh <<EOF!
 #!/bin/bash
 
 # set $DIR to folder containing current script
@@ -474,5 +484,11 @@ export RECOLL_EXTRA_DBS=/path/to/index1/recoll/xapiandb/:/media/$USER/volume2/.r
 # NB: this will only stick for a single instance
 # - how to make these permanent options of external indexes??
 
+
+##### Understanding what's in the index (and why it's so big)
+
+# see xapian delve [https://xapian.org/docs/admin_notes.html#inspecting-a-database]
+sudo apt install xapian-tools
+# see [http://getting-started-with-xapian.readthedocs.io/en/latest/practical_example/indexing/verifying_the_index.html]
 
 # # # # # # END # # # # # # 
