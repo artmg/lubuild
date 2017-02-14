@@ -74,6 +74,7 @@ sudo apt-get install -y lame
 
 
 ## DVD ripping 
+
 ```
 # MakeMKV wraps to single file (nicely for XBMC) but no compression
 ## see MKV Extractor Qt as GUI
@@ -236,6 +237,7 @@ I found a PPA method of installing MakeMKV, but it's not widely mentioned so I'm
     * http://www.makemkv.com/forum2/viewtopic.php?f=3&t=5266
 * Reboot
 * Test it using first command below
+
 ```
 # help - http://www.makemkv.com/developers/usage.txt
 # list all available drives
@@ -293,6 +295,71 @@ see:
 * some alternative software - https://www.reddit.com/r/htpc/comments/2zhntu/alternatives_to_makemkv/
 
 
+## Media indexing
+
+This is about maintaining a catalogue of your media, 
+for instance DVDs containing films, 
+to help select and locate the one you want to watch. 
+
+* How to index DVDs
+* make them easy to find
+* View their Artwork online
+* Scan UPC codes from covers?
+
+### Applications
+
+Try MyMovies for Android scanner
+
+Other candidates
+
+* DVD Profiler
+* PVD (Personal Movie Database)
+* Griffith
+* EMDB
+* Movie Collector
+
+* Ember Media Manager
+* The Renamer
+
+* Album Art Donwloader http://sourceforge.net/projects/album-art/ 
+* MP3Tag
+
+
+### Data Sources
+
+Some include cover art
+
+#### Incl DVD
+
+* AllCDCovers - src About
+* Albumart - src About - Amazon backend
+* CDCovers.cc - last updates 2009/10 ??
+* IMDB
+* AllMovie
+
+#### Mainly CD
+
+* Discogs - src About
+* MusicBrainz - src About
+
+#### to check
+
+* freedb.org
+* theMovieDB
+* Collectorz
+* DVD Empire
+* LastFM
+* rate your music
+
+#### commercial or restricted
+
+CDDB
+Gracenote
+AlbumArtExchange
+
+
+
+
 ## Music Metadata tagging
 
 see also:
@@ -303,9 +370,9 @@ see also:
 
 The most popular... do not support WMA!
 
-* kid3-qt - simple and relatively light
-* easytag - good range of features, in repos
+* kid3-qt - simple and relatively light - see below
 * puddletag - see below
+* easytag - good range of features, in repos
 
 Other candidates:
 * mp3tag on Windows! ... under Wine?
@@ -342,23 +409,12 @@ sudo apt-get install kid3-qt
 ```
 
 
-#### Picard 
-
-```
-# credit https://musicbrainz.org/doc/Picard_Linux_Install
-# available in repos
-
-sudo apt-get install picard
-
-# help http://picard.musicbrainz.org/docs/basics/
-```
-
-
 #### puddletag 
 
 QT-based
 
 Feature limitations:
+
 * Since 0.10.2 WMA support has been dropped (to avoid risk of corruption)
 * 1.02 ('current' in 15.04 repos) does not show Album Art
 * 1.05 source on github released May 2015
@@ -377,5 +433,17 @@ See: https://fanart.tv/2012/06/organizing-your-xbmc-music-library/
         * 2
 * Columns
     * (add the same two as above)
+
+
+#### Picard 
+
+```
+# credit https://musicbrainz.org/doc/Picard_Linux_Install
+# available in repos
+
+sudo apt-get install picard
+
+# help http://picard.musicbrainz.org/docs/basics/
+```
 
 

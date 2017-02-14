@@ -16,6 +16,7 @@ See also:
     * manipulating files for the best size and markup
         * including metadata tagging to make collections convenient
     * other kinds of AV file conversion
+    * maintaining a catalogue of media owned (even when not ripped)
 * [https://github.com/artmg/lubuild/blob/master/help/manipulate/photos.md]
 	* image recognition (OCR, QR codes etc)
 * For details of some ways to make Music and Multimedia available around your house:
@@ -77,12 +78,16 @@ For current installs see [https://github.com/artmg/lubuild/blob/master/app-insta
 
 ## playlist creation
 
-### manual
+### bash scripts to create M3U playlist files
 
 ```
-## bash script to create M3U playlist files
+#### Absolute list of specific subfolder
+# the $PWD gives find an absolute starting point, so this is how it returns the names
+find $PWD/MyMusicFolder -type f \( -iname \*.mp3 -o -iname \*.wma  -o -iname \*.ogg \) | sort >>"MyFolderPlayList.m3u";
 
-# create one M3U file for each subfolder of current, with sorted entries, using relative paths from current folder
+#### One relative list per subfolder 
+# create one M3U file for each subfolder of current, 
+# with sorted entries, using relative paths from current folder
 for D in *; do
     if [ -d "${D}" ]; then
         echo \#EXTM3U >"${D}.m3u";
@@ -100,7 +105,7 @@ find . -name "*.wma" -printf "%f\n" -or -name "*.mp3" -printf "%f\n"
 
 ### Playlist editing
 
-If you bluk create playlists using scripts or commands like above, 
+If you bulk create playlists using scripts or commands like above, 
 you may decide you wish to refine these playlists, 
 perhaps filtering out songs you don't appreciate as much
 
@@ -108,6 +113,9 @@ perhaps filtering out songs you don't appreciate as much
     * easily accepts playlists
     * changes easily saved whilst playing
     * not too fussy about relative or absolute paths
+ 
+Solutions:
+    
 * Clementine
     * Effective solution
     * M3U playlists output are reasonably robust
