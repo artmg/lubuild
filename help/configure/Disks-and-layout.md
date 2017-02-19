@@ -1,16 +1,18 @@
 
 
-NB: This file is rather large, and perhaps it could be separated into different files 
-to cover different subjects
+This file is being prepared for separation into 
+different files to cover different subjects
 
 e.g.
 * configure Disks (here)
 	* install, partitioning, ???
 * diagnose disks
 	* Troubleshooting
+	* will go out to [https://github.com/artmg/lubuild/blob/master/help/diagnose/disks.md]
 * understand Layout 
 	* reasoning sections separate from precise commands to manipulate
 	* specific examples like OpenElec
+	* will go out to [https://github.com/artmg/lubuild/blob/master/help/understand/disk-layout.md]
 
 
 See also:
@@ -24,6 +26,7 @@ See also:
     * removing data, securely if necessary
 * 
 
+# Configure Disks
 
 ## Install
 
@@ -62,8 +65,6 @@ ubiquity
 
 * Install Now
 	* accept warnings about no swap and partitions to format
-
-
 
 
 ## Partitions
@@ -213,11 +214,12 @@ It guides you through the whole procedure and is easy to use.
 sudo apt-get install gparted
 ```
 
-### choose Boot Parititon
+### choose Boot Partition
 
 use fdisk to make a partition bootable
 
 e.g.
+
 ```
 sudo fdisk /dev/sdb
 # p - print table
@@ -295,6 +297,349 @@ sudo ntfsclone -s -o ./PQSERVICE.ntfsclone /dev/sda1
 sudo dd if=/dev/sda1 of=./PQSERVICE.bootsect.bin bs=512 count=1
 ```
 
+## Automount
+
+### IN - validate how current / useful 
+
+==== Xbuntu/Myth Check the NTFS driver is installed ====
+
+```
+apt-cache search ntfs-3g
+```
+
+==== Identify disks ====
+```
+sudo fdisk -l<br />(or)<br />ls -l /dev/disk/by-uuid/
+sudo editor /etc/fstab
+# Ubuntu:
+sudo gedit /etc/fstab
+# Xbuntu/Myth:
+sudo mousepad /etc/fstab
+```
+
+##### Add mount lines 
+
+```
+/dev/sda2 /media/Windows ntfs-3g rw,auto,user,fmask=0111,dmask=0000 0 0
+/dev/sda3 /media/shared vfat rw,auto,user,fmask=0111,dmask=0000 0 0
+# or using UUIDs:
+
+# /dev/sda2
+UUID=7C84665A846616C4 /media/Windows ntfs-3g rw,auto,user,fmask=0111,dmask=0000 0 0
+# /dev/sda3
+UUID=3C72F85E72F81E78 /media/shared vfat rw,auto,user,fmask=0111,dmask=0000 0 0
+```
+''Sample of original fstab contents:''
+
+```
+# /dev/sda2
+UUID=7C84665A846616C4 /media/sda2 ntfs defaults,umask=007,gid=46 0 0
+# /dev/sda3
+UUID=91A1-25A1 /media/open vfat defaults,utf8,umask=007,gid=46 0 1
+sudo mkdir /media/Windows
+sudo mkdir /media/shared
+sudo mount -a
+credit &gt; https://help.ubuntu.com/community/AutomaticallyMountPartitions
+```
+
+## Swap
+
+### set up Swap, post install
+
+NB: This will leave the swap **unencrypted** - see below to encrypt your swap
+
+*Check the code in case of format errors!*
+```
+# help - https://help.ubuntu.com/community/SwapFaq
+# check what swap is set up
+cat /proc/swaps
+
+# get the UUID of the device
+sudo blkid
+
+sudo editor /etc/fstab
+
+# add in the UUID without quotes and make something like
+# UUID=0b3fb4b3-f645-468e-a7d5-c39a19edc07c none swap sw 0 0 
+
+# enable the swap now if you want...
+sudo swapon -a
+
+# check it's there
+cat /proc/swaps
+
+sudo leafpad /etc/default/grub
+
+# Look for the line GRUB_CMDLINE_LINUX="" 
+# and make sure it looks like this (using your UUID of course) 
+# GRUB_CMDLINE_LINUX="resume=UUID=41e86209-3802-424b-9a9d-d7683142dab7" 
+# and save the file
+
+sudo update-grub
+
+sudo leafpad /etc/initramfs-tools/conf.d/resume
+# and make sure its contents are 
+# resume=UUID=41e86209-3802-424b-9a9d-d7683142dab7 (with your UUID of course in place of mine). Save the file!
+
+sudo update-initramfs -u
+```
+Reboot!
+
+### Encrypted Swap
+
+
+```
+LUBUILD_SWAP_DEVICE=/dev/sdXN
+sudo echo
+
+# package required for ecryptfs-setup-swap script used below
+sudo apt-get install ecryptfs-utils
+
+# credit [https://blog.sleeplessbeastie.eu/2012/05/23/ubuntu-how-to-encrypt-swap-partition/]
+sudo mkswap $LUBUILD_SWAP_DEVICE
+# e.g. Setting up swapspace version 1, size = 4 GiB (4293218304 bytes)
+# e.g. no label, UUID=7881e5fd-a2d2-4ffc-ac14-7df643a370aa
+
+sudo swapon $LUBUILD_SWAP_DEVICE
+# check swap is now on
+cat /proc/swaps 
+# should show /dev/sdXN
+sudo blkid | grep swap
+
+sudo ecryptfs-setup-swap
+# if this fails with 
+# swapon: cannot open /dev/mapper/cryptswap1: No such file or directory
+# then run the following 
+## do we also need... ?
+## sudo swapoff $LUBUILD_SWAP_DEVICE
+# sudo cryptdisks_start cryptswap1
+# or simply reboot
+
+# should show /dev/mapper/cryptswap1
+sudo blkid | grep swap
+
+```
+
+There were some issues with 14.04 Trusty, but they could be worked around by using /dev references rather than UUIDs (see [here](https://ubuntuforums.org/showthread.php?t=2224129) and [here](http://askubuntu.com/a/463688))
+
+
+#### IN from wiki
+
+For simple step-by-step instructions on what to change during your
+Ubuntu install see "full encryption using LVM" in Encryption page
+<https://github.com/artmg/lubuild/wiki/Encryption#Full_Disk_Encryption_with_LVM>
+
+
+##### Out to Diagnostics 
+
+ # Is swap encrypted?
+ #
+ sudo blkid | grep swap
+ #
+ # e.g. 
+ # /dev/mapper/cryptswap1: UUID="95f3d64d-6c46-411f-92f7-867e92991fd0" TYPE="swap" 
+ #
+ # if it shows standard /dev/sdxN then it's not
+ #
+
+##### Hibernate issues with encrypted swap 
+
+It is worth mentioning that encrypted swap prevents hibernate (a.k.a. suspend to disk), as a key would be required to decrypt swap after resume. 
+Although https://help.ubuntu.com/community/EncryptedHome#Caveats states that versions 9.10 onwards will encrypt swap if the home is encrypted, it is worth checking using the command in the previous section. 
+If you really want to encrypt swap and hibernate the see the workaround https://help.ubuntu.com/community/EnableHibernateWithEncryptedSwap
+
+https://help.ubuntu.com/community/EnableHibernateWithEncryptedSwap
+
+
+##### Other Notes on encrypted swap 
+
+```
+# encrypt swap and don't give the message saying hibernate will fail to resume
+sudo ecryptfs-setup-swap -f
+```
+
+add this to [https://github.com/artmg/lubuild/wiki/Encryption#encrypted_swap]
+mention in [https://github.com/artmg/lubuild/wiki/Disks-and-layout#Alternative_to_Live_USB_for_regular_use]
+
+14.04 had issues
+ - [https://bugs.launchpad.net/ubuntu/+source/ecryptfs-utils/+bug/1310058]
+ - [http://ubuntuforums.org/showthread.php?t=2224129]
+
+```
+# 14.10 too!
+SWAPDEV=/dev/sdb2
+sudo umount $SWAPDEV
+
+sudo mkswap $SWAPDEV
+# Use the UUID from the previous output...
+SWAPUUID=
+# OR get it from old swap and re-use
+# sudo mkswap --label Ubuntu\ Swap --uuid $SWAPUUID $SWAPDEV
+
+echo "RESUME=UUID=$SWAPUUID" | sudo tee /etc/initramfs-tools/conf.d/resume
+#echo "cryptswap1 $SWAPUUID /dev/urandom swap,cipher=aes-cbc-essiv:sha256" | sudo tee /etc/crypttab
+#echo "cryptswap1 $SWAPUUID /dev/urandom noauto,offset=6,swap,cipher=aes-cbc-essiv:sha256" | sudo tee /etc/crypttab
+#echo "cryptswap1 $SWAPDEV /dev/urandom swap,cipher=aes-cbc-essiv:sha256" | sudo tee /etc/crypttab
+echo "cryptswap1 $SWAPDEV /dev/urandom noauto,offset=6,swap,cipher=aes-cbc-essiv:sha256" | sudo tee /etc/crypttab
+sudo update-initramfs -u
+
+
+
+
+# create upstart script
+sudo tee /etc/init/cryptswap1.conf <<EOF!
+start on started mountall
+script
+ /sbin/cryptdisks_start cryptswap1
+ /sbin/swapon /dev/mapper/cryptswap1
+end script
+EOF!
+
+# then Modify /etc/fstab changing the line:
+#    /dev/mapper/cryptswap1 none swap sw 0 0
+# to
+#    /dev/mapper/cryptswap1 none swap noauto,sw 0 0
+
+# now reboot and check with...
+free --human
+swapon --summary
+```
+interesting article with lots of detail - http://thesimplecomputer.info/encrypt-your-linux-home-folder-2-ways-and-10-steps
+for useful links see also - https://wiki.archlinux.org/index.php/System_Encryption_with_LUKS
+
+
+
+### IN 
+
+The following sections need to be rationalised and reformatted
+
+#### Grub 
+
+##### reference
+
+-   archwiki Grub reference -
+    <https://wiki.archlinux.org/index.php/GRUB>
+-   GNU GRUB full manual - <http://www.gnu.org/software/grub/manual/>
+
+
+##### Advanced Grub2 
+
+###### Install if required 
+
+```
+# Check which version(s) of grub is installed, looking for lines beginning 'ii' in the list...
+dpkg --list 'grub*'
+
+# Check which version is active using:
+grub-install -v
+
+# If required, upgrade to the new version using:
+sudo apt-get install grub-pc
+# Then TAB to choose OK, choose Yes, accept overwriting
+
+###### Configure 
+
+# credit &gt; [http://www.linuxquestions.org/blog/drask-180603/2009/12/5/howmany-for-grub-2-2466/ http://www.linuxquestions.org/blog/drask-180603/2009/12/5/howmany-for-grub-2-2466/]
+sudo cp /usr/sbin/grub-mkconfig /usr/sbin/grub-mkconfig_backup
+sudo cp /etc/grub.d/10_linux /etc/grub.d/10_linux_backup
+sudo chmod a-x /etc/grub.d/10_linux_backup
+sudo cp /etc/grub.d/30_os-prober /etc/grub.d/30_os-prober_backup
+sudo chmod a-x /etc/grub.d/30_os-prober_backup
+sudo gedit /usr/sbin/grub-mkconfig
+
+# after export GRUB_DEFAULT \
+# GRUB_HOWMANY_LINUX \
+
+sudo gedit /etc/grub.d/10_linux
+
+# replace code with what's in '''10_linux''' in Service Procs folder (wallet or online in FM)
+
+# (was [http://www.linuxquestions.org/blog/drask-180603/2009/12/5/howmany-for-grub-2-2466/ www.linuxquestions.org/blog/drask-180603/2009/12/5/howmany-for-grub-2-2466/]
+
+# but then had to make sure you change the HOWMANYs to GRUB_HOWMANY_LINUX)
+sudo gedit /etc/default/grub
+
+# GRUB_HOWMANY_LINUX=1
+sudo os-prober
+
+# to check for exact wording
+sudo gedit /etc/grub.d/30_os-prober
+
+# after
+
+echo &quot;Found ${LONGNAME} on ${DEVICE}&quot; &gt;&amp;2
+
+# found_other_os=1
+
+# insert the code:
+
+if [ &quot;${LONGNAME}&quot; = &quot;Windows NT/2000/XP (loader)&quot; ]; then
+LONGNAME=&quot;Windows XP&quot;
+fi
+
+# then run
+
+sudo update-grub
+```
+
+##### Remove grub bootloader 
+
+```
+# install boot-repair tool to remove grub boot loader and reinstall Windows Master Boot Record (MBR) with NTBootloader
+# credit &gt; https://help.ubuntu.com/community/Boot-Repair
+sudo add-apt-repository ppa:yannubuntu/boot-repair &amp;&amp; sudo apt-get update
+sudo apt-get install -y boot-repair &amp;&amp; (sudo boot-repair &amp;)
+# for alternative consider ms-sys &gt; http://ubuntuforums.org/showthread.php?t=622828
+```
+
+
+#### Appendix E - Advanced disk configuration =
+
+##### Boot configuration ==
+
+''WARNING: Do not upgrade or modify grub in dual boot configurations when Windows is HIBERNATED!''
+
+NB: Left Ubuntu as default – some machines should make Windows default (see ''Set Up PC.htm'')
+
+<pre>If performance on device has ever been in question: </pre>
+<ul>
+<li><pre>default Grub to Ubuntu</pre></li></ul>
+
+
+
+##### Restore Acer MBR for windows restore partition ===
+
+```
+# REPLACE X in sdX with the letter for the disk you need
+# Check the current partition table
+sudo cfdisk -Pt /dev/sdX
+# Backup the MBR including primary partition table: 
+sudo dd if=/dev/sdX of=./mbr.bin.plusPrimaryPartitionTable bs=512 count=1
+# find the file RTMBR.bin from the PQSERVICE hidden partition /acer/tools folder
+cd /media/art/PQSERVICE/acer/tools
+# Restore the MBR *including* primary partition table: 
+sudo dd if=RTMBR.bin of=/dev/sdX bs=512 count=1
+# to Restore JUST the MBR 
+# sudo dd of=RTMBR.bin if=/dev/sdX bs=446 count=1
+```
+
+##### NTFS Permissions 
+
+```
+#==mount options==
+# help &gt; http://www.tuxera.com/community/ntfs-3g-manual/
+ntfs-3g
+users = any user can mount, different user can dismount
+uid=1000
+gid=100
+# less permissive dmask=027,fmask=137
+# more permissive dmask=000,fmask=111
+# totally permissive umask=000
+utf8
+user mapping with windows &gt; http://www.tuxera.com/community/ntfs-3g-manual/#7
+```
+
+# Diagnose Disks
 
 ## Diagnostics and Troubleshooting
 
@@ -536,6 +881,8 @@ comparison with fio and bonnie at
 
 
 
+# Understand Layout
+
 
 
 ## Layouts  #############################################
@@ -741,7 +1088,7 @@ see also:
 ### Alternative to Live USB for regular use
 
 If you always use a Live USB in the same PC, then there is no advantage.
-Also, there are restictions using encrypted home with Live USB. 
+Also, there are restrictions using encrypted home with Live USB. 
 Instead you could Install to the flash drive, as if it were an SSD. 
 
 In this case we have an 8GB USB and a PC with 8GB RAM.
@@ -760,211 +1107,8 @@ Later, to enable hiberate, we need a swap = GB RAM, preferably encrypted
 
 `# help - `[`https://help.ubuntu.com/community/SwapFaq`](https://help.ubuntu.com/community/SwapFaq)
 
-### set up Swap, post install
-
-*Check the code in case of format errors!*
-```
-# help - https://help.ubuntu.com/community/SwapFaq
-# check what swap is set up
-cat /proc/swaps
-
-# get the UUID of the device
-sudo blkid
-
-sudo editor /etc/fstab
-
-# add in the UUID without quotes and make something like
-# UUID=0b3fb4b3-f645-468e-a7d5-c39a19edc07c none swap sw 0 0 
-
-# enable the swap now if you want...
-sudo swapon -a
-
-# check it's there
-cat /proc/swaps
-
-sudo leafpad /etc/default/grub
-
-# Look for the line GRUB_CMDLINE_LINUX="" 
-# and make sure it looks like this (using your UUID of course) 
-# GRUB_CMDLINE_LINUX="resume=UUID=41e86209-3802-424b-9a9d-d7683142dab7" 
-# and save the file
-
-sudo update-grub
-
-sudo leafpad /etc/initramfs-tools/conf.d/resume
-# and make sure its contents are 
-# resume=UUID=41e86209-3802-424b-9a9d-d7683142dab7 (with your UUID of course in place of mine). Save the file!
-
-sudo update-initramfs -u
-```
-Reboot!
-
-### Grub reference
-
--   archwiki Grub reference -
-    <https://wiki.archlinux.org/index.php/GRUB>
--   GNU GRUB full manual - <http://www.gnu.org/software/grub/manual/>
+see [Configure Disks#Swap] currently in this doc
 
 
 
 
-
-## IN ###################################################################################
-
-The following sections have been moved IN from the old Service Set up Ubuntu files
-They need to be rationalised and reformatted
-
-### Appendix E - Advanced disk configuration =
-
-#### Boot configuration ==
-
-''WARNING: Do not upgrade or modify grub in dual boot configurations when Windows is HIBERNATED!''
-
-NB: Left Ubuntu as default – some machines should make Windows default (see ''Set Up PC.htm'')
-
-<pre>If performance on device has ever been in question: </pre>
-<ul>
-<li><pre>default Grub to Ubuntu</pre></li></ul>
-
-##### Advanced Grub2 ===
-
-###### Install if required 
-
-```
-# Check which version(s) of grub is installed, looking for lines beginning 'ii' in the list...
-dpkg --list 'grub*'
-
-# Check which version is active using:
-grub-install -v
-
-# If required, upgrade to the new version using:
-sudo apt-get install grub-pc
-# Then TAB to choose OK, choose Yes, accept overwriting
-
-###### Configure 
-
-# credit &gt; [http://www.linuxquestions.org/blog/drask-180603/2009/12/5/howmany-for-grub-2-2466/ http://www.linuxquestions.org/blog/drask-180603/2009/12/5/howmany-for-grub-2-2466/]
-sudo cp /usr/sbin/grub-mkconfig /usr/sbin/grub-mkconfig_backup
-sudo cp /etc/grub.d/10_linux /etc/grub.d/10_linux_backup
-sudo chmod a-x /etc/grub.d/10_linux_backup
-sudo cp /etc/grub.d/30_os-prober /etc/grub.d/30_os-prober_backup
-sudo chmod a-x /etc/grub.d/30_os-prober_backup
-sudo gedit /usr/sbin/grub-mkconfig
-
-# after export GRUB_DEFAULT \
-# GRUB_HOWMANY_LINUX \
-
-sudo gedit /etc/grub.d/10_linux
-
-# replace code with what's in '''10_linux''' in Service Procs folder (wallet or online in FM)
-
-# (was [http://www.linuxquestions.org/blog/drask-180603/2009/12/5/howmany-for-grub-2-2466/ www.linuxquestions.org/blog/drask-180603/2009/12/5/howmany-for-grub-2-2466/]
-
-# but then had to make sure you change the HOWMANYs to GRUB_HOWMANY_LINUX)
-sudo gedit /etc/default/grub
-
-# GRUB_HOWMANY_LINUX=1
-sudo os-prober
-
-# to check for exact wording
-sudo gedit /etc/grub.d/30_os-prober
-
-# after
-
-echo &quot;Found ${LONGNAME} on ${DEVICE}&quot; &gt;&amp;2
-
-# found_other_os=1
-
-# insert the code:
-
-if [ &quot;${LONGNAME}&quot; = &quot;Windows NT/2000/XP (loader)&quot; ]; then
-LONGNAME=&quot;Windows XP&quot;
-fi
-
-# then run
-
-sudo update-grub
-```
-
-##### Remove grub bootloader 
-
-```
-# install boot-repair tool to remove grub boot loader and reinstall Windows Master Boot Record (MBR) with NTBootloader
-# credit &gt; https://help.ubuntu.com/community/Boot-Repair
-sudo add-apt-repository ppa:yannubuntu/boot-repair &amp;&amp; sudo apt-get update
-sudo apt-get install -y boot-repair &amp;&amp; (sudo boot-repair &amp;)
-# for alternative consider ms-sys &gt; http://ubuntuforums.org/showthread.php?t=622828
-```
-
-##### Restore Acer MBR for windows restore partition ===
-
-```
-# REPLACE X in sdX with the letter for the disk you need
-# Check the current partition table
-sudo cfdisk -Pt /dev/sdX
-# Backup the MBR including primary partition table: 
-sudo dd if=/dev/sdX of=./mbr.bin.plusPrimaryPartitionTable bs=512 count=1
-# find the file RTMBR.bin from the PQSERVICE hidden partition /acer/tools folder
-cd /media/art/PQSERVICE/acer/tools
-# Restore the MBR *including* primary partition table: 
-sudo dd if=RTMBR.bin of=/dev/sdX bs=512 count=1
-# to Restore JUST the MBR 
-# sudo dd of=RTMBR.bin if=/dev/sdX bs=446 count=1
-```
-#### Automount disks 
-
-==== Xbuntu/Myth Check the NTFS driver is installed ====
-
-```
-apt-cache search ntfs-3g
-```
-
-==== Identify disks ====
-```
-sudo fdisk -l<br />(or)<br />ls -l /dev/disk/by-uuid/
-sudo editor /etc/fstab
-# Ubuntu:
-sudo gedit /etc/fstab
-# Xbuntu/Myth:
-sudo mousepad /etc/fstab
-```
-
-##### Add mount lines 
-
-```
-/dev/sda2 /media/Windows ntfs-3g rw,auto,user,fmask=0111,dmask=0000 0 0
-/dev/sda3 /media/shared vfat rw,auto,user,fmask=0111,dmask=0000 0 0
-# or using UUIDs:
-
-# /dev/sda2
-UUID=7C84665A846616C4 /media/Windows ntfs-3g rw,auto,user,fmask=0111,dmask=0000 0 0
-# /dev/sda3
-UUID=3C72F85E72F81E78 /media/shared vfat rw,auto,user,fmask=0111,dmask=0000 0 0
-```
-''Sample of original fstab contents:''
-
-```
-# /dev/sda2
-UUID=7C84665A846616C4 /media/sda2 ntfs defaults,umask=007,gid=46 0 0
-# /dev/sda3
-UUID=91A1-25A1 /media/open vfat defaults,utf8,umask=007,gid=46 0 1
-sudo mkdir /media/Windows
-sudo mkdir /media/shared
-sudo mount -a
-credit &gt; https://help.ubuntu.com/community/AutomaticallyMountPartitions
-```
-##### NTFS Permissions 
-
-```
-#==mount options==
-# help &gt; http://www.tuxera.com/community/ntfs-3g-manual/
-ntfs-3g
-users = any user can mount, different user can dismount
-uid=1000
-gid=100
-# less permissive dmask=027,fmask=137
-# more permissive dmask=000,fmask=111
-# totally permissive umask=000
-utf8
-user mapping with windows &gt; http://www.tuxera.com/community/ntfs-3g-manual/#7
-```
