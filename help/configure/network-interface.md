@@ -7,7 +7,7 @@ Otherwise, for:
 
 * diagnosing issues with connectivity, resolution, addressing or performance - [General Network troubleshooting](https://github.com/artmg/lubuild/blob/master/help/diagnose/network.md)
 * If you want to find out more about what is on your local network, see Discovery / Services in [Network Diagnostics](https://github.com/artmg/lubuild/blob/master/help/diagnose/network.md#Discovery) 
-* For issues turning radios on and off, see [Hardware Troubleshooting](https://github.com/artmg/lubuild/blob/master/help/diagnose/hardware.md) 
+* For issues turning radios on and off, or wifi hardware drivers, see [Hardware Troubleshooting](https://github.com/artmg/lubuild/blob/master/help/diagnose/hardware.md) 
 * For configuring [Network Services](https://github.com/artmg/lubuild/blob/master/help/configure/Networked-Services.md)
 
 
@@ -30,12 +30,14 @@ ifconfig $INTERFACE
 ```
 
 #### Troubleshooting
+
 ```
 # show details of dialog with DHCP server whilst requesting lease
 sudo dhclient -v $INTERFACE
 
 # display details of lease(s) obtained
 cat /var/lib/dhcp/dhclient.leases
+
 ```
 
 ### IP Addressing issues
@@ -83,7 +85,8 @@ If you later need to delete the temporary address use
 
 ### change DNS order
 
+```
 sudo leafpad /etc/nsswitch.conf
 hosts:          files dns mdns4_minimal mdns4 [NOTFOUND=return]
 # help - http://manpages.ubuntu.com/manpages/wily/man5/nsswitch.conf.5.html
-
+```

@@ -78,6 +78,7 @@ nc -zv $HOST_NAME $PORT_NO
 ## Physical and Transport
 
 ### diagnosing Network Manager Connections
+
 ```
 # check the connection state
 nmcli d
@@ -102,6 +103,7 @@ sudo cat /var/log/syslog
 #### Wifi (WLAN)
 
 ##### Issues Connecting
+
 ```
 # iwconfig # deprecated in favour of iw
 iw dev
@@ -159,6 +161,7 @@ ls -l /dev/ttyUSB*
 ```
 
 ### diagnosing ethernet connection issues
+
 ```
 ip link show
 # credit http://serverfault.com/q/15776

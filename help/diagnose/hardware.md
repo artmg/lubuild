@@ -89,8 +89,10 @@ sudo fwts
 ```
 
 ### BIOS Upgrade
+
 Quote from [[https://wiki.ubuntu.com/BIOSandUbuntu]]
- A buggy BIOS can cause many different and subtle problems to Linux, ranging from reboot problems, incorrect battery power readings, suspend/resume not working correctly, and strange ACPI issues
+
+A buggy BIOS can cause many different and subtle problems to Linux, ranging from reboot problems, incorrect battery power readings, suspend/resume not working correctly, and strange ACPI issues
 
 You should also bear in mind that system or driver bug reports might get rejected if the BIOS has been superseded. For help with BIOS Upgrades see [[https://help.ubuntu.com/community/BIOSUpdate]], which includes links to using '''FreeDos over USB''' disk to run vendors' DOS-based BIOS update utility
 
@@ -167,6 +169,7 @@ rfkill list all
 ### Wifi won't turn on
 
 NB: this is separate from the Wifi issue upon restoring from suspend/hibernate, which is now resolved by a shortcut to '''nmcli'''
+
 ```
 ### Detect Wifi ###
 lspci -k | grep -iA3 wireless
@@ -177,6 +180,44 @@ lspci -k | grep -iA3 wireless
 sudo rm /var/lib/NetworkManager/NetworkManager.state
 sudo reboot
 # credit - http://ubuntuforums.org/showthread.php?t=1793994
+```
+
+### Wifi driver issues
+
+Just like with some video drivers, you may have a choice between 
+community supported open source drivers, and vendors' own drivers 
+that may be licensed and supported in whatever way the vendor wants. 
+
+For example, the b43 open driver generally works suitably 
+for most Broadcom Wireless Network Interface cards and chipsets, 
+but if you have specific issues, you might be better 
+trying the Broadcom drivers. 
+
+```
+# Issue is, e.g. 
+# dmesg `Support for cores revisions 0x17 and 0x18 disabled`
+
+# check hardware specifics and module in use
+lspci -vvnn | grep -A 9 Network 
+
+# Check support against PnP ID in
+# [https://wireless.wiki.kernel.org/en/users/drivers/b43]
+# or [http://linuxwireless.org/en/users/Drivers/b43/]
+# see also [https://help.ubuntu.com/community/WifiDocs/Driver/bcm43xx]
+
+# IF SUPPORTED by open driver try...
+# credit [https://ubuntuforums.org/showthread.php?t=2214439&p=13037208#post13037208]
+cat <<EOF! | sudo tee /etc/modprobe.d/local-b43.conf
+# Activate experimental support for some hardware revisions
+options b43 allhwsupport=1
+EOF!
+# unload / reload module to make settings come into effect
+rmmod b43
+modprobe b43
+
+# IF NOT SUPPORTED try vendor driver
+# credit [http://askubuntu.com/a/636113]
+sudo apt-get install bcmwl-kernel-source
 ```
 
 ### Bluetooth devices 
