@@ -68,6 +68,18 @@ fi
 
 
 
+# BCM 4313 wireless adapter (PnP ID [14e4:4727]) 
+# is supported best by Broadcom "wl" driver
+# see also [https://github.com/artmg/lubuild/blob/master/help/diagnose/hardware.md#wifi-driver-issues]
+AFFECTED_MODELS='|AO722|'
+if \
+    [[ $AFFECTED_MODELS == *\|$MODEL_NO\|* ]] \
+    ; then 
+	sudo apt-get install -y bcmwl-kernel-source
+; fi
+
+
+
 ### This logic to only do this for HP Mini on 14.04 is not yet working, 
 # probably due to the space on the end of the model no
 
