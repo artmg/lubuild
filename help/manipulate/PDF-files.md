@@ -1,3 +1,16 @@
+see also:
+
+* [https://github.com/artmg/lubuild/blob/master/help/manipulate/photos.md]
+	* working with individual photos and creating videos from them
+	* also general image manipulation 
+* [https://github.com/artmg/lubuild/blob/master/help/use/Office-documents.md]
+    * Office documents (like MS Office and other combination packages)
+    * Desktop Publishing (DTP) packages
+* [https://github.com/artmg/lubuild/blob/master/help/manipulate/miscellaneous-files.md]
+	* Other common types of document
+	* including email formats
+
+
 
 ## core applications
 
@@ -124,6 +137,7 @@ include:
 
 
 ### completely remove images from PDF files
+
 ```
 # coherentpdf has a draft option which removes them
 cpdf -draft original.pdf -o version_without_images.pdf

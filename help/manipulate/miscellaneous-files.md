@@ -5,17 +5,20 @@ see also:
     * Office documents (like MS Office and other combination packages)
     * Desktop Publishing (DTP) packages
 * [https://github.com/artmg/lubuild/blob/master/help/manipulate/PDF-files.md]
-* [https://github.com/artmg/lubuild/blob/master/help/manipulate/films-and-songs.md]
+	* Portable Document Format (PDF) files originating from Adobe's specification
 * [https://github.com/artmg/lubuild/blob/master/help/manipulate/photos.md]
 	* working with individual photos and creating videos from them
+	* also general image manipulation 
+* [https://github.com/artmg/lubuild/blob/master/help/manipulate/films-and-songs.md]
 * [https://github.com/artmg/lubuild/blob/master/help/manipulate/FreeCAD-plans-and-designs.md]
 * [https://github.com/artmg/lubuild/blob/master/help/manipulate/disk-recovery-and-forensics.md]
 	* Check File Signatures ('Magic Characters') to discover what type of file you are looking at
 * 
 
 
+## Emails
 
-## MIME / MHTML / EML and other email attachment or multipart formats
+### MIME / MHTML / EML and other email attachment or multipart formats
 
 To extract files from MIME text files
 
@@ -34,6 +37,37 @@ for f in *.mht; do mkdir -p "unpack/$f"; munpack "../../$f" -C "unpack/$f" ; don
 # * 
 
 ```
+### Outlook emails ###
+
+* Open saved emails 
+** M standard .eml files
+** M Outlook .msg files including Office 2013
+* M View or Extract attachments
+* S allow copy of content to other formats
+* C preferably without setting up email account
+
+Candidates:
+
+* MsgConv
+	* produces EML from MSG
+	* for procs see [http://askubuntu.com/a/363615]
+
+```
+# includes lots of perl libs but only around 7MB total
+sudo apt-get install libemail-outlook-message-perl
+# create EML file from MSG
+msgconvert myfile.msg
+```
+
+* sylpheed 
+** Opens .EML
+*** Have to click through 4 dialogs first
+*** displays text and allows Open / Save attachments
+
+* thunderbird
+** does not open .MSGs correctly
+** for requirements and current procs see [Lub App Thunderbird config.md]
+
 
 
 ## File and Folder syncronisation
@@ -52,29 +86,35 @@ rsync -a source --delete destination
 --delete is like /purge
 
 #### two way rsync
+
+```
 rsync -avuz source/ dest/
 rsync -avuz dest/ source/
-credit > http://www.linuxquestions.org/questions/showthread.php?p=2899735#post2899735
+# credit [http://www.linuxquestions.org/questions/showthread.php?p=2899735#post2899735]
+```
 
 #### grsync
+
 graphical interface
 
 
 ### unison
-Windows & Linux gui tool written in Objective CAML
-Discontinued
-http://en.wikipedia.org/wiki/Unison_(file_synchronizer)
-Allows sync chains in various topolgies, see > http://sunoano.name/ws/public_xhtml/unison.html
+
+* Windows & Linux gui tool written in Objective CAML
+* Discontinued
+* [http://en.wikipedia.org/wiki/Unison_(file_synchronizer)]
+* Allows sync chains in various topolgies, see > http://sunoano.name/ws/public_xhtml/unison.html
 
 
 ### Conduit
+
 GNOME sync app with plugins for files, photos, emails, PIMs, and many online services
 help > http://live.gnome.org/Conduit/Documentation/UserDocumentation
 
 
-##open source tools##
+### open source tools
 
-###code ideas###
+#### code ideas
 
 Synchrorep http://www.iceberg.0rg.fr/ is Python based and supports ftp, samba & ssh mounted shares
 Conduit http://live.gnome.org/Conduit/Development is Python based with many customm data providers
@@ -147,6 +187,7 @@ find more at http://askubuntu.com/a/118389
 ##### tests
 
 * DupeGuru
+
 ```
 sudo add-apt-repository -y ppa:hsoft/ppa
 sudo apt-get update
@@ -170,3 +211,50 @@ Not available for 15.10!
 :: can rank which to autoreplace with links
 : in repos
 
+
+
+## Hex Viewer ##
+
+To inspect binary files to inspect and understand their contents
+
+S be lightwieght on top of lubuntu
+S allow editing
+C allow understanding of more complex structures (e.g. tables - see below) 
+
+NB: if you just want to find out what type of file it is, see
+[https://github.com/artmg/lubuild/blob/master/help/manipulate/disk-recovery-and-forensics.md]
+to Check File Signatures ('Magic Characters') 
+
+* lfhex
+    * handles files bigger than memory
+    * Qt - very lightwieght
+    * in repos
+* QHexEdit2
+    * (is it an app, or just a widget?)
+    * Qt / C++
+* wxHexEditor
+    * edits massive files AND disk sectors
+    * wxWdigets/C++
+* Bless
+    * full featured
+    * gui AND console
+    * mono / gtk+
+
+more...
+
+* jeex
+    * GTK
+* dhex
+    * include diff mode
+* hexcurse
+* hexedit (rigaux)
+
+
+#### if you want hex and tables ....
+
+* Okteka
+    * KDE app needs many libraries on LXDE
+    * does tables
+
+
+ 

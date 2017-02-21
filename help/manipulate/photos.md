@@ -6,7 +6,73 @@ whereas photos are captured, unique and irreplaceable.
 See also:
 * [https://github.com/artmg/lubuild/blob/master/help/manipulate/films-and-songs.md]
     * For ripping, converting and metatagging films and songs
-* 
+* [https://github.com/artmg/lubuild/blob/master/help/manipulate/PDF-files.md]
+	* Portable Document Format (PDF) files originating from Adobe's specification
+* [https://github.com/artmg/lubuild/blob/master/help/manipulate/miscellaneous-files.md]
+	* Other common types of document
+
+
+## Viewing images
+
+### image viewer
+
+In LXDE the "Image Viewer" application is **GPicView** which:
+
+* is light
+* has slideshow and zoom
+* but Fit to Window does NOT stretch
+* there is no Print option
+
+what image viewer to add as option?
+
+LXQt plans to use LxImage-Qt
+
+```
+# PhotoQt 
+sudo apt-add-repository ppa:lumas/photoqt
+# this is recommended by dev, rather than old source sudo add-apt-repository ppa:samrog131/ppa
+sudo apt update
+sudo apt install photoqt 
+# Pros and cons:
+# Seems the most recommended QT photo viewer
+# Uses GraphicsMagick library to support wide range of formats
+# still in active development
+# quite a lot of dependencies - is it that lightweight? (37MB on my system)
+```
+
+* Other QT based image viewers to consider:
+	* QIviewer
+		- very simple app
+		- not in repos
+	* nomacs
+	* QGraphicsView
++ CLI image manipulators:
+	* feh
+	* nitrogen
+* Other viewers, but use GTK4:
+	* gwenview
+	* gThumb
+	* viewnior
+
+### view image metadata
+
+* command line 
+    * exiftool
+	    - for more info see below
+* GUI
+    * ImageMagick
+        * ImageInfo menu option displays metadata for currently open file
+        * also installs command line    identify -format %[exif:*] myimage.jpg
+
+
+### poster print over multiple pages
+
+* PosteRazor
+    * image via GUI
+* pdfposter
+    * source pdf via command line
+
+
 
 
 
