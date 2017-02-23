@@ -15,7 +15,10 @@ see also:
 ## core applications
 
 The default PDF veiwer in Lubuntu is called "Document Viewer" 
-also known as GNOME Evince, which handles other common book, scan and fax formats. 
+also known as GNOME Evince, has capabilities including: 
+
+* Fill in a Form (if Allowed by file)
+* handles other common book, scan and fax formats
 
 The following are on the default list of Lubuild apps
 
@@ -47,7 +50,11 @@ but others say they can glitch on complex vector diagrams.
 
 Since Adobe stopped supporting their Reader for Linux in 2014, the best 
 closed source (but gratis-free) alternative offering better zoom is
-[Foxit Reader](https://www.foxitsoftware.com/downloads/) 
+[Foxit Reader](https://www.foxitsoftware.com/downloads/). 
+Note that although some features are richer in this giveaway, 
+they have restricted other features to encourage you to buy their wares. 
+So if you can't do something in Foxit for free, for instance form filling, 
+check the libre software above to see if it can.
 
 
 ### Selectively print area of large diagram
