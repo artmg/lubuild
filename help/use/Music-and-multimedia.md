@@ -95,6 +95,22 @@ for D in *; do
     fi
 done
 
+#### single relative list with subfolders in reverse order
+PLAYLIST_PATHFILE="/home/user/Playlists/Series In Reverse"
+# we need to use arrays to properly handle the spaces in filenames
+# Note: The wildcard must be OUTSIDE the quotes to get expanded to matches
+PATH_RELATIVE_MATCH=("./genre\ folder"/Series*1)
+
+echo \#EXTM3U >"$PLAYLIST_PATHFILE.m3u";
+# in case filenames contain spaces we pipe to while instead of for x in backticks do
+# as this uses zero termination we need to sort -z as well as -r for reverse
+# to handle the spaces in the match string we pass as the array elements
+find "${PATH_RELATIVE_MATCH[@]}" -type d -print0 | sort -rz | while read -d $'\0' -r folder ; do
+	echo "$folder"
+	find "$folder" -type f \( -iname \*.mp3 -o -iname \*.wma  -o -iname \*.ogg \) | sort >>"$PLAYLIST_PATHFILE.m3u";
+done
+
+
 #### old notes
 # various at...
 # http://linuxreviews.org/quicktips/playlists/index.html.en
