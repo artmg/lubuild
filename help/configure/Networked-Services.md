@@ -253,7 +253,11 @@ NFS_MOUNT_POINT=/mnt/myMediaLocation/myDataDir
 NFS_EXPORT_NAME=myExportName
 NFS_EXPORT_PERMS=usr:grp
 
+# create mount point if not already there
+sudo mkdir -p $NFS_MOUNT_POINT
+
 ###### Base software install
+sudo apt-get update
 # workaround for Raspbian distros `rpcinfo -p` showing "can't contact portmapper"
 . /etc/*-release
 if [[ "${ID}" == "raspbian" ]] ; then sudo apt-get purge -y rpcbind ; fi ;
@@ -268,8 +272,10 @@ sudo apt-get install -y nfs-kernel-server
 # srv is linux filesystem hierarchy standard, some people use nfs or nfsexports as alternative subfolder
 sudo mkdir -p /srv/exports/$NFS_EXPORT_NAME
 
-# the mount seems to set the correct perms itself, otherwise
-# sudo chown $NFS_EXPORT_PERMS /srv/exports/Libraries
+# check the mount has set the correct perms itself
+ls -la $NFS_EXPORT_PERMS /srv/exports/Libraries
+# otherwise
+sudo chown $NFS_EXPORT_PERMS /srv/exports/Libraries
 
 ###### Bind the data into the nfs exports directory
 cat <<EOF | sudo tee -a /etc/fstab
@@ -302,8 +308,8 @@ sudo service nfs-kernel-server start
 ###### Issues with Debian Jesse
 
 ```
-# Original [https://lists.debian.org/debian-devel/2014/05/msg00618.html]
 # credit [https://www.raspberrypi.org/forums/viewtopic.php?f=28&t=149002&p=980161]
+# Original [https://lists.debian.org/debian-devel/2014/05/msg00618.html]
 
 cat <<EOF | sudo tee -a /etc/systemd/system/nfs-common.services
 [Unit]
@@ -802,7 +808,6 @@ sudo /etc/init.d/mpd restart
 * syslogd
     * default system logging on ubuntu and many linux distros
     * defaults to writing locally
-    * 
 * rsyslogd
     * comes pre-installed on ubuntu and raspbian
 * syslog-ng
@@ -817,6 +822,7 @@ see also:
 
 * logging in ubuntu [https://help.ubuntu.com/community/LinuxLogFiles]
 * [http://askubuntu.com/a/55495] for further comparison
+
 
 ### rsyslogd server
 
@@ -861,7 +867,7 @@ EOF!
 # consider log rotation - http://www.aelog.org/use-the-raspberry-pi-as-a-syslog-server-using-rsyslog/
 ```
 
-### syslog clients
+### rsyslog clients
 
 ```
 ## set your syslog server ip with...
