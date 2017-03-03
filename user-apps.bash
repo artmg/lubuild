@@ -14,6 +14,48 @@
 
 
 
+########################################
+### TRUST CAs in system and Browsers ### 
+########################################
+
+# if we can find a way to do this in the default browser settings 
+# (i.e. that will be copied in on first run) 
+# then move this section into system-apps-manual.bash
+
+# The following code presumably assumes that you have already opened 
+# both browsers at least once to create the local config
+
+# Set your own CA details here
+MY_CA_CERT="/path/to/certs/MyCAsPublic.crt"
+MY_CA_NAME="My own CA"
+
+sudo apt-get install libnss3-tools
+
+sudo cp "$MY_CA_CERT" /usr/share/ca-certificates/
+sudo dpkg-reconfigure ca-certificates
+# manual step to choose ASK then select and OK
+
+TRUST_RIGHTS="C,,"
+# TRUST_RIGHTS="TCu,Cuw,Tuw"
+
+# Google
+certutil -d sql:$HOME/.pki/nssdb -A -t "$TRUST_RIGHTS" -n "$MY_CA_NAME" -i "$MY_CA_CERT"
+# credit - http://blog.tkassembled.com/410/adding-a-certificate-authority-to-the-trusted-list-in-ubuntu/
+
+# Mozilla
+for certDB in $(find  ~/.mozilla* ~/.thunderbird -name "cert8.db")
+do
+  certDir=$(dirname ${certDB});
+  #log "mozilla certificate" "install '${MY_CA_NAME}' in ${certDir}"
+ certutil -A -n "${MY_CA_NAME}" -t "${TRUST_RIGHTS}" -i "${MY_CA_CERT}" -d ${certDir}
+done
+
+# credit http://askubuntu.com/a/369858
+
+
+
+
+
 #####################################
 ### DROPBOX                       ### 
 #####################################
