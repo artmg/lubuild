@@ -263,7 +263,8 @@ Android Apps:
 	* Yatse
 		* can purchase extra features
 	* "XBMC Remote" fr.beungoud.xbmcremote
-	* See also - http://kodi.wiki/view/Smartphone/tablet_remotes
+	* See also - [http://kodi.wiki/view/Smartphone/tablet_remotes]
+    * for wider ideas on how to remote control see [http://www.averagemanvsraspberrypi.com/2015/05/7-remote-control-options-for-your.html] 
 * SSHD +
 	* Home Remote Control 
 		* Uses sshd for mouse / keyboard / file access / stats
