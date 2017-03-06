@@ -5,22 +5,15 @@ The most likely use case for this would be games with no Linux port,
 or that do not work with Wine.
 
 see also:
+
 * [https://github.com/artmg/lubuild/blob/master/help/use/games.md]
     * general gaming stuff
 * [https://github.com/artmg/lubuild/blob/master/help/diagnose/video-display.md]
     * ancilliary diagnostics around video output devices
-* []
-
-
-## OUT
-
-### VirtualBox
-
-Although VirtualBox is the simplest way to set up VMs, 
-it does not yet support GPU Passthrough
-
-For step-by-step instructions to create a Windows Virtual Machine on your PC under Ubuntu using virtualbox see [https://itsfoss.com/install-windows-10-virtualbox-linux/] 
-NB: you can just install **virtualbox** with no version specifier
+* [https://github.com/artmg/lubuild/blob/master/help/configure/Windows.md]
+	* configuring Windows in VMs or dualboot
+* [https://github.com/artmg/lubuild/blob/master/help/configure/virtual-guest.md]
+	- simpler configurations for VMs, like VirtualBox
 
 
 ## Introduction
@@ -31,6 +24,9 @@ containing a specialised processor and memory dedicated to generating lovely ima
 GPU Passthrough involves dedicating a GPU to a guest virtual machine, 
 so the main hosting desktop will not be able to use it. 
 Physically the main desktop will be plugged into the onboard graphics controller.
+
+Although VirtualBox might be the simplest way to set up VMs, 
+it does not yet support GPU Passthrough
 
 * QEMU is used to run virtual machine "guests" on this host desktop
 * IOMMU is the hardware mapping technology that allows passthrough
@@ -140,16 +136,9 @@ Otherwise you will need to override the ACS security (as per passthrough setup a
 
 ### Windows updates
 
-* Use windows update to get to SP1, two or three reboots
-* When updater gets stuck, disable updates and shutdown
-* Ensure Windows Update Service (wuauserv) is Stopped / Manual
-* Obtain KB3020369 & KB3125574 & KB3172605 & sdelete and place on ISO with Brasero
-    * KB 3185278 is Sept 2016 Rollup - not using for now
-* After installing each Stop the service again
-    * credit http://www.sevenforums.com/windows-updates-activation/400285-new-install-windows-7-checking-updates-doesnt-finish-post3279171.html#post3279171
-* Recheck for latest updates, install, reboot - continue until Up To Date
-* Clean up restore points, update & SP caches (System / Protection & Disk cleanup)
-* sdelete -z to zero unused space ready for shrinking
+See section `Fast-forward updates on new Windows 7 install` in 
+[https://github.com/artmg/lubuild/blob/master/help/configure/Windows.md]
+
 * Power down VM and qemu-img convert to create a shrunk copy of disk image
 You now have a fully updated Windows image to use
 

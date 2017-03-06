@@ -31,14 +31,23 @@ which $0 && $0 --version
 # http://wiki.ubuntu-it.org/Programmazione/LinguaggioBash
 ```
 
-## OS Boot Repair
+## Boot-Repair
 
-``` 
+```
 # if you are having trouble with booting, 
-# or wish to return from using GRUB to the original Windows MBR, see ...
-#
-# help - https://help.ubuntu.com/community/Boot-Repair
-# help > http://paste.ubuntu.com/1606498/
+# or wish to return from using GRUB boot loader 
+#	and reinstall Windows Master Boot Record (MBR) with NTBootloader, 
+# If you can only boot to Windows locally, use a LiveUSB for this
+# help - [https://help.ubuntu.com/community/Boot-Repair]
+
+sudo add-apt-repository ppa:yannubuntu/boot-repair && sudo apt-get update
+sudo apt-get install -y boot-repair && (sudo boot-repair &)
+
+# make a note of any URL you are given to Pastebin or similar log caching site
+
+# if you are still having problems with a dual-boot install 
+# see also the section **Dual Boot / bcdedit** in 
+# [https://github.com/artmg/lubuild/blob/master/help/configure/Windows.md] 
 ```
 
 ## Hostname 

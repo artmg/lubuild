@@ -584,13 +584,9 @@ sudo update-grub
 
 ##### Remove grub bootloader 
 
-```
-# install boot-repair tool to remove grub boot loader and reinstall Windows Master Boot Record (MBR) with NTBootloader
-# credit &gt; https://help.ubuntu.com/community/Boot-Repair
-sudo add-apt-repository ppa:yannubuntu/boot-repair &amp;&amp; sudo apt-get update
-sudo apt-get install -y boot-repair &amp;&amp; (sudo boot-repair &amp;)
-# for alternative consider ms-sys &gt; http://ubuntuforums.org/showthread.php?t=622828
-```
+To remove grub boot loader and reinstall Windows Master Boot Record (MBR) with 
+NTBootloader, install **boot-repair** tool - see 
+[https://github.com/artmg/lubuild/blob/master/help/diagnose/operating-system.md]
 
 
 #### Appendix E - Advanced disk configuration =
