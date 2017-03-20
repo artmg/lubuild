@@ -173,7 +173,7 @@ If this doesn't work you might also try:
     * and perhaps a more recent kernel?
 
 
-#### use OVMF uefi instead of BIOS
+#### use OVMF UEFI instead of BIOS
 
 * The simplest way to use QEMU is in BIOS style. 
 * If you installed Windows in BIOS mode rather than UEFI you could convert 
@@ -185,13 +185,37 @@ If this doesn't work you might also try:
 * this guide uses libvirt - might that be easier to start? [http://vfio.blogspot.co.uk/2015/05/vfio-gpu-how-to-series-part-4-our-first.html]
 * 
 
-"windows is loading files, starting windows, just goes blank"
-similar to [http://serverfault.com/questions/776406/windows-7-setup-hangs-at-starting-windows-using-proxmox-4-2]
+* Help - [https://github.com/tianocore/tianocore.github.io/wiki/How-to-run-OVMF]
+
+
+##### Troubleshooting OVMF
+
+If you get issues with the OVMF UEFI (e.g. the VM hangs showing `Tiano Core`):
+
+* First set the log in QEMU to capture what happens
+* Try updating to the latest OVMF 
+	* grabbing the latest RPM, open the archive and replace the CODE and VARS files
++ try disabling KVM in QEMU
+	* see [https://github.com/tianocore/tianocore.github.io/wiki/How-to-run-OVMF#kvm]
++ or add the KVM option `ignore_msrs=1` ???
+	* see [https://wiki.archlinux.org/index.php/PCI_passthrough_via_OVMF#Unexpected_crashes_related_to_CPU_exceptions]
+* other QEMU options?:
+	* -nodefaults
+	* -nodefconfig
++ see also [http://www.linux-kvm.org/downloads/lersek/ovmf-whitepaper-c770f8c.txt]
+
+* For reporting issues 
+	* see the [Tianocore Reporting Issues intro](https://github.com/tianocore/tianocore.github.io/wiki/Reporting-Issues)
+
+* example issues found:
+	- "windows is loading files, starting windows, just goes blank"
+		+ similar to [http://serverfault.com/questions/776406/windows-7-setup-hangs-at-starting-windows-using-proxmox-4-2]
+
 
 #### patch nvidia driver install
 
 This was the option that **worked** for me, and stopped me suffering from the Code 43 error.
-I tried it on a UEFI image, but it _might_ also work on a bios image. 
+It worked ok on a UEFI image, but it failed on a BIOS image. 
 
 * follow the instructions at [https://github.com/sk1080/nvidia-kvm-patcher]
 * Uncheck time sync and backdate clock
@@ -247,6 +271,12 @@ https://wiki.debian.org/VGAPassthrough
 
 
 ## Example QEMU scripts
+
+For help on QEMU options see 
+
+* [http://manpages.ubuntu.com/manpages/yakkety/man1/qemu-system.1.html]
+* 
+
 
 ### Qemu-Win7.bios.sh
 
