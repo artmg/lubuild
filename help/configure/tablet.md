@@ -1,6 +1,9 @@
 This article focusses on special features associated with Tablet computers 
 and similar devices, such as hybrid or convertible form factors. 
 
+If you want to put Ubuntu Mobile onto a tablet see the section towards the end.
+
+
 ## Auto-rotate
 
 Recent Ubuntu versions, including 16.04 and onwards, reportedly have 
@@ -51,4 +54,25 @@ seems to work out of the box
 
 Candidates:
 
-* Floren?*
+* onboard
+	- in repo
+	- available from Accessability menu
+	- for config files see [http://askubuntu.com/a/657065]
+* Florence
+	- in repos
+	- see [http://xmodulo.com/onscreen-virtual-keyboard-linux.html]
+* GOK (Gnome onscreen Keyboard)
+	- 
+* kvkbd
+	- (no longer available)
+* 
+
+
+
+## Ubuntu Mobile
+
+[https://developer.ubuntu.com/en/phone/devices/installing-ubuntu-for-devices/]
+
+* for flashing devices previously running android
+* uses phablet-tools to manipulate the USB connected tablet during install (like adb)
+* 
