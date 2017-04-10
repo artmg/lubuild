@@ -231,8 +231,20 @@ If you need to check which is your java executable:
 readlink -e `which java`
 ```
 
+## Resources
 
-## IN
+### Building and architecture
+
+* UK Building Institute's "Craft Your Future" lessons
+	* for Minecraft Education Edition (M:EE) 
+	* [http://ciobmc.org/]
++ Greenfield
+	* Minecraft's largest city
+	* realistic in 1:1 scale
+	* [http://www.planetminecraft.com/project/greenfield---new-life-size-city-project/]
++ 
+
+# IN
 
 The following sections have been extracted from old Ubuntu Setup notes and may need some tidying. 
 
