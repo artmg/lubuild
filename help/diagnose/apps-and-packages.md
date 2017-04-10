@@ -3,10 +3,11 @@
 see also:
 
 * Diagnose [https://github.com/artmg/lubuild/blob/master/help/diagnose/apps-and-packages.md]
+	* Applications and Package Management
 
-Applications and Package Management
 
-### Which version of XYZ is installed? 
+### Which version of XYZ is installed?
+ 
 ```
 # Check the exact name of the package
 dpkg -l | grep mypackage
@@ -18,6 +19,7 @@ dpkg -s fullpackagename
 ### Which Applications ...
 
 #### ...are installed? 
+
 ```
 # list all installed packages
 dpkg --get-selections
@@ -75,7 +77,8 @@ if you try executing a command in the current working folder, specify the path b
 
  ./myprog
 
-####identify dependencies####
+#### identify dependencies
+
 ```
 # check which libraries are required
 objdump -p ./myprog | grep NEEDED
@@ -89,9 +92,23 @@ ldd ./myprog | grep "not found"
 # http://www.ibm.com/developerworks/library/l-lpic1-v3-102-3/
 # 
 ```
-### installation and cleanup ###
 
-#### .DEB unattend ####
+### installation and cleanup
+
+#### download and install newer version
+
+If the Download is a tgz containing the binaries...
+
+```
+# unpack the new version
+cd /opt/ && sudo tar -zxvf ~/Downloads/MyAppDownload*.tgz
+# make this the default
+sudo ln -s /opt/MyAppVersion-X.Y/MyAppName /usr/local/bin/myappname
+```
+
+
+#### .DEB unattend
+
 ```
 http://www.microhowto.info/howto/perform_an_unattended_installation_of_a_debian_package.html
 
@@ -105,7 +122,8 @@ install debconf-utils
 debconf-get-selections | grep unatt
 echo mysql-server-5.5 mysql-server/root_password password xyzzy | debconf-set-selections
 ```
-#### total purge of old packages ####
+#### total purge of old packages
+
 ```
 apt-get -y dist-upgrade
 apt-get -y autoremove
