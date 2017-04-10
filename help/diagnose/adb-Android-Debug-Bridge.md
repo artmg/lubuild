@@ -10,19 +10,48 @@ sudo apt-get install -y android-tools-adb android-tools-fastboot
 ```
 
 ### prepare your PC for device connection ###
+
 ```
-# EITHER get a [whole generic list of rules](http://bernaerts.dyndns.org/linux/74-ubuntu/328-ubuntu-trusty-android-adb-fastboot-qtadb)
+# Either: EASY
+
+# this package includes a file of udev rules for common devices
+sudo apt-get install libmtp-common
+# /lib/udev/rules.d/69-libmtp.rules 
+
+
+# Or: MANAGED LIST
+# 
+# Download a list of udev rules for common devices
+# [https://github.com/M0Rf30/android-udev-rules]
+# Arch has a package android-udev of this file, but ubuntu not yet!
+
+UDEV_RULES_FOLDER=/etc/udev/rules.d
+sudo mkdir -p $UDEV_RULES_FOLDER
+cd $UDEV_RULES_FOLDER
+sudo curl -O https://raw.githubusercontent.com/M0Rf30/android-udev-rules/master/51-android.rules
+# allow read by standard user
+sudo chmod a+r 51-android.rules
+cd ~
+# reload udev for new rules
+sudo udevadm control --reload   
+
+
+# Or: SPECIFIC
+#
 # or obtain your specific Vendor and Product codes from ID [credit](http://askubuntu.com/a/213907)
 lsusb 
 
-DEVICE_VENDOR_ID=04e8
-DEVICE_PRODUCT_ID=6860
+DEVICE_VENDOR_ID=XXXX
+DEVICE_PRODUCT_ID=YYYY
 
 echo SUBSYSTEM==\"usb\", ATTR{idVendor}==\"$DEVICE_VENDOR_ID\", ATTR{idProduct}==\"$DEVICE_PRODUCT_ID\", MODE=\"0666\", GROUP=\"plugdev\" | sudo tee -a /etc/udev/rules.d/51-android.rules
-# sudo chmod a+r /etc/udev/rules.d/51-android.rules
-
+# allow read by standard user
+sudo chmod a+r /etc/udev/rules.d/51-android.rules
 # reload udev for new rules
-sudo udevadm control --reload   # was sudo /etc/init.d/udev restart
+# was sudo /etc/init.d/udev restart
+sudo udevadm control --reload   
+
+
 
 # test if this is ALWAYS required...
 # also add Vendor ID [credit](http://askubuntu.com/a/341696)
@@ -32,10 +61,15 @@ adb kill-server
 adb start-server
 
 # other guidance - http://forum.xda-developers.com/showthread.php?p=11823740#post11823740
+
+# Or: PERMISSIVE
+#
+# see how to allow devices generically
 ```
 
 
 ### test and connect ###
+
 ```
 # ensure your device has Developer Mode - USB Debugging enabled 
 # Tap About - Build Number several times repeatedly until Developer Mode appears
@@ -123,6 +157,7 @@ dd if=/dev/block/platform/msm_sdcc.1/by-name/param    of=param.img
 ```
 
 ### other backup ###
+
 ```
 # credit http://android.stackexchange.com/a/28315
 
@@ -223,7 +258,7 @@ Quick and Easy
 
 ##### linux #####
 
-# THIS FAILS
+* NB: THIS FAILS!
 
 ```
 # Open it to see the .tar.md5
