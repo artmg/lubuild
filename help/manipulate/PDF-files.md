@@ -67,9 +67,10 @@ check the libre software above to see if it can.
 * now print directly, or to a PDF if you want to extract that selection for later 
 * if you want multiple areas, just CTRL-Z to undo and select again 
 
-```
-### Copy image files out from PDF documents ##
 
+### Copy image files out from PDF documents
+
+```
 # requires poppler-utils
 sudo apt-get install poppler-utils
 
