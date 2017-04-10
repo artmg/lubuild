@@ -1,6 +1,12 @@
 
 _Consider moving out diagnostic and User sections_
 
+## Tips
+
+* Lubuntu
+	* ALT + LeftClick hold to drag windows if you can't see buttons
+* 
+
 ## Display Manager (login screen)
 
 ### Auto login
@@ -27,6 +33,17 @@ sudo gedit /etc/xdg/lubuntu/lxdm/lxdm.conf
 ### Auto Start 
 
 ```
+# Lubuntu stores it's per-user `Manual autostarted applications` 
+# as line entries in
+cat .config/lxsession/Lubuntu/autostart
+# to add one use 
+# cat >> ~/.config/lxsession/Lubuntu/autostart<<EOF
+#
+# to see system-wide autostart commands see
+cat /etc/xdg/lxsession/Lubuntu/autostart
+# and to add one use 
+# cat <<EOF | sudo tee -a /etc/xdg/lxsession/Lubuntu/autostart
+
 # XFCE & LXDE use .desktop files in
 # 
 ls ~/.config/autostart/
@@ -35,9 +52,25 @@ ls ~/Desktop/Autostart/
 # /etc/X11/gdm/PostLogin/Default
 
 # manual alternatives:
+# Lubuntu: Preferences / Default applications for LXSession / Autostart
 # Ubuntu: System / Preferences / Startup applications
 # Xubuntu: Applications / Settings / Session and Startup / Application Autostart
 ```
+
+#### Troubleshooting
+
+If you have issues with autostart...
+
+* check if there is a per-user file
+	* in some configurations this may OVERIDE the system file, rather than add to it
++ check $HOME/.xsession-logs
+	* contains details of where to find the log files
++ check out how autostart entries are executed [https://wiki.lxde.org/en/LXSession#autostart_configuration_file]
++ If the command/script is not in the PATH then qualify it
++ it is NOT a full interpreter so if you want, e.g. a delayed command use a script
+	* e.g. "sleep 30 && myprog" see [https://ubuntuforums.org/showthread.php?t=2024713]
++ see also [https://ubuntuforums.org/showthread.php?t=2182986]
+
 
 ### Switch DM
 
@@ -179,6 +212,32 @@ cd /usr/share/applications/
 sudo mv ~/.local/share/applications/myprog.desktop ./
 sudo chown --reference=defaults.list myprog.desktop
 # sudo chgrp --reference=defaults.list myprog.desktop
+```
+
+see also [https://lkubaski.wordpress.com/2012/06/29/adding-lxde-start-menu-and-desktop-shortcuts/]
+
+
+#### icon files
+
+Although you could specify an icon path in your desktop entry, 
+there are lots inside `/usr/share/icons` which are theme-able, 
+and a few more in `/usr/share/pixmaps` too. 
+
+
+#### run scripts
+
+Inside your desktop entry, to run a script, you could either have:
+
+```
+Exec=/bin/hello.sh
+Terminal=true
+```
+
+or
+
+```
+Exec=lxterminal -e "/bin/hello.sh"
+Terminal=false
 ```
 
 ### Create New ...
