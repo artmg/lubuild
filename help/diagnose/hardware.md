@@ -5,6 +5,7 @@
 This article is for help with general internal hardware components, including radios, etc
 
 See also:
+* [disks](https://github.com/artmg/lubuild/blob/master/help/diagnose/disks.md)
 * Monitor displays and Video graphics adaptors (GPU) [https://github.com/artmg/lubuild/blob/master/help/diagnose/video-display.md]
 * [Printers and Scanners](https://github.com/artmg/lubuild/blob/master/help/use/Print-and-scan.md)
 * software-level [Network troubleshooting](https://github.com/artmg/lubuild/blob/master/help/diagnose/network.md)
