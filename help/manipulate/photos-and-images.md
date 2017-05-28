@@ -8,8 +8,16 @@ See also:
     * For ripping, converting and metatagging films and songs
 * [https://github.com/artmg/lubuild/blob/master/help/manipulate/PDF-files.md]
 	* Portable Document Format (PDF) files originating from Adobe's specification
+	* extracting images from PDF files
+* [https://github.com/artmg/lubuild/blob/master/help/use/Office-documents.md]
+    * Office documents (like MS Office and other combination packages)
+    * Desktop Publishing (DTP) packages
+* [https://github.com/artmg/lubuild/blob/master/help/manipulate/plans-and-designs.md]
+	* Computer Aided Design programs
+	* 3D design, including space layout and rendering, and 2D design
 * [https://github.com/artmg/lubuild/blob/master/help/manipulate/miscellaneous-files.md]
 	* Other common types of document
+	* including email formats
 
 
 ## Viewing images
@@ -119,7 +127,7 @@ exiftool "-FileName<DateTimeOriginal" -d "%Y%m%d_%H%M%S.%%e" -directory=renamed 
 
 ## document recognition
 
-For interpreting the data stored in image files
+For interpreting the textual data (words) stored in image files
 
 ### Optical Character Recognition (OCR)
 
@@ -166,4 +174,45 @@ To generate QR codes consider:
 	- also supports Geo or Wifi Access protocol codes
 	* written in Java (so requires JRE runtime)
 * 
+
+## converting images to drawings
+
+### tracing
+
+Tracing is a way to convert bitmap (raster) images to vector images, 
+to manipulate the shapes themselves, rather than the way they have been rendered. You should consider using a raster graphics program, 
+like GIMP, to clean up or simplify the original image, 
+or to crop out parts not required.
+
+Inkscape has some useful tracing options, 
+see [https://inkscape.org/en/doc/tutorials/tracing/tutorial-tracing.en.html] 
+for an introduction to these. 
+
+However these are based on Potrace, which creates filled shapes. 
+In some circumstances this may be what you want, but in the case of images 
+that began as line drawings, a center-line trace may give you better results. 
+
+You can use command line **Autotrace** with it's **-centerline** option, 
+online services based on Autitrace, such as [http://online.rapidresizer.com/tracer.php], 
+or use the an Inkscape plugin that wraps AutoTrace using python-Pillow:
+
+[https://github.com/fablabnbg/inkscape-centerline-trace]
+
+* download the latest .deb [release](https://github.com/fablabnbg/inkscape-centerline-trace/releases)
+* restart Inkscape
+* look under menu option:
+	- Extensions -> Images -> Centerline Trace ...
+
+NB: Although AutoTrace is rather old (2002), the docs do point to 
+other comparable projects of the time [http://autotrace.sourceforge.net/] 
+as well as suggestions of how to work with fonts
+
+
+### posterising
+
+Changing colours, making photos look more like paintings or cartoons
+
+For more advanced options see online services such as:
+
+* (add candidate websites to list)
 

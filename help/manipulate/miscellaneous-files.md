@@ -1,14 +1,19 @@
 
 
 see also:
+
 * [https://github.com/artmg/lubuild/blob/master/help/use/Office-documents.md]
     * Office documents (like MS Office and other combination packages)
     * Desktop Publishing (DTP) packages
 * [https://github.com/artmg/lubuild/blob/master/help/manipulate/PDF-files.md]
 	* Portable Document Format (PDF) files originating from Adobe's specification
-* [https://github.com/artmg/lubuild/blob/master/help/manipulate/photos.md]
+	* extracting images from PDF files
+* [https://github.com/artmg/lubuild/blob/master/help/manipulate/photos-and-images.md]
 	* working with individual photos and creating videos from them
 	* also general image manipulation 
+* [https://github.com/artmg/lubuild/blob/master/help/manipulate/plans-and-designs.md]
+	* Computer Aided Design programs
+	* 3D design, including space layout and rendering, and 2D design
 * [https://github.com/artmg/lubuild/blob/master/help/manipulate/films-and-songs.md]
 * [https://github.com/artmg/lubuild/blob/master/help/manipulate/FreeCAD-plans-and-designs.md]
 * [https://github.com/artmg/lubuild/blob/master/help/manipulate/disk-recovery-and-forensics.md]
