@@ -6,9 +6,7 @@ see also:
 * [https://github.com/artmg/lubuild/blob/master/help/use/Office-documents.md]
     * Office documents (like MS Office and other combination packages)
     * Desktop Publishing (DTP) packages
-* [https://github.com/artmg/lubuild/blob/master/help/use/Office-documents.md]
-    * Office documents (like MS Office and other combination packages)
-    * Desktop Publishing (DTP) packages
+    * working with fonts in generic Office documents
 * [https://github.com/artmg/lubuild/blob/master/help/manipulate/plans-and-designs.md]
 	* Computer Aided Design programs
 	* 3D design, including space layout and rendering, and 2D design
@@ -25,6 +23,9 @@ also known as GNOME Evince, has capabilities including:
 
 * Fill in a Form (if Allowed by file)
 * handles other common book, scan and fax formats
+* show properties including embedded fonts
+	- although it may not properly support security features like copy protection
+
 
 The following are on the default list of Lubuild apps
 
@@ -176,6 +177,19 @@ for forensic, development or testing work...
 
 ## split pages
 
+
+
+## Working with Fonts
+
+The Evince Document viewer will allow you to see what fonts are embedded in PDF documents
+
+You can also use the command line **pdffonts** from poppler-utils. 
+
+To extract the fonts for local use, install **fontforge** from the ubuntu repos. 
+Note that many fonts are only the subset of letters used, so won't include every character. 
+For more on fontforge, see [http://designwithfontforge.com]
+
+For even more techniques see [https://stackoverflow.com/a/3489099]
 
 
 ## modify file properties ##

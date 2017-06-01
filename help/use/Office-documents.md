@@ -1,10 +1,24 @@
 
+
 This article covers using generic Office documents, including 
 word processing and spreadsheets. It assumes that you use the 
 LibreOffice applications on your linux builds.
 
 There is also a section on the related topic of 
 Desktop Publishing (DTP) software.
+
+see also:
+
+* [https://github.com/artmg/lubuild/blob/master/help/manipulate/PDF-files.md]
+	* Portable Document Format (PDF) files originating from Adobe's specification
+	* extracting images from PDF files
+	* working with fonts in PDFs
+* [https://github.com/artmg/lubuild/blob/master/help/manipulate/photos-and-images.md]
+	* working with individual photos and creating videos from them
+	* also general image manipulation 
+* [https://github.com/artmg/lubuild/blob/master/help/manipulate/miscellaneous-files.md]
+	* Other common types of document
+	* including email formats
 
 
 ## Interoperability
@@ -20,7 +34,7 @@ Google metric-equivalent fonts for Calibri and Cambrian
 
 These latter allow you to see documents made using these Microsoft proprietary fonts 
 with more or less the correct layout as you would if you had them installed.
-# credit [https://wiki.debian.org/SubstitutingCalibriAndCambriaFonts]
+credit [https://wiki.debian.org/SubstitutingCalibriAndCambriaFonts]
 
 The community is asking LibreOffice to install these by default in future 
 [https://bugs.launchpad.net/ubuntu/+source/libreoffice/+bug/1612114]
@@ -81,6 +95,9 @@ For testing around Font Embedding in ODF files, see also
 Note that, if you want to create a PDF with embedded fonts, you are likely to get 
 a more efficient (smaller) filesize if you export to PDF from LibreOffice than 
 if you use a PDF Print Driver such as those based on ghostscript. 
+
+For more about working with fonts in PDFs see 
+[https://github.com/artmg/lubuild/blob/master/help/manipulate/PDF-files.md]
 
 
 ### Apple Mac

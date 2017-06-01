@@ -5,9 +5,11 @@ see also:
 * [https://github.com/artmg/lubuild/blob/master/help/use/Office-documents.md]
     * Office documents (like MS Office and other combination packages)
     * Desktop Publishing (DTP) packages
+    * working with fonts in generic Office documents
 * [https://github.com/artmg/lubuild/blob/master/help/manipulate/PDF-files.md]
 	* Portable Document Format (PDF) files originating from Adobe's specification
 	* extracting images from PDF files
+	* working with fonts in PDFs
 * [https://github.com/artmg/lubuild/blob/master/help/manipulate/photos-and-images.md]
 	* working with individual photos and creating videos from them
 	* also general image manipulation 
