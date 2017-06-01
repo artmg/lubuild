@@ -97,64 +97,6 @@ A buggy BIOS can cause many different and subtle problems to Linux, ranging from
 
 You should also bear in mind that system or driver bug reports might get rejected if the BIOS has been superseded. For help with BIOS Upgrades see [[https://help.ubuntu.com/community/BIOSUpdate]], which includes links to using '''FreeDos over USB''' disk to run vendors' DOS-based BIOS update utility
 
-## Disks 
-
-see [[https://github.com/artmg/lubuild/blob/master/help/configure/Disks-and-layout.md]]
-
-### Low level disk check 
-
-```
-# start basic tests
-sudo smartctl --test=short /dev/sdX
-# check results after a while
-sudo smartctl -l selftest /dev/sdX
-
-sudo smartctl --test=long /dev/sdX
-
-sudo badblocks -v /dev/sdX
-# for destructive test -wsv  
-# can also store in file   -o ~/badblocks.txt
-# see https://wiki.archlinux.org/index.php/badblocks
-# you can exclude these badblocks from filesystems
-# sudo e2fsck -l ~/badblocks.txt /dev/sdX
-
-# low level erase  (move OUT to ???)
-# use hdparam to set secure-erase-password then erase
-# see http://askubuntu.com/a/498797
-
-# alternatively dd with ignore errors
-
-```
-
-### Fault-finding in USB Mass Storage devices
-
-If you plug in your USB drive and don't see it appear, how do you know what is wrong? 
-Perhaps it might help to understand the sequence of events. Plug in your drive and after a few seconds use `dmesg | tail` to see what happened. Here is a list of the modules and what they do / tell you...
-
-* usb 
-	- recognises new device
-	- outputs ID and other info
-	- if this fails, there may be an electrical connection issue
-		+ re-test this using `lsusb` 
-* usb-storage
-	- detects Mass Storage devices
-* scsi
-	- accepts devices detected by usb-storage
-	- recognises device
-	- if this fails, there may be an issues with the controller in your USB device 
-		- if so, after half a minute, you may see a usb **reset** message
-* sd
-	- attempts to attach scsi device (assigning /dev/sd**X**)
-	- identifies layout and device options (like write protect)
-	- at this point the devices should appear in `sudo fdisk -l`
-	- passes on to filesystem-type-specific drivers to automount
-	- if this fails, you might try to delete and recreate the partition(/s/-table) and test write and read to the device
-* myfstype
-	- each filesystem-type-specific driver reports what it found
-
-Bear in mind what is mentioned about flash drives as _consumables_ in [https://github.com/artmg/lubuild/blob/master/help/manipulate/flash-drives-and-SSDs.md], that they **do** break and you might be best off buying a new drive and simply binning the old one (perhaps phyiscally destroyed).
-
-
 ## Radios 
 
 see also [General Network troubleshooting](https://github.com/artmg/lubuild/blob/master/help/diagnose/network.md)

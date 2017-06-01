@@ -10,14 +10,16 @@ see also:
 	* reasoning sections separate from precise commands to manipulate
 	* specific examples like OpenElec
 	* will go out to [https://github.com/artmg/lubuild/blob/master/help/understand/disk-layout.md]
+* diagnosing other types of hardware issue
+	- [Hardware Troubleshooting](https://github.com/artmg/lubuild/blob/master/help/diagnose/hardware.md) 
 
 
 # Diagnose Disks
 
-## Diagnostics and Troubleshooting
+## General Troubleshooting
 
 
-For issues low-level issues see [Hardware Troubleshooting](https://github.com/artmg/lubuild/blob/master/help/diagnose/hardware.md) 
+The '''gnome-disks''' utility is a handy GUI for many simple diagnostics.
 
 If you are having trouble with an installed system, 
 see **boot-repair** for a powerful GUI designed to get it working again
@@ -25,12 +27,8 @@ see **boot-repair** for a powerful GUI designed to get it working again
 The rest of this section introduces useful commands for understanding 
 disks and other storage devices.
 
-### GUI
 
-The '''gnome-disks''' utility is a handy GUI for most diagnostics
-
-
-### Discover the attached devices
+## Discover the attached devices
 
 ```
 # see which partitions are currently in use and check how full
@@ -50,7 +48,7 @@ ls -l /dev/disk/by-label/
 lsblk -o name,mountpoint,label,size
 ```
 
-### Simple checks
+## Simple checks
 
 ```
 # provided the filesystem is UNMOUNTED, check it
@@ -65,20 +63,8 @@ reboot to a Live USB so they are not mounted.
 For help on disk and partition diagnostics see 
 http://www.howtogeek.com/howto/37659/the-beginners-guide-to-linux-disk-utilities/
 
-### ISOs
 
-```
-# If you have an ISO image and want to know if it is bootable...
-# display the disk label and whether the Bootable flag is set
-file MyImage.ISO
-# for much more comprehensive info
-isoinfo -d -i MyImage.ISO
-# credit [http://askubuntu.com/a/31903]
-
-```
-### In from lubuild/wiki/Troubleshooting/
-
-#### Capcity - disk full?
+## Capacity - disk full?
 
 ```
 # check available space on mounted disks
@@ -90,27 +76,16 @@ du --max-depth=1 -ah
 du --max-depth=1 -a | sort -nr
 # human readable sort
 du --max-depth=1 -ah | sort -hr | head
+```
 
+### What's using my space?
+
+```
 ### GUI to identify space hogs (esp in home folders) ###
 baobab &
 ```
 
-#### IN from wiki
-##### Out to Diagnostics 
-
-```
-# Is swap encrypted?
-#
-sudo blkid | grep swap
-#
-# e.g. 
-# /dev/mapper/cryptswap1: UUID="95f3d64d-6c46-411f-92f7-867e92991fd0" TYPE="swap" 
-#
-# if it shows standard /dev/sdxN then it's not
-#
-```
-
-#### Specifics to clean up 
+### Specifics to clean up 
 
 ```
 ### Clean up root ###
@@ -159,7 +134,39 @@ sudo apt-get install bleachbit
 
 ```
 
-#### SMART tests 
+## Specific disk configurations
+
+### ISOs
+
+```
+# If you have an ISO image and want to know if it is bootable...
+# display the disk label and whether the Bootable flag is set
+file MyImage.ISO
+# for much more comprehensive info
+isoinfo -d -i MyImage.ISO
+# credit [http://askubuntu.com/a/31903]
+```
+
+### Swap
+
+```
+# Is swap encrypted?
+#
+sudo blkid | grep swap
+#
+# e.g. 
+# /dev/mapper/cryptswap1: UUID="95f3d64d-6c46-411f-92f7-867e92991fd0" TYPE="swap" 
+#
+# if it shows standard /dev/sdxN then it's not
+#
+```
+
+## Low level hardware diagnostics
+
+For diagnosing issues affecting other types of hardware see [Hardware Troubleshooting](https://github.com/artmg/lubuild/blob/master/help/diagnose/hardware.md) 
+
+
+### SMART tests 
 
 ```
 gnome-disks
@@ -177,10 +184,60 @@ sudo smartctl -i /dev/sdX
 # check the health
 sudo smartctl -H /dev/sdX
 # if you have issues refer to http://blog.shadypixel.com/monitoring-hard-drive-health-on-linux-with-smartmontools/
+
+
+# start basic tests
+sudo smartctl --test=short /dev/sdX
+# check results after a while
+sudo smartctl -l selftest /dev/sdX
+
+sudo smartctl --test=long /dev/sdX
+
+sudo badblocks -v /dev/sdX
+# for destructive test -wsv  
+# can also store in file   -o ~/badblocks.txt
+# see https://wiki.archlinux.org/index.php/badblocks
+# you can exclude these badblocks from filesystems
+# sudo e2fsck -l ~/badblocks.txt /dev/sdX
+
+# low level erase  (move OUT to ???)
+# use hdparam to set secure-erase-password then erase
+# see http://askubuntu.com/a/498797
+
+# alternatively dd with ignore errors
+
 ```
 
+### Fault-finding in USB Mass Storage devices
 
-### Speed and Capacity tests
+If you plug in your USB drive and don't see it appear, how do you know what is wrong? 
+Perhaps it might help to understand the sequence of events. Plug in your drive and after a few seconds use `dmesg | tail` to see what happened. Here is a list of the modules and what they do / tell you...
+
+* usb 
+	- recognises new device
+	- outputs ID and other info
+	- if this fails, there may be an electrical connection issue
+		+ re-test this using `lsusb` 
+* usb-storage
+	- detects Mass Storage devices
+* scsi
+	- accepts devices detected by usb-storage
+	- recognises device
+	- if this fails, there may be an issues with the controller in your USB device 
+		- if so, after half a minute, you may see a usb **reset** message
+* sd
+	- attempts to attach scsi device (assigning /dev/sd**X**)
+	- identifies layout and device options (like write protect)
+	- at this point the devices should appear in `sudo fdisk -l`
+	- passes on to filesystem-type-specific drivers to automount
+	- if this fails, you might try to delete and recreate the partition(/s/-table) and test write and read to the device
+* myfstype
+	- each filesystem-type-specific driver reports what it found
+
+Bear in mind what is mentioned about flash drives as _consumables_ in [https://github.com/artmg/lubuild/blob/master/help/manipulate/flash-drives-and-SSDs.md], that they **do** break and you might be best off buying a new drive and simply binning the old one (perhaps phyiscally destroyed).
+
+
+## Speed and Capacity tests
 
 Capacity tests may be used when you are not sure if you can still rely
 on the quoted volume of a storage device (either because it is worn out
@@ -193,7 +250,7 @@ general computer use)? If you will format the drive in a particular way,
 you should do this before you do your tests, if you want them to be
 representative.
 
-#### built in
+### built in
 
 You can test Speed using the gnome-disk utility (Start Menu /
 Preferences / Disks) to Benchmark the drive speed. Choose the partition
@@ -206,7 +263,7 @@ At the time of writing the Disk utility reportedly does not take into
 consideration the partition alignment considered critical to flash drive
 performance.
 
-#### dd
+### dd
 
 dd is a built-in command which very quickly gives you indicative
 sequential read or write statistics, and can be used for a capacity
@@ -227,21 +284,21 @@ df -BM
 df -BMB
 ```
 
-#### under Wine
+### under Wine
 
 The very popular Windows util H2testw is reported to work under Wine.
 
 Not sure if the same goes for Crystal Disk Mark, ChkFlsh or AS SSD. Atto
 and IoMeter are others commonly used under Windows.
 
-#### Bonnie++
+### Bonnie++
 
 [Bonnie++](https://en.wikipedia.org/wiki/Bonnie%2B%2B) is a tool which
 you may see being recommended by many people, despite its age. For an
 intro see
 [1](http://www.jamescoyle.net/how-to/599-benchmark-disk-io-with-dd-and-bonnie)
 
-#### fio
+### fio
 
 FIO seems to be the choice of many pros (and vendors). It is capable of
 performing very precisely defined tests. The downside to this power and
@@ -257,7 +314,7 @@ servers](https://www.linux.com/learn/tutorials/442451-inspecting-disk-io-perform
     * fio-vizualiszer (PyQt) https://communities.intel.com/community/itpeernetwork/blog/2015/03/27/how-to-benchmark-ssds-with-fio-visualizer
     * gfio (gtk)
 
-#### IOzone
+### IOzone
 
 [IOzone](https://en.wikipedia.org/wiki/IOzone) is what the [Ubuntu
 Kernel
