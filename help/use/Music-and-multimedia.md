@@ -1,6 +1,7 @@
 
 This page is all about **Using** Music and Other Multimedia files (such as Video) 
-including some bash commands for generating playlists
+including some bash commands for generating playlists 
+and how to define what multimedia keys do. 
 
 NB: this file also includes details of Android Applications used for:
 * rendering media including audio
@@ -75,6 +76,7 @@ For current installs see [https://github.com/artmg/lubuild/blob/master/app-insta
         * sudo apt-get update && sudo apt-get install rhythmbox-plugin-coverart-browser
     * can preset library using gsettings set org/gnome/rhythmbox/rhythmdb locations or similar
     * https://help.ubuntu.com/community/Rhythmbox#Multiple_Library_Directories
+
 
 ## playlist creation
 
@@ -251,20 +253,110 @@ Music Player Clients (MPC), often referred to as MPD clients, include:
 For an exhaustive (though rather old) list of MPC clients see [http://mpd.wikia.com/wiki/Clients]
 
 
+## Interface tweaks
+
+### Multimedia keys in Lubuntu Openbox
+
+for other OpenBox settings see 
+[https://github.com/artmg/lubuild/blob/master/user-config.bash]
+
+```
+# [Simple step by step](http://askubuntu.com/q/459760)
+# [full detail from ArchWiki](https://wiki.archlinux.org/index.php/Openbox#Multimedia_keys)
+# consider **obkey** package if you want a GUI
+cp $HOME/.config/openbox/lubuntu-rc.xml{,.`date +%y%m%d.%H%M%S`}  # backup original config
+leafpad $HOME/.config/openbox/lubuntu-rc.xml
+openbox --reconfigure
+```
+
+```
+    <!-- Keybinding for Home Page button  ****    THREE NEW KEY BINDINGS  -->
+    <keybind key="XF86HomePage">
+      <action name="Execute">
+<!--        <command>lxsession-default browser</command> -->
+        <command>x-www-browser</command>
+      </action>
+    </keybind>
+    <!-- Keybinding for Music button [SIC]-->
+    <keybind key="XF86Tools">
+      <action name="Execute">
+        <command>kodi</command>
+      </action>
+    </keybind>
+    <!-- Launch logout on Windows / Super - Esc   (Power Button on the keyboard doesn't send any codes) -->
+    <keybind key="W-Escape">
+      <action name="Execute">
+        <command>lxsession-default quit</command>
+      </action>
+    </keybind>
+    <!-- ******************************     END OF NEW KEY BINDINGS  -->
+```
+
+### Themes for darkened rooms
+
+#### dark skin
+
+Skins for using in darkened room without screen glare
+
+* Lubuntu
+    * GTK+ widget (theme) pack
+        * [Mona Dark](http://gnome-look.org/content/show.php/Mona+1.0+-+Dark+and+blue+GTK+theme?content=168447) into ~/.themes then Customize Look & Feel
+        * 
+    * QT widget theme
+        * ?
+    * Icon themes?
+        * .e.g. Dalisha
+* Chrome
+    * Morpheon Dark
+* Firefox
+    * FT Deep Dark (+ Stylish addon to handle website issues ?)
+
+##### clock colour on dark theme
+
+* Panel Settings / Appearance / Font / Custom Colour
+* choose a value with suitable contrast
+
+or change        Global {      fontcolor=#c0d0ff
+
+leafpad $HOME/.config/lxpanel/Lubuntu/panels/panel
+openbox --reconfigure
+
+
+
 ## remote control ###
 
-### candidates ####
+For using Game Controllers like a Wiimote or PS3 controller 
+on PC hardware or Embedded devices see 
+[https://github.com/artmg/MuGammaPi/wiki/Ready-made-input-devices]
 
 
-Android Apps:
-* KODI server
-	* Kore (official KODI remote)
-		* configure Kodi - http://forum.kodi.tv/showthread.php?tid=221700
+### Kodi remotes
+
+#### Kore (official KODI remote)
+
+* enable Kore remote
+    * configure Kodi - [http://forum.kodi.tv/showthread.php?tid=221700]
+    * Settings → Services → Remote control → Allow programs on other systems to control Kodi → ON
+    * Settings → Services → Webserver → Allow control of Kodi via HTTP → ON
+    * Settings → Services → Zeroconf → Announce these services to other systems via Zeroconf → ON
+
+#### other
+
+* Android Apps:
 	* Yatse
 		* can purchase extra features
 	* "XBMC Remote" fr.beungoud.xbmcremote
 	* See also - [http://kodi.wiki/view/Smartphone/tablet_remotes]
     * for wider ideas on how to remote control see [http://www.averagemanvsraspberrypi.com/2015/05/7-remote-control-options-for-your.html] 
+
+* enable Home Remote Control
+    * sudo apt-get install -y openssh-server xdotool && sudo service ssh restart
+    * http://tuxdiary.com/2014/12/17/home-remote-control/
+
+
+### other candidates ####
+
+
 * SSHD +
 	* Home Remote Control 
 		* Uses sshd for mouse / keyboard / file access / stats
@@ -301,8 +393,6 @@ Android Apps:
     * MultiRemote ?
 
 Feed back into:
-
-* [MuGammaPi/Media Centre]
 
 
 ### Not applicable ####

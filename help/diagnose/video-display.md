@@ -43,6 +43,31 @@ sudo apt-get install mesa-utils
 glxinfo 
 ```
 
+## Control Monitors
+
+### How to control HDMI screen brightness from PC
+
+#### Hardware methods
+
+* HDMI-CEC
+* USB HID
+* DDC/CI (e.g. ddccontrol package) which can work via VGA if cables and devices are compliant
+
+#### Software methods
+
+xrandr can control the brightness of displays. 
+Apparently this is by changing the gamma, rather than actually adjusting the backlight intensity.
+
+e.g. 
+ xrandr --output HDMI1 --brightness 0.5
+
+To assign this to OpenBox hotkeys, try the script: xrandr-adjust-brightness (up / down) - [http://crunchbang.org/forums/viewtopic.php?id=39314]
+
+NB: if you have issues controlling integral LCD on a particular vendor's laptop, 
+try the grub option acpi_backlight=vendor e.g. GRUB_CMDLINE_LINUX_DEFAULT="quiet splash acpi_backlight=vendor" - alternatively video.use_native_backlight=1
+
+
+
 
 
 ## Choosing Video Drivers
@@ -173,19 +198,20 @@ sudo reboot
 
 # see also the archive of proprietary NVidia linux drivers [http://www.nvidia.com/object/unix.html]
 
-
-
 ```
 
 
 
 #### Phoronix Test Suite
 
+```
 sudo apt-get install phoronix-test-suite
 #run benchmarks ...
+```
 
 
 ### AMD Catalyst driver install 
+
 ```
 #### manual install 
 # When trying to install the latest Radeon HD drivers from 
@@ -262,6 +288,7 @@ X will freeze immediately, mouse is blocked, CTRL-ALT-F1 does not respond, only 
 
 ### gather diags 
 
+```
 Set up SSH using 
 https://github.com/artmg/lubuild/wiki/Networked-Services#SSH__remote_Secure_SHell
 
@@ -309,4 +336,5 @@ The forum for logging issues with NVidia is [https://devtalk.nvidia.com/default/
 * how to gather logs locally or via SSH
 * how to describe issues when logging faults
 
+```
 

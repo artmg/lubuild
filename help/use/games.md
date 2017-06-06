@@ -1,5 +1,6 @@
 
 see also:
+
 * [https://github.com/artmg/lubuild/blob/master/help/configure/VM-GPU-Passthrough.md]
     * How to play Windows-only games with your powerful graphics card
 * [https://github.com/artmg/lubuild/blob/master/help/diagnose/video-display.md]
@@ -17,6 +18,14 @@ http://steamcommunity.com/groups/steamuniverse/discussions/1/648814395741989999/
 
 Use Debian Installer method via USB 
 ensure there is an alternative to "Automated Install" to avoid wasting the entire HDD
+
+### Game controllers
+
+Many games use the Unity3D engine, which includes Rewired to support controllers 
+[http://guavaman.com/projects/rewired/docs/SupportedControllers.html] 
+but if you still have issues using Game Controllers like a Wiimote or PS3 controller see 
+[https://github.com/artmg/MuGammaPi/wiki/Ready-made-input-devices]
+
 
 ### Stream to Pi 
 
