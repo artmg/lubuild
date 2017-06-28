@@ -61,49 +61,6 @@ Version: 0.14.3702 (Git)
 Branch: releases/FreeCAD-0-14
 ```
 
-## Import / Export
-
-The [FreeCAD-supported formats](http://www.freecadweb.org/wiki/index.php?title=FreeCAD_Howto_Import_Export) 
-shows what file types you can open and write to.
-
-If you want a better understanding of the industry-prevelence of formats, 
-see [https://www.quora.com/What-is-the-most-popular-file-format-used-for-sharing-CAD-files]
-
-To validate the results of any export, you may consider re-importing from that same file 
-to check the fidelity of objects saved.
-
-In initial experiments with 3d building projects, 
-STEP maintained the independence of named objects in the drawing, 
-whereas IGES compacted all objects into a single one, making it probably the least useful. 
-
-See also SweetHome3D section below for import and export options with FreeCAD.
-
-
-### Add IFC support
-
-IFC (Industry Foundation Classes) is an ISO standard that builds on STEP (and therefore on IGES)
-
-* Before using the instructions below, check whether the IfcOpenShell package has made it into the freecad extras PPA
-* Check FreeCAD about version for Python version and bitsize
-* download appropriate item from [http://ifcopenshell.org/python.html]
-* "Place the extracted archive in the site-packages folder of your Python distribution"
-    * 
-    * python -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())"
-    * # credit - http://stackoverflow.com/a/122340
-    * sudo unzip ~/Downloads/ifcopenshell-python*.zip -d /usr/lib/python2.7/dist-packages
-    * # test
-    * python -c "import ifcopenshell"
-* For instructions on compiling from source see Yorik's notes https://github.com/yorikvanhavre/IfcOpenShell
-    * or IfcOpenShell original https://github.com/IfcOpenShell/IfcOpenShell
-    * 
-
-
-### Add DGW support
-
-TO export to the DGW (Autodesk AutoCAD) format, you have to use the ODA free-to-download (not FOSS) convertor package 
-from [https://www.opendesign.com/guestfiles/TeighaFileConverter] e.g. [https://download.opendesign.com/guestfiles/TeighaFileConverter/TeighaFileConverter_QT5_lnxX64_4.7dll.deb]
-
-
 ## Start
 
 * View - Architecture
@@ -175,9 +132,82 @@ FreeCAD How to:
 * http://forum.freecadweb.org/viewtopic.php?f=3&t=7328
 * http://www.metalshaperman.com/?p=2028
 
-#### other features ####
+## Import / Export
+
+The [FreeCAD-supported formats](http://www.freecadweb.org/wiki/index.php?title=FreeCAD_Howto_Import_Export) 
+shows what file types you can open and write to.
+
+If you want a better understanding of the industry-prevelence of formats, 
+see [https://www.quora.com/What-is-the-most-popular-file-format-used-for-sharing-CAD-files]
+
+To validate the results of any export, you may consider re-importing from that same file 
+to check the fidelity of objects saved.
+
+In initial experiments with 3d building projects, 
+STEP maintained the independence of named objects in the drawing, 
+whereas IGES compacted all objects into a single one, making it probably the least useful. 
+
+See also SweetHome3D section below for import and export options with FreeCAD.
+
+
+### Add IFC support
+
+IFC (Industry Foundation Classes) is an ISO standard that builds on STEP (and therefore on IGES)
+
+* Before using the instructions below, check whether the IfcOpenShell package has made it into the freecad extras PPA
+* Check FreeCAD about version for Python version and bitsize
+* download appropriate item from [http://ifcopenshell.org/python.html]
+* "Place the extracted archive in the site-packages folder of your Python distribution"
+    * 
+    * python -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())"
+    * # credit - http://stackoverflow.com/a/122340
+    * sudo unzip ~/Downloads/ifcopenshell-python*.zip -d /usr/lib/python2.7/dist-packages
+    * # test
+    * python -c "import ifcopenshell"
+* For instructions on compiling from source see Yorik's notes https://github.com/yorikvanhavre/IfcOpenShell
+    * or IfcOpenShell original https://github.com/IfcOpenShell/IfcOpenShell
+    * 
+
+
+### Add DGW support
+
+TO export to the DGW (Autodesk AutoCAD) format, you have to use the ODA free-to-download (not FOSS) convertor package 
+from [https://www.opendesign.com/guestfiles/TeighaFileConverter] e.g. [https://download.opendesign.com/guestfiles/TeighaFileConverter/TeighaFileConverter_QT5_lnxX64_4.7dll.deb]
+
+
+### STL meshes
+
+If you have an STL (STereoLithography) file it is a mesh, 
+a combination of triangles rather than a parametric solid. 
+To work on it in FreeCAD you should:
+
+* Import from STL
+* (optionally Mesh / Analyse / Evaluate and Repair - All the Above - Analyse)
+* Part / Create Shape from Mesh
+* Part / Refine Shape
+* Part / Convert to Solid
+
+see [https://www.freecadweb.org/wiki/Import_from_STL_or_OBJ]
+
+Still, this is not exactly a parametric solid that you can manipulate easily, 
+and until the Reverse Engineering Workbench is ready, 
+you may have to reconstruct the part yourself.
+
+Start by creating cross sections through the solid for what you want to model
+
+* Part / Cross section
+
+Then you can use Part Design to create your sketch by eye, 
+then Pad to extrude, and Pocket to remove blocks
+
+[https://www.freecadweb.org/wiki/PartDesign_Workbench]
+
+
+
+## other features
 
 Arch Survey (quick dimension entry) - http://forum.freecadweb.org/viewtopic.php?f=9&t=5659
+
 
 
 # SweetHome3D
