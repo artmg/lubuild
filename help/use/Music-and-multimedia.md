@@ -77,6 +77,31 @@ For current installs see [https://github.com/artmg/lubuild/blob/master/app-insta
     * can preset library using gsettings set org/gnome/rhythmbox/rhythmdb locations or similar
     * https://help.ubuntu.com/community/Rhythmbox#Multiple_Library_Directories
 
+### FOSS Android music players
+
+Although this is mainly about (L)ubuntu apps, it also touches on various Android clients 
+for rendering or controlling music and multimedia (see relevant sections below). 
+Just for good measure, then, here are some Free and Open Source (FOSS) Music Players available 
+on android devices:
+
+* VLC (see above)
+* Vanilla Music
+	- reasonably popular and mature
+	- plugins or addons have been developed
+* Shuttle
+	- previously a richly functional freemium player
+	- now the dev has open sourced the project to encourage contribs
+* Timber
+	- maybe not so mature or feature rich? 
+	- based on Google Material Design concepts
+	- can folder mode access SD card?
+* Pretty Good Music Player
+	- simple and folder based
+	- does it support WMA files?
+* Apollo
+	- was a rebuild of Android stock Music player
+
+
 
 ## playlist creation
 
@@ -240,9 +265,7 @@ Music Player Clients (MPC), often referred to as MPD clients, include:
     * QMpdClient
     * 
 * Android
-    * MPDroid
-        * slightly quirky setup for connecting to the server, but a good reliable contender for controlling music
-        * does not have a simple way to switch between multiple MPD servers
+    * **MPDroid** (see below)
     * Sound @ Home ?
     * RuneAudio ?
     * MPD Remote ?
@@ -251,6 +274,29 @@ Music Player Clients (MPC), often referred to as MPD clients, include:
 **upmpdcli** is a special case, as it is client for MPD that exposes itself as a UPnP interface to DNLA control points
 
 For an exhaustive (though rather old) list of MPC clients see [http://mpd.wikia.com/wiki/Clients]
+
+### MPDroid
+
+MPDroid has become our choice of Android MPD client:
+
+* directly available for free from Play Store
+* Open Source
+	- little recent development, but already has decent functionality
+	- for diagnosis see historic issues [https://github.com/abarisain/dmix/issues]
+* good reliable contender for controlling music
+
+It's setup for connecting to the server is slightly quirky, 
+and it does not have a simple way to switch between multiple MPD servers 
+unless they are different Wifi Access Points
+
+If you wish to use Media Buttons, or a Bluetooth Remote to Play, Pause
+or Skip then you will need to check Notification Mode in the main player menu. 
+This will put song details and controls in the Android notification area 
+and it enables buttons outside the main player UI.
+
+For solutions to Cover Art browsing from your MPD server 
+and tips on improving metadata tagging 
+see [https://github.com/artmg/MuGammaPi/wiki/Volumio-and-MPD]
 
 
 ## Interface tweaks
