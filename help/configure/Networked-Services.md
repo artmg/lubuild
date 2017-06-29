@@ -1,11 +1,21 @@
 # Networked Services
 
 see also:
+
 * [General Network troubleshooting](https://github.com/artmg/lubuild/blob/master/help/diagnose/network.md)
-* If you're trying to make a direct connection to a single device, see [Configure inteface](https://github.com/artmg/lubuild/blob/master/help/configure/network-interface.md)
-* If you want to find out more about what is on your local network, see Discovery / Services in Network Diagnostics [https://github.com/artmg/lubuild/blob/master/help/diagnose/network.md#Discovery] 
-* For issues turning radios on and off, see [Hardware Troubleshooting](https://github.com/artmg/lubuild/blob/master/help/diagnose/hardware.md) 
-* Samba server [https://github.com/artmg/lubuild/blob/master/help/configure/network-shares-with-Samba.md]
+	* general Network Diagnostics
+	* If you want to find out more about what is on your local network
+		* see Discovery / Services in  [https://github.com/artmg/lubuild/blob/master/help/diagnose/network.md#Discovery] 
+* [Configure inteface](https://github.com/artmg/lubuild/blob/master/help/configure/network-interface.md)
+	* If you're trying to make a direct connection to a single device
+	* useful when configuring new network equipment
+* [Hardware Troubleshooting](https://github.com/artmg/lubuild/blob/master/help/diagnose/hardware.md) 
+	* For issues turning radios on and off
+* [Samba server](https://github.com/artmg/lubuild/blob/master/help/configure/network-shares-with-Samba.md)
+	* Sharing folders Windows-style
+* [Network Appliances](https://github.com/artmg/lubuild/blob/master/help/configure/network-appliance-firmware.md)
+	* dedicated devices running specialist software
+
 
 
 ## Autodiscovery
@@ -61,7 +71,7 @@ ln -s -T /home/shared /home/username/Documents/Pictures
 
 ; Samba
 : Heavier | Windows compatible | ??Secure?? | common | simple from client
-; STFP (SSH File Transfer Protocol)
+; SFTP (SSH File Transfer Protocol)
 : quick and easy if SSH already set up 
 ; NFS
 : lightwight | can automount in fstab or avahi (https://wiki.archlinux.org/index.php/avahi#NFS)
@@ -384,6 +394,7 @@ sudo mount -a
 The examples below use the 'default' choice of OpenSSH-Server.
 
 You should configure SSH to work ONLY with Certificates, to remove the risk of attacking passwords with brute-force, and this should render it reasonably secure, even when accessible from the public internet. If you wanted to go a step further you could use Port Knocking (see https://help.ubuntu.com/community/PortKnocking), but don't forget that obscurity is not a replacement for true security (see http://bsdly.blogspot.co.uk/2012/04/why-not-use-port-knocking.html).
+
 
 ### Private and Public Keys
 
