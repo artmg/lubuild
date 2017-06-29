@@ -118,7 +118,9 @@ sudo apt-get install -y udisks2 mtools
 echo mtools_skip_check=1 > ~/.mtoolsrc
 
 # now swap the file extension as the image is unzipped directly to the device
-unzip -p $IMAGE_FILENAME ${IMAGE_FILENAME%.*}.img | sudo dd bs=4M of=/dev/${MEDIA_DEVICE:0:3}
+unzip -p $IMAGE_FILENAME ${IMAGE_FILENAME%.*}.img | sudo dd bs=4M status=progress of=/dev/${MEDIA_DEVICE:0:3}
+# if you have a .img.xz then use...
+# xzcat $IMAGE_FILENAME ${IMAGE_FILENAME%.*}.img | sudo dd bs=4M status=progress of=/dev/${MEDIA_DEVICE:0:3}
 
 # flush cache before re-insertion
 sync 
@@ -134,7 +136,8 @@ echo please eject and re-insert media
 
 # Setting name on both partitions so Ext4 shows up on booted Pi and FAT shows up when inserted on other system
 # Rename 1 FAT and 2 Ext4 
-sudo mlabel  -i /dev/${MEDIA_DEVICE:0:3}1 ::${MEDIA_LABEL:0:8}\_OS
+SHORT_LABEL=${MEDIA_LABEL:0:8}
+sudo mlabel  -i /dev/${MEDIA_DEVICE:0:3}1 ::${SHORT_LABEL^^}\_OS
 sudo e2label    /dev/${MEDIA_DEVICE:0:3}2 $MEDIA_LABEL\_disk
 
 # display labels
@@ -238,6 +241,7 @@ your FAT partition covers the whole disk (no small empty slice at the
 beginning) or reboot
 
 ### only check systems on USB
+
 ```
 # if you are installing to a 'portable'
 # usb drive and want to ignore 'local' drives...
@@ -500,13 +504,14 @@ to write to the MBR on the drive:
 <pre>syslinux -maf X:</pre>
 See ealier section for what to put in the boot file '''syslinux/txt.cfg'''
 
-credit &gt; [https://wiki.ubuntu.com/LiveUsbPendrivePersistent#Installing_Ubuntu_on_the_USB_drive https://wiki.ubuntu.com/LiveUsbPendrivePersistent#Installing_Ubuntu_on_the_USB_drive]
+credit [https://wiki.ubuntu.com/LiveUsbPendrivePersistent#Installing_Ubuntu_on_the_USB_drive]
 
 ==== ''OLD'' ====
 
 ''These instructions are from a reference below. However, since Ubuntu 10.10 these folders do not seem to be enough to boot successfully!''<br />''Looking at differences in the distros, there is now a file''
 
-<pre>boot/grub/loopback.cfg</pre>
+```
+boot/grub/loopback.cfg</pre>
 <br />''so probably need to merge the following in too (not version with brackets):''
 
 <pre>boot</pre>
@@ -523,13 +528,110 @@ MENU LABEL Ubuntu Persistent
  LINUX /casper/vmlinuz
  INITRD /casper/initrd.lz
  APPEND preseed/file=preseed/ubuntu.seed boot=casper persistent root=/dev/ram rw splash --</pre>
+```
+
 === Issues ===
 
-This may give you issues with the limited size of casper-rw file available for persisting changes<br /><br />#===regional settings===<br /><br /># TIMEZONE ###<br />#<br /># credit &gt; http://serverfault.com/questions/84521/automate-dpkg-reconfigure-tzdata<br />sudo echo &quot;Europe/London&quot; | sudo tee /etc/timezone<br />sudo dpkg-reconfigure -f noninteractive tzdata<br /><br /># DEPRECATED ##################################<br />#<br /># no longer using these as the boot menu can choose language &amp; locale<br />#<br />##sudo echo LANG=&quot;en_GB.UTF-8&quot; | sudo tee /etc/default/locale<br />##sudo dpkg-reconfigure -f noninteractive locales<br />#<br />##sudo update-locale LANG=en_GB.UTF-8<br />#<br />## credit &gt; https://help.ubuntu.com/community/EnvironmentVariables<br />##sudo gedit /etc/environment<br />#<br />###############################################<br /><br /><br />#===error during update===<br /># ' update-initramfs: <br /># ' cp: cannot stat `/vmlinuz': No such file or directory<br /># credit &gt; https://bugs.launchpad.net/ubuntu/+source/usb-creator/+bug/557023/comments/3<br />sudo cp /cdrom/casper/vmlinuz /boot/vmlinuz-2.6.32-21-generic<br /><br /><br /><br />==repair from live usb after windows reinstalled==<br /><br />credit &gt; https://help.ubuntu.com/community/RecoveringUbuntuAfterInstallingWindows<br /><br />Use file manager to mount and view the linux root partition<br /><br /># run Terminal<br />mount | tail -1<br /># to see the drive's UUID<br /><br />cd /media/ # &lt;press tab to auto complete uuid&gt;<br />cat ./boot/grub/grub.cfg<br /># to make sure the file exists<br /><br /># reinstall GRUB to the first hard drive (or change sda)<br /><br />sudo grub-install --root-directory=. /dev/sda<br /><br /># you should see ...<br />#<br /># Installation finished. No error reported.<br />#<br /># If you get BIOS warnings try adding option   --recheck<br /><br /><br />===Build multi-OS boot utility live USB===<br /><br />single usb drive or sd card containing:<br />* ubuntu<br />* portableapps<br />* wallet.copy<br />* media.IN<br />* ubcd (Ultimate Boot CD)<br /><br />This latter is the base for a whole host of utils including DOS<br />and uses syslinux menus<br /><br />Download UBCD iso and extract with 7zip<br />[UBCD | http://www.ultimatebootcd.com/download.html]<br /><br />Use memory stick instructions from [Customizing UBCD | http://www.ultimatebootcd.com/customize.html]<br />to mbr &amp; syslinux the LiveUSB and copy the full Ultimate Boot CD over<br /><br />Then add the ubuntu distro to usb and syslinux menu<br />[Ubuntu 9.10, Syslinux, UBCD 5 : 3 Step How-To Guide <br />| http://www.ultimatebootcd.com/forums/viewtopic.php?f=7&amp;t=2259]<br /><br />help &gt; [syslinux | http://syslinux.zytor.com/wiki/index.php/SYSLINUX]<br /><br />Alternative GUI util to combine multiple ISOs [MultiBootISOs | http://www.pendrivelinux.com/boot-multiple-iso-from-usb-multiboot-usb/]<br /><br /><br />===Trackpoint makes mouse drift===<br /><br /># Possible solutions to stop trackpoint making your mouse cursor drift<br />#<br />synclient GuestMouseOff=1<br />#<br /># or edit the Xorg.cfg file<br /># <br /># help &gt; https://help.ubuntu.com/community/SynapticsTouchpad
+```
+# This may give you issues with the limited size of casper-rw file available for persisting changes
+
+#===regional settings===
+
+# TIMEZONE ###
+# credit [http://serverfault.com/questions/84521/automate-dpkg-reconfigure-tzdata]
+sudo echo "Europe/London" | sudo tee /etc/timezone
+sudo dpkg-reconfigure -f noninteractive tzdata
+
+# DEPRECATED ##################################
+#
+# no longer using these as the boot menu can choose language & locale
+#
+##sudo echo LANG="en_GB.UTF-8" | sudo tee /etc/default/locale
+##sudo dpkg-reconfigure -f noninteractive locales
+#
+##sudo update-locale LANG=en_GB.UTF-8
+#
+## credit [https://help.ubuntu.com/community/EnvironmentVariables]
+##sudo gedit /etc/environment
+#
+###############################################
+
+
+#===error during update===
+# ' update-initramfs: 
+# ' cp: cannot stat `/vmlinuz': No such file or directory
+# credit [https://bugs.launchpad.net/ubuntu/+source/usb-creator/+bug/557023/comments/3]
+sudo cp /cdrom/casper/vmlinuz /boot/vmlinuz-2.6.32-21-generic
+
+
+
+==repair from live usb after windows reinstalled==
+
+credit [https://help.ubuntu.com/community/RecoveringUbuntuAfterInstallingWindows]
+
+Use file manager to mount and view the linux root partition
+
+# run Terminal
+mount | tail -1
+# to see the drive's UUID
+
+cd /media/ # <press tab to auto complete uuid>
+cat ./boot/grub/grub.cfg
+# to make sure the file exists
+
+# reinstall GRUB to the first hard drive (or change sda)
+
+sudo grub-install --root-directory=. /dev/sda
+
+# you should see ...
+#
+# Installation finished. No error reported.
+#
+# If you get BIOS warnings try adding option   --recheck
+
+
+===Build multi-OS boot utility live USB===
+
+single usb drive or sd card containing:
+* ubuntu
+* portableapps
+* wallet.copy
+* media.IN
+* ubcd (Ultimate Boot CD)
+
+This latter is the base for a whole host of utils including DOS
+and uses syslinux menus
+
+Download UBCD iso and extract with 7zip
+[UBCD | http://www.ultimatebootcd.com/download.html]
+
+Use memory stick instructions from [Customizing UBCD | http://www.ultimatebootcd.com/customize.html]
+to mbr &amp; syslinux the LiveUSB and copy the full Ultimate Boot CD over
+
+Then add the ubuntu distro to usb and syslinux menu
+[Ubuntu 9.10, Syslinux, UBCD 5 : 3 Step How-To Guide 
+| http://www.ultimatebootcd.com/forums/viewtopic.php?f=7&t=2259]
+
+help [syslinux | http://syslinux.zytor.com/wiki/index.php/SYSLINUX]
+
+Alternative GUI util to combine multiple ISOs [MultiBootISOs | http://www.pendrivelinux.com/boot-multiple-iso-from-usb-multiboot-usb/]
+
+
+===Trackpoint makes mouse drift===
+
+# Possible solutions to stop trackpoint making your mouse cursor drift
+#
+synclient GuestMouseOff=1
+#
+# or edit the Xorg.cfg file
+# 
+# help [https://help.ubuntu.com/community/SynapticsTouchpad]
+```
 
 == Live USB - to be filed ==
 
-<pre># deprecated, there is one in ubuntu distrib
+```
+# deprecated, there is one in ubuntu distrib
 ## Startup Disk Creator for making Ubuntu Live USBs
 #sudo apt-get install usb-creator
 #
@@ -539,9 +641,9 @@ Launch and run Update Manager to get and install latest updates
 #===error during update===
 # ' update-initramfs: 
 # ' cp: cannot stat `/vmlinuz': No such file or directory
-# credit &gt; https://bugs.launchpad.net/ubuntu/+source/usb-creator/+bug/557023/comments/3
-sudo cp /cdrom/casper/vmlinuz /boot/vmlinuz-2.6.32-21-generic</pre>
-<br /><br />
+# credit [https://bugs.launchpad.net/ubuntu/+source/usb-creator/+bug/557023/comments/3]
+sudo cp /cdrom/casper/vmlinuz /boot/vmlinuz-2.6.32-21-generic
+```
 
 
 === Issues ===
@@ -550,10 +652,11 @@ sudo cp /cdrom/casper/vmlinuz /boot/vmlinuz-2.6.32-21-generic</pre>
 
 Issue in 12.10 mounting other USB drives
 
-<pre>sudo mkdir /media/$USER
+```
+sudo mkdir /media/$USER
 sudo chown $USER.$USER /media/$USER
-# credit &gt; http://askubuntu.com/questions/215219/cant-open-a-separate-usbdrive-when-booting-from-a-liveusb-install-12-10</pre>
+# credit [http://askubuntu.com/questions/215219/cant-open-a-separate-usbdrive-when-booting-from-a-liveusb-install-12-10]
 if mount still not visible in Nautilus browse directly to folder
-
+```
 
 
