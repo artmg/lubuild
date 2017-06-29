@@ -446,6 +446,10 @@ EOF!
 # some of these last couple may be needed in other indexes below
 
 
+#### diagnosing indexing issues
+# see [https://bitbucket.org/medoc/recoll/wiki/ProblemSolvingData]
+
+
 #### set up multiple indexes for Removeable Media ####
 
 cd <my container root folder> ###### do this for each offline container you want to index
