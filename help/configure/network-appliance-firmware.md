@@ -535,6 +535,24 @@ other than to simply ship it elsewhere, for storage and further processing.
 For configuring and using the remote collection service, 
 see [https://github.com/artmg/lubuild/blob/master/help/configure/Networked-Services.md]
 
+###### ELK
+
+A suggested method:
+* set up an ELK stack remote logging server
+* add Softflowd on pfsense to feed netflow packet data 
+* the (remote) logstash server inserts into ElasticSearch
+* build a simple Kibana dashboard to track per-device usage, all usage, down vs. up, v4 vs v6, etc.
+
+Other suggestions:
+* install dnsmasq on the remote to cache dns lookups locally 
+	- reduces pfsense traffic, CPU and risk of crash
+* logstash filter only doing ip -> FQDN translations for IPv4 fields that match my internal LAN
+* tell Kibana that the netflow.in_bytes field was measured in bytes
+	- so that it would automatically convert to KB/MB/GB
+* custom index template so that my FQDN fields weren't analyzed
+* set up some graphs and tables to see total and individual usage
+	-(traffic from pfsense router to an internal machine == downloads, 
+	- and traffic from internal machines to my pfsense router == uploads)
 
 
 ### troubleshooting

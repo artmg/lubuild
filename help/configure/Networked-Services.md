@@ -283,9 +283,9 @@ sudo apt-get install -y nfs-kernel-server
 sudo mkdir -p /srv/exports/$NFS_EXPORT_NAME
 
 # check the mount has set the correct perms itself
-ls -la $NFS_EXPORT_PERMS /srv/exports/Libraries
+ls -la $NFS_EXPORT_PERMS /srv/exports/$NFS_EXPORT_NAME
 # otherwise
-sudo chown $NFS_EXPORT_PERMS /srv/exports/Libraries
+sudo chown $NFS_EXPORT_PERMS /srv/exports/$NFS_EXPORT_NAME
 
 ###### Bind the data into the nfs exports directory
 cat <<EOF | sudo tee -a /etc/fstab
@@ -742,10 +742,11 @@ sudo service minidlna restart
 
 see also 
 
-* []
+* ???
 	- avahi if needed (for DLNA and or SAMBA)
 	- album art
-* album art publishing
+* [https://github.com/artmg/MuGammaPi/wiki/Volumio-and-MPD]
+	- album art publishing
 * 
 
 #### Announce
@@ -812,15 +813,22 @@ sudo /etc/init.d/mpd restart
 
 
 
-## syslog
+## Monitoring and Alerting
+
+* Gathering event information from network devices
+* analysing and reporting
+* sending messages upon important events
+
 
 ### Architecture and Options
 
-* syslogd
-    * default system logging on ubuntu and many linux distros
-    * defaults to writing locally
 * rsyslogd
     * comes pre-installed on ubuntu and raspbian
+    * for further comparison see [http://askubuntu.com/a/55495]
+    * see also [logging in ubuntu](https://help.ubuntu.com/community/LinuxLogFiles)
+* syslogd
+    * previously the default system logging on ubuntu and many linux distros
+    * defaults to writing locally
 * syslog-ng
     * server
     * FOSS with added functionality on freemium model with Premium Edition available
@@ -828,11 +836,6 @@ sudo /etc/init.d/mpd restart
 * ELK (ElasticSearch, Logstash, Kibana) 
     * FOSS stack to collect, store, search and visualise logs
 * 
-
-see also:
-
-* logging in ubuntu [https://help.ubuntu.com/community/LinuxLogFiles]
-* [http://askubuntu.com/a/55495] for further comparison
 
 
 ### rsyslogd server
@@ -877,6 +880,29 @@ EOF!
 
 # consider log rotation - http://www.aelog.org/use-the-raspberry-pi-as-a-syslog-server-using-rsyslog/
 ```
+
+#### moving log folder
+
+You may choose to store your logs on a different volume, 
+especially if you have your main OS on a flash drive. 
+
+The basic steps are:
+
+* quiesce the logging services
+* copy any existing files
+* mount or link the new location
+
+* [example with mount](https://serverfault.com/questions/55984/how-can-i-move-var-log-directory)
+	* can you only mount a single destination per volume?
+* [eaxmple with symlink](https://askubuntu.com/questions/220358/how-to-change-location-where-logs-are-stored)
+	* multiple destinations per target volume
+	* any disadvantages?
+
+
+For suggestions of folders that can be sent to tmpfs (RAM disk) 
+to conserve Flash-based systems 
+see [http://www.zdnet.com/article/raspberry-pi-extending-the-life-of-the-sd-card/]
+
 
 ### rsyslog clients
 
