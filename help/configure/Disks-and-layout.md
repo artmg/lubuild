@@ -105,6 +105,8 @@ echo -n "Enter new label for Media : " && read MEDIA_LABEL
 ## if below you get error "not a multiple of sectors"
 # echo mtools_skip_check=1 >> ~/.mtoolsrc
 
+# ISSUE - sometimes the lsblk returns blank (e.g. after mkfs.ext4)
+ 
 # determine filesystem type then set display label accordingly
 case $(lsblk -o FSTYPE -n /dev/$MEDIA_DEVICE) in
     vfat)

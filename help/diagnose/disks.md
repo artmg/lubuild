@@ -10,6 +10,8 @@ see also:
 	* reasoning sections separate from precise commands to manipulate
 	* specific examples like OpenElec
 	* will go out to [https://github.com/artmg/lubuild/blob/master/help/understand/disk-layout.md]
+* issues that are specific to solid state / flash storage devices
+	* [https://github.com/artmg/lubuild/blob/master/help/manipulate/flash-drives-and-SSDs.md] 
 * diagnosing other types of hardware issue
 	- [Hardware Troubleshooting](https://github.com/artmg/lubuild/blob/master/help/diagnose/hardware.md) 
 
@@ -211,7 +213,9 @@ sudo badblocks -v /dev/sdX
 ### Fault-finding in USB Mass Storage devices
 
 If you plug in your USB drive and don't see it appear, how do you know what is wrong? 
-Perhaps it might help to understand the sequence of events. Plug in your drive and after a few seconds use `dmesg | tail` to see what happened. Here is a list of the modules and what they do / tell you...
+Perhaps it might help to understand the sequence of events. 
+Plug in your drive and after a few seconds use `dmesg | tail` 
+to see what happened. Here is a list of the modules and what they do / tell you...
 
 * usb 
 	- recognises new device
@@ -234,7 +238,13 @@ Perhaps it might help to understand the sequence of events. Plug in your drive a
 * myfstype
 	- each filesystem-type-specific driver reports what it found
 
-Bear in mind what is mentioned about flash drives as _consumables_ in [https://github.com/artmg/lubuild/blob/master/help/manipulate/flash-drives-and-SSDs.md], that they **do** break and you might be best off buying a new drive and simply binning the old one (perhaps phyiscally destroyed).
+Bear in mind what is mentioned about flash drives as _consumables_ in 
+[https://github.com/artmg/lubuild/blob/master/help/manipulate/flash-drives-and-SSDs.md], 
+that they **do** break and you might be best off buying a new drive and 
+simply binning the old one (perhaps phyiscally destroyed).
+
+Note that flash drives that appear Read Only may be repairable. 
+See the above article for details. 
 
 
 ## Speed and Capacity tests

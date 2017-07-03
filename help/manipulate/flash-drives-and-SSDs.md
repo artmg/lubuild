@@ -1,6 +1,5 @@
 
-Flash drives
-------------
+## Flash drives
 
 Flash memory storage devices, such as SD cards, USB pen drives and SSD
 drives, sometimes referred to as NAND memory, has very different
@@ -10,11 +9,13 @@ durable' but these sometimes increase the complications for using them
 effectively for specific purposes.
 
 If you want to get a low-level picture of this see
-<https://lwn.net/Articles/428584/>
+[https://lwn.net/Articles/428584/]
+
 
 ### Using flash as additional storage
 
 Check the the partitions are aligned - see above - SD card alignment
+
 
 ### Issues arising later with flash drives
 
@@ -23,7 +24,16 @@ consumables, and you might consider pragmatism when troubleshooting
 older drives. Are you better off spending a little money on a new drive
 rather than loads of time fixing an older one?
 
-<http://superuser.com/questions/376274/check-the-physical-health-of-a-usb-stick-in-linux>
+[http://superuser.com/questions/376274/check-the-physical-health-of-a-usb-stick-in-linux]
+
+#### Drives that appear Read Only
+
+If a flash drive appears Read Only, it might be a sign that it is 
+reaching the end of its usable life. However there are some steps 
+to take first, to see if proper functionality can be restored:
+
+[https://askubuntu.com/a/859284]
+
 
 ### Optimising OS installed on flash
 
@@ -258,14 +268,17 @@ This is to keep them to whole blocks where
 However SanDisk forum article http://forums.sandisk.com/t5/M/6/m-p/301049#M2727
 shows a 64GB device with 16MB free space at start
 
-See original partition for Cruzer Fit 8GB according to http://www.flashdrivespeed.com/flash-drive/sandisk-cruzer-fit-8gb-usb-flash-drive-review-and-speed-test/
+See original partition for Cruzer Fit 8GB according to 
+[http://www.flashdrivespeed.com/flash-drive/sandisk-cruzer-fit-8gb-usb-flash-drive-review-and-speed-test/]
 
 
 
 ### force partitioning to sector 63 ###
 
-"Most modern disk drives need a partition to be aligned on sector 2048 to avoid writes overlapping two sectors
-On modern distros like Ubuntu the fdisk utility is patched to default to 2048 sectors. But [what if] you need to use sector 63?"
+"Most modern disk drives need a partition to be aligned on sector 2048 
+to avoid writes overlapping two sectors. 
+On modern distros like Ubuntu the fdisk utility is patched to default 
+to 2048 sectors. But [what if] you need to use sector 63?"
 
-http://confluence.wartungsfenster.de/display/Adminspace/fdisk+Force+sector+63+boundary
+[http://confluence.wartungsfenster.de/display/Adminspace/fdisk+Force+sector+63+boundary]
 
