@@ -31,6 +31,14 @@ if [ ! -f /etc/apt/sources.list.d/google-chrome.list ]; then (
   sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list' ;
 ) ; fi
 
+# if this distros does NOT have skype sources already...
+if [ ! -f /etc/apt/sources.list.d/skype-stable.list ]; then (
+  # credit https://repo.skype.com/
+  dpkg -s apt-transport-https > /dev/null || bash -c "sudo apt-get update; sudo apt-get install apt-transport-https -y"
+  wget -q -O - https://repo.skype.com/data/SKYPE-GPG-KEY | sudo apt-key add - 
+  echo "deb [arch=amd64] https://repo.skype.com/deb stable main" | sudo tee /etc/apt/sources.list.d/skype-stable.list
+) ; fi
+
 # Prepare for repository installs
 sudo apt-get update
 
@@ -108,12 +116,13 @@ cat > ./package_list <<EOF
 ######## ALL MACHINES ############
 
 ####### MultiMedia ##########
-gstreamer		 ### NO LONGER FOUND! ### # none-open formats incl DVDs - also needs post install code below # might be part of other media player like totem
+
 # AUDIO usually works fine out of the box
 pulseaudio	                 # should be in by default
 pavucontrol	                 # pulse volume control
 # pulseaudio-module-bluetooth # if you want to add Bluetooth Audio Sink
 guvcview	# support for most webcams
+
 
 ######## Networking ############
 
@@ -184,10 +193,11 @@ meld        # file and folder diffs...
 
 google-chrome-stable    ### PPA required ### Google Chrome
 
-epiphany-browser	      # alternative lightweight browser
-transmission			      # torrent client
-gftp					          # file transfer client
-skype                   # back in the repos since 13.10 - no longer need manual script
+skypeforlinux           ### PPA required ### repo.skype.com
+
+epiphany-browser        # alternative lightweight browser
+transmission            # torrent client
+gftp                    # file transfer client
 
 # deprecated
 # flashplugin-installer	 # Adobe Flash plugin for browsers - alternatives are swfdec-gnome or gnash
@@ -226,9 +236,20 @@ cat package_list | while read line ; do line=${line%%\#*} ; [ "$line" ] && echo 
 ################################
 
 
-### Allow 
-# play dvds
-sudo /usr/share/doc/libdvdread4/install-css.sh 
+### Allow to play DVDs
+# NB: both these commands are attended installs, needing some user interaction
+# credit https://help.ubuntu.com/stable/ubuntu-help/video-dvd-restricted.html
+sudo apt-get install -y libdvdnav4 libdvdread4 gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly libdvd-pkg
+sudo dpkg-reconfigure libdvd-pkg
+# optional player app as alternative to MPlayer
+# sudo apt-get install -y vlc
+
+# register app(s) to use when dvd inserted
+sudo tee -a /etc/xdg/lubuntu/applications/defaults.list cat <<EOF!
+x-content/video-dvd=gnome-mplayer.desktop
+x-content/video-vcd=gnome-mplayer.desktop
+x-content/video-svcd=gnome-mplayer.desktop
+EOF!
 
 
 ########################################
