@@ -244,12 +244,6 @@ sudo dpkg-reconfigure libdvd-pkg
 # optional player app as alternative to MPlayer
 # sudo apt-get install -y vlc
 
-# register app(s) to use when dvd inserted
-sudo tee -a /etc/xdg/lubuntu/applications/defaults.list cat <<EOF!
-x-content/video-dvd=gnome-mplayer.desktop
-x-content/video-vcd=gnome-mplayer.desktop
-x-content/video-svcd=gnome-mplayer.desktop
-EOF!
 
 
 ########################################

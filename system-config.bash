@@ -53,6 +53,22 @@ EOF!
 # /usr/share/lubuntu/openbox/
 
 
+######### register app(s) to use when dvd inserted ###########################
+# STILL NEEDS DEVELOPING AND TESTING
+sudo cp /usr/share/applications/defaults.list{,.`date +%y%m%d.%H%M%S`}
+# in file  /usr/share/applications/defaults.list
+# x-content/video-dvd=org.gnome.Totem.desktop
+# x-content/video-vcd=org.gnome.Totem.desktop
+# x-content/video-svcd=org.gnome.Totem.desktop
+# need replacing with =gnome-mplayer.desktop
+
+# sudo tee -a /etc/xdg/lubuntu/applications/defaults.list cat <<EOF!
+# x-content/video-dvd=gnome-mplayer.desktop
+# x-content/video-vcd=gnome-mplayer.desktop
+# x-content/video-svcd=gnome-mplayer.desktop
+# EOF!
+
+
 ######### toggle external screen display using SUPER-P ###########################
 #
 # this is now in user-config but could it be sys wide?
