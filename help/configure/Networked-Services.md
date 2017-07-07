@@ -837,6 +837,9 @@ sudo /etc/init.d/mpd restart
     * FOSS stack to collect, store, search and visualise logs
 * 
 
+You could use a conbination of these, e.g. rsyslog to send files 
+to a log collection server, then ELK to analyse from this
+
 
 ### rsyslogd server
 
