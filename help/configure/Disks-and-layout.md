@@ -219,6 +219,10 @@ It guides you through the whole procedure and is easy to use.
 sudo apt-get install gparted
 ```
 
+Note that you cannot move a mounted partition, such as the root 
+you are currently booted from. Consider booting using a Live USB. 
+
+
 ### choose Boot Partition
 
 use fdisk to make a partition bootable
@@ -505,6 +509,40 @@ for useful links see also - https://wiki.archlinux.org/index.php/System_Encrypti
 ### IN 
 
 The following sections need to be rationalised and reformatted
+
+#### shrinking Windows volumes
+
+The best way to reconfigure NTFS partitions where Windows is installed 
+is usually by using the Windows operating system itself. 
+To shrink a volume use `diskmgmt.msc`.
+
+Unfortunately Windows considers some system files to be 'unmoveable', 
+and Volume Shrink will be limited by this. The trick is to disable 
+those features, reboot, and shrink again, before finally reenabling them. 
+
+To identify which file is limiting the shrink, check the Windows 
+**Application** even logs for a 259 code. Once you have found the culprit, 
+deal with it, then try the shrink again. You can continue this, rebooting 
+occasionally, until you have the shrink size you were hoping for. 
+Try using **Disk cleanup** for removing some of those temporary system files. 
+
+* to view the latest event preventing shrink:
+	- powershell (if backqoutes surround the code, omit them)
+		- `Get-WinEvent -FilterHashtable @{logname=’application’; id=259} -MaxEvents 1 | fl`
+	- gui
+		- `eventvwr` / Windows Logs / Application / look for event with ID 259
+* to disable and renable the features
+	- command line syntax 
+		- [https://superuser.com/a/1175556]
+	- using the GUI
+		- [https://somoit.net/windows/windows-cannot-shrink-volume-unmovable-files]
+* search service
+	- powershell
+		- `Set-Service WSearch -StartupType "Disabled"`
+		- `Stop-Service WSearch`
+	- GUI
+		- [https://superuser.com/questions/73204/correct-way-to-disable-indexing-in-windows-7]
+
 
 #### Grub 
 

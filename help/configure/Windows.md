@@ -6,8 +6,19 @@ Even if you mainly use free operating systems, you might use Windows ...
 * On dual boot if you have an OEM license and you had Windows preinstalled on your PC
 * In a virtual machine if you have a retail license you purchased
 
-Here are some tips for the basics of administrating your Windows instance 
-for such cases.
+This article includes some tips for the basics of administrating 
+your Windows instance for such cases.
+
+see also:
+
+* paritioning and volume configurations for dual boot between Windows and Linux 
+	* [https://github.com/artmg/lubuild/blob/master/help/configure/Disks-and-layout.md]
+	* will go to [https://github.com/artmg/lubuild/blob/master/help/configure/disks.md]
+* understand Layout 
+	* more detail about choosing options for your partitions 
+	* specific examples like OpenElec
+	* will go out to [https://github.com/artmg/lubuild/blob/master/help/understand/disk-layout.md]
+
 
 ## Windows 10 useful tips
 
