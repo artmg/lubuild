@@ -36,11 +36,16 @@ modinfo drivername
 
 ### other diagnostics
 
-_What do these do?_
 ```
-sudo apt-get install mesa-utils
+# check for driver issues at startup, e.g.
+dmesg | egrep 'drm|radeon'
 
+# check OpenGL config
+sudo apt-get install mesa-utils
 glxinfo 
+
+# ensure renderer string does not say "software rasterizer" or "llvmpipe"
+glxinfo | grep renderer
 ```
 
 ## Control Monitors
