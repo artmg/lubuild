@@ -356,6 +356,16 @@ ln -s /media/Windows $WINEPREFIX/dosdevices/w:
 ### RECOLL                        ### 
 #####################################
 
+# simple manual install procs:
+#
+# * Use the Lubuntu Software Center to install the app   recoll 
+# * run it from Start / Accessories / Recoll
+# * in the dialog  First indexing setup  choose  Start Indexing Now  at the bottom
+# * you should see it running through a list of filenames at the bottom
+# * once it's done you should be able to search
+
+
+
 # recoll stable PPA
 sudo add-apt-repository -y ppa:recoll-backports/recoll-1.15-on
 sudo apt-get update
