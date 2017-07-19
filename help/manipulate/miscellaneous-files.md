@@ -75,6 +75,19 @@ msgconvert myfile.msg
 ** does not open .MSGs correctly
 ** for requirements and current procs see [Lub App Thunderbird config.md]
 
+see also:
+
+* readpst
+	[https://github.com/artmg/lubuild/blob/master/app-installs.bash]
+
+### Outlook Express IAF files
+
+Get Passwords from IAF file Outlook Express email account export
+
+* Using Perl
+	* [http://www.forensicfocus.com/Forums/viewtopic/t=2788/]
+* Using Ruby
+	* [https://gist.github.com/kurochan/9038608]
 
 
 ## File and Folder syncronisation
