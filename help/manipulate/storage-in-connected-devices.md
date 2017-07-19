@@ -101,6 +101,35 @@ jmtpfs $HOME/mount/MTP
 fusermount -u $HOME/mount/MTP
 ```
 
+### but MTP is slow
+
+Many linux users have complained about the poor performance using MTP. 
+Some people attribute it to the design of the MTP protocol itself, 
+whereas others just say that libmtp is not the best implementation. 
+
+In either case, on Linux you are unlikely to get any substantial 
+improvement in speed unless you remove possible bottlenecks, 
+usually by avoiding MTP altogether, for example:
+
+* remove the phone
+	* if the data is on an SD card, 
+		- physically remove it from the phone and plug it in to the PC directly
+* remove the USB cable
+	* use a network (or wireless) transfer protocol like FTP, samba, etc
+		* for more on networked services see 
+			- [https://github.com/artmg/lubuild/blob/master/help/configure/Networked-Services.md]
+* remove the MTP
+	* use ADB (Android Debugging) to transfer data
+		* e.g. adbfs / adbfs-rootless
+		* relies on debugging being enabled
+		* may have some limitations on unrooted phones
+		* you may need to play with the way the phone sees the storage
+		* can be command-line intensive
+		* in other words it removes a lot of the advantages of MTP 
+		* for more on ADB see 
+			- [https://github.com/artmg/lubuild/blob/master/help/diagnose/adb-Android-Debug-Bridge.md]
+* remove the Linux libmtp implementation
+	* some people suggest that MTP on Windows works reasonably quickly
 
 
 ## Troubleshooting
@@ -113,6 +142,13 @@ you may resolve issues by rebuilding or flushing this
 e.g.
 * Settings > Applications > Media Storage > Clear Cache / Data 
     * credit - http://android.stackexchange.com/a/59687
+* or alternatively:
+	* Disconnect USB cable
+	* Settings > Apps > Show System Apps > find External Storage and Media Storage
+	* Clear data and cache on each one
+	* reboot
+	* give it 5 min after full boot up to rebuild media databases
+	* connect to USB and select MTP
 * SDrescan (not 4.4+)
     * if you get issues with folders not appearing
  
