@@ -216,3 +216,27 @@ For more advanced options see online services such as:
 
 * (add candidate websites to list)
 
+
+## backing up from image services
+
+### instagram
+
+If you want to back up photos and their captions from Instragram 
+there are various free downloads and third party services, 
+or you can even save to another service with ifttt. 
+However you could simply use a foss python script, that can be automated, 
+like instaLooter, taken over from instaRaider. [https://github.com/althonos/instaLooter]
+
+* requirements: 
+	* python
+	* PIL or Pillow as well as piexif for metadata
+* installation
+	* easy with pypi or pip
+	* see [http://instalooter.readthedocs.io/en/latest/install.html]
+* runtime options:
+	* `python instaRaider.py -u myusername` 
+	* `-N`, --new   just get new files not already in destination
+	* `-m`, --add-metadata    add date and caption metadata
+	* credit [http://instalooter.readthedocs.io/en/latest/usage.html]
+
+
