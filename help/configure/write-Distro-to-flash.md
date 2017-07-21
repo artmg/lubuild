@@ -11,6 +11,8 @@ see also:
     * special info about how to work with flash (non-mechanical) storage devices
 * [https://github.com/artmg/MuGammaPi/wiki/Disks#distro-images]
     * 
+* [https://github.com/artmg/lubuild/blob/master/help/understand/test-and-qa-for-Lubuntu.md]
+    * contributing to the Lubuntu Test and QA community
 
 
 ## Purposes

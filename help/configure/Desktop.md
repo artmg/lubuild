@@ -1,6 +1,14 @@
 
 _Consider moving out diagnostic and User sections_
 
+see also:
+
+* if you are confused by some of the terminology around linux desktops
+	* [https://github.com/artmg/lubuild/blob/master/help/understand/layers-on-your-desktop.md]
+* this is where the desktop is initially configured
+	* [https://github.com/artmg/lubuild/blob/master/user-config.bash]
+
+
 ## Tips
 
 * Lubuntu

@@ -1,4 +1,12 @@
 
+see also:
+
+* for specific configuration suggestions
+	* [https://github.com/artmg/lubuild/blob/master/help/configure/Desktop.md]
+* this is where the desktop is initially configured during Lubuild
+	* [https://github.com/artmg/lubuild/blob/master/user-config.bash]
+
+
 * simple intro
 [http://www.complete-concrete-concise.com/ubuntu-2/ubuntu-12-04-server/ubuntu-12-04-server-how-to-install-a-gui]
 * what uses what [https://journalxtra.com/linux/desktop-recovery/the-definitive-guide-to-getting-your-linux-desktop-back/]
@@ -22,10 +30,16 @@ also check out the Category Template at the end of the article.
 * alternatives like Wayland?
 
 
-Display Manager
+## Display Manager
+
  starts the X servers, user sessions and greeter (login screen)
-LightDM is default in and Lubuntu & Ubuntu
-see https://wiki.ubuntu.com/LightDM
+
+* LightDM
+	* default in and Lubuntu & Ubuntu
+	* see https://wiki.ubuntu.com/LightDM
+* SDDM
+	* preferred by Lxqt / Lubuntu Next
+
 
 Greeter 
 login screen
