@@ -20,7 +20,10 @@ see also:
 * [https://github.com/artmg/lubuild/blob/master/help/manipulate/FreeCAD-plans-and-designs.md]
 * [https://github.com/artmg/lubuild/blob/master/help/manipulate/disk-recovery-and-forensics.md]
 	* Check File Signatures ('Magic Characters') to discover what type of file you are looking at
-* 
+* [https://github.com/artmg/lubuild/blob/master/help/use/local-search.md]
+	* how to index and search locally stored file content
+* [https://github.com/artmg/lubuild/blob/master/app-installs.bash]
+	* which candidates are currently installed
 
 
 ## Emails
@@ -149,11 +152,55 @@ https://wiki.ubuntu.com/MultipleComputersSynchronization
 http://sourceforge.net/projects/freefilesync/ C++ wxWidgets
 
 
+## Differences between Files and Folders 
+
+If you have two instances of any of the following:
+
+* a file, 
+* a group of files, 
+* a folder tree, 
+
+and want to look beyond the similarities to find the differences. 
+
+These may help you syncronise or deduplicate, 
+but the focus here is on finding what is not identical. 
+
+### Candidates
+
+* GUI
+	* meld
+		* currently installed candidate 
+			* [https://github.com/artmg/lubuild/blob/master/app-installs.bash]
+	* xxdiff
+	* kdiff3 (floss) Win/Nux - [http://askubuntu.com/questions/312604/how-do-i-install-xxdiff-in-13-04] 
+	* diffMerge (free) Win/Nux 
+* CLI
+	* diff
+		* usually installed in distros
+	* 
+
+### diff examples
+
+```
+# basic diff (show what the differences are)
+diff file1 file2
+# side-by-side
+diff -y file1 file2
+# quiet diff (just tell me if they are different)
+diff file1 file2
+```
+
+
+
 ## Deduplicate files and folders
 
 As files get copied around, you are sometimes left with multiple copies. 
 Some of these might be similar but different versions. 
 How do you sort this all out? 
+
+Relates to apps mentioned above for Differences between Files and Folders, 
+but this is where you need to find the similar ones first! 
+
 
 ### Requirements ###
 
@@ -197,12 +244,6 @@ find more at http://askubuntu.com/a/118389
 ; Duplicate Files Finder
 : both Windows and Linux versions
 : someone is +1ing a lot, may be author
-
-* check whether any of the DIFF programmes have dupe finder features:
-    * meld - current installed candidate
-    * xxdiff
-    * kdiff3 (floss) Win/Nux - [http://askubuntu.com/questions/312604/how-do-i-install-xxdiff-in-13-04] 
-    * diffMerge (free) Win/Nux 
 
 ##### tests
 
