@@ -23,6 +23,13 @@ https://en.wikipedia.org/wiki/Window_manager
 
 also check out the Category Template at the end of the article.
 
+* Window Manager
+* Display Manager
+	* Greeter
+* Session Manager
+* Desktop Manager
+* Lock screen
+
 
 ## X Server
 

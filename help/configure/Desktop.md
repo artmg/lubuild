@@ -38,6 +38,66 @@ update-alternatives --get-selections|grep lxdm
 sudo gedit /etc/xdg/lubuntu/lxdm/lxdm.conf
 ```
 
+### Switch DM
+
+```
+# which Display Manager (login screen) are you currently using?
+sudo cat /etc/X11/default-display-manager
+# If you want to swap to a different display manager, 
+# then perhaps a safer alternative to editing that file would be to 
+sudo dpkg-reconfigure yourDM
+# where yourDM could be   lightdm    or     lxdm      
+
+# list all session types (desktop environments) available 
+ls /usr/share/xsessions
+# CAT the specific file to see details of what starts up. 
+# You can set the default session by putting the name from the .desktop file into the command:
+sudo /usr/lib/lightdm/lightdm-set-defaults -s New-Session-Name
+
+# NB if you want to use Fingerprint-GUI for the fingerprint scanner 
+# lxdm does not support alternative authentication mechanisms 
+# so you should install lightdm and lightdm-gtk-greeter
+# credit - https://launchpad.net/~fingerprint/+archive/ubuntu/fingerprint-gui
+```
+
+## Desktop Environment
+
+The current default DE for Lubuntu is LXDE
+
+The latest source for lubuntu default settings is 
+[http://bazaar.launchpad.net/~lubuntu-dev/lubuntu-default-settings/trunk/files/head:/src/]
+
+### LxQt
+
+The next DE for Lubuntu will (eventually be) LxQt, a Qt-based spin 
+of LXDE, borrowing some bits in the meantime from KDE to fill in. 
+
+For details of the sources 
+see [https://github.com/lxde/lxqt/blob/master/CONTRIBUTING.md]
+
+Not sure where the Lubuntu Next settings source is 
+
+
+### Screen locker
+
+Lubuntu with LXDE uses light-locker as it's lock screen
+Configuration is handled using startup parameters in the autostart dekstop file:
+
+* ~/.config/autostart/*.desktop
+* /etc/xdg/autostart/light-locker.desktop
+
+
+## Session Manager
+
+LXDE uses LxSession as its session manager, independent of which 
+desktop manager or window manager is being used. 
+
+* Configuration files: ~/.config/lxsession/<Profile Name>
+* Default configs: /etc/xdg/lxsession/<Profile name> 
+
+For more see [https://wiki.lxde.org/en/LXSession]
+
+
 ### Auto Start 
 
 ```
@@ -79,28 +139,6 @@ If you have issues with autostart...
 	* e.g. "sleep 30 && myprog" see [https://ubuntuforums.org/showthread.php?t=2024713]
 + see also [https://ubuntuforums.org/showthread.php?t=2182986]
 
-
-### Switch DM
-
-```
-# which Display Manager (login screen) are you currently using?
-sudo cat /etc/X11/default-display-manager
-# If you want to swap to a different display manager, 
-# then perhaps a safer alternative to editing that file would be to 
-sudo dpkg-reconfigure yourDM
-# where yourDM could be   lightdm    or     lxdm      
-
-# list all session types (desktop environments) available 
-ls /usr/share/xsessions
-# CAT the specific file to see details of what starts up. 
-# You can set the default session by putting the name from the .desktop file into the command:
-sudo /usr/lib/lightdm/lightdm-set-defaults -s New-Session-Name
-
-# NB if you want to use Fingerprint-GUI for the fingerprint scanner 
-# lxdm does not support alternative authentication mechanisms 
-# so you should install lightdm and lightdm-gtk-greeter
-# credit - https://launchpad.net/~fingerprint/+archive/ubuntu/fingerprint-gui
-```
 
 ### Troubleshooting the Desktop
 
