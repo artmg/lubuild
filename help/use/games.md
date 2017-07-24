@@ -5,6 +5,8 @@ see also:
     * How to play Windows-only games with your powerful graphics card
 * [https://github.com/artmg/lubuild/blob/master/help/diagnose/video-display.md]
     * many gaming issues are down to the video output devices
+* [https://github.com/artmg/lubuild/blob/master/help/use/games-Minecraft.md]
+    * specifics on Mojang's crafter/builder world game clients and servers
 * []
 
 
