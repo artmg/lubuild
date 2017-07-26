@@ -207,9 +207,12 @@ security = share</pre>
 
 #####  WebDAV
 
-For ideas about using WebDAV on ubuntu, for instance to keep files syncronised with rsync, see  [http://tomalison.com/reference/2010/04/03/webdav/ http://tomalison.com/reference/2010/04/03/webdav/]
+For ideas about using WebDAV on ubuntu, 
+for instance to keep files syncronised with rsync, 
+see [http://tomalison.com/reference/2010/04/03/webdav/ http://tomalison.com/reference/2010/04/03/webdav/]
 
 There is also the Konqueror WebDAV client for KDE 
+
 
 ### Sharing printers
 
@@ -784,32 +787,16 @@ service avahi-daemon restart
 ### Media Player Daemon (MPD)
 
 
-```
-# mkdir /media/Music
-# chmod -R 777 /media/Music
-# credit - http://www.raspyfi.com/ho-to-install-mpd-on-an-existing-debian-installation-on-raspberry-pi/
+## http web server
 
-# credit - http://www.instructables.com/id/Linux-music-server-controlled-by-an-Android-device/
-sudo apt-get update && sudo apt-get install -y mpd
+### lightweight web server candidates:
 
-sudo nano /etc/mpd.conf
-# ? bind_to_address "any"
+* nginx
+* lighttpd
+* plack
+* Go/fasthttp
 
-sudo /etc/init.d/mpd restart
-
-# other packages required?
-
-# does this sort perms issues? - http://www.reddit.com/r/raspberry_pi/comments/1w8ia0/raspberry_pi_mpd_server/
-
-# alternative using archlinux (quicker boot if you don't need HDMI)
-# http://hempeldesigngroup.com/embedded/stories/raspberry-pi-setup-as-mpd-sever/
-
-# troubleshooting - http://mpd.wikia.com/wiki/Music_Player_Daemon_HOWTO_Troubleshoot
-# ArchLinux page on setup - https://wiki.archlinux.org/index.php/Music_Player_Daemon
-# ArchLinux page on troubleshooting https://wiki.archlinux.org/index.php/Music_Player_Daemon/Troubleshooting
-# or consider whether mopidy might be simpler https://docs.mopidy.com/en/latest/installation/raspberrypi/
-```
-
+for benchmarks see [msoap/Raspberry Pi httpd benchmark.md](https://gist.github.com/msoap/7060974)
 
 
 
