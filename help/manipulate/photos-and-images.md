@@ -102,6 +102,49 @@ exiftool -s myPhoto.jpg
 exiftool "-FileName<DateTimeOriginal" -d "%Y%m%d_%H%M%S.%%e" -directory=renamed .
 ```
 
+## Create photo collage
+
+If you have multiple images, you may wish to crop, resize, and splice 
+them together into a photo collage.
+You may also be able to use these to put together multiple images 
+into a photo montage, but this requirement is more for cutting and gluing. 
+
+* Inkscape
+	* import images, resize and crop
+	* use layers
+	* can be slow to refresh images
+* Gimp
+	* Open images as layers
+	* crop etc
+* G'MIC montage plugin for Gimp
+	* gimp-gmic package in repos
+	* uses c++ libgmic for functions
+	* Open as Layers > choose your images
+	* Filters > G'Mic / Arrays & tiles > Montage
+	* good for layout but assumes you have pre-scaled and cropped layers
+* fotowall
+	* new fotowall 1.0 retro released after long haitus (may be final)
+	* very flexible and quick to put images together as you wish
+	* once you crop you can't uncrop without reloading image
+	* [https://www.enricoros.com/opensource/fotowall/download/binaries/]
+	* original not in repos since trusty
+	* in ppa:dhor/myway
+* photocollage
+	* simple and lightweight
+	* good for splicing and arranging but no crop or resize
+	* written in Python using GTK interface and Python Imaging Library (PIL)
+	* in ubuntu repos since 17.04
+	* in ppa:dhor/myway before then
+* shapecollage
+	* algorithmic creation of specific outlined shape
+* metapixel
+	* cli program
+
+Instagram has an android app called Layout, 
+and there are also many web-based collage services, 
+e.g. [http://www.creativebloq.com/photography/collage-maker-11135210]
+
+
 ## Creating videos from images
 
 ### Candidates
@@ -125,9 +168,78 @@ exiftool "-FileName<DateTimeOriginal" -d "%Y%m%d_%H%M%S.%%e" -directory=renamed 
 	- Blender (also includes editing features)
 
 
-## document recognition
+## converting images to drawings
 
-For interpreting the textual data (words) stored in image files
+### tracing
+
+Tracing is a way to convert bitmap (raster) images to vector images, 
+to manipulate the shapes themselves, rather than the way they have been rendered. You should consider using a raster graphics program, 
+like GIMP, to clean up or simplify the original image, 
+or to crop out parts not required.
+
+Inkscape has some useful tracing options, 
+see [https://inkscape.org/en/doc/tutorials/tracing/tutorial-tracing.en.html] 
+for an introduction to these. 
+
+However these are based on Potrace, which creates filled shapes. 
+In some circumstances this may be what you want, but in the case of images 
+that began as line drawings, a center-line trace may give you better results. 
+
+You can use command line **Autotrace** with it's **-centerline** option, 
+online services based on Autitrace, such as [http://online.rapidresizer.com/tracer.php], 
+or use the an Inkscape plugin that wraps AutoTrace using python-Pillow:
+
+[https://github.com/fablabnbg/inkscape-centerline-trace]
+
+* download the latest .deb [release](https://github.com/fablabnbg/inkscape-centerline-trace/releases)
+* restart Inkscape
+* look under menu option:
+	- Extensions -> Images -> Centerline Trace ...
+
+NB: Although AutoTrace is rather old (2002), the docs do point to 
+other comparable projects of the time [http://autotrace.sourceforge.net/] 
+as well as suggestions of how to work with fonts
+
+
+### posterising
+
+Turning graduations of colour into abrupt hue changes, 
+to make photos look more like paintings or cartoons
+
+For more advanced options see online services such as:
+
+* (add candidate websites to list)
+
+
+## backing up from image services
+
+### instagram
+
+If you want to back up photos and their captions from Instragram 
+there are various free downloads and third party services, 
+or you can even save to another service with ifttt. 
+However you could simply use a foss python script, that can be automated, 
+like instaLooter, taken over from instaRaider. [https://github.com/althonos/instaLooter]
+
+* requirements: 
+	* python
+	* PIL or Pillow as well as piexif for metadata
+* installation
+	* easy with pypi or pip
+	* see [http://instalooter.readthedocs.io/en/latest/install.html]
+* runtime options:
+	* `python instaRaider.py -u myusername` 
+	* `-N`, --new   just get new files not already in destination
+	* `-m`, --add-metadata    add date and caption metadata
+	* credit [http://instalooter.readthedocs.io/en/latest/usage.html]
+
+
+## turning images into text
+
+Document recognition is 
+interpreting the textual or numerical data (words and numbers) 
+stored in image files
+
 
 ### Optical Character Recognition (OCR)
 
@@ -174,69 +286,4 @@ To generate QR codes consider:
 	- also supports Geo or Wifi Access protocol codes
 	* written in Java (so requires JRE runtime)
 * 
-
-## converting images to drawings
-
-### tracing
-
-Tracing is a way to convert bitmap (raster) images to vector images, 
-to manipulate the shapes themselves, rather than the way they have been rendered. You should consider using a raster graphics program, 
-like GIMP, to clean up or simplify the original image, 
-or to crop out parts not required.
-
-Inkscape has some useful tracing options, 
-see [https://inkscape.org/en/doc/tutorials/tracing/tutorial-tracing.en.html] 
-for an introduction to these. 
-
-However these are based on Potrace, which creates filled shapes. 
-In some circumstances this may be what you want, but in the case of images 
-that began as line drawings, a center-line trace may give you better results. 
-
-You can use command line **Autotrace** with it's **-centerline** option, 
-online services based on Autitrace, such as [http://online.rapidresizer.com/tracer.php], 
-or use the an Inkscape plugin that wraps AutoTrace using python-Pillow:
-
-[https://github.com/fablabnbg/inkscape-centerline-trace]
-
-* download the latest .deb [release](https://github.com/fablabnbg/inkscape-centerline-trace/releases)
-* restart Inkscape
-* look under menu option:
-	- Extensions -> Images -> Centerline Trace ...
-
-NB: Although AutoTrace is rather old (2002), the docs do point to 
-other comparable projects of the time [http://autotrace.sourceforge.net/] 
-as well as suggestions of how to work with fonts
-
-
-### posterising
-
-Changing colours, making photos look more like paintings or cartoons
-
-For more advanced options see online services such as:
-
-* (add candidate websites to list)
-
-
-## backing up from image services
-
-### instagram
-
-If you want to back up photos and their captions from Instragram 
-there are various free downloads and third party services, 
-or you can even save to another service with ifttt. 
-However you could simply use a foss python script, that can be automated, 
-like instaLooter, taken over from instaRaider. [https://github.com/althonos/instaLooter]
-
-* requirements: 
-	* python
-	* PIL or Pillow as well as piexif for metadata
-* installation
-	* easy with pypi or pip
-	* see [http://instalooter.readthedocs.io/en/latest/install.html]
-* runtime options:
-	* `python instaRaider.py -u myusername` 
-	* `-N`, --new   just get new files not already in destination
-	* `-m`, --add-metadata    add date and caption metadata
-	* credit [http://instalooter.readthedocs.io/en/latest/usage.html]
-
 
