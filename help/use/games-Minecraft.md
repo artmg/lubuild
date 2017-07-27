@@ -153,14 +153,31 @@ see [http://www.howtogeek.com/122934] and  [http://www.ghacks.net/2010/04/25/how
 
 
 
+
+#### other
+
+still laggy? - for more ideas see optimise - http://www.makeuseof.com/tag/7-steps-install-optimize-minecraft-linux/
+
+
+## mods
+
+### client mods
+
+#### Forge in Windows
+
+Some windows clients use an intenal stripped-down Java instance,
+so the regular Forge installer does not recognise it.
+
+You need to get the Installer JAR, not the Windows installer, 
+and install it manually using the Java instance inside Minecraft. 
+See [http://nothing.golddave.com/2017/02/12/minecraft-installing-forge-without-installing-java/]
+
+
 ##### mods
 
 OptiFine Lite - http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/1272953-1-8-4-optifine-hd-d4-fps-boost-hd-textures-aa-af
 
 
-#### other
-
-still laggy? - for more ideas see optimise - http://www.makeuseof.com/tag/7-steps-install-optimize-minecraft-linux/
 
 ## Minecraft Server
 
