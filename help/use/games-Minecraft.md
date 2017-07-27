@@ -153,7 +153,6 @@ see [http://www.howtogeek.com/122934] and  [http://www.ghacks.net/2010/04/25/how
 
 
 
-
 #### other
 
 still laggy? - for more ideas see optimise - http://www.makeuseof.com/tag/7-steps-install-optimize-minecraft-linux/
@@ -161,7 +160,35 @@ still laggy? - for more ideas see optimise - http://www.makeuseof.com/tag/7-step
 
 ## mods
 
-### client mods
+Mods are changes to the minecraft code. 
+Originally this was hard as the code would overwrite with new versions, 
+but the MincraftForge system was developed to manage mods. 
+This has been extended in cooperation with Mojang developers, 
+and the non-proprietary elements are published as opensource on github  
+[https://github.com/MinecraftForge/MinecraftForge] 
+
+Plugins using Sponge and Bukkit are custom code 
+designed to extend the server functionality via APIs. They:
+
+* require no modification to client installs
+* should work independently of minecraft versions
+
+BukkitDev was a common system of plugins, 
+and commonly made available via Curse Forge,
+which has now been bought out by Amazon/Twitch. 
+CurseForge covered a number of different games, and 
+it's minecraft mod library is popular. 
+[https://minecraft.curseforge.com/mc-mods] 
+
+
+### MinecraftForge
+
+Forge mod management system can be downloaded for use at 
+[http://files.minecraftforge.net]
+
+There is also a Modder Development Kit (MDK) for people 
+who want to create a Forge Mod workspace in their dev IDE.
+
 
 #### Forge in Windows
 
@@ -173,10 +200,76 @@ and install it manually using the Java instance inside Minecraft.
 See [http://nothing.golddave.com/2017/02/12/minecraft-installing-forge-without-installing-java/]
 
 
+### client mods
+
 ##### mods
 
 OptiFine Lite - http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/1272953-1-8-4-optifine-hd-d4-fps-boost-hd-textures-aa-af
 
+#### Mods to consider: ####
+
+old list
+
+* CommandBook
+    * requires WorldEdit
+    * many extra console cmds for ops & players (less bloat than 'Essentials')
+* AdminCmd ?
+* ShiftMode
+    * toggle Creative or Survival from console
+    * http://dev.bukkit.org/server-mods/shiftmode/
+* WorldEdit
+    * modify worlds 
+    * [http://dev.bukkit.org/server-mods/worldedit/] 
+
+```
+mkdir craftbukkit
+cd craftbukkit
+# get the Craft Bukkit beta (for MC 1.2.4 compatibility)
+wget http://cbukk.it/craftbukkit-beta.jar
+cat > craftbukkit.sh << EOF
+#!/bin/sh
+BINDIR=$PWD
+cd "\$BINDIR"
+java -Xmx1024M -Xms1024M -jar craftbukkit-beta.jar
+EOF
+chmod +x craftbukkit.sh
+sh craftbukkit.sh
+
+# Then you'll need to STOP the server onces all the files are created
+
+#you may need to get nightly build for WorldEdit
+wget http://build.sk89q.com/job/WorldEdit/lastSuccessfulBuild/artifact/%2azip%2a/archive.zip
+unzip -j archive.zip
+rm archive.zip
+mkdir plugins/WorldEdit
+unzip worldedit*.zip -d plugins
+wget http://build.sk89q.com/job/CommandBook/lastBuild/artifact/*zip*/archive.zip
+unzip -j archive.zip
+rm archive.zip
+mkdir plugins/CommandBook
+unzip commandbook*.zip -d plugins
+```
+
+#### Notes on client Mods ####
+
+* TooManyItems
+    * quite useful for managing inventory
+* Hamachi (p2p vpn client)
+    * not needed with DynDNS addressing 
+
+
+## Resources
+
+### Building and architecture
+
+* UK Building Institute's "Craft Your Future" lessons
+	* for Minecraft Education Edition (M:EE) 
+	* [http://ciobmc.org/]
++ Greenfield
+	* Minecraft's largest city
+	* realistic in 1:1 scale
+	* [http://www.planetminecraft.com/project/greenfield---new-life-size-city-project/]
++ 
 
 
 ## Minecraft Server
@@ -192,6 +285,7 @@ NB: As at version 1.11.2 this starts fine with Oracle Java 9
 but connecting clients with Java 9 reports
 `Unable to access address of buffer`
 - fall back to Java 8 which is better supported for now
+
 
 
 ### Configure 
@@ -248,22 +342,11 @@ If you need to check which is your java executable:
 readlink -e `which java`
 ```
 
-## Resources
-
-### Building and architecture
-
-* UK Building Institute's "Craft Your Future" lessons
-	* for Minecraft Education Edition (M:EE) 
-	* [http://ciobmc.org/]
-+ Greenfield
-	* Minecraft's largest city
-	* realistic in 1:1 scale
-	* [http://www.planetminecraft.com/project/greenfield---new-life-size-city-project/]
-+ 
-
 # IN
 
-The following sections have been extracted from old Ubuntu Setup notes and may need some tidying. 
+The following sections have been extracted from old Ubuntu Setup notes 
+and may need some tidying. 
+
 
 ## Minecraft server ##
 
@@ -327,6 +410,7 @@ mkdir minecraft
 cd minecraft
 wget http://www.minecraft.net/download/minecraft_server.jar
 ```
+
 ### Create config files ###
 
 Run Minecraft server for the first time 
@@ -339,7 +423,10 @@ then stop it immediately
 ```
 /stop
 ```
-### Configuring server and mods ###
+
+### Configuring server ###
+
+see also **mods** section above
 
 Now edit the **server.properties** file and set _server-port_ and _motd_
 
@@ -353,54 +440,6 @@ sudo vi admin.txt
 help > http://www.minecraftserverhosting.org/minecraft-server-files-folders/
 ```
 
-#### Mods to consider: ####
-
-* CommandBook
-    * requires WorldEdit
-    * many extra console cmds for ops & players (less bloat than 'Essentials')
-* AdminCmd ?
-* ShiftMode
-    * toggle Creative or Survival from console
-    * http://dev.bukkit.org/server-mods/shiftmode/
-* WorldEdit
-    * modify worlds 
-    * [http://dev.bukkit.org/server-mods/worldedit/] 
-
-```
-mkdir craftbukkit
-cd craftbukkit
-# get the Craft Bukkit beta (for MC 1.2.4 compatibility)
-wget http://cbukk.it/craftbukkit-beta.jar
-cat > craftbukkit.sh << EOF
-#!/bin/sh
-BINDIR=$PWD
-cd "\$BINDIR"
-java -Xmx1024M -Xms1024M -jar craftbukkit-beta.jar
-EOF
-chmod +x craftbukkit.sh
-sh craftbukkit.sh
-
-# Then you'll need to STOP the server onces all the files are created
-
-#you may need to get nightly build for WorldEdit
-wget http://build.sk89q.com/job/WorldEdit/lastSuccessfulBuild/artifact/%2azip%2a/archive.zip
-unzip -j archive.zip
-rm archive.zip
-mkdir plugins/WorldEdit
-unzip worldedit*.zip -d plugins
-wget http://build.sk89q.com/job/CommandBook/lastBuild/artifact/*zip*/archive.zip
-unzip -j archive.zip
-rm archive.zip
-mkdir plugins/CommandBook
-unzip commandbook*.zip -d plugins
-```
-
-#### Notes on client Mods ####
-
-* TooManyItems
-    * quite useful for managing inventory
-* Hamachi (p2p vpn client)
-    * not needed with DynDNS addressing 
 
 ### Updating minecraft ###
 
@@ -418,6 +457,7 @@ cp minecraft_server.$MCver.jar minecraft_server.jar
 exit
 sudo /etc/init.d/minecraft start
 ```
+
 ### Running minecraft automatically ###
 
 Get the script from [http://www.minecraftwiki.net/wiki/Server_startup_script]
@@ -434,6 +474,7 @@ sudo cp minecraft /etc/init.d/minecraft
 sudo chmod a+x /etc/init.d/minecraft
 sudo update-rc.d minecraft defaults
 ```
+
 ### Operator Console commands ###
 
 /op <name>
@@ -461,13 +502,16 @@ If you installed the startup scrips, you can use the following to restart it...
 ```
 sudo /etc/init.d/minecraft restart
 ```
+
 ### Saved Worlds ###
 
-Bear in mind that singleplayer mode on Windows Vista saves it's worlds in the following location 
+Bear in mind that singleplayer mode on Windows Vista 
+saves it's worlds in the following location 
 
 ```
 C:\Users\Username\AppData\Roaming\.minecraft\saves
 ```
+
 To copy worlds...
 
 ```
