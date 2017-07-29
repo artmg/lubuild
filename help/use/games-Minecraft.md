@@ -202,6 +202,8 @@ See [http://nothing.golddave.com/2017/02/12/minecraft-installing-forge-without-i
 
 ### client mods
 
+* Vic's modern warfare [https://mods.curse.com/mc-mods/minecraft/243788-vics-modern-warfare-mod]
+
 ##### mods
 
 OptiFine Lite - http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/1272953-1-8-4-optifine-hd-d4-fps-boost-hd-textures-aa-af
