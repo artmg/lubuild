@@ -266,7 +266,8 @@ see also [https://lkubaski.wordpress.com/2012/06/29/adding-lxde-start-menu-and-d
 #### icon files
 
 Although you could specify an icon path in your desktop entry, 
-there are lots inside `/usr/share/icons` which are theme-able, 
+you could choose one that comes with your distro. 
+There are lots inside `/usr/share/icons` which are theme-able, 
 and a few more in `/usr/share/pixmaps` too. 
 
 
