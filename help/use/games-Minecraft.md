@@ -56,6 +56,67 @@ that does the download from mojang for you, on top of the OpenJDK runtime.
 Not sure if this has been maintained - see [http://www.omgubuntu.co.uk/2013/04/minecraft-installer-for-ubuntu]
 
 
+#### Java runtime
+
+The minecraft program code uses the java 'runtime' which 
+allows it to work properly on your specific hardware and operating system. 
+By default ubuntu comes with OpenJRE (open source) 
+however the minecraft vendors do NOT support OpenJRE 
+and recommend using Oracle's closed code Java Runtime Environment (JRE). 
+At the time of writing they recommended either version 7 or 8, 
+but check the latest suggestions. 
+
+##### Java in Ubuntu
+
+* you may have more that one type of JRE installed at the same time (if you really want), and more than one version too
+* Oracle Java 9 is only supported if change your JVM Arguments
+	- if it fails with `Error: Game ended with bad state (Exit Code 1)`
+	- Edit Profile / Check JVM arguments
+	- remove the option clause `-XX:+CMSIncrementalMode`
+	- save and re-execute game
+	- credit [http://minecraft.gamepedia.com/Tutorials/Update_Java] 
+
+```
+# check the current JRE(s) installed
+dpkg --get-selections | grep jre
+
+# check the version of the default JRE
+java -version
+```
+
+Oracle Java is no longer in an officially supported Ubuntu repository. If you want to install it, 
+a common choice is to download it directly from Oracle. You may alternatively use the WebUpd8 PPA. 
+This is a very simple technique, but the PPA does NOT contain Oracle binaries, 
+it simply contains a wrapper which downloads Java from Oracle and keeps it updated. 
+You can find more about Java and about the choices at https://help.ubuntu.com/community/Java
+
+```
+# http://www.webupd8.org/2012/09/install-oracle-java-8-in-ubuntu-via-ppa.html
+sudo add-apt-repository ppa:webupd8team/java
+sudo apt-get update
+echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections
+### EITHER: install JRE only
+sudo apt-get install oracle-java8-installer
+### OR: install JDK (which includes JRE)
+sudo apt-get install oracle-jdk8-installer
+# For info on including browser (e.g. Firefox) plugins see http://askubuntu.com/q/48468
+```
+
+##### Java in Windows
+
+If you install Oracle Java in Windows for Minecraft clients, the plugins are included. 
+For help with removing the plugins (e.g. to only enable Java for local programs like Minecraft) 
+see [http://www.howtogeek.com/122934] and  [http://www.ghacks.net/2010/04/25/how-to-remove-the-java-deployment-toolkit-from-firefox/]
+
+Recent versions of Minecraft for Windows 10 include a stripped down 
+Java runtime instance within the minecraft installation, 
+partly for security, partly for simplicity. 
+
+If you want to open your Windows firewall to allow local connections 
+to a LAN Game you set up, you will need the Java Binary. If it's not in there yet 
+browse to JavaW.exe in your runtime folder (which may bu under minecraft). 
+
+
 ### Performance ##
 
 The graphical performance of minecraft client is measured in FPS (frames per second) 
@@ -105,57 +166,31 @@ java -Xmx1024M -Xms512M
 Some people suggest increasing the priority of the java executable in task manager
 
 
-#### java
-
-The minecraft program code uses the java system to translate it to work properly on your specific hardware and operating system. 
-By default ubuntu comes with OpenJRE (open source) however the minecraft vendors do NOT support OpenJRE 
-and recommend using Oracle's closed code Java Runtime Environment (JRE), either version 7 or 8. 
-
-Notes:
-
-* you may have more that one type of JRE installed at the same time (if you really want), and more than one version too
-* Oracle Java 9 is only supported if change your JVM Arguments
-	- if it fails with `Error: Game ended with bad state (Exit Code 1)`
-	- Edit Profile / Check JVM arguments
-	- remove the option clause `-XX:+CMSIncrementalMode`
-	- save and re-execute game
-	- credit [http://minecraft.gamepedia.com/Tutorials/Update_Java] 
-
-```
-# check the current JRE(s) installed
-dpkg --get-selections | grep jre
-
-# check the version of the default JRE
-java -version
-```
-
-Oracle Java is no longer in an officially supported Ubuntu repository. If you want to install it, 
-a common choice is to download it directly from Oracle. You may alternatively use the WebUpd8 PPA. 
-This is a very simple technique, but the PPA does NOT contain Oracle binaries, 
-it simply contains a wrapper which downloads Java from Oracle and keeps it updated. 
-You can find more about Java and about the choices at https://help.ubuntu.com/community/Java
-
-```
-# http://www.webupd8.org/2012/09/install-oracle-java-8-in-ubuntu-via-ppa.html
-sudo add-apt-repository ppa:webupd8team/java
-sudo apt-get update
-echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections
-### EITHER: install JRE only
-sudo apt-get install oracle-java8-installer
-### OR: install JDK (which includes JRE)
-sudo apt-get install oracle-jdk8-installer
-# For info on including browser (e.g. Firefox) plugins see http://askubuntu.com/q/48468
-```
-
-NB: If you install Oracle Java in Windows for Minecraft clients, the plugins are included. 
-For help with removing the plugins (e.g. to only enable Java for local programs like Minecraft) 
-see [http://www.howtogeek.com/122934] and  [http://www.ghacks.net/2010/04/25/how-to-remove-the-java-deployment-toolkit-from-firefox/]
-
-
 
 #### other
 
 still laggy? - for more ideas see optimise - http://www.makeuseof.com/tag/7-steps-install-optimize-minecraft-linux/
+
+
+### Multiplayer 
+
+If you set up a LAN game, this is equivalent to running a server 
+instance using the world you are in. 
+You can choose the option Broadcast to LAN to advertise your server locally.
+
+You can see details on servers and advertising in sections below, 
+but troubleshooting issues with other people seeing and connecting 
+to your LAN game include:
+
+* is your firewall blocking the app? 
+	* Allow connections into Java.
+* if the server doesn't appear on other people's lists
+	* direct connection, either:
+		* ComputerName:12345 (e.g. MyPc:22543)
+		* IPAddress:12345 (e.g. 192.168.0.17:23643)
+* for more ideas and details see:
+	* [https://www.howtogeek.com/242375/how-to-troubleshoot-minecraft-lan-game-problems/]
+
 
 
 ## mods
@@ -332,9 +367,16 @@ allow-flight=true
 Minecraft server advertising does not use any of the usual suspects, 
 like `avahi` or `bonjour`, but broadcasts `MOTD` to port 4445... 
 
+For specifics on the 'protocol' for minecraft lan games 
+see [https://minecraft.gamepedia.com/Tutorials/Setting_up_a_LAN_world]
+
+If you want to emulate this from your own server...
+
 * Copy the python code from [http://gaming.stackexchange.com/a/238680]
 * set your server(s) in the array variable
 * create a .desktop file to launch it with `python`
+
+
 
 ### Troubleshoot
 
