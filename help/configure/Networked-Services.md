@@ -86,6 +86,8 @@ If you are connecting to a device that already serves SSH,
 e.g. you know you can connect to a remote command line, 
 then it will be very easy to use SSH File Transfer Protocol, 
 all you need is a suitable client. 
+To copy a single file you can use SCP, but SFTP maintains the 
+connection so you can transfer many files easily. 
 
 If you are connecting from a Ubuntu or Lubuntu client, 
 it's already built in via your file manager. 
@@ -434,7 +436,7 @@ ssh-keygen -t rsa -b 4096
 # if you need no passphrase then just Enter Enter
 ```
 
-Please see also the section on [https://github.com/artmg/lubuild/wiki/Networked-Services#managing-encryption-keys Managing Encryption Keys] below
+Please see also the section on [#managing-encryption-keys Managing Encryption Keys] below
 
 #### generate keys on Windows
 
