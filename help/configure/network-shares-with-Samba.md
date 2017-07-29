@@ -14,18 +14,20 @@ NB: see locally stored [Samba Tests.md] for other attempts including Optical Dri
 
 ## Introduction 
 
-Samba is an SMB server. 
-It runs a daemon listening at port 445 that uses Server Message Blocks 
-to share files and printers across a network. 
-It has also been known as CIFS, the Common Internet File System. 
-Because it is the default way for Windows to share files, 
+Samba is a Server Message Blocks (SMB) server, 
+to share files and printers across a network, 
+in a way that Windows PCs can access easily.
+
+Because SMB is the default way for Windows to share files, 
 it is commonly used as a cross-platform solution from Linux servers 
 (rather than just using the NFS Network File System that only Unix understands). 
+Samba runs a daemon listening at port 445 that uses SMB. 
+It has also been known as CIFS, the Common Internet File System. 
 See more info at [https://en.wikipedia.org/wiki/Server_Message_Block]
 
 The Samba config file may also turn on WINS, 
 the Windows Internet Naming Service, 
-so that computer names are broadcast and can be used instead of IP addresses
+so that computer names are broadcast and can be used instead of IP addresses. 
 
 (_copied from [https://github.com/artmg/MuGammaPi/wiki/Shared-files]_)
 
@@ -198,5 +200,17 @@ ensure that you have defined:
 * the correct back-end a) user/group and b) file and directory mode on the share and c) the corresponding user/group/mode on the filesystem
     * 
 
+If you simply want to use your local password database then use these options 
 
+```
+[global]
+	# authenticate per-user rather than per-share
+	security = user
+	# use the local /etc/passwd and shadow files
+	passdb backend = plaintext
+```
+
+There are more complex ways to set this up, where there is a local 
+set of smaba users and passwords kept in sync with the local linux 
+users and passwords using pam_smbpass, but the method above is simpler. 
 
