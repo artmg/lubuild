@@ -42,6 +42,10 @@ There are various options for layout explained later in this article, but here i
 	* ubiquity can download recent fixes to installation issues
 	* e.g. grub-install sometimes fails with encrypted root unless network available
 
+* Qt Ubiquity issues (Lubuntu Next, LxQt, Kubuntu) with encryption
+	* to avoid them check out...
+	 	* [https://github.com/artmg/lubuild/blob/master/help/configure/LxQt-Kubuntu-Ubiqity-manual-encryption-bug.md]
+
 ```
 # turn off extra ('unsafe') swap to avoid errors during install
 cat /proc/swaps
@@ -305,6 +309,29 @@ sudo ntfsclone -s -o ./PQSERVICE.ntfsclone /dev/sda1
 # (not yet complete)
 sudo dd if=/dev/sda1 of=./PQSERVICE.bootsect.bin bs=512 count=1
 ```
+
+### Overwrite entire partition before encyption
+
+Best practice 
+
+There are suggestions for preparing file loop volumes in 
+[https://github.com/artmg/lubuild/blob/master/help/use/encryption.md#create-new-loop-volumes-files] 
+but here is a simpler method for crypto-overwriting an entire partition: 
+
+```
+PARTITION_TO_ENCRYPT=/dev/sdXN
+# use openssl to encrypt the zeros (much QUICKER simple pseudo-RANDOM - better than patterns)
+head -c 32 /dev/urandom | openssl enc -rc4 -nosalt -in /dev/zero -pass stdin | dd bs=1M status=progress of=$PARTITION_TO_ENCRYPT
+# credit - http://askubuntu.com/a/359547
+
+## simpler version if you don't need to view progress
+#sudo openssl enc -aes-256-ctr -pass pass:"$(dd if=/dev/urandom bs=128 count=1 2>/dev/null | base64)" -nosalt < /dev/zero > $PARTITION_TO_ENCRYPT
+## credit [http://thesimplecomputer.info/full-disk-encryption-with-ubuntu]
+```
+
+For more alternatives on how to wipe whole partitions as preparation for encryption 
+see [https://github.com/artmg/lubuild/blob/master/help/manipulate/remove-data.md]
+
 
 ## Automount
 

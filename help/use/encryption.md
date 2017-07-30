@@ -16,7 +16,8 @@ see also:
 * [https://github.com/artmg/lubuild/wiki/Networked-Services]
 	- encryption of network traffic (e.g. using SSH) 
 	- managing encryption keys
-* 
+* how to wipe whole partitions as preparation for encryption
+	* [https://github.com/artmg/lubuild/blob/master/help/manipulate/remove-data.md]
 
 
 ## Create new loop volumes files
