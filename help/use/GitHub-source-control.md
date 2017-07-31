@@ -28,7 +28,14 @@ options for graphical git clients:
     * need to manually set up actions like merge or push!
 * 
 
-
+```
+sudo apt-get install -y git
+```
+* Settings
+	* Working Directory / Diff against Working Dir
+	* Commit / Defined in: Local Config
+* Actions / New
+	* push
 
 #### clone 
 
@@ -80,6 +87,19 @@ git config --global credential.helper cache
 git config --global credential.helper 'cache --timeout=3600'
 
 git config --global user.email "artmg@users.noreply.github.com"
+```
+
+#### ignore certain file patterns
+
+Do not sync file changes if they meet certain pattern criteria 
+(e.g. backup files)
+
+```
+cat >$HOME/.gitignore_global <<EOF!
+#ghostwriter backup files
+*.md.backup
+EOF!
+git config --global core.excludesfile ~/.gitignore_global
 ```
 
 
@@ -230,8 +250,7 @@ explains two broad methods:
 Note that you should guard these tokens as if they were passwords, 
 as they allow wide ranging access to your repos. 
 
-
-
+* Log into Github web interface
 * Generate a new Personal Access Token 
     * [https://github.com/settings/tokens/new]
 * Give it a name 
@@ -242,7 +261,7 @@ as they allow wide ranging access to your repos.
 
 ```
 # paste the token into the editor in the form
-# http[s]://<username>:<password>@<host>
+# http[s]://<username>:<password>@<userUrl>
 # (so username goes before domain)
 editor ~/.git-personal-access-token
 
