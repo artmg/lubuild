@@ -6,6 +6,7 @@ different files to cover different subjects
 e.g.
 * configure Disks (here)
 	* install, partitioning, ???
+	* setting up encrypted swap and allowing resume
 * diagnose disks
 	* Troubleshooting
 	* gone out to [https://github.com/artmg/lubuild/blob/master/help/diagnose/disks.md]
@@ -17,17 +18,21 @@ e.g.
 
 See also:
 
-* [https://github.com/artmg/lubuild/blob/master/help/diagnose/disks.md]
-	* diagnosis and Troubleshooting on disks
-* [https://github.com/artmg/lubuild/blob/master/help/manipulate/storage-in-connected-devices.md]
-    * for device storage (MTP and PTP) and mounting
-* [https://github.com/artmg/lubuild/blob/master/help/configure/write-Distro-to-flash.md]
-    * creating LiveUSB installation media
-* [https://github.com/artmg/lubuild/blob/master/help/manipulate/flash-drives-and-SSDs.md]
-    * special info about how to work with flash (non-mechanical) storage devices
-* [https://github.com/artmg/lubuild/blob/master/help/manipulate/remove-data.md]
-    * removing data, securely if necessary
-* 
+* diagnosis and Troubleshooting on disks
+	* [https://github.com/artmg/lubuild/blob/master/help/diagnose/disks.md]
+* other forms of encryption
+	* [https://github.com/artmg/lubuild/blob/master/help/use/encryption.md]
+* for device storage (MTP and PTP) and mounting
+	* [https://github.com/artmg/lubuild/blob/master/help/manipulate/storage-in-connected-devices.md]
+* creating LiveUSB installation media
+	* [https://github.com/artmg/lubuild/blob/master/help/configure/write-Distro-to-flash.md]
+* special info about how to work with flash (non-mechanical) storage devices
+	* [https://github.com/artmg/lubuild/blob/master/help/manipulate/flash-drives-and-SSDs.md]
+* removing data, securely if necessary
+	* [https://github.com/artmg/lubuild/blob/master/help/manipulate/remove-data.md]
+* to workaround issues installing QT and KDE into encrypted partitions 
+	* [https://github.com/artmg/lubuild/blob/master/help/configure/LxQt-Kubuntu-Ubiqity-manual-encryption-bug.md]
+
 
 # Configure Disks
 
@@ -378,6 +383,12 @@ sudo mount -a
 credit &gt; https://help.ubuntu.com/community/AutomaticallyMountPartitions
 ```
 
+For help with automatically mounting encrypted partitions 
+using a securely stored key file to unlock them 
+see http://thesimplecomputer.info/full-disk-encryption-with-ubuntu
+
+
+
 ## Swap
 
 ### set up Swap, post install
@@ -477,6 +488,9 @@ https://help.ubuntu.com/community/EnableHibernateWithEncryptedSwap
 
 ##### Other Notes on encrypted swap 
 
+###### Resume with encrypted swap
+
+
 ```
 # encrypt swap and don't give the message saying hibernate will fail to resume
 sudo ecryptfs-setup-swap -f
@@ -508,6 +522,10 @@ echo "cryptswap1 $SWAPDEV /dev/urandom noauto,offset=6,swap,cipher=aes-cbc-essiv
 sudo update-initramfs -u
 
 
+Resume with encrypted swap - 
+/etc/initramfs-tools/conf.d/resume
+RESUME=/dev/mapper/MyEncrSwap
+update-initramfs
 
 
 # create upstart script
@@ -555,7 +573,7 @@ Try using **Disk cleanup** for removing some of those temporary system files.
 
 * to view the latest event preventing shrink:
 	- powershell (if backqoutes surround the code, omit them)
-		- `Get-WinEvent -FilterHashtable @{logname=’application’; id=259} -MaxEvents 1 | fl`
+		- `Get-WinEvent -FilterHashtable @{logname=???application???; id=259} -MaxEvents 1 | fl`
 	- gui
 		- `eventvwr` / Windows Logs / Application / look for event with ID 259
 * to disable and renable the features
@@ -653,7 +671,7 @@ NTBootloader, install **boot-repair** tool - see
 
 ''WARNING: Do not upgrade or modify grub in dual boot configurations when Windows is HIBERNATED!''
 
-NB: Left Ubuntu as default – some machines should make Windows default (see ''Set Up PC.htm'')
+NB: Left Ubuntu as default ??? some machines should make Windows default (see ''Set Up PC.htm'')
 
 <pre>If performance on device has ever been in question: </pre>
 <ul>
