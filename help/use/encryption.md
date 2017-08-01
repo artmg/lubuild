@@ -6,19 +6,25 @@ This article is mostly about _encryption at rest_,
 in other words when data is being stored on a medium 
 such as a hard disk drive or a flash drive.
 
+For help on setting up encryption when you install into partitions, 
+including encrypted swap, see 
+[https://github.com/artmg/lubuild/blob/master/help/configure/Disks.md]
+
+
 see also:
 
-* [loop files and forensics](https://github.com/artmg/lubuild/blob/master/help/manipulate/disk-recovery-and-forensics.md)
-    * discovering the contents of a disk image (loop) file
-* [general partitioning procs](https://github.com/artmg/lubuild/blob/master/help/configure/Disks-and-layout.md)
-* [Flash and Filesystems](https://github.com/artmg/lubuild/blob/master/help/manipulate/flash-drives-and-SSDs.md)
-* [https://github.com/artmg/lubuild/wiki/Networked-Services]
-	- encryption of network traffic (e.g. using SSH) 
-	- managing encryption keys
+* discovering the contents of a disk image (loop) file
+	* [loop files and forensics](https://github.com/artmg/lubuild/blob/master/help/manipulate/disk-recovery-and-forensics.md)
+* general partitioning procedures including encrypted swap
+	* [https://github.com/artmg/lubuild/blob/master/help/configure/Disks.md]
 * how to wipe whole partitions as preparation for encryption
 	* [https://github.com/artmg/lubuild/blob/master/help/manipulate/remove-data.md]
 * to workaround issues installing QT and KDE into encrypted partitions 
 	* [https://github.com/artmg/lubuild/blob/master/help/configure/LxQt-Kubuntu-Ubiqity-manual-encryption-bug.md]
+* [Flash and Filesystems](https://github.com/artmg/lubuild/blob/master/help/manipulate/flash-drives-and-SSDs.md)
+* [https://github.com/artmg/lubuild/wiki/Networked-Services]
+	- encryption of network traffic (e.g. using SSH) 
+	- managing encryption keys
 
 
 ## Create new loop volumes files
