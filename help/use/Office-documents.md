@@ -21,6 +21,72 @@ see also:
 	* including email formats
 
 
+## Fonts
+
+See also Fonts for Interoperability below
+
+### Font file locations
+
+* recommended
+	* User - $HOME/.local/share/fonts
+	* System - /usr/local/share/fonts
+* legacy
+	* User - $HOME/.fonts
+	* System - /usr/share/fonts
+
+### Installing fonts
+
+You can also double-click on the font file (or select Open with Font Viewer in the right-click menu). 
+Then click the Install Font button.
+
+```
+# rebuild Font Cache
+sudo fc-cache -f -v
+```
+
+* Ubuntu has the GTK `font-manager` package
+	* this is the default app for opening font files from file manager
+* is there a Qt-based font manager package?
+	* fontmatrix
+		* source [https://github.com/fontmatrix/fontmatrix]
+		* was in repos until trusty
+	* kFontview
+		* comes with ubuntu package [plasma-desktop]
+	* quickbrownfox
+		* source [https://github.com/achipa/quickbrownfox]
+
+#### Improving how Fonts appear
+
+* fontconfig-infinality
+
+
+### Font packages
+
+```
+# credit [https://www.maketecheasier.com/install-hundreds-of-fonts-in-ubuntu/]
+#
+# a few hundred
+sudo apt-get install fonts-cantarell lmodern ttf-aenigma ttf-georgewilliams ttf-bitstream-vera ttf-sjfonts ttf-tuffy tv-fonts
+# even more
+sudo apt-get install ubuntustudio-font-meta
+#
+# Install all the google fonts
+cd && wget http://webupd8.googlecode.com/files/install-google-fonts
+chmod +x install-google-fonts
+./install-google-fonts
+
+```
+
+### Font sources
+
+* see list in [https://wiki.ubuntu.com/Fonts#Links_to_fonts]
+* [https://fonts.google.com/]
+* to check
+	* [http://www.losttype.com/browse/]
+	* [http://www.fontsquirrel.com/]
+
+
+
 ## Interoperability
 
 ### Microsoft Windows and Office
