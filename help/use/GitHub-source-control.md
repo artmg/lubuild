@@ -96,6 +96,9 @@ Do not sync file changes if they meet certain pattern criteria
 
 ```
 cat >$HOME/.gitignore_global <<EOF!
+#geany backup files
+*~
+*.*~
 #ghostwriter backup files
 *.md.backup
 EOF!
