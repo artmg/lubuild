@@ -37,6 +37,31 @@ sudo apt-get install -y git
 * Actions / New
 	* push
 
+#### configure
+
+##### ignore certain file patterns
+
+Do not sync file changes if they meet certain pattern criteria 
+(e.g. backup files)
+
+```
+cat >$HOME/.gitignore_global <<EOF!
+#geany backup files
+*~
+*.*~
+#ghostwriter backup files
+*.md.backup
+EOF!
+git config --global core.excludesfile ~/.gitignore_global
+```
+
+##### Authentication
+
+see [#authentication-options] section below, e.g.
+
+* [#store-personal-access-token]
+
+
 #### clone 
 
 ```
@@ -88,23 +113,6 @@ git config --global credential.helper 'cache --timeout=3600'
 
 git config --global user.email "artmg@users.noreply.github.com"
 ```
-
-#### ignore certain file patterns
-
-Do not sync file changes if they meet certain pattern criteria 
-(e.g. backup files)
-
-```
-cat >$HOME/.gitignore_global <<EOF!
-#geany backup files
-*~
-*.*~
-#ghostwriter backup files
-*.md.backup
-EOF!
-git config --global core.excludesfile ~/.gitignore_global
-```
-
 
 #### sync recent changes
 
@@ -233,7 +241,7 @@ gollum .
 x-www-browser http://localhost:4567/
 ```
 
-## Authentication
+## Authentication options
 
 see also:
 * caching your github password (above)
@@ -248,7 +256,7 @@ explains two broad methods:
 * use one of the Credential Storage options over HTTP(S) transport
 
 
-### stored Personal Access token
+### store Personal Access token
 
 Note that you should guard these tokens as if they were passwords, 
 as they allow wide ranging access to your repos. 
