@@ -10,8 +10,9 @@ see also:
 ### learning resources
 
 * simple tutorial
+	[http://www.cplusplus.com/doc/tutorial/]
 * fun problems to solve
-	* these apply to any language, 
+	* these could be solved using any language, 
 		* but maybe C++ makes you think more, as it is lower-level
 	* a handful of mainly simple problems
 		* [http://www.shiftedup.com/2015/05/07/five-programming-problems-every-software-engineer-should-be-able-to-solve-in-less-than-1-hour]
@@ -27,12 +28,31 @@ see also:
 
 ### cross platform c++ console ide
 
-The requirement is for a free / libre c++ IDE that allows 
+The requirement is for a free / libre C++ IDE that allows 
+programs to be both written on and compiled for 
+both Windows and Linux systems. 
+Ideally the solution should be reasonably lightweight, 
+and allow for simple, standard C++ syntax code 
+that will run on a console. 
 
-* Code::Blocks
-	* in ubuntu repos
-	* for Windows pick installer that includes MinGW compiler
-* CodeLite
+The chosen candidate here is **Code::Blocks**, 
+although CodeLite is probably another close contender. 
+Eclipse with the C++ plugin would have worked, albeit with more bulk, 
+and Qt Creator was only discounted as the console code 
+was not classic C++ style. 
+
+See [#purpose-built-ides] section below for more details on alternatives. 
+
+```
+# install `codeblocks` package, and all dependencies, from ubuntu repos 
+sudo apt-get install codeblocks g++
+# since ubuntu 17.04 the codeblocks version is reasonably recent
+# NB on fresh install all the compiler/debug/widgets might take 700MB!
+```
+
+* for Windows pick installer that includes MinGW compiler
+
+
 
 ## Java
 
@@ -130,7 +150,7 @@ This section is focused on free/libre IDEs that run using Qt widgets
 	* small footprint
 	* focus is on developing C++
 	* no movement since 2014
- 
+
 * Not qt: 
 	* CodeLite
 		* written in C++ with GTK2
@@ -143,7 +163,7 @@ This section is focused on free/libre IDEs that run using Qt widgets
 		* accepts a variety of compilers
 		* mature project but not many updates recently
 		* lightweight and easy for beginners to get started
-		* GitBlocks plugin available
+		* GitBlocks plugin not complete (Aug'17)
 		* GDB debugging on Windows had problems but should be sorted
 	* atom
 		* runs on electron framework (web-oriented)
