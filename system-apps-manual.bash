@@ -26,40 +26,6 @@ xdg-open https://help.ubuntu.com/community/InstallKompozer
 # Is BlueFish visual? Aptana is more web dev
 
 
-#################################
-### HP Linux Imaging & Printing project (HPLIP) - HP printer & scanner drivers
-
-# now distributed via repos
-sudo apt-get install -y hplip
-
-# *** VERSION FIXES ***
-# credit https://help.ubuntu.com/community/HpAllInOne#error:_hp-setup_requires_GUI_support
-if [[ "${DESKTOP_SESSION} $(lsb_release -sr)" == "Lubuntu 14.04" ]] then 
-   sudo apt-get install -y python-qt4 ; 
-fi
-if [[ "${DESKTOP_SESSION} $(lsb_release -sr)" == "Lubuntu 15.04" ]] then 
-   sudo apt-get install -y python3-pyqt4 ; 
-fi
-if [[ "${DESKTOP_SESSION} $(lsb_release -sr)" == "ubuntustudio 16.10" ]] then 
-   sudo apt-get install -y python3-pyqt5 ; 
-fi
-
-sudo hp-setup
-# help - https://help.ubuntu.com/community/HpAllInOne
-
-
-## alternative for manual install (or latest version)
-# xdg-open http://hplipopensource.com/hplip-web/install/install/index.html 
-## launch the downloaded installer by entering the following, then TAB to autocomplete, then ENTER
-# bash `xdg-user-dir DOWNLOAD`/hplip*.run
-
-
-# First time around you can check compatibility at 
-# xdg-open http://hplipopensource.com/hplip-web/install_wizard/index.html
-
-# should also include XSANE scanner
-
-
 ##################################
 ### SKYPE
 

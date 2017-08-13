@@ -4,41 +4,65 @@
 # $LUBUILD_HARDWARE_TYPE_EXTERNAL_SCREEN
 # $LUBUILD_HARDWARE_TYPE_LAPTOP 
 # $LUBUILD_HARDWARE_TYPE_LIVEUSB
+# $LUBUILD_HARDWARE_TYPE_DVD
 
 
-#
-### Wifi issues after waking from hibernate or suspend ###
-#
-## credit - http://askubuntu.com/questions/365112/lubuntu-13-10-laptop-loses-wireless-after-sleep
-## sudo not required :)
-# nmcli nm sleep false
-#
-# before nmcli version 0.9.10 this was
-#
-# nmcli nm sleep false
-#
-# since nmcli version 0.9.10 this should now be
-# nmcli networking on   # or simply    nmcli n on 
-#
-# and check with 
-# nmcli general   # or simply    nmcli g
-#
-## if nmcli n on does not bring it out of sleep (check with nmcli -f state g)
-## there appears to be no way with nmcli to turn STATE asleep into anything else
-## so just restart the service
-# sudo service network-manager restart
-if [[ $LUBUILD_HARDWARE_TYPE_LAPTOP -eq TRUE ]] ; then ( 
-sudo tee /usr/share/applications/wake-up-wifi.desktop cat <<EOF!
-[Desktop Entry]
-Type=Application
-Name=Wake up Wifi
-Exec=nmcli networking on
-Terminal=false
-Categories=System;
-Icon=nm-signal-50
-EOF!
+#################################
+### HP Linux Imaging & Printing project (HPLIP) - HP printer & scanner drivers
+
+# now distributed via repos
+sudo apt-get install -y hplip hplip-gui
+
+# *** VERSION FIXES ***
+# credit https://help.ubuntu.com/community/HpAllInOne#error:_hp-setup_requires_GUI_support
+if [[ "${DESKTOP_SESSION} $(lsb_release -sr)" == "Lubuntu 14.04" ]] then 
+   sudo apt-get install -y python-qt4 ; 
+fi
+if [[ "${DESKTOP_SESSION} $(lsb_release -sr)" == "Lubuntu 15.04" ]] then 
+   sudo apt-get install -y python3-pyqt4 ; 
+fi
+if [[ "${DESKTOP_SESSION} $(lsb_release -sr)" == "ubuntustudio 16.10" ]] then 
+   sudo apt-get install -y python3-pyqt5 ; 
+fi
+
+sudo hp-setup
+# help - https://help.ubuntu.com/community/HpAllInOne
+
+
+## alternative for manual install (or latest version)
+# xdg-open http://hplipopensource.com/hplip-web/install/install/index.html 
+## launch the downloaded installer by entering the following, then TAB to autocomplete, then ENTER
+# bash `xdg-user-dir DOWNLOAD`/hplip*.run
+
+
+# First time around you can check compatibility at 
+# xdg-open http://hplipopensource.com/hplip-web/install_wizard/index.html
+
+# should also include XSANE scanner
+
+
+### webcam
+
+if [[ LUBUILD_HARDWARE_TYPE_LAPTOP -eq TRUE ]] ; then ( 
+	# support for most webcams
+	sudo apt-get install guvcview
+) fi
+
+
+### Allow to play DVDs
+
+if [[ LUBUILD_HARDWARE_TYPE_DVD -eq TRUE ]] ; then ( 
+	# NB: both these commands are attended installs, needing some user interaction
+	# credit https://help.ubuntu.com/stable/ubuntu-help/video-dvd-restricted.html
+	sudo apt-get install -y libdvdnav4 libdvdread4 gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly libdvd-pkg
+	sudo dpkg-reconfigure libdvd-pkg
+	# optional player app as alternative to MPlayer
+	# sudo apt-get install -y vlc
 ) ; fi
-###############################################
+
+
+
+
 
 
 ######### Defaults for Users ###########

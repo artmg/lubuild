@@ -444,7 +444,12 @@ see http://thesimplecomputer.info/full-disk-encryption-with-ubuntu
 
 NB: This will leave the swap **unencrypted** - see below to encrypt your swap
 
-*Check the code in case of format errors!*
+Improvements:
+
+* Check the code in case of format errors!
+* use some of the automation in 
+	* [https://github.com/artmg/lubuild/blob/master/help/configure/LxQt-Kubuntu-Ubiqity-manual-encryption-bug.md]
+
 ```
 # help - https://help.ubuntu.com/community/SwapFaq
 # check what swap is set up
@@ -481,20 +486,33 @@ sudo update-initramfs -u
 ```
 Reboot!
 
+
 ### Encrypted Swap
+
+```
+# Prepare variables
+LUBUILD_SWAP_DEVICE=/dev/sdXN
+```
+
+* Best practice recommends overwriting  magnetic media with random patterns
+
+```
+PARTITION_TO_ENCRYPT=$LUBUILD_SWAP_DEVICE
+```
+
+* [https://github.com/artmg/lubuild/blob/master/help/configure/Disks-and-layout.md#overwrite-entire-partition-before-encyption]
 
 
 ```
-LUBUILD_SWAP_DEVICE=/dev/sdXN
+# authenticate for sudo
 sudo echo
 
 # package required for ecryptfs-setup-swap script used below
-sudo apt-get install ecryptfs-utils
+sudo apt-get install -y ecryptfs-utils
 
 # credit [https://blog.sleeplessbeastie.eu/2012/05/23/ubuntu-how-to-encrypt-swap-partition/]
 sudo mkswap $LUBUILD_SWAP_DEVICE
-# e.g. Setting up swapspace version 1, size = 4 GiB (4293218304 bytes)
-# e.g. no label, UUID=7881e5fd-a2d2-4ffc-ac14-7df643a370aa
+# This will output the main UUID of the swap partition
 
 sudo swapon $LUBUILD_SWAP_DEVICE
 # check swap is now on
@@ -502,40 +520,103 @@ cat /proc/swaps
 # should show /dev/sdXN
 sudo blkid | grep swap
 
-sudo ecryptfs-setup-swap
+sudo ecryptfs-setup-swap --force
+
 # if this fails with 
 # swapon: cannot open /dev/mapper/cryptswap1: No such file or directory
 # then run the following 
-## do we also need... ?
-## sudo swapoff $LUBUILD_SWAP_DEVICE
-# sudo cryptdisks_start cryptswap1
+sudo cryptdisks_start cryptswap1
+sudo swapon /dev/mapper/cryptswap1
 # or simply reboot
 
+# finally check 
+cat /proc/swaps
 # should show /dev/mapper/cryptswap1
 sudo blkid | grep swap
+# check config files tally with cryptswapx entry, e.g. 
+# /dev/mapper/cryptswap1 none swap sw 0 0
+# cryptswap1 UUID=ac17...9b75 /dev/urandom swap,offset=1024,cipher=aes-xts-plain64
+cat /etc/fstab |grep swap
+cat /etc/crypttab |grep swap
 
 ```
 
-There were some issues with 14.04 Trusty, but they could be worked around by using /dev references rather than UUIDs (see [here](https://ubuntuforums.org/showthread.php?t=2224129) and [here](http://askubuntu.com/a/463688))
+There were some issues with 14.04 Trusty, but they could be worked around 
+by using /dev references rather than UUIDs 
+(see [here](https://ubuntuforums.org/showthread.php?t=2224129) and [here](http://askubuntu.com/a/463688))
 
-#### In from Lub
 
-e.g.
+#### Hibernate with Encrypted swap
+
+When you hibernate your RAM is saved to disk in the swap area. 
+If you have openned an encrypted volume with a LUKS key, 
+that would be stored in plaintext inside your RAM, making it easy 
+to decrypt your main volumne. This is why you need to encrypt your swap 
+before considering hibernating, if you have an encrypted volume. 
+
+The trick with hibernate is actually the RESUME. If the swap is 
+encryped you need a key to decrypt it upon resume, to get your RAM contents 
+back out of the swap. 
 
 ```
-LUBUILD_SWAP_DEVICE=/dev/sda8
+# Prepare variables
+LUBUILD_SWAP_DEVICE=/dev/sdXN
 ```
 
-#### OUT - Hibernate with Encrypted swap
+This method asks you for the passphrase that will be used to encrypt 
+the swap. 
 
-* out to [https://github.com/artmg/lubuild/blob/master/help/configure/Disks-and-layout.md]
+```
+PARTITION_MAPPER=cryptswap1
+CRYPT_OPTIONS="--cipher aes-xts-plain64 --verify-passphrase --key-size 256"
 
-Article covers full disk encry wih LVM - including Swap - how to enable Hibernate on top
+# Turn off swap.
+sudo swapoff -a
+
+# Undo the existing mapping.
+sudo cryptsetup luksClose /dev/mapper/$PARTITION_MAPPER
+
+# remember YES must be uppercase, then enter passphrase twice
+sudo cryptsetup $CRYPT_OPTIONS luksFormat $LUBUILD_SWAP_DEVICE
+
+# and passphrase a third time
+sudo cryptsetup luksOpen $LUBUILD_SWAP_DEVICE  $PARTITION_MAPPER
+
+#Set up the partition as swap.
+sudo mkswap /dev/mapper/$PARTITION_MAPPER
+# Turn on the swap
+sudo swapon --all
+# Check that it is working.
+swapon --summary
+
+sudo cp /etc/crypttab{,.`date +%y%m%d.%H%M%S`}
+sudo sed -i 's|cryptswap1|#cryptswap1|' /etc/crypttab
+sudo tee -a /etc/crypttab <<EOF!
+$PARTITION_MAPPER   $LUBUILD_SWAP_DEVICE   none   luks
+EOF!
+cat /etc/crypttab
+
+sudo tee -a /etc/initramfs-tools/conf.d/resume <<EOF!
+RESUME=/dev/mapper/$PARTITION_MAPPER
+EOF!
+cat /etc/initramfs-tools/conf.d/resume
+
+## IS THIS STILL TRUE ??? - IMPORTANT: Whenever new kernels are installed, this step must be repeated
+
+sudo update-initramfs -u -k all
+
+```
+
+* will this also put RESUME into grub??
+
+
+
 
 If you have an encrypted swap and want to enable hibernate
-https://help.ubuntu.com/community/EnableHibernateWithEncryptedSwap
-
-(http://thesimplecomputer.info/full-disk-encryption-with-ubuntu)
+* flexible method with any paritioning
+	[https://help.ubuntu.com/community/EnableHibernateWithEncryptedSwap]
+* method with single encrypted LVM including swap partition inside
+	[http://thesimplecomputer.info/full-disk-encryption-with-ubuntu]
 
 Other links copied from top:
 
@@ -545,31 +626,16 @@ Other links copied from top:
 * [Partitioning, Encryption and SSD advice](DROP.IN/Service.IN/Lub Disk Partitions & Tests.md)
     * most stuff moved out of here now
 
-```
-PARTITION_TO_ENCRYPT=/dev/sda6
-```
-[https://github.com/artmg/lubuild/blob/master/help/configure/Disks-and-layout.md#overwrite-entire-partition-before-encyption]
-
-
-
-
-#### IN from wiki
-
-For simple step-by-step instructions on what to change during your
-Ubuntu install see "full encryption using LVM" in Encryption page
-<https://github.com/artmg/lubuild/wiki/Encryption#Full_Disk_Encryption_with_LVM>
-
 
 ##### Hibernate issues with encrypted swap 
 
-It is worth mentioning that encrypted swap prevents hibernate (a.k.a. suspend to disk), as a key would be required to decrypt swap after resume. 
-Although https://help.ubuntu.com/community/EncryptedHome#Caveats states that versions 9.10 onwards will encrypt swap if the home is encrypted, it is worth checking using the command in the previous section. 
-If you really want to encrypt swap and hibernate the see the workaround https://help.ubuntu.com/community/EnableHibernateWithEncryptedSwap
-
+It is worth mentioning that encrypted swap prevents hibernate (a.k.a. suspend to disk), 
+as a key would be required to decrypt swap after resume. 
+Although https://help.ubuntu.com/community/EncryptedHome#Caveats 
+states that versions 9.10 onwards will encrypt swap if the home is encrypted, 
+it is worth checking using the command in the previous section. 
+If you really want to encrypt swap and hibernate the see the workaround 
 https://help.ubuntu.com/community/EnableHibernateWithEncryptedSwap
-
-
-##### Other Notes on encrypted swap 
 
 ###### Resume with encrypted swap
 

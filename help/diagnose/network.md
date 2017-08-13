@@ -107,6 +107,9 @@ sudo cat /var/log/syslog
 ```
 # iwconfig # deprecated in favour of iw
 iw dev
+
+ip address
+
 ```
 
 ##### Limited Bandwidth 

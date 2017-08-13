@@ -18,6 +18,16 @@ if \
    ~/.config/openbox/lubuntu-rc.xml
 fi
 
+if [[ "${DESKTOP_SESSION} $(lsb_release -sr)" == "QLubuntu 17.10" ]] ; then
+cat > $HOME/.config/lxqt/globalkeyshortcuts.conf <<EOF!
+
+[Control%2BAlt%2BL.27]
+Comment=Lock screen
+Enabled=true
+path=lxqt-leave --lockscreen
+EOF!
+fi
+
 # consider changing (unconditionally) shortcut from key="C-A-l" to key="W-l"
 # or at least adding in a copy (like W-p below) to use both shortcuts
 
@@ -38,6 +48,20 @@ if [[ $LUBUILD_HARDWARE_TYPE_LAPTOP -eq TRUE ]] ; then (
 ) ; fi
 
 
+## enable Sleep Key in Lubuntu 16.10
+#
+# Manual
+#
+# e.g. (Fn-F4) on AO722
+#    * Right-click on battery - (Xfce) Power Managment Settings
+#        * xfce4-power-manager-settings
+#    * "When sleep button is pressed" = Suspend
+#        * ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-power-manager.xml
+#        * <property name="sleep-button-action" type="uint" value="1"/>
+
+
+
+
 
 ######### toggle external screen display using SUPER-P ###########################
 #
@@ -47,8 +71,10 @@ if [[ $LUBUILD_HARDWARE_TYPE_LAPTOP -eq TRUE ]] ; then (
 # Use ARandR scripts instead... 
 # help - http://christian.amsuess.com/tools/arandr/
 # proc - http://askubuntu.com/questions/162028/how-to-use-shortcuts-to-switch-between-displays-in-lxde
+#
+# NOT required under LXQT: lxqt-config-monitor is based on KScreen, handles monitor changes automatically
 
-if [[ $LUBUILD_HARDWARE_TYPE_LAPTOP -eq TRUE ] && [ $LUBUILD_HARDWARE_TYPE_EXTERNAL_SCREEN -eq TRUE ]] ; then ( 
+if [[ "$DESKTOP_SESSION" <> "QLubuntu" ] && [ $LUBUILD_HARDWARE_TYPE_LAPTOP -eq TRUE ] && [ $LUBUILD_HARDWARE_TYPE_EXTERNAL_SCREEN -eq TRUE ]] ; then ( 
 # This installs the GUI and the notify-send util the script uses for notification bubbles / toasts
 sudo apt-get install -y arandr libnotify-bin
 
@@ -159,7 +185,6 @@ if [[ $AFFECTED_MODELS == *\|$MODEL_NO\|* ]] ; then
   # set the card's Beep setting to almost silent
   amixer -c 1 sset Beep 1
 fi
-
 
 
 

@@ -4,12 +4,14 @@ graphical installer interface for Ubuntu, and spins derived from it
 like Lubuntu Next. Specifically, manual partitioning encryption fails. 
 This is about that error and how to work around it. 
 
-* more tech detail on install 
-	* [https://bugs.launchpad.net/ubuntu/+source/ubiquity/+bug/1670336]
 * has kubuntu been plagued by this for years?
 	* [https://bugs.launchpad.net/ubuntu/+source/ubiquity/+bug/1510731]
+* upstream bug for ubiquity-frontend-kde
+	* [https://bugs.kde.org/show_bug.cgi?id=383219]
 * lots and lots of history
 	* [https://bugs.launchpad.net/ubuntu/+source/ubiquity/+bug/1066480]
+* more tech detail on install but bug is actually on swap issue
+	* [https://bugs.launchpad.net/ubuntu/+source/ubiquity/+bug/1670336]
 * the bug I opened a bug to link to an ISO tracker report for artful alpha 1 Lubuntu Next
 	* [https://bugs.launchpad.net/ubuntu/+source/ubiquity/+bug/1705845]
 
@@ -137,6 +139,16 @@ exit
 ```
 
 ## help
+
+### install in debug mode
+
+```
+# run the installer using the following command
+ubiquity -d
+# afterwards inspect the contents of the file
+# /var/log/installer
+# see also [https://wiki.ubuntu.com/DebuggingUbiquity/AttachingLogs]
+```
 
 ### extract initramfs to view or compare files
 

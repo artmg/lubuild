@@ -1,4 +1,4 @@
-f#!/bin/bash
+#!/bin/bash
 
 # request sudo password before getting stuck in...
 sudo echo
@@ -16,10 +16,10 @@ sudo add-apt-repository -y "deb http://archive.canonical.com/ $(lsb_release -sc)
 
 ### PPAs ###
 # NB: do NOT add comments to the end of apt-get commands, it may produce errors
+# nixnote2
+sudo add-apt-repository -y ppa:nixnote/nixnote2-daily
 # repos now deprectated or not required
-# sudo add-apt-repository -y ppa:vincent-c/nevernote                # NixNote2
 # sudo add-apt-repository -y ppa:freecad-maintainers/freecad-stable # FreeCAD (newer than Ubuntu version)
-# sudo add-apt-repository -y ppa:basic256/basic256                  # basic256
 # sudo add-apt-repository -y ppa:recoll-backports/recoll-1.15-on    # now in user-apps.bash
 
 
@@ -59,14 +59,18 @@ if [[ $DESKTOP_SESSION == Lubuntu ]] ; then
  sudo apt-mark manual lubuntu-desktop ;
 fi
 # credit - https://help.ubuntu.com/community/Lubuntu/Documentation/RemoveLubuntuDesktop
+if [[ "$DESKTOP_SESSION" == "QLubuntu" ]] ; then
+ sudo apt-mark manual lubuntu-qt-desktop ;
+fi
 
 # assuming the LibreOffice suite is installed, remove the lighter weight alternatives
-# remove abiword to avoid doc corruption issues
-sudo apt-get remove -y abiword
-# sudo apt-get remove -y abiword abiword-common
-## or will this do it all?
-sudo apt-get remove -y gnumeric
-
+if [[ $DESKTOP_SESSION == Lubuntu ]] ; then (
+	# remove abiword to avoid doc corruption issues
+	sudo apt-get remove -y abiword
+	# sudo apt-get remove -y abiword abiword-common
+	## or will this do it all?
+	sudo apt-get remove -y gnumeric
+) fi
 # sudo apt-get autoremove
 
 
@@ -94,11 +98,6 @@ EOF
 sudo apt-get install -y fonts-crosextra-carlito fonts-crosextra-caladea
 # see also [https://github.com/artmg/lubuild/blob/master/help/use/Office-documents.md]
 
-# including some proprietary (non-libre) packages
-
-sudo apt-get install `echo ${DESKTOP_SESSION,}`-restricted-extras -y
-# help > https://help.ubuntu.com/community/RestrictedFormats
-
 
 # rebuild Font Cache (just in case)
 sudo fc-cache -f -v
@@ -121,21 +120,26 @@ cat > ./package_list <<EOF
 pulseaudio	                 # should be in by default
 pavucontrol	                 # pulse volume control
 # pulseaudio-module-bluetooth # if you want to add Bluetooth Audio Sink
-guvcview	# support for most webcams
+
+cantata						# qt-based MPD client
+
+
+######## Non-libre ############
+# NOT using the `echo ${DESKTOP_SESSION,}`-restricted-extras to avoid flash installer
+libavcodec-extra unrar ttf-mscorefonts-installer
+# help > https://help.ubuntu.com/community/RestrictedFormats
 
 
 ######## Networking ############
 
-libnss-mdns # name resolution
-cifs-utils  # mount cifs in fuse
-cups-pdf	 	# PDF printer
+libnss-mdns                       # name resolution
+cifs-utils nfs-common             # mount helpers for cifs and nfs
+cups-pdf	 	                  # PDF printer
 
 ########### KIDS #############
 # for more ideas see...  https://wiki.ubuntu.com/Edubuntu/AppGuide
 childsplay gcompris tuxpaint kwordquiz ri-li # infants
 tuxtype ktouch tuxmath gbrainy kig kalgebra  # practice
-laby kturtle scratch                         # programming 
-basic256                                     ### PPA required ### ppa:basic256/basic256 (version for correct syntax)
 celestia stellarium kstars marble kgeography # geo-astro
 aisleriot airstrike glchess glines gnect gnibbles gnobots2 gnome-sudoku  # play
 gnomine gnotravex gtali iagno gnotski fraqtive khangman solfege          # play
@@ -192,8 +196,10 @@ meld        # file and folder diffs...
 ### Internet Clients ###
 
 google-chrome-stable    ### PPA required ### Google Chrome
-
 skypeforlinux           ### PPA required ### repo.skype.com
+firefox                 # for distros that don't include by default
+
+nixnote2				### PPA required
 
 epiphany-browser        # alternative lightweight browser
 transmission            # torrent client
@@ -234,15 +240,6 @@ cat package_list | while read line ; do line=${line%%\#*} ; [ "$line" ] && echo 
 ################################
 ### *** Post App Install *** ###
 ################################
-
-
-### Allow to play DVDs
-# NB: both these commands are attended installs, needing some user interaction
-# credit https://help.ubuntu.com/stable/ubuntu-help/video-dvd-restricted.html
-sudo apt-get install -y libdvdnav4 libdvdread4 gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly libdvd-pkg
-sudo dpkg-reconfigure libdvd-pkg
-# optional player app as alternative to MPlayer
-# sudo apt-get install -y vlc
 
 
 

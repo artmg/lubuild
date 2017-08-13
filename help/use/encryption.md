@@ -21,10 +21,10 @@ see also:
 	* [https://github.com/artmg/lubuild/blob/master/help/manipulate/remove-data.md]
 * to workaround issues installing QT and KDE into encrypted partitions 
 	* [https://github.com/artmg/lubuild/blob/master/help/configure/LxQt-Kubuntu-Ubiqity-manual-encryption-bug.md]
-* [Flash and Filesystems](https://github.com/artmg/lubuild/blob/master/help/manipulate/flash-drives-and-SSDs.md)
-* [https://github.com/artmg/lubuild/wiki/Networked-Services]
-	- encryption of network traffic (e.g. using SSH) 
-	- managing encryption keys
+* special considerations for data stored using solid state or NAND 'flash' technologies
+	* [https://github.com/artmg/lubuild/blob/master/help/manipulate/flash-drives-and-SSDs.md]
+* encryption of network traffic (e.g. using SSH) and managing encryption keys
+	* [https://github.com/artmg/lubuild/wiki/Networked-Services]
 
 
 ## Create new loop volumes files
@@ -279,28 +279,32 @@ chmod +x volume_close.sh
 
 ## Using Existing Volumes
 
-```
+VOLUME_FILE1="/mount/path/vol1"
+VOLUME_FILE2="/mount/path/vol2"
 BIN_FOLDER=.bin
-mkdir ~/$BIN_FOLDER
+
+```
+DEFAULT_TERM_EMU=`readlink /etc/alternatives/x-terminal-emulator`
+mkdir "~/${BIN_FOLDER}"
 cat <<-EOF! > ~/$BIN_FOLDER/volumes_open.sh
 #!/bin/bash
-losetup /dev/loop0 /mount/path/vol1
-losetup /dev/loop1 /mount/path/vol2
+losetup /dev/loop0 "${VOLUME_FILE1}"
+losetup /dev/loop1 "${VOLUME_FILE2}"
 EOF!
-cat <<-EOF! > ~/$BIN_FOLDER/volumes_close.sh
+cat <<-EOF! > "~/${BIN_FOLDER}/volumes_close.sh"
 #!/bin/bash
 losetup -d /dev/loop0
 losetup -d /dev/loop1
 EOF!
-chmod +x ~/$BIN_FOLDER/volumes_open.sh
-chmod +x ~/$BIN_FOLDER/volumes_close.sh
+chmod +x "~/${BIN_FOLDER}/volumes_open.sh"
+chmod +x "~/${BIN_FOLDER}/volumes_close.sh"
 cat <<-EOF! > ~/Desktop/Volumes_Open.desktop
 [Desktop Entry]
 Encoding=UTF-8
 Type=Application
 Name=Open Volumes
 Icon=gcr-key
-Exec=lxterminal -e "${HOME}/$BIN_FOLDER/volumes_open.sh"
+Exec=$DEFAULT_TERM_EMU -e "${HOME}/${BIN_FOLDER}/volumes_open.sh"
 Terminal=false
 EOF!
 cat <<-EOF! > ~/Desktop/Volumes_Close.desktop
@@ -309,7 +313,7 @@ Encoding=UTF-8
 Type=Application
 Name=Close Volumes
 Icon=gcr-key
-Exec=lxterminal -e "${HOME}/$BIN_FOLDER/volumes_close.sh"
+Exec=$DEFAULT_TERM_EMU -e "${HOME}/${BIN_FOLDER}/volumes_close.sh"
 Terminal=false
 EOF!
 ```
@@ -329,6 +333,132 @@ groups $USER_NAME
 # 2 automount via fstab - http://forum.osdev.org/viewtopic.php?f=13&t=24712
 # 3 using pmount - http://pmount.alioth.debian.org/
 # to understand risks, pros, cons of various approaches...
-# see https://github.com/artmg/lubuild/wiki/Desktop-and-Users#Policy_Kit 
+# see [https://github.com/artmg/lubuild/blob/master/help/configure/Desktop.md#policy-kit]
+
+
+#### legacy polkit method
+
+sudo tee /etc/polkit-1/localauthority/50-local.d/99-allow-loop-setup.pkla <<EOF!
+# Allow all users to open and close loops (e.g. losetup) without authentication
+[Set up loops]
+Identity=unix-user:*
+Action=org.freedesktop.udisks2.loop-setup
+ResultInactive=yes
+EOF!
+
+
+#### New polkit method
+
+sudo tee echo /usr/share/polkit-1/rules.d/99-allow-loop-setup.rules <<EOF!
+// Allow all users to open and close loops (e.g. losetup) without authentication
+polkit.addRule(function(action, subject) {
+   if ((action.id == "org.freedesktop.udisks2.loop-setup")) {
+      return polkit.Result.YES;
+   }
+});
+EOF!
+```
+
+## IN from mediawiki 
+
+### Choices
+
+```
+#===Encryption tool choices===
+# Use cryptsetup because it has mainstream supported on ubuntu. 
+# Cryptsetup is a frontend to the dm-crypt device mapper in the linux kernel
+# and allows you to use the LUKS format. 
+#
+# Cryptoloop was deprecated in linux kernel 2.6.
+# truecrypt.org is not preferred windows option, use FreeOFTE instead
+```
+
+### Install
+
+```
+# Installation
+#
+sudo apt-get install cryptsetup cryptmount
+# credit &gt; http://elwoodicious.com/2007/05/24/encryption-usb-drive-ubuntu-windows-and-you/
+#
+# cryptmount _SHOULD_ allow volumes to be mounted without admin rights
+```
+
+### Access volume
+
+```
+sudo losetup /dev/loop0 name.vol
+sudo cryptsetup luksOpen /dev/loop0 mappedLuksVol
+# The extra loop below was used to perform a manual mount
+# but you can just mount the volume by cliking on it in file manager
+#sudo losetup /dev/loop1 /dev/mapper/mappedLuksVol
+#sudo mkdir ./insideLuks
+#sudo mount /dev/loop1 ./insideLuks
+#unmount volume first before cleaning up with...
+sudo cryptsetup luksClose mappedLuksVol
+sudo losetup -d /dev/loop0
+# if you want to update the timestamp you will also need to...
+touch name.vol
+```
+
+#### Alternatives
+
+```
+http://www.saout.de/tikiwiki/tiki-index.php?page=luksopen
+CryptoMaster (GUI - but undeveloped since 2006)
+pam_mount
+```
+
+### Create volume ===
+
+```
+# credit &gt; freeOTFE docs http://www.freeotfe.org/docs/Main/Linux_examples__LUKS.htm#level_3_heading_6
+PASSWORD=BlahBlah1234
+VOLUME_FILE=linux.vol 
+# SIZE_5MB=10
+# dd if=/dev/zero of=$VOLUME_FILE bs=1M count=$SIZE_MB
+SIZE_5MB_BLOCKS=2
+dd if=/dev/zero of=$VOLUME_FILE bs=5M count=$SIZE_5MB_BLOCKS
+# loops are used despite cryptoloop deprecation because ... &gt; http://www.freeotfe.org/docs/Main/Linux_volumes.htm#level_3_heading_5
+sudo losetup /dev/loop0 $VOLUME_FILE
+echo $PASSWORD | sudo cryptsetup -c aes-xts-plain -s 512 luksFormat /dev/loop0
+sudo cryptsetup luksDump /dev/loop0 
+echo $PASSWORD | sudo cryptsetup luksOpen /dev/loop0 myMapper
+sudo dmsetup ls
+sudo dmsetup table
+sudo dmsetup status
+sudo cryptsetup status myMapper
+sudo losetup /dev/loop1 /dev/mapper/myMapper
+# consider luksformat to create &gt; http://manpages.ubuntu.com/manpages/lucid/man8/luksformat.8.html
+# or see cryptsetup LUKS FAQ &gt; http://code.google.com/p/cryptsetup/wiki/FrequentlyAskedQuestions
+sudo mkdosfs /dev/loop1
+# alternative filesystem format...
+# sudo mkntfs /dev/loop1 -L labelstring -C
+sudo mkdir ./test_mountpoint
+sudo mount /dev/loop1 ./test_mountpoint
+sudo cp 'set up Ubuntu.encr.txt' ./test_mountpoint
+cp ./test_files/SHORT_TEXT.txt ./test_mountpoint
+cp ./test_files/BINARY_ZEROS.dat ./test_mountpoint
+cp ./test_files/BINARY_ABC_RPTD.dat ./test_mountpoint
+cp ./test_files/BINARY_00_FF_RPTD.dat ./test_mountpoint
+sudo umount ./test_mountpoint
+sudo losetup -d /dev/loop1
+sudo cryptsetup luksClose myMapper
+sudo losetup -d /dev/loop0
+sudo rm -rf ./test_mountpoint
+```
+
+##### IN ===
+
+```
+# cryptmount for LUKS encryption &gt; http://manpages.ubuntu.com/manpages/lucid/en/man8/cryptmount.8.html#toptoc7
+# some example usage (mostly for full volume encryption) &gt; https://help.ubuntu.com/community/EncryptedFilesystemHowto3
+# or https://help.ubuntu.com/community/EncryptedFilesystemHowto
+# using pmount to mount and umount (but not create) volumes without privileges &gt; 
+# pmount supports opening and closing of LUKS logical devices from userspace
+# pmount - http://pmount.alioth.debian.org/
+# alternatively use cryptmount-setup &gt; http://www.enterprisenetworkingplanet.com/netsecur/article.php/3742191/Create-Encrypted-Volumes-With-Cryptmount-and-Linux.htm
+# but this creates a separate key file
+# automount LUKS encrypted volumes in KDE - http://krypt.berlios.de/
 ```
 

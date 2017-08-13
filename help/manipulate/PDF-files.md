@@ -92,6 +92,17 @@ pdftocairo -svg source-file-name.PDF /path/to/output/image-files.SVG
 
 ```
 
+### Create PDF from image files
+
+# credit [https://askubuntu.com/a/446218]
+# convert utility is from imagemagick package
+convert x.jpg y.jpeg pictures.pdf
+# list files in a "natural order" (1,2,3...) and proceed with conversion
+convert `ls -1v` file.pdf
+# for extensive list of options see
+# [http://manpages.ubuntu.com/manpages/zesty/man1/convert-im6.1.html]
+
+
 ### Reduce PDF filesize by reducing image quality
 
 ```

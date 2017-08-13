@@ -6,6 +6,11 @@
 
 # disable Java integration to speed up the start up of the program. 
 
+# programmatically:
+#$HOME/.config/libreoffice/4/user/config/javasettings_Linux_X86_64.xml
+#NOW   <enabled xsi:nil="false">false</enabled>
+#was   <enabled xsi:nil="true"></enabled>
+
 # MANUALLY: Tools > Options > LibreOffice > Advanced > Use a Java runtime environment
 ###########
 
@@ -29,7 +34,7 @@
 MY_CA_CERT="/path/to/certs/MyCAsPublic.crt"
 MY_CA_NAME="My own CA"
 
-sudo apt-get install libnss3-tools
+sudo apt-get install -y libnss3-tools
 
 sudo cp "$MY_CA_CERT" /usr/share/ca-certificates/
 sudo dpkg-reconfigure ca-certificates
@@ -49,7 +54,6 @@ do
   #log "mozilla certificate" "install '${MY_CA_NAME}' in ${certDir}"
  certutil -A -n "${MY_CA_NAME}" -t "${TRUST_RIGHTS}" -i "${MY_CA_CERT}" -d ${certDir}
 done
-
 # credit http://askubuntu.com/a/369858
 
 
@@ -80,6 +84,10 @@ case $(uname -m) in
  ;;
 esac
 
+# identify the name of the folder into which it was expanded, but this returns an array
+LUBUILD_DROPBOX_EXPANDED=($HOME/$LUBUILD_BIN_FOLDER/.dropbox-dist/dropbox-lnx.*)
+# assume that the *most recent* is the last element (index from last) ${LUBUILD_DROPBOX_EXPANDED[-1]}
+
 # create the Start Menu shortcut / launcher
 mkdir -p ~/.local/share/applications
 cat > ~/.local/share/applications/dropbox.desktop<<EOF!
@@ -87,8 +95,9 @@ cat > ~/.local/share/applications/dropbox.desktop<<EOF!
 Name=Dropbox
 Comment=Share your files between computers
 Exec=$HOME/$LUBUILD_BIN_FOLDER/.dropbox-dist/dropboxd
+Icon=${LUBUILD_DROPBOX_EXPANDED[-1]}/images/emblems/emblem-dropbox-syncing.icon
 #Icon should be $HOME/$LUBUILD_BIN_FOLDER/.dropbox-dist/dropbox-lnx.x86_64-x.yy.z/images/emblems/emblem-dropbox-syncing.png
-Icon=$HOME/$LUBUILD_BIN_FOLDER/.dropbox-dist/images/emblems/emblem-dropbox-syncing.icon
+#Icon=$HOME/$LUBUILD_BIN_FOLDER/.dropbox-dist/images/emblems/emblem-dropbox-syncing.icon
 Categories=Network
 Type=Application
 Terminal=false
@@ -103,9 +112,9 @@ if [[ $LUBUILD_DROPBOX_AUTOSTART -eq TRUE ]] ; then (
 ) ; fi
 ## paths validated for BOTH Unity & LXDE at 14.04
 
-## if you need to refresh the Start Menu  
-# lxpanelctl restart
-
+## refresh the Start Menu
+if [[ $DESKTOP_SESSION == Lubuntu ]] ; then lxpanelctl restart; fi
+if [[ $DESKTOP_SESSION == QLubuntu ]] ; then killall lxqt-panel && lxqt-panel & fi
 
 # and first time around you will need to configure it with your account
 # If you choose "Advanced" setup you can choose where to store your files locally
@@ -132,7 +141,7 @@ if [[ $LUBUILD_DROPBOX_AUTOSTART -eq TRUE ]] ; then (
 
 
 ## in case of issues with Ubuntu not showing panel icon try
-# sudo apt-get install libappindicator1
+# sudo apt-get install -y libappindicator1
 ## credit - http://askubuntu.com/a/359224
 ## or see - http://itsfoss.com/solve-dropbox-icon-ubuntu-1310/
 
@@ -171,13 +180,13 @@ sudo echo
 # prepare locations and extra dependencies
 mkdir -p $BINFOLDER/geeknote
 cd $BINFOLDER
-sudo apt-get install git 
+sudo apt-get install -y git 
 
 #### Current instructions from README in repo
 ##################
 
 # Install dependencies. (This example for Debian-based systems):
-sudo apt-get update; sudo apt-get -y install python-setuptools
+sudo apt-get update; sudo apt-get install -y python-setuptools
 
 # Download the repository.
 git clone git://github.com/jeffkowalski/geeknote.git
@@ -185,15 +194,16 @@ git clone git://github.com/jeffkowalski/geeknote.git
 cd geeknote
 
 # Installation
+
 python setup.py build
-sudo pip install .
+# do NOT install python-pip just for this as it brings 125 MB of dependencies 
+# and the only downside to easy_install is no ability to uninstall
+if hash pip 2>/dev/nul; then
+	sudo pip install .
+else
+	sudo easy_install .
+fi
 
-##################
-
-# if last line failed because you have never installed pip, do NOT install python-pip from apt-get
-# as it also loads a heap of build, make and other dev dependencies (over 125MB)
-# either install pip (how) or simply use easy_install (main downside is no ability to uninstall)
-sudo easy_install .
 
 
 #### Authenticate
@@ -377,7 +387,7 @@ sudo apt-get update
 sudo apt-get install -y recoll \
  antiword xsltproc catdoc unrtf libimage-exiftool-perl python-mutagen aspell
 
-
+mkdir -p $HOME/.recoll
 cat > $HOME/.recoll/recoll.conf <<EOF!
 # This is the indexing configuration for the current user
 # These values override the system-wide config files in:
@@ -544,7 +554,7 @@ export RECOLL_EXTRA_DBS=/path/to/index1/recoll/xapiandb/:/media/$USER/volume2/.r
 ##### Understanding what's in the index (and why it's so big)
 
 # see xapian delve [https://xapian.org/docs/admin_notes.html#inspecting-a-database]
-sudo apt install xapian-tools
+sudo apt install -y xapian-tools
 # see [http://getting-started-with-xapian.readthedocs.io/en/latest/practical_example/indexing/verifying_the_index.html]
 
 # # # # # # END # # # # # # 

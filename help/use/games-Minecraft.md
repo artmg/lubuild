@@ -193,7 +193,7 @@ to your LAN game include:
 
 
 
-## mods
+## using mods
 
 Mods are changes to the minecraft code. 
 Originally this was hard as the code would overwrite with new versions, 
@@ -293,6 +293,25 @@ unzip commandbook*.zip -d plugins
     * quite useful for managing inventory
 * Hamachi (p2p vpn client)
     * not needed with DynDNS addressing 
+
+
+## coding mods
+
+### Learning
+
+Options for learning Java Coding with Minecraft Mods include:
+
+* Code Kingdoms - great visual editor & cloud servers for £10/mon £50/yr
+* Leanr.... ? - lessons and servers from $30/yr
+* Appljuze - free video tutorials
+
+Tried Code Kingdoms to start with but didn't need that much handholding 
+so used Appljuze free videos instead
+
+[https://www.youtube.com/user/AppljuzeProgramming]
+
+### Environments
+
 
 
 ## Resources

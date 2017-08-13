@@ -47,6 +47,43 @@ fi
 
 
 
+#
+### Wifi issues after waking from hibernate or suspend ###
+#
+## credit - http://askubuntu.com/questions/365112/lubuntu-13-10-laptop-loses-wireless-after-sleep
+## sudo not required :)
+# nmcli nm sleep false
+#
+# before nmcli version 0.9.10 this was
+#
+# nmcli nm sleep false
+#
+# since nmcli version 0.9.10 this should now be
+# nmcli networking on   # or simply    nmcli n on 
+#
+# and check with 
+# nmcli general   # or simply    nmcli g
+#
+## if nmcli n on does not bring it out of sleep (check with nmcli -f state g)
+## there appears to be no way with nmcli to turn STATE asleep into anything else
+## so just restart the service
+# sudo service network-manager restart
+if [[ $LUBUILD_HARDWARE_TYPE_LAPTOP -eq TRUE ] && [ "${DESKTOP_SESSION}" == "Lubuntu" ] && [ (( $(echo "$(lsb_release -sr) <= 16.04"  | bc -l) )) ]] ; then 
+sudo tee /usr/share/applications/wake-up-wifi.desktop cat <<EOF!
+[Desktop Entry]
+Type=Application
+Name=Wake up Wifi
+Exec=nmcli networking on
+Terminal=false
+Categories=System;
+Icon=nm-signal-50
+EOF!
+) ; fi
+###############################################
+
+
+
+
 # Notifications not clear
 # https://bugs.launchpad.net/ubuntu/+source/lubuntu-artwork/+bug/1362555
 

@@ -183,6 +183,18 @@ and https://wiki.archlinux.org/index.php/LXDE
 but bear in mind that the "session" config folder name is likely to be Lubuntu not LXDE
 
 
+#### LxQtPanel
+
+##### restart
+
+```
+# to refresh the LxQt menu either:
+sudo touch /etc/xdg/menus/lxqt-applications.menu
+# or 
+killall lxqt-panel && lxqt-panel &
+```
+
+
 ## File types, icons, shortcuts
 
 ### Mime Types
@@ -293,6 +305,49 @@ To add new file templates into the menu Create New in PCManFM file manager,
 see [https://wiki.lxde.org/en/PCManFM#Create_New...]
 
 
+## Shell
+
+### Terminal
+
+```
+#### Choice of terminal emulator
+# identify the current default terminal
+readlink /etc/alternatives/x-terminal-emulator
+# view the options
+update-alternatives --display x-terminal-emulator
+# increase the priority of a specific candidate
+sudo update-alternatives --install /usr/bin/x-terminal-emulator x-terminal-emulator /usr/bin/qterminal 60
+```
+
+### Environment variables
+
+Locations where environment variables may be set
+according to [https://askubuntu.com/q/4667] 
+
+* System
+	* Variables
+		* /etc/environment
+	* scripts that may set variables
+		* /etc/profile
+		* /etc/profile.d/*.sh
+		* /etc/bash.bashrc
+* per-User
+	* Variables
+		* ~/.pam_environment
+	* scripts that may set variables
+		* ~/.profile - at start of desktop session as well as by the login shell for text console
+		* ~/.bash_profile or ~./bash_login
+			* If one of these exists, overrides ~/.profile when bash is starts from login shell
+			* won't influence graphical session terminal
+		* ~/.bashrc
+* per-User defaults
+	* / files above
+
+
+
+~/.bashrc
+
+
 ## User Sessions
 
 ### Other users logged in
@@ -342,11 +397,11 @@ editor ~/.config/lxsession/Lubuntu/autostart
 #### Accented characters
 
 Use Hex
- e.g. CTRL-SHIFT-U e 9 ENTER as 0x00e9 is é
+ e.g. CTRL-SHIFT-U e 9 ENTER as 0x00e9 is ??
 http://askubuntu.com/questions/32764/using-alt-keycode-for-accents
 
  Use ComposeKey
- SHIFT-ALTGR <release> e ' = é
+ SHIFT-ALTGR <release> e ' = ??
  https://help.ubuntu.com/community/ComposeKey
 
 ### Policy Kit
@@ -399,7 +454,9 @@ e.g.
  # however action files do allow wildcards so you could ...
  # permit all users ...   Identity=unix-user:* 
 
- [All all users to modify network settings without typing password]
+ # modifying actions is NOT the recommended way for sys admins, use RULES instead
+
+ [All all users to???modify???network???settings without typing password]
  Identity=unix-user:*
  Action=org.freedesktop.NetworkManager.settings.modify.system
  ResultInactive=no
@@ -419,6 +476,51 @@ e.g.
  # /etc/polkit-1/localauthority  sub folders such as 30-site.d and 50-local.d which are useful scopes
  # but these are all .conf files
 ```
+
+#### Ubuntu PolKit implementation
+
+According to [https://askubuntu.com/a/704062] 
+If you are on Ubuntu 17.04 or lower
+then you are still using the old version of PolKit, 
+where there are no .rules files but only .pkla and .conf files.
+
+```
+pkaction --version
+```
+
+If it says **< 0.106** then you can only use the old syntax, 
+to create a .pkla file in /etc/polkit-1/localauthority/
+
+Lubuntu Next 17.10 Alpha 2 gives pkaction version 0.105
+
+#### IN from old mediwiki
+
+
+== Mounting and options ==
+
+=== Automount disks ===
+
+You can modify the fstab entries, or simply edit the mount options using
+
+<pre>gnome-disks</pre>
+=== Allow users to mount internal NTFS volumes ===
+
+By default you need to type in an admin password to mount a drive as a regular user (&quot;Authentication is required to mount ...&quot;).
+
+<pre>sudo gedit /var/lib/polkit-1/localauthority/10-vendor.d/com.ubuntu.desktop.pkla</pre>
+In the first section, <code>[Mounting, checkin ...]</code>, comment out the old line and add in the following (you may be able to copy this from the end of the file)
+
+<pre>Identity=unix-user:*
+# Identity=unix-group:admin;unix-group:sudo</pre>
+credit &gt; http://handytutorial.com/ask-password-for-mounting-drives-in-ubuntu-12-10-12-04/
+
+=== Prevent auto open at startup of automounted volumes ===
+
+<pre>gsettings set org.gnome.desktop.media-handling automount-open false</pre>
+credit &gt; http://askubuntu.com/questions/289621/dont-automatically-open-the-folder-of-mounted-devices
+
+credit &gt; http://askubuntu.com/questions/72070/how-do-i-change-dconf-keys-without-a-gui-for-a-post-install-script
+
 
 ## Background
 

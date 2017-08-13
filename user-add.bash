@@ -1,12 +1,16 @@
-# required software
-sudo apt-get install -y ecryptfs-utils
+#!/bin/bash
 
 ### Users ###
 
-NEWUSER=NewUserName
-DISPLAYNAME=UserDisplayName
+NEWUSER=
+DISPLAYNAME=
+ENCRYPT_HOME=--encrypt-home
 
-sudo adduser --encrypt-home --gecos $DISPLAYNAME,,, $NEWUSER
+# required software
+[ ! -z ENCRYPT_HOME ] sudo apt-get install -y ecryptfs-utils
+
+
+sudo adduser $ENCRYPT_HOME --gecos $DISPLAYNAME,,, $NEWUSER
 # credit - http://askubuntu.com/questions/132395/
 
 # add a user non-interactively (unlike the adduser wrapper):
@@ -21,7 +25,7 @@ sudo adduser --encrypt-home --gecos $DISPLAYNAME,,, $NEWUSER
 ## log in with this user BEFORE the next reboot (not sure why)
 
 ### User rights  via group membership
-sudo usermod -a -G audio,video,plugdev,netdev,fuse,lpadmin,scanner $NEWUSER
+sudo usermod -a -G audio,video,plugdev,netdev,lpadmin,scanner $NEWUSER
 # separated for when it does not exist
 sudo usermod -a -G fuse $NEWUSER
 

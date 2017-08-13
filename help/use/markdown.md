@@ -29,6 +29,7 @@ For Android Apps see the section below.
 	* use Symbols sidebar for Table of Contents
 	* auto-indents but no auto bullets
 	* no URL hyperlinks
+	- built using GTK2 toolkit and depends on these llibraries
 * ReText
     * proper wysiwyg editor
     * written in Python with Qt widgets
@@ -43,6 +44,14 @@ For Android Apps see the section below.
 	* author has PPA 
 	* simple styling (can it be colour-differentiated?)
 	* pull out table of contents
+* QOwnNotes
+	* Qt and C++
+	* focussed on integration with OwnCloud
+	* project active for a couple of years with many commits in past year (to Aug 2017)
+	* single developer
+	* author has PPA for Ubuntu (and Arm builds fro Pi)
+		* ppa:pbek/qownnotes
+	* based on author's own Qt Widget qmarkdowntextedit
 * CuteMarkEd
 	* Qt and C++
 	* commits have waned drastically in past year 
