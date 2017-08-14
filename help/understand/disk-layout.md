@@ -178,6 +178,7 @@ credit - [http://wiki.openelec.tv/index.php/Dual_Boot]
 
 * No free (unpartitioned) space on HDD.
 * can shrink Windows Partition to make space
+	* [https://github.com/artmg/lubuild/blob/master/help/configure/Windows.md#shrink-windows-volume]
 * This will put OpenELEC between Windows & Ubuntu
 * Need to expand the Extended Partition to make space for two new logical partitions at the start of the Extended
 * Must leave current partitions AS THEY ARE at the end of the repartitioning, so that data is left intact (non-destructively)
@@ -214,10 +215,17 @@ sudo dd if=/dev/sda of=./mbr.bin.plusPrimaryPartitionTable bs=512 count=1
 sudo dd if=/dev/sda1 of=./HP.SYSTEM.partition
 ```
 
-Before proceeding you should prepare your Windows by shrinking the main OS partition to make space for the Ubuntu partitions, as you will need to install Ubuntu to give a bootloader in place of the old HP System parition.
+Before proceeding you should prepare your Windows 
+by shrinking the main OS partition to make space for the Ubuntu partitions, 
+as you will need to install Ubuntu to give a bootloader 
+in place of the old HP System parition.
 
-Once you have done this you can use GPartEd to delete the System Partition. Create the new Ubuntu partitons in the space freed up by shrinking the OS partition (as the System partition was too small to use for this) Finally proceed with the Ubuntu installation
-
+for help see [https://github.com/artmg/lubuild/blob/master/help/configure/Windows.md#shrink-windows-volume]
+	
+Once you have done this you can use GPartEd to delete the System Partition. 
+Create the new Ubuntu partitons in the space freed up by shrinking the OS partition 
+(as the System partition was too small to use for this). 
+Finally proceed with the Ubuntu installation
 
 
 ## LiveUSB

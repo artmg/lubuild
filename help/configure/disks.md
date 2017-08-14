@@ -1,22 +1,13 @@
 
 
-This file is being prepared for separation into 
-different files to cover different subjects
+This article is focussed mainly on the procedures for actually 
+configuring the disks and partitions you have decided upon. 
+It includes swap partitions with encryption and resume. 
 
-e.g.
-* configure Disks (here)
-	* install, partitioning, ???
-	* setting up encrypted swap and allowing resume
-	* [https://github.com/artmg/lubuild/blob/master/help/configure/disks.md]
-* diagnose disks
-	* Troubleshooting
-	* [https://github.com/artmg/lubuild/blob/master/help/diagnose/disks.md]
-
-* understand Layout 
-	* reasoning sections separate from precise commands to manipulate
-	* specific examples like OpenElec
-	* will go out to [https://github.com/artmg/lubuild/blob/master/help/understand/disk-layout.md]
-
+To find out more about why you might choose a particular layout see 
+[https://github.com/artmg/lubuild/blob/master/help/understand/disk-layout.md] 
+and for diagnosis and Troubleshooting on disks see 
+[https://github.com/artmg/lubuild/blob/master/help/diagnose/disks.md]
 
 See also:
 
@@ -24,9 +15,10 @@ See also:
 	* [https://github.com/artmg/lubuild/blob/master/help/understand/disk-layout.md]
 * diagnosis and Troubleshooting on disks
 	* [https://github.com/artmg/lubuild/blob/master/help/diagnose/disks.md]
-* encrypting data
+* encrypting data (other than install partitions and swap, covered in here)
 	* [https://github.com/artmg/lubuild/blob/master/help/use/encryption.md]
-		*  (other than install partitions and swap, covered in here)
+* dealing with windows volumes, and shrinking them for dual boot
+	* [https://github.com/artmg/lubuild/blob/master/help/configure/Windows.md]
 * for device storage (MTP and PTP) and mounting
 	* [https://github.com/artmg/lubuild/blob/master/help/manipulate/storage-in-connected-devices.md]
 * creating LiveUSB installation media
@@ -704,39 +696,8 @@ for useful links see also - https://wiki.archlinux.org/index.php/System_Encrypti
 
 The following sections need to be rationalised and reformatted
 
-#### shrinking Windows volumes
-
-The best way to reconfigure NTFS partitions where Windows is installed 
-is usually by using the Windows operating system itself. 
-To shrink a volume use `diskmgmt.msc`.
-
-Unfortunately Windows considers some system files to be 'unmoveable', 
-and Volume Shrink will be limited by this. The trick is to disable 
-those features, reboot, and shrink again, before finally reenabling them. 
-
-To identify which file is limiting the shrink, check the Windows 
-**Application** even logs for a 259 code. Once you have found the culprit, 
-deal with it, then try the shrink again. You can continue this, rebooting 
-occasionally, until you have the shrink size you were hoping for. 
-Try using **Disk cleanup** for removing some of those temporary system files. 
-
-* to view the latest event preventing shrink:
-	- powershell (if backqoutes surround the code, omit them)
-		- `Get-WinEvent -FilterHashtable @{logname=???application???; id=259} -MaxEvents 1 | fl`
-	- gui
-		- `eventvwr` / Windows Logs / Application / look for event with ID 259
-* to disable and renable the features
-	- command line syntax 
-		- [https://superuser.com/a/1175556]
-	- using the GUI
-		- [https://somoit.net/windows/windows-cannot-shrink-volume-unmovable-files]
-* search service
-	- powershell
-		- `Set-Service WSearch -StartupType "Disabled"`
-		- `Stop-Service WSearch`
-	- GUI
-		- [https://superuser.com/questions/73204/correct-way-to-disable-indexing-in-windows-7]
-
+NB: for shrinking windows volumes 
+see [https://github.com/artmg/lubuild/blob/master/help/configure/Windows.md#shrink-windows-volume]
 
 #### Grub 
 

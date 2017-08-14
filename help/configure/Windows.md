@@ -11,13 +11,12 @@ your Windows instance for such cases.
 
 see also:
 
-* paritioning and volume configurations for dual boot between Windows and Linux 
-	* [https://github.com/artmg/lubuild/blob/master/help/configure/Disks-and-layout.md]
-	* will go to [https://github.com/artmg/lubuild/blob/master/help/configure/disks.md]
-* understand Layout 
-	* more detail about choosing options for your partitions 
-	* specific examples like OpenElec
-	* will go out to [https://github.com/artmg/lubuild/blob/master/help/understand/disk-layout.md]
+* how to decide on options for partitioning multi-boot systems
+	* [https://github.com/artmg/lubuild/blob/master/help/understand/disk-layout.md] 
+* specific commands for setting up your chosen layout under ubuntu 
+	* [https://github.com/artmg/lubuild/blob/master/help/configure/disks.md]
+* ubuntu diagnosis and troubleshooting commands 
+	* [https://github.com/artmg/lubuild/blob/master/help/diagnose/disks.md]
 
 
 ## Windows 10 useful tips
@@ -100,6 +99,43 @@ and shrink it to save space. This will be your baseline "OS install"
 
 
 ## Dual Boot
+
+### shrink Windows volume
+
+The best way to reconfigure NTFS partitions where Windows is installed 
+is usually by using the Windows operating system itself. 
+To shrink a volume use `diskmgmt.msc`.
+
+Unfortunately Windows considers some system files to be 'unmoveable', 
+and Volume Shrink will be limited by this. The trick is to disable 
+those features, reboot, and shrink again, before finally reenabling them. 
+
+To identify which file is limiting the shrink, check the Windows 
+**Application** even logs for a 259 code. Once you have found the culprit, 
+deal with it, then try the shrink again. You can continue this, rebooting 
+occasionally, until you have the shrink size you were hoping for. 
+Try using **Disk cleanup** for removing some of those temporary system files. 
+Files in `System Volume Information` are often from System Recovery, 
+which you can turn off in `systempropertiesprotection.exe`.
+
+* to view the latest event preventing shrink:
+	- powershell (if backqoutes surround the code, omit them)
+		- `Get-WinEvent -FilterHashtable @{logname=???application???; id=259} -MaxEvents 1 | fl`
+	- gui
+		- `eventvwr` / Windows Logs / Application / look for event with ID 259
+* to disable and renable the features
+	- command line syntax 
+		- [https://superuser.com/a/1175556]
+	- using the GUI
+		- [https://somoit.net/windows/windows-cannot-shrink-volume-unmovable-files]
+* search service
+	- powershell
+		- `Set-Service WSearch -StartupType "Disabled"`
+		- `Stop-Service WSearch`
+	- GUI
+		- [https://superuser.com/questions/73204/correct-way-to-disable-indexing-in-windows-7]
+
+
 
 ### Windows 10 Dual Boot
 
