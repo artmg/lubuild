@@ -11,6 +11,15 @@
 
 ## Edit markdown documents
 
+### Requirements
+
+* single pane WYSIWYG (rather than multi-pane with preview)
+* Document navigator for section headings
+* hyperlinked URLs - click to open (either browser or editor if local)
+* prefer Qt-based widget system
+
+### Candidates
+
 These are open source applications readily available for Ubuntu linux. 
 For Android Apps see the section below. 
 
@@ -44,7 +53,7 @@ For Android Apps see the section below.
 	* author has PPA 
 	* simple styling (can it be colour-differentiated?)
 	* pull out table of contents
-* QOwnNotes
+* QOwnNotes1
 	* Qt and C++
 	* focussed on integration with OwnCloud
 	* project active for a couple of years with many commits in past year (to Aug 2017)
@@ -67,11 +76,20 @@ For Android Apps see the section below.
 * Scite
 	* GTK+ and Scintilla-based editor
 	* does it have language support for Markwdown and Mediawiki ??
+* remarkable
+	* GTK + python
+	* active project [https://github.com/jamiemcg/remarkable]
+	* 2 pane (edit + live preview)
 * atom
+	* electron-based
 	* generic code editor with preview mode including Markdown
 * others?
 	* springseed / flame ??
-	* haroopad ?
+	* haroopad
+		* well featured but no activity since 2013
+	* LightMd_Editor
+		* only developed over one year (2015)
+	
 
 see also:
 

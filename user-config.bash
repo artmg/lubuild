@@ -74,7 +74,7 @@ if [[ $LUBUILD_HARDWARE_TYPE_LAPTOP -eq TRUE ]] ; then (
 #
 # NOT required under LXQT: lxqt-config-monitor is based on KScreen, handles monitor changes automatically
 
-if [[ "$DESKTOP_SESSION" <> "QLubuntu" ] && [ $LUBUILD_HARDWARE_TYPE_LAPTOP -eq TRUE ] && [ $LUBUILD_HARDWARE_TYPE_EXTERNAL_SCREEN -eq TRUE ]] ; then ( 
+if [[ "$DESKTOP_SESSION" -ne "QLubuntu" ] && [ "$LUBUILD_HARDWARE_TYPE_LAPTOP" -eq "TRUE" ] && [ "$LUBUILD_HARDWARE_TYPE_EXTERNAL_SCREEN" -eq "TRUE" ]] ; then ( 
 # This installs the GUI and the notify-send util the script uses for notification bubbles / toasts
 sudo apt-get install -y arandr libnotify-bin
 

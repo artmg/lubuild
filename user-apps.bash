@@ -366,36 +366,20 @@ ln -s /media/Windows $WINEPREFIX/dosdevices/w:
 ### RECOLL                        ### 
 #####################################
 
-# simple manual install procs:
-#
-# * Use the Lubuntu Software Center to install the app   recoll 
-# * run it from Start / Accessories / Recoll
-# * in the dialog  First indexing setup  choose  Start Indexing Now  at the bottom
-# * you should see it running through a list of filenames at the bottom
-# * once it's done you should be able to search
-
-
+# for details and help see
+# [https://github.com/artmg/lubuild/blob/master/help/use/local-search.md]
 
 # recoll stable PPA
 sudo add-apt-repository -y ppa:recoll-backports/recoll-1.15-on
 sudo apt-get update
 
 # install filesystem search engine
-# plus helpers for common doctypes
-# help - http://www.lesbonscomptes.com/recoll/features.html#doctypes
-# see also - http://packages.ubuntu.com/xenial/recoll
 sudo apt-get install -y recoll \
  antiword xsltproc catdoc unrtf libimage-exiftool-perl python-mutagen aspell
 
 mkdir -p $HOME/.recoll
 cat > $HOME/.recoll/recoll.conf <<EOF!
-# This is the indexing configuration for the current user
-# These values override the system-wide config files in:
-#   /usr/share/recoll/examples
-# help - [http://www.lesbonscomptes.com/recoll/usermanual/usermanual.html#RCL.INSTALL.CONFIG.RECOLLCONF]
-
 topdirs = ~ \
-
 
 # these try to ignore the bulk of the hidden .* folder trees under home
 
@@ -415,19 +399,6 @@ skippedPathsFnmPathname = 0
 
 EOF!
 
-##### General knowledge on Mime Types in Recoll
-
-# on your system, the Mime Types are defined in either:
-# /etc/mime.types
-# /usr/share/mime/types
-# ~/.local/share/mime/types
-# and the applications associated are
-# /usr/share/applications/defaults.list
-# ~/.local/share/applications/mimeapps.list 
-# for more info on Mime Types see [https://github.com/artmg/lubuild/blob/master/help/configure/Desktop.md]
-
-# To change the recoll config (including mime types) ...
-# make changes locally ~/.recoll
 # make changes globally /usr/share/recoll/examples
 
 # to add new viewers/editors onto Recoll **Open With** Context menu see
@@ -550,11 +521,5 @@ export RECOLL_EXTRA_DBS=/path/to/index1/recoll/xapiandb/:/media/$USER/volume2/.r
 # NB: this will only stick for a single instance
 # - how to make these permanent options of external indexes??
 
-
-##### Understanding what's in the index (and why it's so big)
-
-# see xapian delve [https://xapian.org/docs/admin_notes.html#inspecting-a-database]
-sudo apt install -y xapian-tools
-# see [http://getting-started-with-xapian.readthedocs.io/en/latest/practical_example/indexing/verifying_the_index.html]
 
 # # # # # # END # # # # # # 

@@ -279,26 +279,28 @@ chmod +x volume_close.sh
 
 ## Using Existing Volumes
 
+```
 VOLUME_FILE1="/mount/path/vol1"
 VOLUME_FILE2="/mount/path/vol2"
 BIN_FOLDER=.bin
+```
 
 ```
 DEFAULT_TERM_EMU=`readlink /etc/alternatives/x-terminal-emulator`
-mkdir "~/${BIN_FOLDER}"
-cat <<-EOF! > ~/$BIN_FOLDER/volumes_open.sh
+mkdir -p "$HOME/${BIN_FOLDER}"
+cat <<-EOF! > "$HOME/${BIN_FOLDER}/volumes_open.sh"
 #!/bin/bash
 losetup /dev/loop0 "${VOLUME_FILE1}"
 losetup /dev/loop1 "${VOLUME_FILE2}"
 EOF!
-cat <<-EOF! > "~/${BIN_FOLDER}/volumes_close.sh"
+cat <<-EOF! > "$HOME/${BIN_FOLDER}/volumes_close.sh"
 #!/bin/bash
 losetup -d /dev/loop0
 losetup -d /dev/loop1
 EOF!
-chmod +x "~/${BIN_FOLDER}/volumes_open.sh"
-chmod +x "~/${BIN_FOLDER}/volumes_close.sh"
-cat <<-EOF! > ~/Desktop/Volumes_Open.desktop
+chmod +x "$HOME/${BIN_FOLDER}/volumes_open.sh"
+chmod +x "$HOME/${BIN_FOLDER}/volumes_close.sh"
+cat <<-EOF! > $HOME/Desktop/Volumes_Open.desktop
 [Desktop Entry]
 Encoding=UTF-8
 Type=Application

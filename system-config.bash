@@ -15,13 +15,13 @@ sudo apt-get install -y hplip hplip-gui
 
 # *** VERSION FIXES ***
 # credit https://help.ubuntu.com/community/HpAllInOne#error:_hp-setup_requires_GUI_support
-if [[ "${DESKTOP_SESSION} $(lsb_release -sr)" == "Lubuntu 14.04" ]] then 
+if [[ "${DESKTOP_SESSION} $(lsb_release -sr)" == "Lubuntu 14.04" ]] ; then 
    sudo apt-get install -y python-qt4 ; 
 fi
-if [[ "${DESKTOP_SESSION} $(lsb_release -sr)" == "Lubuntu 15.04" ]] then 
+if [[ "${DESKTOP_SESSION} $(lsb_release -sr)" == "Lubuntu 15.04" ]] ; then 
    sudo apt-get install -y python3-pyqt4 ; 
 fi
-if [[ "${DESKTOP_SESSION} $(lsb_release -sr)" == "ubuntustudio 16.10" ]] then 
+if [[ "${DESKTOP_SESSION} $(lsb_release -sr)" == "ubuntustudio 16.10" ]] ; then 
    sudo apt-get install -y python3-pyqt5 ; 
 fi
 
