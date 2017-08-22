@@ -96,6 +96,33 @@ Objective:
     * on players with limited storage media space 
     * whilst maintaining ID3 and other metadata
 
+#### Choosing a target codec
+
+This section contains opinions: YMMV
+
+In an ideal world, we would have enough storage for FLAC files, 
+and ears that can tell the difference. 
+In a pragmatic or realistic world, however, 
+the target compression algorithm would likely be:
+
+* OGG Vorbis
+	+ open standard
+	+ great performance
+	- not supported everywhere
+
+but that last one can be an issue in making music ubiquitous, so between 
+
+* MP3
+	+ the most widely supported format
+	- not the best sound per Mbs
+
+* AAC
+	+ a superior algorithm for making smaller music files sound better
+	- very widely supported but perhaps not universal
+
+AAC might work out to be the better choice 
+(_until_ you find a **vital** player that does not support it).
+
 
 #### Candidates 
 
@@ -103,22 +130,30 @@ Objective:
     * should retain metadata
     * soundconverter should be in repos 
 * soundkonverter (QT)
-    * is in repos
-    * currently requires too many additional libs (c 400MB)
-    * try again when QT5 is mainline
+    * was in repos
+		* has since been dropped
+    * required additional KDE libs (c 400MB)
 * ffmpeg
     * to preserve metadate use 
         * -map_metadata 0 -id3v2_version 3 
         * credit http://stackoverflow.com/a/26109838
     * winff GUI is in repos
-* Handbrake ?
+* Handbrake
+	* widely used
+	* includes video conversion
+	* GTK3 widgets
+	* requires quite a few libraries
 * fre:ac (formally BonkEnc)
+* QWinFF
+	* no obvious updates since 2015
+	* PPA owner has made quarterly updates into github more recently
+	* no recent ubuntu versions supported
 
 * Audacity ("chain" feature)
 * gnac ?
 * does qmmp batch convert ?
 
-see also "MultiOS Data Music Metadata.txt"
+see also local "MultiOS Data Music Metadata.txt"
 
 
 #### re-encoding tests
@@ -144,6 +179,12 @@ see also "MultiOS Data Music Metadata.txt"
 * 
 
 * later try handbrake ?
+
+#### example ffmpeg
+
+to convert a folder full of files
+
+...
 
 
 ### cutting an audio track
