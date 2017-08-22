@@ -94,6 +94,10 @@ dmesg | tail
 
 # logs are in
 #  /var/log/
+#
+# check out syslog, messages, kern
+# older logs are retained here in case you are diagnosing 
+# after a crash for evidence
 
 # if you want to force rotation then check there is a .conf file in
 #  /etc/logrotate.d/
