@@ -98,6 +98,72 @@ sudo cat /var/log/syslog
 
 ```
 
+### diagnosing dhcpcd connections
+
+```
+# check the interface config
+cat /etc/network/interfaces
+# look for hooks used
+ls -l /lib/dhcpcd/dhcpcd-hooks/
+# see what wireless settings are
+cat /etc/wpa_supplicant/wpa_supplicant.conf
+
+# check some statuses
+cat /proc/net/dev
+cat /proc/net/route
+cat /proc/net/arp
+cat /proc/net/wireless
+
+# diagnosing issues (including hotplugging)
+ip link show
+ip address
+# after making changes see...
+# check log contents
+sudo cat /var/log/syslog
+
+# check service
+systemctl status dhcpcd.service 
+systemctl cat dhcpcd.service
+# and config
+cat /etc/dhcpcd.conf 
+
+# check leases
+cat /var/lib/dhcp/dhclient.*.leases
+tail -vn +1 /var/lib/dhcpcd5/*
+
+# to disable specific interface(s)
+# echo "denyinterfaces wlan0" | sudo tee -a /etc/dhcpcd.conf
+# sudo service dhcpcd restart
+
+
+# Check name resolution
+cat /etc/resolv.conf
+# check where this links to
+ls -l /etc/resolv.conf
+# check other possible files
+cat /run/resolvconf/resolv.conf 
+cat /run/systemd/resolve/resolv.conf 
+cat /etc/systemd/resolved.conf 
+
+# and systemd resolved if used
+systemd-resolve --status
+# check the order of name resolution
+cat /etc/nsswitch.conf
+# show per interface resolution config
+tail -vn +1 /run/resolvconf/interface/*
+
+
+# test name resolution
+dig google.com
+nslookup -debug google.com
+nslookup -debug google.com 8.8.8.8
+
+# if you want to try restarting
+sudo systemctl restart systemd-resolved.service
+
+```
+
+
 ### diagnosing wireless connection issues
 
 #### Wifi (WLAN)
@@ -179,11 +245,19 @@ ethtool enp6s0
 
 ## Names and Addresses
 
-
 ```
+# If you are not sure what your name and address stack is using
+# see what packages are installed
+dpkg -l | grep "dns\|dhcp\|unbou\|network-ma"
+# check which services are enabled
+systemctl list-unit-files
+```
+
 ### DHCP addressing
 
 #### All interfaces
+
+```
 # list of interfaces
 nmcli dev
 
@@ -206,35 +280,41 @@ cat /etc/network/interfaces
 
 # display details of lease(s) obtained
 cat /var/lib/dhcp/dhclient.leases
+# cat /var/lib/dhcp/dhclient.*.leases
+
 
 # /var/lib/dh* 
 # no longer seems to hold anything useful
 
 # dhclient
 # doesn't do much on its own - see 
+```
 
 #### Renew DHCP address
 
+```
 # when renewing DHCP, try purging locally cached lease file
 sudo dhclient -r -v && sudo rm /var/lib/dhcp/dhclient.* ; sudo dhclient -v
 # credit - http://askubuntu.com/a/431385
 # if you're still having issues, check the lease has been removed from the DHCP server too
-
+```
 
 #### Specific interface
 
+```
 INTERFACE=eth0
 
 # display current settings
 nmcli dev show $INTERFACE
 # nmcli dev list iface $INTERFACE - old syntax
 # ifconfig $INTERFACE - deprecated
-
+```
 
 ### DNS Resolution
 
-#### local
+#### local (Network Manager)
 
+```
 # By default, since around 12.04, NetworkManager has relied on a local DNS cache provided by
 # dnsmasq running on localhost, which passes requests out when the host is not cached.
 # credit - http://askubuntu.com/a/368935
@@ -257,9 +337,11 @@ cat /etc/nsswitch.conf
 
 # check what DNS server is set on your network interface(s)
 nmcli dev show | grep DNS
+```
 
 #### dnsmasq
 
+```
 # if your Network Manager conf (see above) uses dnsmasq then ...
 
 # flush dns cache
@@ -270,10 +352,11 @@ nmcli dev show | grep DNS
 killall dnsmasq
 dnsmasq --server=192.168.2.1
 # credit - http://askubuntu.com/a/682058
-
+```
 
 #### browser dns cache
 
+```
 # ?? chrome://net-internals/#dns  - Clear Host Cache
 
 # firefox - either restart browser
