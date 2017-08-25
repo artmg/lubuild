@@ -18,6 +18,8 @@ if \
    ~/.config/openbox/lubuntu-rc.xml
 fi
 
+## NB: is above also an issue in Lubuntu 17.10? (was at Alpha2)
+
 if [[ "${DESKTOP_SESSION} $(lsb_release -sr)" == "QLubuntu 17.10" ]] ; then
 cat > $HOME/.config/lxqt/globalkeyshortcuts.conf <<EOF!
 
