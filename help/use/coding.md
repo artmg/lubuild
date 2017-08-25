@@ -52,6 +52,19 @@ sudo apt-get install codeblocks g++
 
 * for Windows pick installer that includes MinGW compiler
 
+### reusing common functions
+
+If you want to use common functions you have written 
+from multiple programs, you can create a functions source file (.cpp) 
+and declare them in a header (.hpp) that you can #include from your code 
+and add your include path into the compiler settings
+
+* introduction to principles [http://www.cplusplus.com/forum/beginner/79689/#msg429444]
+* avoiding nesting of headers [https://stackoverflow.com/a/23163775]
+* in depth explanation of headers [http://www.cplusplus.com/forum/articles/10627/]
+
+Note that all functions in your included headers are usually compiled 
+into the executable, even if your code did not actually call them. 
 
 
 ## Java
