@@ -163,6 +163,32 @@ modprobe b43
 sudo apt-get install bcmwl-kernel-source
 ```
 
+#### remove bcmwl
+
+According to [https://askubuntu.com/a/60395] the bcmwl drivers might 
+be the best for your hardware, but if they are causing issues you 
+could consider replacing them with an open source driver to test.
+
+```
+sudo apt-get purge bcmwl-kernel-source
+
+# credit [https://help.ubuntu.com/community/WifiDocs/Driver/bcm43xx#Switching_between_drivers]
+# this assumes open driver already installed
+sudo modprobe -r b43 bcma
+sudo modprobe -r brcmsmac bcma
+sudo modprobe -r wl
+sudo modprobe brcmsmac
+
+# check it loaded
+
+lsmod | grep br
+
+sudo reboot
+```
+
+Note that the open SoftMac driver might NOT fully support your model, see 
+[https://wireless.wiki.kernel.org/en/users/drivers/brcm80211]
+
 ### Bluetooth devices 
 
 (see also Audio section below for Audio Bluetooth issues) 
