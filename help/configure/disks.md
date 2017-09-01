@@ -383,13 +383,14 @@ see [https://github.com/artmg/lubuild/blob/master/help/manipulate/remove-data.md
 
 ### IN - validate how current / useful 
 
-==== Xbuntu/Myth Check the NTFS driver is installed ====
+#### Xbuntu/Myth Check the NTFS driver is installed
 
 ```
 apt-cache search ntfs-3g
 ```
 
-==== Identify disks ====
+#### Identify disks
+
 ```
 sudo fdisk -l<br />(or)<br />ls -l /dev/disk/by-uuid/
 sudo editor /etc/fstab
@@ -482,6 +483,12 @@ Reboot!
 ### Encrypted Swap
 
 ```
+# check current swap
+cat /proc/swaps
+
+# check your disk partitions
+lsblk
+
 # Prepare variables
 LUBUILD_SWAP_DEVICE=/dev/sdXN
 ```
