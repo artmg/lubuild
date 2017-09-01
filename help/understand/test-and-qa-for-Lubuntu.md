@@ -78,6 +78,11 @@ e.g. http://iso.qa.ubuntu.com/qatracker/testcases/1302/info
 report using 
  ubuntu-bug package_name
 
+if you don't know which package
+
+ dpkg -S `which executableName`
+
+
 #### Attaching diagnostics ####
 
 for uploading multiple files in one go is there not something like ?? 

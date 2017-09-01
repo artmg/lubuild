@@ -67,7 +67,15 @@ update-alternatives --query <name>
 
 #### ...depend on this one? 
 
- apt-cache rdepends packagename
+```
+apt-cache rdepends packagename
+```
+
+#### ...provides this file or binary?
+
+```
+dpkg -S filenameOrPath
+```
 
 ### Executables 
 
