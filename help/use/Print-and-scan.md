@@ -41,6 +41,28 @@ If you get a QT error, then you probably need an extra module
 such as `python3-pyqt4` or `python3-pyqt5` 
 - see [https://github.com/artmg/lubuild/blob/master/system-apps-manual.bash]
 
+### diagnostics
+
+* use hp-check
+	* sudo hp-check
+* increase CUPS logging level
+	* [http://hplipopensource.com/node/225]
+	* see logs in /var/log/cups/  (error_log, etc)
+
+### troubleshooting connectivity
+
+various recomendations include:
+
+* check your Device URI:
+	* starts with hp:/
+	* has the ip address at the end
+* check SNMP is active
+	* [http://hplipopensource.com/node/216]
+* see also [http://hplipopensource.com/node/224]
+* ensure that avahi is active locally
+	* comes up before cups? [https://bbs.archlinux.org/viewtopic.php?pid=954010#p954010]
+
+
 ## Scanners
 
 ```
