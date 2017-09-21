@@ -299,6 +299,10 @@ Exec=lxterminal -e "/bin/hello.sh"
 Terminal=false
 ```
 
+If you have issues with -e syntax try --command="" instead
+
+
+
 ### Create New ...
 
 To add new file templates into the menu Create New in PCManFM file manager, 
