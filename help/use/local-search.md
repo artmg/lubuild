@@ -89,6 +89,7 @@ see also [http://en.wikipedia.org/wiki/List_of_search_engines#Desktop_search_eng
 * see instructions at [https://github.com/artmg/lubuild/blob/master/user-apps.bash]
 * extensions
 	- Recoll Web UI
+		* see below
     * also Omega below provides server-based results search for Xapian
 
 ### out from user-apps
@@ -277,6 +278,38 @@ export RECOLL_EXTRA_DBS=/path/to/index1/recoll/xapiandb/:/media/$USER/volume2/.r
 # - how to make these permanent options of external indexes??
 
 ```
+
+### web UI
+
+This simplest way to run this is using the Bottle Python built-in web server, 
+although this only provides single-user, single threaded access
+
+* `sudo apt-get install recoll python-recoll`
+* download [https://github.com/koniu/recoll-webui/archive/master.zip]
+* extract to bin folder
+* `./webui-standalone.py`
+* browse to localhost:8080
+
+For advanced config see [https://www.lesbonscomptes.com/recoll/pages/recoll-webui-install-wsgi.html]
+
+
+#### example desktop entry
+
+```
+$HOME/Desktop/Search.desktop
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Name=Recoll Web UI
+Exec=lxterminal --title="Recoll Web UI" --command="python $HOME/.bin/recoll-webui/recoll-webui-master/webui-standalone.py"
+Terminal=false
+Categories=Utility;
+Comment=Enable browser-based search using Recoll Web interface
+GenericName=Local browser-based search
+Icon=recoll
+Keywords=Search;Full Text;
+```
+
 
 ### weightings for folder trees indexed
 
