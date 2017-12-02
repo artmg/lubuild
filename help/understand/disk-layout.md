@@ -32,9 +32,21 @@ Reasoning:
     * also handy when booting from flash
 
 
-### IN
+### Choice of Filesystem Type
 
-### Formatting for large hard drives ==
+_(need to integrate section below)_ 
+
+Compatibility of Filesystems between Linux, Windows and macOS complicates 
+matters. The only universally supported filesystem types are 
+FAT (and derivatives) that are not the most efficient or resilient these days. 
+
+Filesystem type - see table in https://www.howtogeek.com/73178/
+The safest three-platform choice is FAT(32)
+
+
+#### Formatting for large hard drives ==
+
+_old section name left in case of inbound links_
 
 Previously chose NTFS format for large partitions for compatibility 
 with Windows devices. Unfortunately filesystem repair tools under Linux 
@@ -44,11 +56,12 @@ Ext2Fsd, and the device can have an initial liveCD partition to boot
 into linux and copy data to other locally attached (e.g. NTFS) drives 
 for access by Windows. 
 
-Issues:
+
+#### Issues
+
 WDTV supports only FAT32/NTFS - http://wdc.custhelp.com/app/answers/detail/a_id/2726
 Android (which didn't support NTFS) does not have across the board support for extX
 Permissions could be an issue unless umasks are sep up or root is used 
-
 
 10GB boot partition = FAT32 ??
 
@@ -62,9 +75,16 @@ http://askubuntu.com/questions/138356/
 
 Use Startup Disk Creator to load live image and make this bootable 
  
- 
 <The Rest>GB Data partition = EXT4
 
+#### macOS support
+
+EXT filesystems are not natively supported
+```
+# Ext support for macOS
+brew cask install osxfuse
+
+```
 
 
 ### full encryption using LVM
