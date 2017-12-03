@@ -1,4 +1,10 @@
 
+see also:
+
+* using qemu to run VM guests on Linux host, and including use of graphics cards
+    * 
+* 
+
 # VirtualBox
 
 ## Windows Guest
@@ -15,8 +21,9 @@ you'll need these for proper sizing of the screen between the host and the guest
 
 * start your VM
 * install the Lubuntu OS
-* reboot into newly installed Lubuntu OS
-* mount the Guest Additions ISO
+* restart into the newly installed Lubuntu OS
+* VirtualBox Menu / Devices / Mount the Guest Additions ISO (Menu / Device menu)
+* 
 
 ```
 # these are the dependencies to compile the additional drivers
@@ -29,4 +36,10 @@ sudo sh ./VBoxLinuxXxxx.run
 # for the additions to work you need a reboot
 sudo reboot
 ```
+
+## USB Device Passthru
+
+This should be quite straightforward, using the Devices Menu to choose the USB device you want
+If you have errors, check that the VM / Settings / Ports page uses the appropriate level of
+USB support (e.g. USB3)
 
