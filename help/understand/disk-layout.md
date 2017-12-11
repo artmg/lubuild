@@ -79,10 +79,20 @@ Use Startup Disk Creator to load live image and make this bootable
 
 #### macOS support
 
-EXT filesystems are not natively supported
+* EXT filesystems are not natively supported
+* oxsfuse is a common integration layer for different filesystems
+* ext4fuse is RO for Ext
+* fuse-ext2 has RW options for Ext
+    * had issues with SIP in macOS 10.11 but workarounds exist
+    * requires MacFUSE Compatibility Layer not available via homebrew (use manual pkg)
+* NTFS-3G supports RW NTFS
+
 ```
-# Ext support for macOS
+
+# NTFS support for macOS
 brew cask install osxfuse
+brew install ntfs-3g
+
 
 ```
 
