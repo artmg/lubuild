@@ -37,6 +37,16 @@ sudo sh ./VBoxLinuxXxxx.run
 sudo reboot
 ```
 
+If you have issues (e.g. Clipboard) then it is possible that your Linux OS came with forked Guest Additions, which might need to be removed before the official Guest Additions will correctly install.
+
+```
+dpkg -l | grep box
+sudo apt-get purge virtualbox-guest-utils
+```
+
+Then reinstall the tools as above
+
+
 ## USB Device Passthru
 
 This should be quite straightforward, using the Devices Menu to choose the USB device you want
