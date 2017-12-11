@@ -372,19 +372,64 @@ sudo reboot
 NFS_SERVER=myServerName
 NFS_EXPORT=myExportFolder
 LOCAL_MOUNT=myMountName
-sudo apt-get install -y nfs-common
+MOUNT_PERM=yes-or-no
 
-sudo mkdir -p /mnt/nfs/$LOCAL_MOUNT
-sudo mount -t nfs $NFS_SERVER:/srv/exports/$NFS_EXPORT /mnt/nfs/$LOCAL_MOUNT
-# test
-mount -t nfs
+# detect unix release
+. /etc/*-release
+if [ -f "/etc/arch-release" ]; then ID=archarm; fi
+if [ "$(uname)" == "Darwin" ]; then ID=macos; fi
 
-# for a permanent mount that should avoid issues if unavailable...
-cat <<EOF | sudo tee -a /etc/fstab
-$NFS_SERVER:/srv/exports/$NFS_EXPORT /mnt/nfs/$LOCAL_MOUNT nfs  defaults,timeo=14,soft   0   0
+#install
+if [[ "${ID}" == "archarm" ]] ; then 
+  sudo pacman -S --noconfirm nfs-utils
+else
+  sudo apt-get install -y nfs-common
+fi
+
+case "${ID}" in
+  ubuntu)
+    MOUNT_ROOT=/mnt/nfs
+    EXPORT_ROOT=/srv/exports
+    MOUNT_OPTIONS=
+    # for a permanent mount that should avoid issues if unavailable...
+    MOUNT_PERM_OPT="defaults,timeo=14,soft   0   0"
+    ;;
+  macos)
+    # Sierra file system hierarchy suggests /Volumes for mounts
+    # https://developer.apple.com/library/content/documentation/FileManagement/Conceptual/FileSystemProgrammingGuide/FileSystemOverview/FileSystemOverview.html#//apple_ref/doc/uid/TP40010672-CH2-SW7
+    # also the security design recommends using reserved ports
+    MOUNT_ROOT=/Volumes
+    EXPORT_ROOT=
+    MOUNT_OPTIONS="-o resvport"
+    MOUNT_PERM_OPT=
+    ;;
+  archarm)
+    MOUNT_ROOT=/mnt/nfs
+    EXPORT_ROOT=/srv/exports
+    MOUNT_OPTIONS=
+    # MOUNT_PERM_OPT="rsize=8192,wsize=8192,timeo=14,_netdev	0 0"
+    MOUNT_PERM_OPT="defaults,timeo=14,soft   0   0"
+    # or even using automount options
+    # MOUNT_PERM_OPT="auto,x-systemd.automount,x-systemd.device-timeout=10,timeo=14,x-systemd.idle-timeout=1min	0 0"
+    # credit [https://wiki.archlinux.org/index.php/NFS#Mount_using_.2Fetc.2Ffstab_with_systemd]
+esac
+
+
+sudo mkdir -p $MOUNT_ROOT/$LOCAL_MOUNT
+
+if [[ "${MOUNT_PERM}" == "yes" ]] ; then
+  # add the entry to the file system table
+  cat <<EOF | sudo tee -a /etc/fstab
+$NFS_SERVER:$EXPORT_ROOT/$NFS_EXPORT $MOUNT_ROOT/$LOCAL_MOUNT nfs $MOUNT_PERM_OPT
 EOF
-
-sudo mount -a
+  # now mount from the fstab
+  sudo mount -a
+else
+  # or just mount
+  sudo mount -t nfs $MOUNT_OPTIONS $NFS_SERVER:$EXPORT_ROOT/$NFS_EXPORT $MOUNT_ROOT/$LOCAL_MOUNT
+  # then test
+  mount -t nfs
+fi
 
 ```
 
