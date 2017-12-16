@@ -46,10 +46,18 @@ sudo apt-get purge virtualbox-guest-utils
 
 Then reinstall the tools as above
 
+## Shared Folder
+
+```
+# if you get Permission errors when you have created 
+# a Shared Folder into an Ubuntu guest...
+sudo usermod -aG vboxsf $USER
+```
 
 ## USB Device Passthru
 
 This should be quite straightforward, using the Devices Menu to choose the USB device you want
 If you have errors, check that the VM / Settings / Ports page uses the appropriate level of
 USB support (e.g. USB3)
+
 
