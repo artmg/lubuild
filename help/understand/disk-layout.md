@@ -1,13 +1,10 @@
 
-# Understand Layout
+# Understand Disk Layout
 
 
+Here are some sample disk layouts and notes to try and help you, depending on your needs
 
-## Layouts  #############################################
-
-Here are some sample disk layouts depending on your needs
-
-### Sizing Notes
+## Sizing Notes
 
 Recommend minimum 16GB device - skip the rest of the section if you're ok with that
 
@@ -32,30 +29,63 @@ Reasoning:
     * also handy when booting from flash
 
 
-### Choice of Filesystem Type
+## Choice of Filesystem Type
 
 _(need to integrate section below)_ 
 
-Compatibility of Filesystems between Linux, Windows and macOS complicates 
-matters. The only universally supported filesystem types are 
+### Compatibility
+
+Compatibility of Filesystems between Linux, Windows and macOS complicates matters. The only universally supported filesystem types are 
 FAT (and derivatives) that are not the most efficient or resilient these days. 
 
 Filesystem type - see table in https://www.howtogeek.com/73178/
 The safest three-platform choice is FAT(32)
 
+UDF has been suggested as being supported by W, M & L (https://unix.stackexchange.com/a/59590) however it is intended for RO media like optical drives, and is not necessarily fit for general purpose RW use. 
 
-#### Formatting for large hard drives ==
+#### macOS support
 
-_old section name left in case of inbound links_
+* EXT filesystems are not natively supported
+* oxsfuse is a common integration layer for different filesystems
+* ext4fuse is RO for Ext
+* fuse-ext2 has RW options for Ext
+    * had issues with SIP in macOS 10.11 but workarounds exist
+    * requires MacFUSE Compatibility Layer not available via homebrew (use manual pkg)
+* NTFS-3G supports RW NTFS
 
-Previously chose NTFS format for large partitions for compatibility 
-with Windows devices. Unfortunately filesystem repair tools under Linux 
-are not as "NTFS friendly". As most home devices are NOT Windows-based 
-the new proposed large FS is EXT4. Windows drivers for ext4 include 
-Ext2Fsd, and the device can have an initial liveCD partition to boot 
-into linux and copy data to other locally attached (e.g. NTFS) drives 
-for access by Windows. 
+```
+# NTFS support for macOS
+brew cask install osxfuse
+brew install ntfs-3g
+```
 
+NB: you can completely skip the whole Compatibility issue by not plugging in a drive. If you use cloud file sync (Dropbox etc) or NAS shares (CIFS/NFS/etc) then the FS is abstracted and the problem disappears into a puff of ether.
+
+
+
+### Size (large volumes)
+
+You will see both the compatibility and size limitations of filesystem types at https://www.howtogeek.com/73178/
+
+FAT32 remains the most universally supported FS, but has the increasingly noticeable limitation of 4GB maximum file size.
+
+We chose NTFS for large sizes for a while, as Linux supports NTFS reasonably well thanks to developers (including Tuxera) maintaining open-source drivers. OK, when it comes to NTFS repair, they'll still recommend booting into Windows for a good ol' CHKDSK /F but still that worked well.
+
+EXT4 was a good choice for a while, as we had few non-linux devices using large drives. Also Windows drivers for ext4 include Ext2Fsd, and the device can have an initial liveCD partition to boot into linux and copy data to other locally attached (e.g. NTFS) drives for access by Windows. 
+
+However, introducing macOS has complicated things once again.
+
+The best combination of Large File Support and cross-platform compatibility seems to come from exFAT. Yes, Linux kernel cannot include the drivers for licensing reasons until 2029, but they are easy to install...
+
+```
+sudo apt install exfat-fuse
+```
+
+As long as you stick to MBR partition tables, you'll even have game console compatibility.
+
+```
+sudo mkfs.exfat -n LABEL /dev/sdXN
+```
 
 #### Issues
 
@@ -77,24 +107,6 @@ Use Startup Disk Creator to load live image and make this bootable
  
 <The Rest>GB Data partition = EXT4
 
-#### macOS support
-
-* EXT filesystems are not natively supported
-* oxsfuse is a common integration layer for different filesystems
-* ext4fuse is RO for Ext
-* fuse-ext2 has RW options for Ext
-    * had issues with SIP in macOS 10.11 but workarounds exist
-    * requires MacFUSE Compatibility Layer not available via homebrew (use manual pkg)
-* NTFS-3G supports RW NTFS
-
-```
-
-# NTFS support for macOS
-brew cask install osxfuse
-brew install ntfs-3g
-
-
-```
 
 
 ### full encryption using LVM
