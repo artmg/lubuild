@@ -14,9 +14,9 @@
 ### Requirements
 
 * single pane WYSIWYG (rather than multi-pane with preview)
-* Document navigator for section headings
+* Document navigator for jumping between TOC section headings
 * hyperlinked URLs - click to open (either browser or editor if local)
-* prefer Qt-based widget system
+* prefer Qt-based widget system 
 
 ### Candidates
 
@@ -47,6 +47,7 @@ For Android Apps see the section below.
 	* auto-bullets and table mode 
 	* no URL hyperlinks
 	* supports python markdown extensions
+	* does it have TOC navigation?
 * Ghostwriter
 	* Qt and C++
 	* [https://github.com/wereturtle/ghostwriter]
@@ -58,7 +59,7 @@ For Android Apps see the section below.
 	* focussed on integration with OwnCloud
 	* project active for a couple of years with many commits in past year (to Aug 2017)
 	* single developer
-	* author has PPA for Ubuntu (and Arm builds fro Pi)
+	* author has PPA for Ubuntu (and Arm builds for Pi)
 		* ppa:pbek/qownnotes
 	* based on author's own Qt Widget qmarkdowntextedit
 * CuteMarkEd
@@ -108,6 +109,23 @@ see also:
 
 * Markdrop
 * Draft
+
+
+### macOS editors
+
+
+* macdown
+	* foss
+	* mac only
+* sublime text
+	* nagware
+* Ghostwriter
+	* foss, but no mac package ready - _should_ build
+* ReText
+	* python-based so should work ok
+* QOwnNotes
+	* mac packages available (not yet via homebrew)
+
 
 
 ## Why use Markdown?
