@@ -398,8 +398,9 @@ case "${ID}" in
     # Sierra file system hierarchy suggests /Volumes for mounts
     # https://developer.apple.com/library/content/documentation/FileManagement/Conceptual/FileSystemProgrammingGuide/FileSystemOverview/FileSystemOverview.html#//apple_ref/doc/uid/TP40010672-CH2-SW7
     # also the security design recommends using reserved ports
+    # export root determined with showmount -e servername
     MOUNT_ROOT=/Volumes
-    EXPORT_ROOT=
+    EXPORT_ROOT=/srv/exports
     MOUNT_OPTIONS="-o resvport"
     MOUNT_PERM_OPT=
     ;;
