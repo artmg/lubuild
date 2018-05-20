@@ -115,9 +115,20 @@ into a photo montage, but this requirement is more for cutting and gluing.
 	* import images, resize and crop
 	* use layers
 	* can be slow to refresh images
-* Gimp
-	* Open images as layers
-	* crop etc
+* Gimp (without extra plugins)
+	* Extremely flexible control over results, but can be time consuming
+	* here's a video intro to the basic steps [https://youtu.be/-EKm38ubGxE]
+	* here's a compact text tutorial, with some shots, of a more complex example [http://emptyeasel.com/2008/08/29/how-to-create-a-photomontage-in-gimp/]
+	* and here's a real step-by-step in case you get stuck on the manipulation [https://digital-photography-school.com/create-a-collage-in-gimp/]
+	* Here's an overview of the process
+		* Open images as layers
+		* add layer masks
+		* use gradients on mask to blend your image into others
+	* Tips
+		* Have an idea of the overall layout before you start
+			* you can fit canvas to layers as you go
+			* or you can set your final size/resolution from the start
+		* look for shortcuts in manipulating selections in mask layers
 * G'MIC montage plugin for Gimp
 	* gimp-gmic package in repos
 	* uses c++ libgmic for functions
