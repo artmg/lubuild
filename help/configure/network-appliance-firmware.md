@@ -357,6 +357,17 @@ from ssh shell...
 
 ```
 
+#### Security requirements
+
+Some circumstances recommend renaming administrative logins. 
+With pfSense you need to bear in mind:
+* you cannot rename the WebAdmin user, but need to create a new one
+    * https://forum.pfsense.org/index.php?topic=59119.0
+* the authentication and authorisation for SSH access may be separate from the web admins
+    * https://forum.pfsense.org/index.php?topic=135478.0
+
+
+
 #### Services
 
 ##### DHCP
