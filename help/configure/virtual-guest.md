@@ -49,6 +49,16 @@ Then reinstall the tools as above
 ## Shared Folder
 
 ```
+# acess the shared drive from the guest os 
+sudo echo
+sudo usermod -aG vboxsf $USER
+sudo mkdir -p /mnt/vboxshare
+# penulimate parameter is 'Machine Folders' name from vBox Settings / Shared Folders
+sudo mount -t vboxsf folder_name /mnt/vboxshare
+cd /mnt/vboxshare
+```
+
+```
 # if you get Permission errors when you have created 
 # a Shared Folder into an Ubuntu guest...
 sudo usermod -aG vboxsf $USER
