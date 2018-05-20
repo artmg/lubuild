@@ -100,9 +100,11 @@ Games based on controlling vehicles in a partially realistic way
 
 ### flight
 
-* FlightGate
-    * Works well in Linux & Windows with variety of graphics adapters
-    * supposedly realistic, but not the simplest
+* Flight Gear
+    * Windows, Linux, macOS
+    * complicated to set up
+    * supposed to be very realistic
+    * Works well with variety of graphics adapters
 * GoogleEarth
     * in-browser version for Chrome
     * much simpler
@@ -111,6 +113,7 @@ Games based on controlling vehicles in a partially realistic way
     * space-based flying game more than flying sim
     * Linux / Windows / OSX
     * trading game elements like Elite
+    * https://wiki.vega-strike.org/Manual:Install
 * YSFlight
     * Windows Yes, Linux ???
     * 
