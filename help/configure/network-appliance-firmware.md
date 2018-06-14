@@ -250,6 +250,7 @@ opkg install avahi-daemon-service-http
 * curently done via interface
 * set to use uci, driven with variables
 
+* https://wiki.openwrt.org/doc/uci/wireless
 
 ## Back up
 
@@ -288,6 +289,25 @@ cat /var/resolv.conf.auto
 
 
 ```
+
+### diagnosing wifi connections
+
+The OpenWrt GUI page Network / Wireless includes 
+MAC addresses, signal strength and TX RX rates. 
+This is not so simple to refer to when you have 
+multiple APs and no hostnames in the list. 
+
+Check the following article for ideas 
+on how to combine this data from multiple sources 
+and look up MAC addresses against a table.
+
+https://medium.com/openwrt-iot/openwrt-debugging-your-wireless-fac83a6fdc44
+
+see also:
+
+* https://openwrt.org/docs/guide-developer/debugging#wireless
+* https://openwrt.org/docs/guide-user/network/wifi/wireless.overview#packages
+* 
 
 ### Failsafe mode
 
