@@ -294,8 +294,9 @@ sudo chown $NFS_EXPORT_PERMS /srv/exports/$NFS_EXPORT_NAME
 
 ###### Bind the data into the nfs exports directory
 cat <<EOF | sudo tee -a /etc/fstab
-$NFS_MOUNT_POINT      /srv/exports/$NFS_EXPORT_NAME    none   bind   0   0
+$NFS_MOUNT_POINT      /srv/exports/$NFS_EXPORT_NAME    none   bind,nofail   0   0
 EOF
+# add nofail to ensure that ancilliary disk fails do not prevent devices from booting
 sudo mount -a
 
 ###### make the export available - add to NFS filesystem access control list
