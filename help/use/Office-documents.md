@@ -82,6 +82,7 @@ chmod +x install-google-fonts
 * see list in [https://wiki.ubuntu.com/Fonts#Links_to_fonts]
 * [https://fonts.google.com/]
 * to check
+	* [http://www.fontspace.com/]
 	* [http://www.losttype.com/browse/]
 	* [http://www.fontsquirrel.com/]
 
@@ -191,7 +192,7 @@ visually both appealing and coherent.
 The main candidate that comes up again and again is **Scribus**, 
 but others are covered in the section further below. 
 For other software more related to graphical manipulation that multipage styling, 
-like Gimp or Inkscape, see [??]
+like Gimp or Inkscape, see [https://github.com/artmg/lubuild/blob/master/help/manipulate/photos-and-images.md]
 
 
 ### Scribus
