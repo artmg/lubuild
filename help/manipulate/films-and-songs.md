@@ -14,6 +14,9 @@ see also:
 * [https://github.com/artmg/lubuild/blob/master/help/manipulate/photos.md]
     * for working with your own captured images
     * includes converting them into videos
+* [https://github.com/artmg/lubuild/blob/master/help/manipulate/miscellaneous-files.md]
+    * manage files and folders, including sync, dedupe and bulk rename
+    * inspect miscellaneous file formats like binary or email
 
 
 ## IN
@@ -347,6 +350,9 @@ to help select and locate the one you want to watch.
 * View their Artwork online
 * Scan UPC codes from covers?
 
+see also how to bulk rename based on metadata in [https://github.com/artmg/lubuild/blob/master/help/manipulate/miscellaneous-files.md]
+
+
 ### Applications
 
 Try MyMovies for Android scanner
@@ -434,8 +440,8 @@ Although not a specific candidate for the functionality mentioned here,
 see:
 * [https://github.com/artmg/lubuild/blob/master/help/manipulate/PDF files.md]
     * to view a single file's metadata properties
-* [https://github.com/artmg/lubuild/blob/master/help/manipulate/photos.md]
-    * to bulk rename files based on meta properties (e.g. date photo or video was taken)
+* [https://github.com/artmg/lubuild/blob/master/help/manipulate/miscellaneous-files.md]
+    * to bulk rename files based on meta properties including artist and album
 * 
 
 

@@ -18,8 +18,8 @@ See also:
 	* Computer Aided Design programs
 	* 3D design, including space layout and rendering, and 2D design
 * [https://github.com/artmg/lubuild/blob/master/help/manipulate/miscellaneous-files.md]
-	* Other common types of document
-	* including email formats
+    * manage files and folders, including sync, dedupe and bulk rename
+	* inspect miscellaneous file formats like binary or email
 
 
 ## Viewing images
@@ -84,25 +84,11 @@ sudo apt install photoqt
 
 
 
-
-
 ## renaming images based on metadata
 
-The most common case for this would be to rename to "YYYYmmdd_HHMMSS.ext" 
-based on the date and time that the photo was taken (metadata)
+moved out to [https://github.com/artmg/lubuild/blob/master/help/manipulate/miscellaneous-files.md]
 
-Exiftool is a great way to do this
 
-```
-# show the metadata for a single file
-exiftool myPhoto.jpg
-# help - http://www.sno.phy.queensu.ca/~phil/exiftool/
-# show the shortnames for meta tags
-exiftool -s myPhoto.jpg
-
-# rename to "YYYYmmdd_HHMMSS.ext" and move into folder "renamed"
-exiftool "-FileName<DateTimeOriginal" -d "%Y%m%d_%H%M%S.%%e" -directory=renamed .
-```
 
 ## Create photo collage
 

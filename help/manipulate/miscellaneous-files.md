@@ -26,71 +26,76 @@ see also:
 	* which candidates are currently installed
 
 
-## Emails
+The first section of this looks at manipulating files and folders in general. 
+This includes sychronisation, deduplicating and bulk renaming
 
-### MIME / MHTML / EML and other email attachment or multipart formats
+Then further down there are ways to inspect miscellaneous types of file, such as emails, or binaries
 
-To extract files from MIME text files
+
+# Working with files and folders
+
+## Bulk rename based on metadata
+
+Although some file managers in Windows, Macos and Linux flavours can do some bulk renaming, 
+they do not always allow the names to be based on the metadata describing the contents. 
+Use cases for this include sorting photos easily by the date they were taken, 
+or grouping music into albums and artists. 
+
+
+### GUI tool
+
+The requirement is for a tool that is:
+
+* easy to use with a graphical user interface (GUI) 
+* open source, and preferably an active project with multiple developers
+* can use both EXIF image metadata and ID3 music metadata
+* available across platforms (at least Macos, Ubuntu and Windows)
+* uses reasonably lightweight and efficient subsystems
+
+* Métamorphose 2
+    * open source, cross platform and multiple contributor
+    * replaced previous Metamorphose project
+    * based on python and Qt
+    * not many contributions recently
+    * PPA way out of date and no Macos binary (needs make-ing)
+* Inviska rename
+    * open source and cross-platform, using Qt
+    * sole developer, site was out for a few months
+    * code published but only as zips
+    * fully-featured across all platforms
+* Ant Renamer
+    * seems like a solo project where code is published
+    * written using Borland Delphi
+    * unicode support only on Windows
+* F2Utility
+    * cross-platform
+    * java-based
+* ExifRenamer
+    * Macos only
+    * free not libre
+* Exif ReName
+    * not macos
+
+### command line using exiftool
+
+exiftool is commonly available through standard application repositories on linux variants
+via homebrew core and as a windows download
+
+Here is an example for the use case 
+to rename all files in a folder to "YYYYmmdd_HHMMSS.ext" 
+based on the date and time that the photo was taken (metadata)
 
 ```
-# munpack from mpack package
+# show the metadata for a single file
+exiftool myPhoto.jpg
+# help - http://www.sno.phy.queensu.ca/~phil/exiftool/
+# show the shortnames for meta tags
+exiftool -s myPhoto.jpg
 
-sudo apt-get install mpack
-munpack mimefilename.ext
-
-# example in loop
-for f in *.mht; do mkdir -p "unpack/$f"; munpack "../../$f" -C "unpack/$f" ; done
-
-# alternatives:
-# * mu-extract from maildir-utils 
-# * base64 -d from gnu
-# * 
-
-```
-### Outlook emails ###
-
-* Open saved emails 
-** M standard .eml files
-** M Outlook .msg files including Office 2013
-* M View or Extract attachments
-* S allow copy of content to other formats
-* C preferably without setting up email account
-
-Candidates:
-
-* MsgConv
-	* produces EML from MSG
-	* for procs see [http://askubuntu.com/a/363615]
-
-```
-# includes lots of perl libs but only around 7MB total
-sudo apt-get install libemail-outlook-message-perl
-# create EML file from MSG
-msgconvert myfile.msg
+# rename to "YYYYmmdd_HHMMSS.ext" and move into folder "renamed"
+exiftool "-FileName<DateTimeOriginal" -d "%Y%m%d_%H%M%S.%%e" -directory=renamed .
 ```
 
-* sylpheed 
-** Opens .EML
-*** Have to click through 4 dialogs first
-*** displays text and allows Open / Save attachments
-
-* thunderbird
-** does not open .MSGs correctly
-** for requirements and current procs see [Lub App Thunderbird config.md]
-
-see also:
-
-* readpst
-	[https://github.com/artmg/lubuild/blob/master/app-installs.bash]
-
-### Outlook Express IAF files
-
-Get Passwords from IAF file Outlook Express email account export
-
-* Using Perl
-	* [http://www.forensicfocus.com/Forums/viewtopic/t=2788/]
-* Using Ruby
-	* [https://gist.github.com/kurochan/9038608]
 
 
 ## File and Folder syncronisation
@@ -271,6 +276,77 @@ Not available for 15.10!
 ; rdfind - http://rdfind.pauldreik.se/
 :: can rank which to autoreplace with links
 : in repos
+
+
+
+# Inspecting particular file types
+
+
+## Emails
+
+### MIME / MHTML / EML and other email attachment or multipart formats
+
+To extract files from MIME text files
+
+```
+# munpack from mpack package
+
+sudo apt-get install mpack
+munpack mimefilename.ext
+
+# example in loop
+for f in *.mht; do mkdir -p "unpack/$f"; munpack "../../$f" -C "unpack/$f" ; done
+
+# alternatives:
+# * mu-extract from maildir-utils 
+# * base64 -d from gnu
+# * 
+
+```
+### Outlook emails ###
+
+* Open saved emails 
+** M standard .eml files
+** M Outlook .msg files including Office 2013
+* M View or Extract attachments
+* S allow copy of content to other formats
+* C preferably without setting up email account
+
+Candidates:
+
+* MsgConv
+    * produces EML from MSG
+    * for procs see [http://askubuntu.com/a/363615]
+
+```
+# includes lots of perl libs but only around 7MB total
+sudo apt-get install libemail-outlook-message-perl
+# create EML file from MSG
+msgconvert myfile.msg
+```
+
+* sylpheed 
+** Opens .EML
+*** Have to click through 4 dialogs first
+*** displays text and allows Open / Save attachments
+
+* thunderbird
+** does not open .MSGs correctly
+** for requirements and current procs see [Lub App Thunderbird config.md]
+
+see also:
+
+* readpst
+    [https://github.com/artmg/lubuild/blob/master/app-installs.bash]
+
+### Outlook Express IAF files
+
+Get Passwords from IAF file Outlook Express email account export
+
+* Using Perl
+    * [http://www.forensicfocus.com/Forums/viewtopic/t=2788/]
+* Using Ruby
+    * [https://gist.github.com/kurochan/9038608]
 
 
 
