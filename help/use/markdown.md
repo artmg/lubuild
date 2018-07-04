@@ -117,6 +117,8 @@ see also:
 * macdown
 	* foss
 	* mac only
+	* may be installed from brew cask
+	* uses Hoedown for rendering and Prism for syntax highlighing 
 * sublime text
 	* nagware
 * Ghostwriter
