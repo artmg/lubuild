@@ -1,3 +1,6 @@
+PDF files
+========
+
 see also:
 
 * [https://github.com/artmg/lubuild/blob/master/help/manipulate/photos-and-images.md]
@@ -94,6 +97,7 @@ pdftocairo -svg source-file-name.PDF /path/to/output/image-files.SVG
 
 ### Create PDF from image files
 
+```
 # credit [https://askubuntu.com/a/446218]
 # convert utility is from imagemagick package
 convert x.jpg y.jpeg pictures.pdf
@@ -101,7 +105,7 @@ convert x.jpg y.jpeg pictures.pdf
 convert `ls -1v` file.pdf
 # for extensive list of options see
 # [http://manpages.ubuntu.com/manpages/zesty/man1/convert-im6.1.html]
-
+```
 
 ### Reduce PDF filesize by reducing image quality
 
@@ -182,8 +186,13 @@ for forensic, development or testing work...
             * http://podofo.sourceforge.net/download.html#browser
             * QT based GUI
             * any repos?
+	* qpdf
+		* cli utility to extract from PDF to text readable format
+		* cross platform, open source
+		* can be found in many distro repos
     * see also http://forensicswiki.org/wiki/PDF#PDF_Tools
     * iTextRUPS is Java based
+    * see also 	https://stackoverflow.com/a/29474423
     * 
 
 ## split pages
@@ -192,7 +201,11 @@ for forensic, development or testing work...
 
 ## Working with Fonts
 
-The Evince Document viewer will allow you to see what fonts are embedded in PDF documents
+Many Document Viewer apps will allow you to see what fonts are embedded in PDF documents
+inlcuding: 
+
+* Evince 
+* qpdfview
 
 You can also use the command line **pdffonts** from poppler-utils. 
 
