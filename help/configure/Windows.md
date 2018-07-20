@@ -29,6 +29,18 @@ e.g. Elevated Command prompt...  Win-X then A
 
 This is also available in Windows 8
 
+### Remove Unwanted Apps
+
+You can do this via Apps and Features, but it can be quicker in an Adminsitrators Powershell
+
+```
+Get-AppxPackage | select name | sort name
+Get-AppxPackage -Name 'Microsoft.MicrosoftSolitaireCollection'  | Remove-AppxPackage
+Get-AppxPackage -Name *Microsoft.Xbox*  | Remove-AppxPackage
+Get-AppxPackage -Name *EclipseManager*  | Remove-AppxPackage
+Get-AppxPackage -Name *Duolingo*  | Remove-AppxPackage
+
+```
 
 ### Windows 10 Prevent allow updates to download
 
