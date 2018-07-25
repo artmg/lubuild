@@ -301,6 +301,23 @@ The very popular Windows util H2testw is reported to work under Wine.
 Not sure if the same goes for Crystal Disk Mark, ChkFlsh or AS SSD. Atto
 and IoMeter are others commonly used under Windows.
 
+### f3
+
+f3 by Digirati.com.br is a cross-platform open-source solution. The author states that he based the initial programme on the process used by H2testW.
+
+f3 is in many linux repos and may be installed on Mac using homebrew: `brew install f3`
+
+It comprises two command line executables:
+
+```
+# perform write speed tests 
+# also required to create files used by read tests
+f3write /path/to/drive
+
+# perform read speed tests
+f3read /path/to/drive
+```
+
 ### Bonnie++
 
 [Bonnie++](https://en.wikipedia.org/wiki/Bonnie%2B%2B) is a tool which
