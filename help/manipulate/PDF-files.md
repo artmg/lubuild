@@ -83,6 +83,7 @@ check the libre software above to see if it can.
 ```
 # requires poppler-utils
 sudo apt-get install poppler-utils
+# on Mac use:  brew install poppler
 
 #### raster images
 
