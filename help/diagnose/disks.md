@@ -316,6 +316,9 @@ f3write /path/to/drive
 
 # perform read speed tests
 f3read /path/to/drive
+
+# on Mac the automounted volume path is typically...
+# /Volume/vol_label
 ```
 
 ### Bonnie++
