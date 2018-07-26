@@ -94,26 +94,33 @@ Further info - see...
 
 ## Flash and Filesystems ##
 
-ext4 is often mentioned as ok choice for flash, but with mount options
+### background
 
-* discard - enable TRIM housekeeping
-* noatime, nodiratime - avoid excessive writes
+There was a time when techies would caution about special settings such as those below, to prevent NAND Flash Devices such as pen drives and SD cards from wearing out too soon. 
+Now these devices are so common-place that most modern linux distros are typically set up with the necessary options built in. 
 
-some people suggest disabling journaling - not sure about this
+The default filesystem for many distros is (still) Ext4 and this does provide a sensible balance, in most cases, between 
+performance, resilience, compatibility and ease of use. However there are some circumstances when you might want to look further.  
 
-credit - http://superuser.com/questions/223290/which-filesystem-is-appropriate-for-formatting-an-usb-stick-and-install-an-opera
-see also - askubuntu.com/q/1400
+Performance of cheap flash drives, speed and longevity, could be improved by a file system that takes their characteristics into account. In embedded systems (including devices like Raspberry Pi) the chances of suddenly loosing power increases the risk of filesystem corruption if it was writing at the time. 
 
-btrfs is sometime heralded as more modern and flash friendly
-but it may still be experimental and performance is not optimum
+### Alternatives
 
-f2fs is designed as flash-friendly (as its name states) and performance
-is comparable with ext4, but is also not formally stable
+**btrfs** is sometime heralded as more modern and flash friendly. 
+over the years it has become a little more mature 
+and performance is comparable. 
+If you want to see an extreme configuration, 
+how about an SD card with two mirrored BTRFS partitions 
+https://unix.stackexchange.com/a/186954
 
-http://www.phoronix.com/scan.php?page=article&item=linux-3.19-ssd-fs&num=2
+**f2fs** is designed as flash-friendly (as its name states) 
+and performance is comparable with ext4. 
+There were issues with stability in early days, but these seem to be resolved.
 
-alternative distros like slax and puppy are reputed to be more flash friendly
-- why?
+Some alternative distros like slax and puppy are reputed to be more flash friendly (not sure specifically why), but the way you lay out disks can vastly improve reliability. For instance, some OS configurations for embedded use-cases, where very little changes boot after boot, use a ram disk for their core storage. That way writing is mainly done in memory so the flash storage device is mainy read only. That avoids issues with wear levelling and reliability. ALternatively, battery backup (UPS-style) can prevent sudden power loss, removing the cause of some corruption).
+
+Note that linux developed a Memory Technology Device (MTD) subsystem, that improves reliability of flash storage devices. Filesystems such as **JFFS2** (or even UBIFS) use MTD to improve the way that raw flash devices are used. However, SD cards and pendrives have their own build in Flash Translation Layer (FTL) to present them to the system as a good old fashioned 'block device', so these MTD filesystems offer **no** benefit for these. 
+
 
 ### other ssd enhancements ###
 

@@ -33,6 +33,12 @@ Reasoning:
 
 _(need to integrate section below)_ 
 
+NB: If instead you want to understand 
+your choice of possible filesystems to 
+work well with SD cards and USB drives see 
+[https://github.com/artmg/lubuild/blob/master/help/manipulate/flash-drives-and-SSDs.md#flash-and-filesystems]
+
+
 ### Compatibility
 
 Compatibility of Filesystems between Linux, Windows and macOS complicates matters. The only universally supported filesystem types are 
