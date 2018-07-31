@@ -219,6 +219,7 @@ There is also the Konqueror WebDAV client for KDE
 ### Sharing printers
 
 If you want to share printers you will need to
+
 ```
 <pre>sudo apt-get install -Y samba system-config-samba
 #if you want to run it without rebooting then just
@@ -627,6 +628,7 @@ sudo /usr/sbin/sshd -Dd
 #### more
 
 see ...
+
 * https://help.ubuntu.com/community/SSH/OpenSSH/Keys#Troubleshooting
 * https://help.ubuntu.com/community/SSH/OpenSSH/Configuring#Troubleshooting
 
@@ -713,18 +715,24 @@ If you get the error &quot;<code>XOpenDisplay failed</code>&quot; then try repla
 
 #### Others
 
+```
 credit &gt; [https://help.ubuntu.com/community/VNC/Servers https://help.ubuntu.com/community/VNC/Servers]
 
 sudo apt-get install x11vnc
 
 sudo x11vnc -storepasswd
 
+```
+
 Add the following to your startup applications
 
+```
 x11vnc -safer -allow 192.168.3. -usepw -ncache
+```
 
 or
 
+```
 echo '[Desktop Entry]
 
 Name=VNC server
@@ -740,6 +748,7 @@ Credit &gt; http://ubuntuforums.org/showthread.php?t=1068793
 sudo apt-get install vino
 
 vino-preferences
+```
 
 Allow view &amp; control
 
@@ -858,20 +867,23 @@ for benchmarks see [msoap/Raspberry Pi httpd benchmark.md](https://gist.github.c
 
 ### Architecture and Options
 
+The main options for collecting logs to the syslog RFC standards:
+
 * rsyslogd
-    * comes pre-installed on ubuntu and raspbian
-    * for further comparison see [http://askubuntu.com/a/55495]
-    * see also [logging in ubuntu](https://help.ubuntu.com/community/LinuxLogFiles)
-* syslogd
-    * previously the default system logging on ubuntu and many linux distros
-    * defaults to writing locally
+	* comes pre-installed on ubuntu and raspbian
+	* open source
+	* single main owner (multiple contribs)
 * syslog-ng
-    * server
-    * FOSS with added functionality on freemium model with Premium Edition available
-    * 
+	* FOSS / freemium: open Community Edition with added functionality available in Premium Edition
+	* corporately owned
+* syslogd
+	* project long abandoned
+	* previously the default system logging on ubuntu and many linux distros
+    * defaults to writing locally
 * ELK (ElasticSearch, Logstash, Kibana) 
     * FOSS stack to collect, store, search and visualise logs
-* 
+    * commonly run on cloud services
+    * available in turnkey images such as bitnami
 
 You could use a conbination of these, e.g. rsyslog to send files 
 to a log collection server, then ELK to analyse from this
@@ -880,7 +892,8 @@ to a log collection server, then ELK to analyse from this
 ### rsyslogd server
 
 ```
-sudo nano /etc/rsyslog.conf
+#### Listen on network
+sudo editor /etc/rsyslog.conf
 ## uncomment the following lines to allow listeners on default UDP & TCP ports
 #$ModLoad imudp
 #$UDPServerRun 514
@@ -894,6 +907,8 @@ sudo service rsyslog restart
 # by default this will send ALL logs received to syslog
 # you may want to separate these out using conf files as below
 
+
+#### Single log file
 # This gives one log file for all
 LOG_FILE=/var/log/mylogs.log
 sudo touch $LOG_FILE
@@ -903,9 +918,12 @@ sudo tee /etc/rsyslog.d/60-network.conf cat <<EOF!
 & ~
 EOF
 
+
+#### DynaFile
 # This gives a log file per source hostname
 # credit - http://www.rsyslog.com/article60/
 LOG_LOCATION=/var/log/network
+
 sudo mkdir -p $LOG_LOCATION
 sudo tee /etc/rsyslog.d/60-network.conf cat <<EOF!
 \$template DynaFile,"$LOG_LOCATION/%HOSTNAME%.log"
@@ -913,11 +931,27 @@ sudo tee /etc/rsyslog.d/60-network.conf cat <<EOF!
 & ~
 EOF!
 
+
 # you can choose which host sends to which file with...
 # :fromhost-ip, isequal, "192.168.0.1" -?NetworkLog
 
 
-# consider log rotation - http://www.aelog.org/use-the-raspberry-pi-as-a-syslog-server-using-rsyslog/
+#### Log Rotation
+
+sudo tee /etc/logrotate.d/rsyslog-data.conf cat <<EOF!
+$LOG_LOCATION/*.log $LOG_LOCATION/*/*.log {
+        rotate 10
+        size 500k
+        compress
+        notifempty
+        postrotate
+                invoke-rc.d rsyslog rotate > /dev/null
+        endscript
+}
+EOF!
+
+sudo logrotate /etc/logrotate.conf --debug
+
 ```
 
 #### moving log folder
