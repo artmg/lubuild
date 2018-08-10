@@ -20,7 +20,19 @@ see also:
 ### Auto login
 
 ```
-### Lubuntu LightDM autologon 
+#### Check which display manager is in use
+update-alternatives --get-selections|grep dm
+
+#### Lubuntu LightDM autologon 
+
+# credit - https://askubuntu.com/a/456957
+sudo tee -a /etc/lightdm/lightdm.conf.d/12-autologin.conf <<EOF!
+[SeatDefaults]
+autologin-user=username
+EOF!
+
+
+#### older versions
 # edit the global config file
 sudo xxx-gnome-editor /etc/lightdm/lightdm.conf
 # NB: there are per-user config files called .dmrc in users' home folders
