@@ -1,3 +1,5 @@
+Network Appliance Firmware
+--------------------------
 
 Although general purpose computer hardware gives you more flexibility, 
 you may be better off with simpler, more efficient solutions 
@@ -318,6 +320,9 @@ If you really screw up the configuration, and have trouble accessing the device 
 and check [Procedures for Configuring Network Interface](https://github.com/artmg/lubuild/blob/master/help/configure/network-interface.md) to set an address in the 192.168.1.x network
 
 
+# pfSense
+
+pfSense was a fork from m0n0wall that has since become sponsored by Netgate, Teaxs (not to be confused with Netgear). It is unclear when, but inferring from the blogs it was likely between 2008 and 2012. They have maintained it with an Open Source license, albeit with some license changes. In 2018 it is undergoing some major re-architecting for a version 3. In 2014 there was a fork by developers sponsored by Deciso BV, Rotterdam. Since then much of OPNsense has been re-written, and there has been animosity between the corresponding sponsors.  
 
 
 ## pfsense on nanobsd
@@ -368,7 +373,7 @@ See some misc command examples for disk manipulation
 [here](http://bsdrp.net/documentation/technical_docs).
 
 
-### pfsense general
+## pfsense general
 
 from ssh shell...
 
@@ -377,7 +382,7 @@ from ssh shell...
 
 ```
 
-#### Security requirements
+### Security requirements
 
 Some circumstances recommend renaming administrative logins. 
 With pfSense you need to bear in mind:
@@ -388,13 +393,67 @@ With pfSense you need to bear in mind:
 
 
 
-#### Services
+## pfSense Services
 
-##### DHCP
+### VLANs
 
-- Yes
+If your network includes subnetworks, 
+you need to define these in 
 
-##### DNS
+* Interfaces / (assign) / VLANs
+* Add
+* Parent Interface: LAN (re2 ?)
+* VLAN tag: 
+* VLAN priority: 
+* Description: 
+
+
+
+### DHCP and DHCPv6
+
+For simplicity you could enable DHCP Server for your network from the pfSense box.
+
+DHCP v4 is relatively straightforward.
+You may assign a Static IPv4 address on the WAN Interface, or if the modem offers you could use DHCP. You should assign a static IPv4 address on the LAN interface.
+
+
+Before enabling DHCPv6 Server, you should 
+enable the DHCPv6 client on the WAN interface. 
+
+* Interfaces / WAN / General section
+* IPv6 Configuration Type: DHCP6
+* DHCP6 Client Configuration section
+* Use IPv4 as parent: CHECK (assuming you have not yet configured your gateway to allow IPv6)
+* Only Request IPv6 prefix: CHECK
+* Prefix Delegation Size: 
+
+This should be according to your network design. For simplicity, you can keep a single subnet and choose 64. If you want up to 256 subnets, choose 56. And if you have a large network and want to extend up to ,000s of subnets, choose 48.
+
+* Send a Prefix hint: CHECK
+* 
+
+* Interfaces / LAN / General section
+* IPv6 Configuration Type: Track Interface
+* Track IPv6 Interface section
+* IPv6 Interface: WAN
+* IPv6 Prefix ID: (use hex equivalent of your subnet 3rd octet in IPv4 Static address) 
+* Do not allow PD/Address release: ?
+
+NB: if you do not release, but you change your prefix size then you may need to delete the DUID file (/var/db/dhcp6c_duid) via the CLI. This option was previously called DUID hold.
+
+NB: If you are reusing an ISP router as a gateway modem only, then you should prevent it from requesting IPv6 Routing Prefix, as it is likely to only ask for /64. Alternatively set the modem into bridged mode, rather than routing mode. The option "Do not wait for a RA" may also help with certain issues between ISPs and their gateway settings.
+
+If you can't manage to get IPv6 working via your ISP, you can still use a free [Tunnel Broker](https://tunnelbroker.net/) to a local IPv6 over IPv4 tunnel server - see [pfSense config guide](https://www.netgate.com/docs/pfsense/interfaces/using-ipv6-with-a-tunnel-broker.html).
+
+Once you have done your first IPv6 ping 
+you may like to try out 
+https://ipv6.he.net/certification/
+for a little more geeky 'fun'.
+
+/64 range is `:: to ::ffff:ffff:ffff:ffff`
+
+
+### DNS
 
 * Enable ('Unbound') DNS Resolver
 * (listen on) Network Interface: LAN and localhost
@@ -403,18 +462,18 @@ With pfSense you need to bear in mind:
 * DHCP Registration: Leases AND Static
 * help - [https://doc.pfsense.org/index.php/Unbound_DNS_Resolver]
 
-##### Avahi
+### Avahi
 
 ```
 # packages are case sensitive
 pfSsh.php playback installpkg "Avahi"
 ```
 
-##### Modem Access
+### Modem Access
 
 - modem has internal interface on .1. network available so can be connected
 
-##### Snort IDS/IPS
+### Snort IDS/IPS
 
 * Installation
     * [register account to get Oinkcode](http://hubpages.com/technology/How-to-Set-Up-an-Intrusion-Detection-System-Using-Snort-on-pfSense-20)
@@ -428,7 +487,7 @@ pfSsh.php playback installpkg "Avahi"
         * see comments in [OLD simple procs](https://forum.pfsense.org/index.php?topic=61018.0)
         * See Setup Snort Package above for how to disable rules
 
-##### SMTP messages
+### SMTP messages
 
 * Create new gmail account with 2 step authentication to allow App Specific pwds
 * Add App Specific password - Custom - SMTP sender
@@ -439,9 +498,12 @@ pfSsh.php playback installpkg "Avahi"
     * E-Mail server: smtp.gmail.com
     * SMTP Port of E-Mail server: 465
     * Secure SMTP Connection: Enable SMTP over SSL/TLS
-    * Addresses - _see Config_
+    * Addresses - 
 
-##### Certificates
+define the addresses according to your Config
+
+
+### Certificates
 
 Alternatives:
 
@@ -466,7 +528,12 @@ Procedures:
 
 * Generate certificate for firewall box
     * Certificates / Add / Create Internal
-        * Name: _see Certificate Name in Config_
+        * Name: 
+
+define the Certificate Name according to your Config
+
+* .
+	* .
         * Key: 2048 / Algo: SHA256 (defaults)
         * Lifetime: 730
         * Common Name: (use FQDN from System / General)
@@ -488,63 +555,67 @@ Procedures:
 		- Export P12
 		- Export Key but STORE SECURELY!
 
+### Firewall
 
-##### Proxy
+To add your rules based on a scripted config file, see [https://www.netgate.com/docs/pfsense/firewall/adding-rules-with-easyrule.html]
+
+
+### Proxy
 
 Alternatives:
 
-    * Squid rather than simply OpenDNS + block external DNS resolvers
-    * [https://doc.pfsense.org/index.php/Setup_Squid_as_a_Transparent_Proxy]
-    * Squid3 (proxy) - YES
-        * Interface: LAN
-        * Transparent (redirect :80)
-        * local cache (depending on storage available) ?
-        * MITM ? e.g. Peek And Splice (replaces SslBump)
-        * Logging ?
-    * SquidGuard3 (access control) - YES
-        * blacklist: e.g.
-            * shallalist.de
-            * 
-        * how to authenticate users - for reporting and elevation
-        * e.g. based on MAC and (optionally) local logged-on username
-            * pfsense natively supports LDAP & Radius
-            * see [http://wiki.squid-cache.org/Features/Authentication]
-            * [basic passwords from ncsa_auth](http://www.squidguard.org/Doc/authentication.html)
-            * [Squid MAC ACLs](http://wiki.squid-cache.org/SquidFaq/SquidAcl#Can_I_set_up_ACL.27s_based_on_MAC_address_rather_than_IP.3F) and [examples](http://tecadmin.net/configure-squid-proxy-server-mac-address-based-filtering/)
-            * [intro to squid ACLs](https://workaround.org/squid-acls/)
-            * detailed and specific syntax and examples for [defining squid ACLs](http://www.squid-cache.org/Doc/config/acl/)
-    * 
-    * ? lightsquid (log reporting) ?
-        * [http://hubpages.com/technology/Monitoring-Internet-Usage-With-LightSquid-and-pfSense]
-    * ? HAVP - virus scan downloads (e.g. max 1 MB) ?
-        * e.g. SquidClamAV (via ICAP)
-    * ? DansGuardian ? web content filtering
+* Squid rather than simply OpenDNS + block external DNS resolvers
+* [https://doc.pfsense.org/index.php/Setup_Squid_as_a_Transparent_Proxy]
+* Squid3 (proxy) - YES
+    * Interface: LAN
+    * Transparent (redirect :80)
+    * local cache (depending on storage available) ?
+    * MITM ? e.g. Peek And Splice (replaces SslBump)
+    * Logging ?
+* SquidGuard3 (access control) - YES
+    * blacklist: e.g.
+        * shallalist.de
         * 
+    * how to authenticate users - for reporting and elevation
+    * e.g. based on MAC and (optionally) local logged-on username
+        * pfsense natively supports LDAP & Radius
+        * see [http://wiki.squid-cache.org/Features/Authentication]
+        * [basic passwords from ncsa_auth](http://www.squidguard.org/Doc/authentication.html)
+        * [Squid MAC ACLs](http://wiki.squid-cache.org/SquidFaq/SquidAcl#Can_I_set_up_ACL.27s_based_on_MAC_address_rather_than_IP.3F) and [examples](http://tecadmin.net/configure-squid-proxy-server-mac-address-based-filtering/)
+        * [intro to squid ACLs](https://workaround.org/squid-acls/)
+        * detailed and specific syntax and examples for [defining squid ACLs](http://www.squid-cache.org/Doc/config/acl/)
+* 
+* ? lightsquid (log reporting) ?
+    * [http://hubpages.com/technology/Monitoring-Internet-Usage-With-LightSquid-and-pfSense]
+* ? HAVP - virus scan downloads (e.g. max 1 MB) ?
+    * e.g. SquidClamAV (via ICAP)
+* ? DansGuardian ? web content filtering
+    * 
 
-##### bandwidth monitoring
+### bandwidth monitoring
 
-    * for information on options 
-		* see [https://doc.pfsense.org/index.php/How_can_I_monitor_bandwidth_usage]
-	* BandwidthD
-		- deprecating as upstream has no dev
-		- shows simple but useful graphs
-		- break down by local device 
-	* ntopng
-		- recommended instead of BandwidthD
-		- may be more complex
-		- not ideal for low memory / cpu systems
-	* vnstat
-		- used by new(ish) Status Traffic Totals package
-	* netflow
-		- uses softflowd package
-		- relies on separate 'collector' node on network
-		- more complex to set up but seems well liked
-	* logstash
-		- remote collection
-		- combined with ELK for interpretation
-		- NOT a simple setup, see below
+* for information on options 
+	* see [https://doc.pfsense.org/index.php/How_can_I_monitor_bandwidth_usage]
+* BandwidthD
+	- deprecating as upstream has no dev
+	- shows simple but useful graphs
+	- break down by local device 
+* ntopng
+	- recommended instead of BandwidthD
+	- may be more complex
+	- not ideal for low memory / cpu systems
+* vnstat
+	- used by new(ish) Status Traffic Totals package
+* netflow
+	- uses softflowd package
+	- relies on separate 'collector' node on network
+	- more complex to set up but seems well liked
+* logstash
+	- remote collection
+	- combined with ELK for interpretation
+	- NOT a simple setup, see below
 
-##### Logs
+### Logs
 
 It is often better to store logs remotely, whether they are for 
 security, performance, or other kinds of monitoring. 
@@ -566,7 +637,7 @@ other than to simply ship it elsewhere, for storage and further processing.
 For configuring and using the remote collection service, 
 see [https://github.com/artmg/lubuild/blob/master/help/configure/Networked-Services.md]
 
-###### ELK
+#### ELK
 
 A suggested method:
 * set up an ELK stack remote logging server
@@ -586,7 +657,7 @@ Other suggestions:
 	- and traffic from internal machines to my pfsense router == uploads)
 
 
-### troubleshooting
+## troubleshooting
 
 For general help see [https://doc.pfsense.org/]
 
@@ -604,9 +675,7 @@ If modem is inaccessible:
 For capturing packets, use the [Diagnostics / Packet Capture feature](https://doc.pfsense.org/index.php/Sniffers,_Packet_Capture).
 
 
-#### psfense service specific
-
-##### Unbound DNS Resolver
+### Unbound DNS Resolver
 
 Under Services / DNS Resolver / Advanced are
 
@@ -618,7 +687,7 @@ Under Services / DNS Resolver / Advanced are
     * [https://unbound.net/]
 
 
-###### CNAMES for aliases 
+#### CNAMES for aliases 
 
 * Unbound does NOT fully support CNAMES - even though you can enter them into advanced options, the service is NOT authoritative so clients are unlikely to resolve them [https://www.bentasker.co.uk/documentation/linux/279-unbound-adding-custom-dns-records]
 * The recomendation for CNAME support is to use BIND or NSD although these also have limitations [https://forums.freebsd.org/threads/unbound-resolver-or-server.49131/]
