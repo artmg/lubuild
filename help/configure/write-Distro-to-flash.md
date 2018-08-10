@@ -3,8 +3,8 @@ This is about creating LiveUSB media on a flash drive,
 to install or try out an OS. It also includes troubleshooting 
 and how to add a Persistence volume
 
-
 see also:
+
 * [https://github.com/artmg/lubuild/blob/master/help/configure/Disks-and-layout.md]
     * once you've booted your distro, how do you want to configure your storage?
 * [https://github.com/artmg/lubuild/blob/master/help/manipulate/flash-drives-and-SSDs.md]
@@ -85,11 +85,11 @@ sudo echo
 
 # help https://help.ubuntu.com/community/mkusb
 sudo add-apt-repository -y ppa:mkusb/ppa
-sudo apt-get update
-sudo apt-get install -y mkusb
+sudo apt update
+sudo apt install -y mkusb
 
 # IF CHOICE = write to USB
-sudo -H mkusb $IMAGE_FILENAME $IMAGE_PERSISTENCE 
+sudo -H guidus $IMAGE_FILENAME $IMAGE_PERSISTENCE 
 # enter persistence % (e.g. 100%)
 # choose GPT or MSDOS partition table
 ```
@@ -101,6 +101,7 @@ See more about persistence in the later section.
 ### Choice = Simpler - dd
 
 Browsing in pcmanfm in the folder containing the ISO image, press F4 for a terminal
+
 ```
 # type and tab after this to choose filename
 IMAGE_FILENAME=
@@ -115,7 +116,7 @@ MEDIA_DEVICE=sdX9
 sudo echo
 
 # udisks2 is probably installed by default on ubuntu
-sudo apt-get install -y udisks2 mtools
+sudo apt install -y udisks2 mtools
 # avoid the error "not a multiple of sectors"
 echo mtools_skip_check=1 > ~/.mtoolsrc
 
