@@ -121,8 +121,7 @@ sudo apt-get dist-upgrade -y   # optionally update kernel and other held-back pa
 
 #### Test using Mainline Kernel ####
 
-see https://github.com/artmg/lubuild/wiki/Troubleshooting#Latest_versions
-help/diagnose/operating-system.md
+see [https://github.com/artmg/lubuild/tree/master/help/diagnose/operating-system.md#latest-mainline-kernel]
 
 
 ### Bugs with X.org ###

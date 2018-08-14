@@ -5,11 +5,17 @@
 This article is for help with general internal hardware components, including radios, etc
 
 See also:
-* [disks](https://github.com/artmg/lubuild/blob/master/help/diagnose/disks.md)
-* Monitor displays and Video graphics adaptors (GPU) [https://github.com/artmg/lubuild/blob/master/help/diagnose/video-display.md]
-* [Printers and Scanners](https://github.com/artmg/lubuild/blob/master/help/use/Print-and-scan.md)
+
+* Disks
+	* [https://github.com/artmg/lubuild/blob/master/help/diagnose/disks.md]
+* Monitor displays and Video graphics adaptors (GPU)
+	* [https://github.com/artmg/lubuild/blob/master/help/diagnose/video-display.md]
+* Printers and Scanners
+	* [https://github.com/artmg/lubuild/blob/master/help/use/Print-and-scan.md]
 * software-level [Network troubleshooting](https://github.com/artmg/lubuild/blob/master/help/diagnose/network.md)
-* [operating system diagnostics](https://github.com/artmg/lubuild/blob/master/help/diagnose/operating-system.md)
+* operating system diagnostics
+	* [https://github.com/artmg/lubuild/blob/master/help/diagnose/operating-system.md]
+	* although Suspend and Hibernate issues are frequently associated with drivers and devices, they are a part of OS power management so covered in there
 * 
 
 ## Basic discovery
@@ -192,6 +198,7 @@ Note that the open SoftMac driver might NOT fully support your model, see
 ### Bluetooth devices 
 
 (see also Audio section below for Audio Bluetooth issues) 
+
 ``` 
 ##### basic diagnostics
 

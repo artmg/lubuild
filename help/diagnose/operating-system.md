@@ -109,7 +109,9 @@ sudo logrotate -f /etc/logrotate.d/rsyslog
 ```
 
 ## Performance and Tuning 
+
 Some of these are old links...
+
 ```
 # Check the top CPU consuming processes:
 top
@@ -128,6 +130,7 @@ iostat -k 5
 ## Updates 
 
 Sometimes bringing software (both OS and apps) to the latest versions can resolve issues
+
 ```
 # simple update, no risk of breaking packages or dependencies
 sudo dpkg --configure -a      # complete any previously-interrupted installs
@@ -150,15 +153,33 @@ To troubleshoot issues with apt-get see Applications / Package Manager section b
 ### Latest mainline kernel
 
 Some driver issues recommend installing the latest mainline ('''non-daily''') kernel as the issue may already have been fixed upstream (help - https://wiki.ubuntu.com/Kernel/MainlineBuilds ). Be aware that these are unsupported, and for diagnostics. You can however install these kernels side-by-side and only use them for specific tests.
+
 * Browse to http://kernel.ubuntu.com/~kernel-ppa/mainline/?C=N;O=D
 * open the latest folder
 * download 3 .deb files (generic unless you use low latency):
-** headers for your arch
-** headers for "all"
-** image for your arch
+	* headers for your arch
+	* headers for "all"
+	* image for your arch
 * install the .debs
  sudo dpkg -i *.deb
 * reboot into new upstream kernel from grub
+
+#### Using UKUU for kernel upgrades
+
+As an alternative to the manual steps above, you could use the Ubuntu Kernel Upgrade Utility (UKUU) 
+to do this.
+
+```
+# see - https://github.com/teejee2008/ukuu
+sudo apt-add-repository -y ppa:teejee2008/ppa
+sudo apt update
+sudo apt install ukuu
+
+sudo ukuu --install-point
+# or
+sudo ukuu --install-latest
+
+```
 
 ### Kernel versions 
 
@@ -176,6 +197,7 @@ x-www-browser https://www.kernel.org/
 # find specific kernel versions
 x-www-browser http://kernel.ubuntu.com/~kernel-ppa/mainline/
 ```
+
 what is not currently clear is where to find which is the latest kernel release for a specific ubuntu version!
 
 ### Choose preferred kernel 
@@ -207,6 +229,7 @@ sudo apt-get autoremove -y linux-image-W.X.Y-Z-generic
 ```
 
 ## Shutdown / reboot 
+
 ```
 # Reboot neatly
 sudo reboot
@@ -217,6 +240,64 @@ sudo shutdown now -P
 # Immediately pull the plug
 sudo halt
 ```
+
+### Issues with Hibernate or Suspend
+
+```
+# First see what power save modes are available
+cat /etc/power/states
+
+# should show    freeze mem disk
+
+# test suspend
+echo mem | sudo tee /sys/power/state
+
+# for more see 
+# [https://01.org/blogs/rzhang/2015/best-practice-debug-linux-suspend/hibernate-issues]
+```
+
+#### Previous notes
+
+* Try adding USB devices to rc.local 
+ sudo gedit /etc/rc.local
+ # http://askubuntu.com/questions/144932/why-does-my-laptop-resume-immediately-after-suspend
+* Try removing Modules: http://ubuntuforums.org/showthread.php?t=1775514&page=4
+	* other ideas for rc.local changes http://ubuntuforums.org/showthread.php?t=1969615
+* If log items indicate screen driver issues, ensure you are on the default Open Source [[Troubleshooting#Drivers]]. Although proprietary drivers are more feature rich, it is not the Ubuntu Community who supports them
+* try with [#Latest_mainline_kernel] or try the alternatives listed at the end of [https://wiki.ubuntu.com/DebuggingKernelSuspend]
+* background: [https://wiki.ubuntu.com/UnderstandingSuspend]
+* NB System crash bug reports can be rejected if BIOS version has been superseded - strongly consider [[Troubleshooting#BIOS_Upgrade]] to latest version
+
+``` 
+# soak test suspend...
+sudo fwts s3 --s3-multiple=20
+ 
+# HOW TO DEBUG...
+# help - https://wiki.ubuntu.com/DebuggingKernelSuspend
+#
+ 
+# credit - https://bugs.launchpad.net/ubuntu/+source/lubuntu-default-settings/+bug/961122
+sudo pm-hibernate
+
+# https://bugs.launchpad.net/ubuntu/+source/systemd-shim/+bug/1184262
+sudo gdbus call -y -d org.freedesktop.login1 -o /org/freedesktop/login1 -m org.freedesktop.login1.Manager.Suspend true
+
+# see also https://bugs.launchpad.net/ubuntu/+source/ubuntu-docs/+bug/1241786
+```
+
+#### Other diagnostic suggestions
+
+```
+# credit - http://ubuntuforums.org/showthread.php?t=2173550&p=12784913#post12784913
+cat cat /var/log/pm-suspend.log
+cat /var/log/syslog | grep PM:
+```
+
+### Issues after waking from hibernate or suspend
+
+* Network wake up now sorted via shortcut to nmcli
+
+
 
 ## Startup Apps 
 
