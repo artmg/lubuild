@@ -138,6 +138,16 @@ sudo apt-get install bleachbit
 
 ## Specific disk configurations
 
+### USB removable drives
+
+If you want to watch what happens when you 
+plug or unplug a drive then try
+
+```
+udevadm monitor -u --environment
+```
+
+
 ### ISOs
 
 ```
@@ -319,6 +329,19 @@ f3read /path/to/drive
 
 # on Mac the automounted volume path is typically...
 # /Volume/vol_label
+```
+
+As 'advanced' filesystems like extX reserve some capacity for internal use, 
+the utility's author [recommends](https://fight-flash-fraud.readthedocs.io/en/latest/usage.html#users-notes) using simple FAT volumes for testing.
+
+Linux users have additional commands that can speed up the process, although it will destroy any contents:
+
+```
+#identify block device name
+lsblk
+
+# refer to the drive 'sdX' rather than the partition 'sdXN'
+f3probe --destructive --time-ops /dev/sdX
 ```
 
 ### Bonnie++
