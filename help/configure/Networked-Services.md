@@ -376,20 +376,35 @@ NFS_EXPORT=myExportFolder
 LOCAL_MOUNT=myMountName
 MOUNT_PERM=yes-or-no
 
+
+# permit root commands later on
+sudo echo
+
 # detect unix release
 . /etc/*-release
 if [ -f "/etc/arch-release" ]; then ID=archarm; fi
 if [ "$(uname)" == "Darwin" ]; then ID=macos; fi
 
 #install
-if [[ "${ID}" == "archarm" ]] ; then 
-  sudo pacman -S --noconfirm nfs-utils
-else
-  sudo apt-get install -y nfs-common
-fi
 
 case "${ID}" in
-  ubuntu)
+  ubuntu|raspbian)
+    if [ $(dpkg-query -W -f='${Status}' nfs-common 2>/dev/null | grep -c "ok installed") -eq 0 ];
+    then
+      sudo apt install -y nfs-common
+    fi
+    ;;
+  archarm)
+    sudo pacman -S --noconfirm nfs-utils
+    ;;
+  macos)
+    # no need, NFS client built into macos
+esac
+
+# set options
+
+case "${ID}" in
+  ubuntu|raspbian)
     MOUNT_ROOT=/mnt/nfs
     EXPORT_ROOT=/srv/exports
     MOUNT_OPTIONS=
