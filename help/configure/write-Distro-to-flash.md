@@ -100,7 +100,30 @@ See more about persistence in the later section.
 
 ### Choice = Simpler - dd
 
-Browsing in pcmanfm in the folder containing the ISO image, press F4 for a terminal
+The actual command for dd writing is very straightforward. Browsing in pcmanfm in the folder containing the ISO image, press F4 for a terminal...
+
+```
+# type and tab after this to choose filename
+IMAGE_FILENAME=
+# check the output for the dev name set as **vfat**
+MEDIA_DEVICE=sdX9
+
+# now swap the file extension as the image is unzipped directly to the device
+unzip -p $IMAGE_FILENAME ${IMAGE_FILENAME%.*}.img | sudo dd bs=4M status=progress of=/dev/${MEDIA_DEVICE:0:3}
+# if you have a .img.xz then use...
+# xzcat $IMAGE_FILENAME ${IMAGE_FILENAME%.*}.img | sudo dd bs=4M status=progress of=/dev/${MEDIA_DEVICE:0:3}
+
+```
+
+But below is a handy bit of automation that also sorts out the media labels and other details.
+
+Note: this automation in the rest of this page 
+is similar to that used in the pages below, 
+so perhaps they could be merged at some point?
+
+* [Buildroot](https://github.com/artmg/MuGammaPi/wiki/buildroot)
+* [ArchLinuxArm install](https://github.com/artmg/MuGammaPi/wiki/arch-linux-install)
+* [Raspbian basics](https://github.com/artmg/MuGammaPi/wiki/Raspbian-basics)
 
 ```
 # type and tab after this to choose filename
@@ -115,42 +138,68 @@ MEDIA_DEVICE=sdX9
 # enter your password for su
 sudo echo
 
-# udisks2 is probably installed by default on ubuntu
-sudo apt install -y udisks2 mtools
-# avoid the error "not a multiple of sectors"
-echo mtools_skip_check=1 > ~/.mtoolsrc
+# Prepare
+SHORT_LABEL=${MEDIA_LABEL:0:8}
+# detect unix release
+. /etc/os-release
+. /etc/*-release
+
+# set up required tools
+case "${ID}" in
+  raspbian)
+    FAT_LABEL_SET="sudo dosfslabel /dev/${MEDIA_DEVICE}1 ${SHORT_LABEL^^}_OS"
+    FAT_LABEL_GET="sudo dosfslabel /dev/${MEDIA_DEVICE}1"
+    ;;
+  ubuntu)
+    # udisks2 is probably installed by default
+    sudo apt install -y udisks2 mtools
+    # avoid the error "not a multiple of sectors"
+    echo mtools_skip_check=1 > ~/.mtoolsrc
+    FAT_LABEL_SET="sudo mlabel  -i /dev/${MEDIA_DEVICE}1 ::${SHORT_LABEL^^}_OS"
+    FAT_LABEL_GET="sudo mlabel  -i /dev/${MEDIA_DEVICE}1 -s ::"
+esac
+
 
 # now swap the file extension as the image is unzipped directly to the device
-unzip -p $IMAGE_FILENAME ${IMAGE_FILENAME%.*}.img | sudo dd bs=4M status=progress of=/dev/${MEDIA_DEVICE:0:3}
+unzip -p $IMAGE_FILENAME ${IMAGE_FILENAME//+(*\/|.*)}.img | sudo dd bs=4M status=progress of=/dev/${MEDIA_DEVICE:0:3}
+# credit for substituotion code https://stackoverflow.com/a/38277789
 # if you have a .img.xz then use...
 # xzcat $IMAGE_FILENAME ${IMAGE_FILENAME%.*}.img | sudo dd bs=4M status=progress of=/dev/${MEDIA_DEVICE:0:3}
 
 # flush cache before re-insertion
 sync 
-# eject
-udisksctl unmount --block-device /dev/$MEDIA_DEVICE
-udisksctl unmount --block-device /dev/${MEDIA_DEVICE:0:3}1
-udisksctl power-off --block-device /dev/${MEDIA_DEVICE:0:3}
-# help - https://udisks.freedesktop.org/docs/latest/udisksctl.1.html
-echo please eject and re-insert media
+
+## don't both yet to ...
+## eject
+#udisksctl unmount --block-device /dev/$MEDIA_DEVICE
+#udisksctl unmount --block-device /dev/${MEDIA_DEVICE:0:3}1
+#udisksctl power-off --block-device /dev/${MEDIA_DEVICE:0:3}
+## help - https://udisks.freedesktop.org/docs/latest/udisksctl.1.html
+#echo please eject and re-insert media
 
 # The partition arrangement here is for Raspbian
 # see [https://github.com/artmg/MuGammaPi/wiki/Rasbian-basics]
+# it appears also valid for ArchLinuxArm images
 
-# Setting name on both partitions so Ext4 shows up on booted Pi and FAT shows up when inserted on other system
+# Setting name on both partitions so Ext4 shows up on booted Pi and FAT shows up when inserted on other systems
 # Rename 1 FAT and 2 Ext4 
-SHORT_LABEL=${MEDIA_LABEL:0:8}
-sudo mlabel  -i /dev/${MEDIA_DEVICE:0:3}1 ::${SHORT_LABEL^^}\_OS
-sudo e2label    /dev/${MEDIA_DEVICE:0:3}2 $MEDIA_LABEL\_disk
+${FAT_LABEL_SET}
+sudo e2label    /dev/${MEDIA_DEVICE}2 $MEDIA_LABEL\_disk
 
 # display labels
-sudo mlabel  -i /dev/${MEDIA_DEVICE:0:3}1 -s ::
-sudo e2label    /dev/${MEDIA_DEVICE:0:3}2 
+${FAT_LABEL_GET}
+sudo e2label    /dev/${MEDIA_DEVICE}2 
 # Set name / display name - does it REALLY need sudo?
+```
 
+If you are done with all your changes to the image you can 'eject' it, i.e unmount and **Power it Down**
+
+```
 # eject
 udisksctl unmount --block-device /dev/$MEDIA_DEVICE
 udisksctl unmount --block-device /dev/${MEDIA_DEVICE:0:3}1
+
+# Shut down USB device holding newly flashed image
 udisksctl power-off --block-device /dev/${MEDIA_DEVICE:0:3}
 # help - https://udisks.freedesktop.org/docs/latest/udisksctl.1.html
 ```
@@ -358,32 +407,9 @@ You can use **mkusb** above for a more controlled approach, which makes it more 
 
 ### expand the second partition
 
-you should do this AFTER the umount above but before any device eject / power-off command
+for details on expanding the default Raspbian 
+second parition to fill your device, see
 
-```
-# credit - http://elinux.org/RPi_Resize_Flash_Partitions
-# the article also explains why as well as various options for how
-
-MEDIA_DEVICE=sdX9
-
-# sudo parted /dev/$MEDIA_DEVICE resize 
-# help
-
-# WIP #################
-# note that neither command line option (parted not fdisk delete and recreate) 
-# has a simple option to automatically expand to fill all available space
-# 
-# for now use fdisk 
-# * delete paritition (2) and create new 
-# * accepting defaults will fill to end as type 83
-sudo fdisk /dev/${MEDIA_DEVICE:0:3}
-
-udisksctl unmount --block-device /dev/${MEDIA_DEVICE:0:3}2
-sudo e2fsck -f /dev/${MEDIA_DEVICE:0:3}2
-sudo resize2fs /dev/${MEDIA_DEVICE:0:3}2
-
-
-```
 
 ### Partition start improvement?
 
