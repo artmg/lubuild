@@ -18,7 +18,18 @@ see also:
 
 
 
-## Autodiscovery
+## Network discovery
+
+The **mDNS** service advertises available services, 
+but it also advertises hostnames too, 
+so is a handy broadcast ('peer-to-peer') name resolution service
+for the `.local` network. 
+. It goes by various names 
+including Bonjour, Avahi, ZeroConf, 
+but because of its wide support 
+many services automatically install the files 
+top configure their advertisement of services they make available. 
+So in most cases you can install and it just works (hence zero configuration). 
 
 To set allow basic local autodiscovery of services on your device...
 
@@ -904,7 +915,7 @@ You could use a conbination of these, e.g. rsyslog to send files
 to a log collection server, then ELK to analyse from this
 
 
-### rsyslogd server
+### rsyslog server
 
 ```
 #### Listen on network
