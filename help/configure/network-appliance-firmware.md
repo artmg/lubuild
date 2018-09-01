@@ -327,6 +327,9 @@ pfSense was a fork from m0n0wall that has since become sponsored by Netgate, Tea
 
 ## pfsense on nanobsd
 
+From psSense v2.4 nanobsd is no longer supported.
+
+
 ### nanoBSD background and architecture
 
 NanoBSD is basically the FreeBSD functionality and package set 
@@ -352,7 +355,7 @@ b) smooth restart after a power outage
 * Log files are NOT persisted across reboot
 * Not really made for expanding partition across media ('a la Pi)
     * [forumQ on expanding](https://forum.pfsense.org/index.php?topic=61434.0)
-* running out of space is usally about improper configuration (or specification)
+* running out of space is usually about improper configuration (or specification)
     * [https://forum.pfsense.org/index.php?topic=59474.0]
 * 
 
