@@ -875,13 +875,23 @@ service avahi-daemon restart
 
 ### lightweight web server candidates:
 
+The first two are more self contained. 
+Opinions differ on which is smaller, faster, lighter 
+or easier to get working:
+
 * nginx
 * lighttpd
-* plack
+
+
+The following are typically linked to a base framework, 
+so make sense to use when you already rely on that framework:
+
+* php/plack
+* phython/flask
 * Go/fasthttp
+* Busybox/httpd ?
 
 for benchmarks see [msoap/Raspberry Pi httpd benchmark.md](https://gist.github.com/msoap/7060974)
-
 
 
 ## Monitoring and Alerting
