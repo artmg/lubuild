@@ -2,10 +2,12 @@
 
 This article covers using generic Office documents, including 
 word processing and spreadsheets. It assumes that you use the 
-LibreOffice applications on your linux builds.
+LibreOffice applications on your linux builds. 
+However some topics may also cover other popular office software. 
 
 There is also a section on the related topic of 
-Desktop Publishing (DTP) software.
+Desktop Publishing (DTP) software. 
+It also touches on managing contacts and events. 
 
 see also:
 
@@ -178,6 +180,29 @@ you have a couple of last ditch options:
 * sign up to iCloud to use Apple's own convertor to render a DOC or PDF
 * Open the archive cabinet, look for the _QuickLook_ folder and check out the _Preview.PDF_ inside
 
+
+## Interchange formats
+
+These cover the many standards and common formats 
+for exchanging information, 
+especially with common entities like 
+contacts, events, messages. 
+They include simple file formats like vCard 
+and APIs like CardDAV.
+
+### table to virtual card
+
+Contact or event data is often held in table format, 
+especially in spreadsheet software. 
+A common exchange format, especially with mobile 
+is vCard. 
+This problem / solution is a
+superset of 'convert csv to vcard'
+
+* bash
+	* http://web-tech.ga-usa.com/2012/12/outlook-2002-contacts-csv-to-vcard-via-bash/
+* python3
+	* https://github.com/Moduland/csv2vcf
 
 
 ## Desktop Publishing (DTP) software

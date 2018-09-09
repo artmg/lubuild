@@ -6,6 +6,7 @@ see also:
     * Office documents (like MS Office and other combination packages)
     * Desktop Publishing (DTP) packages
     * working with fonts in generic Office documents
+    * interchange formats including contacts, events, emails
 * [https://github.com/artmg/lubuild/blob/master/help/manipulate/PDF-files.md]
 	* Portable Document Format (PDF) files originating from Adobe's specification
 	* extracting images from PDF files
