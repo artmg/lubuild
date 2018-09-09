@@ -115,7 +115,28 @@ unzip -p $IMAGE_FILENAME ${IMAGE_FILENAME%.*}.img | sudo dd bs=4M status=progres
 
 ```
 
-But below is a handy bit of automation that also sorts out the media labels and other details.
+### Choice = GUI - gnome Disks utility
+
+If you prefer a GUI alternative, you may find the gnome Disks utility's 
+Image Restore options pratical. 
+
+However these offer you NO features to avoid you accidentally choosing the wrong 
+destination and inadvertently **wiping all your data**, so beware!
+
+If you have a paritition image then choose the destination partition and choose 
+"Restore Partition Image". If you have a Disk image then select the drive unit 
+and use the top right hand menu to choose "Restore Disk Image". 
+
+NB: This technique does NOT add any bootloader, so whether it works also 
+depends on the image you choose to use, unless you have UEFI-enabled systems. 
+
+If you get errors such as _isolinux.bin missing or corrupt_ then perhaps 
+you tried to write a Disk image to a Partition?
+
+
+## Flash automation
+
+Below is a handy bit of automation that also sorts out the media labels and other details.
 
 Note: this automation in the rest of this page 
 is similar to that used in the pages below, 
@@ -166,16 +187,26 @@ unzip -p $IMAGE_FILENAME ${IMAGE_FILENAME//+(*\/|.*)}.img | sudo dd bs=4M status
 # if you have a .img.xz then use...
 # xzcat $IMAGE_FILENAME ${IMAGE_FILENAME%.*}.img | sudo dd bs=4M status=progress of=/dev/${MEDIA_DEVICE:0:3}
 
+```
+
+Now you wait a few minutes depending on 
+the size of the image and speed of the media.
+
+```
+
 # flush cache before re-insertion
 sync 
 
 ## don't both yet to ...
 ## eject
-#udisksctl unmount --block-device /dev/$MEDIA_DEVICE
 #udisksctl unmount --block-device /dev/${MEDIA_DEVICE:0:3}1
+#udisksctl unmount --block-device /dev/${MEDIA_DEVICE:0:3}2
 #udisksctl power-off --block-device /dev/${MEDIA_DEVICE:0:3}
 ## help - https://udisks.freedesktop.org/docs/latest/udisksctl.1.html
 #echo please eject and re-insert media
+
+# sudo partprobe
+# sudo fdisk -l /dev/${MEDIA_DEVICE}
 
 # The partition arrangement here is for Raspbian
 # see [https://github.com/artmg/MuGammaPi/wiki/Rasbian-basics]
@@ -196,31 +227,13 @@ If you are done with all your changes to the image you can 'eject' it, i.e unmou
 
 ```
 # eject
-udisksctl unmount --block-device /dev/$MEDIA_DEVICE
 udisksctl unmount --block-device /dev/${MEDIA_DEVICE:0:3}1
+udisksctl unmount --block-device /dev/${MEDIA_DEVICE:0:3}2
 
 # Shut down USB device holding newly flashed image
 udisksctl power-off --block-device /dev/${MEDIA_DEVICE:0:3}
 # help - https://udisks.freedesktop.org/docs/latest/udisksctl.1.html
 ```
-
-### Choice = GUI - gnome Disks utility
-
-If you prefer a GUI alternative, you may find the gnome Disks utility's 
-Image Restore options pratical. 
-
-However these offer you NO features to avoid you accidentally choosing the wrong 
-destination and inadvertently **wiping all your data**, so beware!
-
-If you have a paritition image then choose the destination partition and choose 
-"Restore Partition Image". If you have a Disk image then select the drive unit 
-and use the top right hand menu to choose "Restore Disk Image". 
-
-NB: This technique does NOT add any bootloader, so whether it works also 
-depends on the image you choose to use, unless you have UEFI-enabled systems. 
-
-If you get errors such as _isolinux.bin missing or corrupt_ then perhaps 
-you tried to write a Disk image to a Partition?
 
 
 ## Troubleshooting boot issues
