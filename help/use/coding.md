@@ -4,6 +4,9 @@ see also:
 
 * source code publishing, collaboration and version control with GitHub
 	* [https://github.com/artmg/lubuild/blob/master/help/use/GitHub-source-control.md]
+* markdown-specific editors
+	* https://github.com/artmg/lubuild/blob/master/help/use/markdown.md
+
 
 ## C++
 
@@ -99,10 +102,12 @@ that will work on any platform where a JRE is installed
 
 This section is focused on free/libre code editors that run using Qt widgets
 
+If you simply want markdown-specific editors for richer text formatting see https://github.com/artmg/lubuild/blob/master/help/use/markdown.md
+
+
 * Previously using Geany as lightweight IDE
 	* edit and execute Shell scripts
 	* also use as general editor for markdown text
-	* see also [https://github.com/artmg/lubuild/blob/master/help/use/markdown.md#edit-markdown-documents]
 * want to consider qt-based alternative
 	* for smaller footprint when moving to LxQt desktop
 	* syntax highlighting
@@ -135,6 +140,37 @@ This section is focused on free/libre code editors that run using Qt widgets
 	* lots of plugins
 * QSciTE 
 * FeatherPad?
+
+
+### Fully cross-platform, open source
+
+This section looks at more richly featured Text Editors
+(think Notepad++) that are supported on Linux, Windows and Mac. Also those that are fully open-sourced.
+
+* Bluefish
+	* mature and current project with multiple devs
+	* may require GTK
+* Howl
+	* relatively new
+* Atom
+	* heavywight, needs Electron
+* Brackets
+	* only focussed on web-development 
+
+
+Using the mature and popular python-based `neovim` APIs 
+there are also:
+
+* gonvim
+	* go language and qt
+	* builds available for Windows, Macos, Linux
+	* quite new and only a few releases so far
+* neovim-qt
+	* self-compile, not sure if this has ready builds
+* Oni
+	* uses nodeJS, yarn (code package mgr), python
+	* may also use electron
+
 
 
 ### purpose built IDEs
@@ -171,6 +207,7 @@ This section is focused on free/libre IDEs that run using Qt widgets
 		* add-on (paid?) for WxWidgets
 		* includes plugins for git
 		* is it limited to GDB for debugging?
+		* Windows, Linux and Macos
 	* CodeBlocks
 		* written in C++ with wxWidgets
 		* accepts a variety of compilers
@@ -184,7 +221,14 @@ This section is focused on free/libre IDEs that run using Qt widgets
 		* developed by github
 		* HTML, JavaScript, CSS, and Node.js integration
 	* Bluefish
+		* uses GTK+ toolkit
 		* no markdown
+	* Light Table
+		* different paradigm to most IDEs
+		* not sure about performance or dependencies
+	* Komodo Edit
+		* rich and mature IDE project
+		* based on Mozilla platform
 
 * Not free/libre
 	* sublime text 

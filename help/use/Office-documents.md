@@ -21,6 +21,10 @@ see also:
 * [https://github.com/artmg/lubuild/blob/master/help/manipulate/miscellaneous-files.md]
 	* Other common types of document
 	* including email formats
+* https://github.com/artmg/lubuild/blob/master/help/use/coding
+	* Text Editors and programming environments
+* https://github.com/artmg/lubuild/blob/master/help/use/markdown.md
+	* Markdown editors for quickly writing formatted documents
 
 
 ## Fonts

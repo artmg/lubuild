@@ -17,6 +17,10 @@ see also:
 * [https://github.com/artmg/lubuild/blob/master/help/manipulate/plans-and-designs.md]
 	* Computer Aided Design programs
 	* 3D design, including space layout and rendering, and 2D design
+* https://github.com/artmg/lubuild/blob/master/help/use/coding
+	* Text Editors and IDEs
+	* as opposed to Hex viewers, see below for them
+	* or markdown editors see https://github.com/artmg/lubuild/blob/master/help/use/markdown.md
 * [https://github.com/artmg/lubuild/blob/master/help/manipulate/films-and-songs.md]
 * [https://github.com/artmg/lubuild/blob/master/help/manipulate/FreeCAD-plans-and-designs.md]
 * [https://github.com/artmg/lubuild/blob/master/help/manipulate/disk-recovery-and-forensics.md]

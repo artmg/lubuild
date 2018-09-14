@@ -1,3 +1,8 @@
+see also:
+
+* https://github.com/artmg/lubuild/blob/master/help/use/coding
+	* general Text Editors and IDEs for other language syntax
+
 * see **Requirements and Decisions** section below for:
     * requirement for markup languages
     * reasons for choosing Markdown as preference over MediaWiki
