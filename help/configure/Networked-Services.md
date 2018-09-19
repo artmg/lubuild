@@ -122,11 +122,14 @@ fortunately however many FTP clients have been written to also use SFTP.
 
 #### Share with Samba
 
+For the main article on configuring network shares with samba 
+please see [https://github.com/artmg/lubuild/blob/master/help/configure/network-shares-with-Samba.md]
+
 Below are simple instructions for setting up a basic Samba share in Lubuntu. 
 For more explanation, background, and further examples of advanced use 
 such as multiple shares, sharing printers and optical drives, 
 or for details on accessing them with linux clients 
-please see [https://github.com/artmg/lubuild/blob/master/help/configure/network-shares-with-Samba.md]
+please see the above-mentioned article.
 
 ##### OUT
 
@@ -167,6 +170,10 @@ EOF
 # test the master file, create real conf file and restart
 testparm -s /etc/samba/smb.conf.master && testparm -s /etc/samba/smb.conf.master | sudo tee /etc/samba/smb.conf && sudo /etc/init.d/samba restart
 ```
+
+NB: by default, samba users are separate from linux system users.  
+For more on advanced configuration please see [https://github.com/artmg/lubuild/blob/master/help/configure/network-shares-with-Samba.md]
+
 
 #### Sharing folders between computers 
 
@@ -1032,3 +1039,32 @@ nano /etc/syslog-ng/syslog-ng.conf
 # credit - http://resources.intenseschool.com/raspberry-pi-as-a-syslog-server/
 service syslog-ng restart
 ```
+
+### Log Viewing
+
+Open source, cross platform GUI tools for viewing logs 
+and dynamically filtering which entries appear:
+
+* glogg
+* logstash
+* ? splunk ?
+* ? Fluentd ?
+* Prometheus (may be more alerting)
+
+Some options are java-based, 
+but might be considered as part of a larger stack
+
+* Graylog
+* Apache Chainsaw log4j
+* Otros
+
+Not consider these for the stated reasons:
+
+* logsniffer, development ceased 2016
+* GoAccess, great lightweight C terminal/browser analyser, but too focussed on site log visitor stats (and only linux)
+* LogExpert is Windows only 
+* Logbert is Windows only 
+* Lilith not developed for years
+* 
+
+
