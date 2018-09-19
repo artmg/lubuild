@@ -22,7 +22,7 @@ Because SMB is the default way for Windows to share files,
 it is commonly used as a cross-platform solution from Linux servers 
 (rather than just using the NFS Network File System that only Unix understands). 
 Samba runs a daemon listening at port 445 that uses SMB. 
-It has also been known as CIFS, the Common Internet File System. 
+An early version of was known as CIFS, the Common Internet File System, but Microsoft replaced this with newer improved versions of SMB 2 or 3. 
 See more info at [https://en.wikipedia.org/wiki/Server_Message_Block]
 
 The Samba config file may also turn on WINS, 
@@ -122,19 +122,52 @@ The following configuration directive is YES by default ...
 sudo apt-get install -y cifs-utils
 
 ### prepare mount
-MOUNT_LOCAL=/media/mylocalmount
+LOCAL_MOUNT=mylocalmount
 MOUNT_SHARE=//otherpc.local/sharename
 MOUNT_OPTIONS="-o -ro"
-sudo mkdir -p $MOUNT_LOCAL
-sudo mount -t cifs --verbose $MOUNT_OPTIONS $MOUNT_SHARE $MOUNT_LOCAL
+
+#MOUNT_LOCAL=/media/mylocalmount
+MOUNT_ROOT=/media
+sudo mkdir -p $MOUNT_ROOT/$LOCAL_MOUNT
+sudo mount -t cifs --verbose $MOUNT_OPTIONS $MOUNT_SHARE $MOUNT_ROOT/$LOCAL_MOUNT
 
 # sync contents
 # NB this is TEST ONLY MODE with dry run
-rsync --dry-run -av --modify-window=3605 $MOUNT_LOCAL /media/localdrive/localcopy/ 
+rsync --dry-run -av --modify-window=3605 $MOUNT_ROOT/$LOCAL_MOUNT /media/localdrive/localcopy/ 
 ```
 
+### Access Samba from Macos
 
- 
+Tested with High Sierra. 
+SMB client is already installed by default. 
+
+```
+MOUNT_SHARE=//otherpc.local/sharename
+MOUNT_PERM=no
+
+/usr/bin/osascript -e "try" -e "mount volume \"smb:$MOUNT_SHARE\"" -e "end try"
+```
+
+The following alternative doesn't work yet
+
+```
+LOCAL_MOUNT=mylocalmount
+MOUNT_SHARE=//otherpc.local/sharename
+MOUNT_OPTIONS="-o -f=777,-d=0777"
+MOUNT_PERM=no
+
+# couldn't manage to work out how to get the permissions inside right with the following
+MOUNT_OPTIONS="-o noowners"
+MOUNT_OPTIONS="-o -f=777,-d=0777"
+MOUNT_OPTIONS="-o -m=777"
+
+MOUNT_ROOT=/Volumes
+sudo umount $MOUNT_ROOT/$LOCAL_MOUNT
+sudo mkdir -p $MOUNT_ROOT/$LOCAL_MOUNT
+sudo chmod 777 $MOUNT_ROOT/$LOCAL_MOUNT 
+sudo mount -v $MOUNT_OPTIONS -t smbfs $MOUNT_SHARE $MOUNT_ROOT/$LOCAL_MOUNT
+``` 
+
 ### Troubleshooting ####
 
 #### Windows access issues
