@@ -256,6 +256,17 @@ explains two broad methods:
 * use one of the Credential Storage options over HTTP(S) transport
 
 
+### Using SSH keys
+
+```
+SERVICE_ID=github
+SERVICE_USER=artmg
+SERVICE_EMAIL=artmg@users.noreply.github.com
+SERVICE_HOST=github.com
+
+
+```
+
 ### store Personal Access token
 
 Note that you should guard these tokens as if they were passwords, 
