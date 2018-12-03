@@ -253,6 +253,8 @@ dpkg -l | grep "dns\|dhcp\|unbou\|network-ma"
 systemctl list-unit-files
 ```
 
+
+
 ### DHCP addressing
 
 #### All interfaces
@@ -438,6 +440,26 @@ Even when hosts are not explicitly advertising their services for autodiscovery,
 The first step is the simplest, quickest and least aggressive, but may not work on some networks. As you work down this list, although you are more likely to get results, each option becomes more time consuming, and importantly such actions can be considered signs of aggression. On a securely managed network, you, the discoverer, may find yourself being "discovered" by administrators, and potentially even banned!
 
 If you choose to try such steps then one of the most popular and fully functioned tools is '''nmap''' and it's handy GUI '''zenmap'''. On the other hand, if you own the network, and want to discover who is doing this kind of scan, then '''Wireshark''' is a good starting point as a traffic analyser :)
+
+
+#### find nearby addresses
+
+The quickest way of detecting IP addresses, 
+and their corresponding MAC addresses, 
+in your immediate network vicinity is using
+
+`ip neigh`
+
+This is the equivalent of pinging the broadcast 
+and checking the arp cache, but in a much simpler command. 
+
+```
+ping 192.168.1.255
+arp -a
+```
+
+You could also use `netstat -r`
+
 
 #### nmap CLI 
 
