@@ -170,6 +170,11 @@ Use the [recipe for a Dumb AP](https://wiki.openwrt.org/doc/recipes/dumbap),
 no routing, simply switching all traffic through...
 
 ```
+# Set up variables
+NEW_HOST=newHostName
+DISABLE_DNSMASQ=yes-or-no
+
+
 # back up the old versions
 cp /etc/config/network  /etc/config/network.backup.`date +%y%m%d`
 cp /etc/config/firewall /etc/config/firewall.backup.`date +%y%m%d`
@@ -177,16 +182,17 @@ cp /etc/config/dhcp     /etc/config/dhcp.backup.`date +%y%m%d`
 cp /etc/rc.local        /etc/rc.local.`date +%y%m%d`
 
 ### DISABLE DHCP
-# do this via luci interface of...
 #uci set dhcp.lan.ignore=1
 uci set dhcp.lan.ignore='1'
 uci commit dhcp
-# leave dnsmasq in case we need TFTP
-/etc/init.d/dnsmasq restart
-# or if not required could just delete /etc/rc.d/S60dnsmasq
-# or 
-# /etc/init.d/dnsmasq disable
-# /etc/init.d/dnsmasq stop
+if [[ "${DISABLE_DNSMASQ}" == "yes" ]] ; then
+  /etc/init.d/dnsmasq disable
+  /etc/init.d/dnsmasq stop
+  # or just delete /etc/rc.d/S60dnsmasq
+else
+  # leave dnsmasq in case we need TFTP
+  /etc/init.d/dnsmasq restart
+fi
 
 ### ALLOW ALL TRAFFIC
 # for now to configure to pass ALL using firewall ACCEPT
@@ -254,6 +260,13 @@ opkg install avahi-daemon-service-http
 
 * https://wiki.openwrt.org/doc/uci/wireless
 
+### More with UCI
+
+For other ways to use UCI commands to configure, see 
+
+https://wiki.teltonika.lt/view/UCI_command_usage
+
+
 ## Back up
 
 Using the LUCI web console, or the [manual ssh & scp instructions](https://wiki.openwrt.org/doc/howto/generic.backup#backup_openwrt_configuration), grab yourself a safe copy of the configs
@@ -313,11 +326,17 @@ see also:
 
 ### Failsafe mode
 
-If you really screw up the configuration, and have trouble accessing the device at all, then see the failsafe mode
+If you really screw up the configuration, and have trouble accessing the device at all, then see the failsafe mode. If you try to do a hard reset with the button, and it fails, then you will have to use this means.
 
- [https://wiki.openwrt.org/doc/howto/generic.failsafe]
+[https://openwrt.org/docs/guide-user/troubleshooting/failsafe_and_factory_reset]
 
 and check [Procedures for Configuring Network Interface](https://github.com/artmg/lubuild/blob/master/help/configure/network-interface.md) to set an address in the 192.168.1.x network
+
+#### Troubleshooting failsafe mode
+
+If you have issues using **ssh** to connect (`connection refused`) then you may be using older firmware so try **telnet** instead.
+
+If you use firstboot to reset to default configuration and it does nothing, then try a second session in another window as per [https://dev.archive.openwrt.org/ticket/20168.html].
 
 
 # pfSense
