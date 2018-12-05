@@ -270,11 +270,14 @@ Note that your image may need some preprocessing to regularise:
 
 #### creating
 
-To generate QR codes consider:
+To generate QR codes consider the following software. 
+For help on syntax see 
+https://github.com/zxing/zxing/wiki/Barcode-Contents
 
 * qrencode
 	- create a png file from text supplied on the command line
 	- also creates EPS and Ascii text files
+	- can be installed on mac with `brew install qrencode`
 * qreator
 	- similar
 * qtqr
