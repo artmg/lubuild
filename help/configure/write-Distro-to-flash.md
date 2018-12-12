@@ -50,93 +50,31 @@ Ensuring the package arrived intact is not only about maintaining security,
 it will also save you time and much frustration if you discover immediately 
 whether you inadvertently lost some bits during transmission. 
 
-Copy the hyperlink to MD5SUMS 
-Browsing in pcmanfm in the folder containing the ISO image, press F4 for a terminal
+Copy the hyperlink to MD5SUMS. Browsing in pcmanfm in the folder containing the ISO image, press F4 for a terminal
 
 ```
 wget url_to_MD5SUMS
 md5sum -c MD5SUMS
 ```
 
-
-## Ubuntu and derivatives ##
-
-
-### Choice = Safer - mkusb
-
-If you find the (L)ubuntu built-in *Startup Disk Creator* does not
-reliably create bootable live usb drives, try the alternative **mkusb**
-script, which also protects you from accidentally overwriting non-removable media. 
-
-Browsing in pcmanfm in the folder containing the ISO image, press F4 for a terminal
-
-```
-# type and tab after this to choose filename
-IMAGE_FILENAME=
-
-# enter the label you want for this device
-IMAGE_LABEL=
-
-# leave this blank (no 'p') if you want NO persistence in the flash image
-IMAGE_PERSISTENCE=p
-
-# enter your password for su
-sudo echo
-
-# help https://help.ubuntu.com/community/mkusb
-sudo add-apt-repository -y ppa:mkusb/ppa
-sudo apt update
-sudo apt install -y mkusb
-
-# IF CHOICE = write to USB
-sudo -H guidus $IMAGE_FILENAME $IMAGE_PERSISTENCE 
-# enter persistence % (e.g. 100%)
-# choose GPT or MSDOS partition table
-```
-
-See more about persistence in the later section.
+Alternatively if you just see the SHA-256 checksum on the download page you can manually compare it to the output from `sha256sum ~/Downloads/myimage`
 
 
+## Flash two partitions
 
-### Choice = Simpler - dd
+Below is a handy bit of automation 
+that also sorts out the media labels and other details. 
+It has been designed to work from the bash prompt 
+on OSes including Ubuntu  and Raspbian.
 
-The actual command for dd writing is very straightforward. Browsing in pcmanfm in the folder containing the ISO image, press F4 for a terminal...
+These commands assume the typical disk layout 
+for live Linux OS images 
+where there is a small FAT boot partition 
+followed by a larger EXT partition 
+with the rest of the OS on there. 
 
-```
-# type and tab after this to choose filename
-IMAGE_FILENAME=
-# check the output for the dev name set as **vfat**
-MEDIA_DEVICE=sdX9
-
-# now swap the file extension as the image is unzipped directly to the device
-unzip -p $IMAGE_FILENAME ${IMAGE_FILENAME%.*}.img | sudo dd bs=4M status=progress of=/dev/${MEDIA_DEVICE:0:3}
-# if you have a .img.xz then use...
-# xzcat $IMAGE_FILENAME ${IMAGE_FILENAME%.*}.img | sudo dd bs=4M status=progress of=/dev/${MEDIA_DEVICE:0:3}
-
-```
-
-### Choice = GUI - gnome Disks utility
-
-If you prefer a GUI alternative, you may find the gnome Disks utility's 
-Image Restore options pratical. 
-
-However these offer you NO features to avoid you accidentally choosing the wrong 
-destination and inadvertently **wiping all your data**, so beware!
-
-If you have a paritition image then choose the destination partition and choose 
-"Restore Partition Image". If you have a Disk image then select the drive unit 
-and use the top right hand menu to choose "Restore Disk Image". 
-
-NB: This technique does NOT add any bootloader, so whether it works also 
-depends on the image you choose to use, unless you have UEFI-enabled systems. 
-
-If you get errors such as _isolinux.bin missing or corrupt_ then perhaps 
-you tried to write a Disk image to a Partition?
-
-
-## Flash automation
-
-Below is a handy bit of automation that also sorts out the media labels and other details.
+It will write the two image partitions 
+and label them for clarity. 
 
 Note: this automation in the rest of this page 
 is similar to that used in the pages below, 
@@ -180,12 +118,21 @@ case "${ID}" in
     FAT_LABEL_GET="sudo mlabel  -i /dev/${MEDIA_DEVICE}1 -s ::"
 esac
 
+# In case the device had volume that auto mounted on insertion...
+udisksctl unmount --block-device /dev/${MEDIA_DEVICE:0:3}1
+udisksctl unmount --block-device /dev/${MEDIA_DEVICE:0:3}2
+sudo partprobe
 
 # now swap the file extension as the image is unzipped directly to the device
 unzip -p $IMAGE_FILENAME ${IMAGE_FILENAME//+(*\/|.*)}.img | sudo dd bs=4M status=progress of=/dev/${MEDIA_DEVICE:0:3}
-# credit for substituotion code https://stackoverflow.com/a/38277789
+# credit for substitution code https://stackoverflow.com/a/38277789
 # if you have a .img.xz then use...
 # xzcat $IMAGE_FILENAME ${IMAGE_FILENAME%.*}.img | sudo dd bs=4M status=progress of=/dev/${MEDIA_DEVICE:0:3}
+
+# write everything still left in the cache 
+sync
+#
+
 
 ```
 
@@ -194,10 +141,7 @@ the size of the image and speed of the media.
 
 ```
 
-# flush cache before re-insertion
-sync 
-
-## don't both yet to ...
+## don't yet have to ...
 ## eject
 #udisksctl unmount --block-device /dev/${MEDIA_DEVICE:0:3}1
 #udisksctl unmount --block-device /dev/${MEDIA_DEVICE:0:3}2
@@ -205,7 +149,7 @@ sync
 ## help - https://udisks.freedesktop.org/docs/latest/udisksctl.1.html
 #echo please eject and re-insert media
 
-# sudo partprobe
+sudo partprobe
 # sudo fdisk -l /dev/${MEDIA_DEVICE}
 
 # The partition arrangement here is for Raspbian
@@ -234,6 +178,83 @@ udisksctl unmount --block-device /dev/${MEDIA_DEVICE:0:3}2
 udisksctl power-off --block-device /dev/${MEDIA_DEVICE:0:3}
 # help - https://udisks.freedesktop.org/docs/latest/udisksctl.1.html
 ```
+
+
+### Ubuntu and derivatives
+
+These were the older techniques used before the automation code above, and they are specific to Ubuntu.
+
+#### Choice = Safer - mkusb
+
+If you find the (L)ubuntu built-in *Startup Disk Creator* does not
+reliably create bootable live usb drives, try the alternative **mkusb**
+script, which also protects you from accidentally overwriting non-removable media. 
+
+Browsing in pcmanfm in the folder containing the ISO image, press F4 for a terminal
+
+```
+# type and tab after this to choose filename
+IMAGE_FILENAME=
+
+# enter the label you want for this device
+IMAGE_LABEL=
+
+# leave this blank (no 'p') if you want NO persistence in the flash image
+IMAGE_PERSISTENCE=p
+
+# enter your password for su
+sudo echo
+
+# help https://help.ubuntu.com/community/mkusb
+sudo add-apt-repository -y ppa:mkusb/ppa
+sudo apt update
+sudo apt install -y mkusb
+
+# IF CHOICE = write to USB
+sudo -H guidus $IMAGE_FILENAME $IMAGE_PERSISTENCE 
+# enter persistence % (e.g. 100%)
+# choose GPT or MSDOS partition table
+```
+
+See more about persistence in the later section.
+
+
+
+#### Choice = Simpler - dd
+
+The actual command for dd writing is very straightforward. Browsing in pcmanfm in the folder containing the ISO image, press F4 for a terminal...
+
+```
+# type and tab after this to choose filename
+IMAGE_FILENAME=
+# check the output for the dev name set as **vfat**
+MEDIA_DEVICE=sdX9
+
+# now swap the file extension as the image is unzipped directly to the device
+unzip -p $IMAGE_FILENAME ${IMAGE_FILENAME%.*}.img | sudo dd bs=4M status=progress of=/dev/${MEDIA_DEVICE:0:3}
+# if you have a .img.xz then use...
+# xzcat $IMAGE_FILENAME ${IMAGE_FILENAME%.*}.img | sudo dd bs=4M status=progress of=/dev/${MEDIA_DEVICE:0:3}
+
+```
+
+#### Choice = GUI - gnome Disks utility
+
+If you prefer a GUI alternative, you may find the gnome Disks utility's 
+Image Restore options pratical. 
+
+However these offer you NO features to avoid you accidentally choosing the wrong 
+destination and inadvertently **wiping all your data**, so beware!
+
+If you have a paritition image then choose the destination partition and choose 
+"Restore Partition Image". If you have a Disk image then select the drive unit 
+and use the top right hand menu to choose "Restore Disk Image". 
+
+NB: This technique does NOT add any bootloader, so whether it works also 
+depends on the image you choose to use, unless you have UEFI-enabled systems. 
+
+If you get errors such as _isolinux.bin missing or corrupt_ then perhaps 
+you tried to write a Disk image to a Partition?
+
 
 
 ## Troubleshooting boot issues
