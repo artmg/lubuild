@@ -3,7 +3,7 @@
 see also:
 
 * source code publishing, collaboration and version control with GitHub
-	* [https://github.com/artmg/lubuild/blob/master/help/use/GitHub-source-control.md]
+	* [https://github.com/artmg/lubuild/blob/master/help/use/git-source-control.md]
 * markdown-specific editors
 	* https://github.com/artmg/lubuild/blob/master/help/use/markdown.md
 

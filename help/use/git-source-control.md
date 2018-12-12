@@ -1,7 +1,11 @@
+## Using Git
 
-
-
-## Using GitHub
+As you can see, we have loved GitHub.com 
+for many years now, but other services are available, 
+such as GitLab.com that also allows free Private repos. 
+Most of what you will read below goes for any 
+git hosting service you might like to use, 
+including any internal one you set up and host yourself. 
 
 
 ### Basics
