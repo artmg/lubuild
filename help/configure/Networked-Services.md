@@ -506,7 +506,7 @@ You should configure SSH to work ONLY with Certificates, to remove the risk of a
 # Usually done on client, before the public key is securely transferred to the server
 
 # credit https://help.ubuntu.com/community/SSH/OpenSSH/Keys#Generating_RSA_Keys
-mkdir ~/.ssh
+mkdir -p ~/.ssh
 chmod 700 ~/.ssh
 
 ssh-keygen -t rsa -b 4096
@@ -625,6 +625,24 @@ sudo mv /etc/init/ssh.conf /etc/init/ssh.conf.disabled
 ssh user@computer
 
 # see also https://help.ubuntu.com/community/SSH/OpenSSH/ConnectingTo
+```
+
+### Moving files
+
+Once you have SSH configured you can use it to 
+move files to and from the server from your local client. 
+The simplest way to do this is using SCP. 
+
+```
+scp user@myServer:path/to/file local/path
+```
+
+You can use wildcards and -r for recursion too. 
+If you want to be specific about the files to include
+or exclude then rsync can also use the ssh protocol
+
+```
+rsync -av -e ssh --exclude='unwanted*.ext' user@myServer:path/to/files* local/path
 ```
 
 ### Troubleshooting

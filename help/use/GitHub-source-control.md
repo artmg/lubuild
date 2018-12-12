@@ -1,7 +1,7 @@
 
 
 
-## Using GitHub ##
+## Using GitHub
 
 
 ### Basics
@@ -264,7 +264,52 @@ SERVICE_USER=artmg
 SERVICE_EMAIL=artmg@users.noreply.github.com
 SERVICE_HOST=github.com
 
+# Generate a new ED25519 SSH key pair
+KEY_OPTIONS="-t ed25519"
+# Or if your service doesn't support that, use RSA:
+# KEY_OPTIONS="-o -t rsa -b 4096"
+KEY_FILE=~/.ssh/id_${SERVICE_ID}_$SERVICE_USER
 
+# generate without passphrase
+ssh-keygen $KEY_OPTIONS -f $KEY_FILE -N "" -C "$SERVICE_ID $SERVICE_USER $SERVICE_EMAIL"
+# the comment is to help you recognise it
+
+# save this in the ssh config file
+tee -a ~/.ssh/config << EOF!
+Host $SERVICE_HOST
+  Preferredauthentications publickey
+  IdentityFile $KEY_FILE
+EOF!
+
+# detect OS
+. /etc/os-release
+. /etc/*-release
+if [ -f "/etc/arch-release" ]; then ID=archarm; fi
+if [ "$(uname)" == "Darwin" ]; then ID=macos; fi
+
+# Copy key to keyboard
+case "${ID}" in
+  ubuntu|raspbian|archarm)
+    # may need to install the 'xclip' package
+    xclip -sel clip < $KEY_FILE.pub
+    ;;
+  macos)
+    pbcopy < $KEY_FILE.pub
+esac
+```
+
+* Go into your Account Settings 
+* Add a new SSH Key
+* Paste this in
+* Save
+
+Alternatively you can save this as a per-machine/repo deploy key - see below
+
+```
+# test
+ssh -T git@$SERVICE_HOST
+# optionally diagnose
+# ssh -vvvT git@$SERVICE_HOST
 ```
 
 ### store Personal Access token
@@ -308,8 +353,21 @@ see also:
 
 ### deploy keys
 
-[https://developer.github.com/guides/managing-deploy-keys/#deploy-keys]
+A deploy key is a more granular kind of SSH key.
+If an SSH key is associated with your git account, 
+then it will have full permissions over all repos, 
+so you might not want to install the private key 
+onto devices over which you have less control. 
 
-can be set up per repo
+If you have test or deploy computers you can still
+use with the flexibility and security of SSH keys. 
+Create a key per computer/cluster that you assign to 
+one or more repos with either read or read-write permissions.
+
+You use the same technique above #using-ssh-keys
+but then you simple add the public key to the 
+Project's Repository Settings
+
+For more see https://developer.github.com/guides/managing-deploy-keys/#deploy-keys
 
 
