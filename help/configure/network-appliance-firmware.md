@@ -39,13 +39,15 @@ See also:
 #### work on ARM or embedded ####
 
 * OpenWrt
-    * embedded system that can be flashed onto wide range of consumer devices
-    * Pi is supported, but the distro is compiled for **armel** (no hardware maths acceleration) so it runs slower than some hardware of similar power [http://wiki.openwrt.org/toh/raspberry_pi_foundation/raspberry_pi]
+    * embedded system that can be flashed onto wide range of consumer devices (designed to replace the vendor supplied firmware)
     * mainly aimed at wireless and combo routers - compare
         * routers (no modem, no wireless) - [http://skinflint.co.uk/?cat=router]
         * with the [OpenWrt hardware list](http://wiki.openwrt.org/toh/start)
         * wlan router modems that support OpenWrt [http://skinflint.co.uk/?cat=wlanroutmod&xf=758_OpenWrt&sort=p]
         * wlan routers (no modem) that support OpenWrt [http://skinflint.co.uk/?cat=wlanrout&xf=758_OpenWrt&sort=p]
+    * Pi is supported, but the distro is compiled for **armel** (no hardware maths acceleration) so it runs slower than some hardware of similar power [http://wiki.openwrt.org/toh/raspberry_pi_foundation/raspberry_pi]
+* LEDE
+	* was a strongly-backed fork from OpenWrt but the two projects have since recombined under the OpenWrt name
 * DD-WRT
     *
 * Tomato
@@ -62,6 +64,10 @@ See also:
 
 * m0n0wall
     * very lightweight
+    * source of some popular forks: 
+    	* pfSense was forked off 2004
+    	* OPNsense forked from pfSense 2015
+    * abandoned 2015 in favour of OPNsense
 * pfSense
     * FOSS for the appliances they sell, but they offer a **Community Edition**
     * requires Intel or AMD - x86 or x64
@@ -579,8 +585,14 @@ define the Certificate Name according to your Config
 
 ### Firewall
 
-To add your rules based on a scripted config file, see [https://www.netgate.com/docs/pfsense/firewall/adding-rules-with-easyrule.html]
-
+* To add your rules based on a scripted config file, see https://www.netgate.com/docs/pfsense/firewall/adding-rules-with-easyrule.html
+* For an introduction to rules see https://www.netgate.com/docs/pfsense/firewall/firewall-rule-basics.html
+* To understand the order rules are processed in see https://www.netgate.com/docs/pfsense/firewall/firewall-rule-processing-order.html
+* To use **Aliases** to help build more complex rules, including **bulk import** of lists, see https://www.netgate.com/docs/pfsense/firewall/aliases.html
+* If you check your logs, and want to understand more
+about the traffic you are seeing blocked, 
+	* then you can use **Diagnostics / Packet Capture** like `tcpdump` to inspect the packets, including MAC address details.
+ 
 
 ### Proxy
 
