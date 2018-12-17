@@ -487,18 +487,24 @@ You should configure SSH to work ONLY with Certificates, to remove the risk of a
 #### Recommendations
 
 * Realms 
-** Use a different key for each administrative boundary you wish to maintain. 
-** Use the same key for all servers within that realm 
-** Of course, ONLY distribute the public key, NEVER the private key! 
+  * Use a different key for each administrative boundary you wish to maintain. 
+  * Use the same key for all servers within that realm 
+  * Of course, ONLY distribute the public key, NEVER the private key! 
 * Passphrase 
-** Might you ever copy or insert this key into a non-secure location? 
-*** If so consider a passphrase. 
-** Of course if the machine you run it from has malware, it may be leylogged anyhow, but... 
+  * Might you ever copy or insert this key into a non-secure location? 
+      * If so consider a passphrase. 
+  * Of course if the machine you run it from has malware, it may be keylogged anyhow, but... 
 * Algorithm 
-** Use RSA algorithm with 4096 bit strength 
-** As recommended by:
-*** Microsoft - http://technet.microsoft.com/en-us/library/cc740209%28v=ws.10%29.aspx
-*** Apache - http://www.apache.org/dev/release-signing Apache
+  * Use RSA algorithm with 4096 bit strength 
+      * As recommended by:
+      * Microsoft - http://technet.microsoft.com/en-us/library/cc740209%28v=ws.10%29.aspx
+      * Apache - http://www.apache.org/dev/release-signing Apache
+  * some sources now suggest **ed25519** to be the best (least flawed) current choice for generating authentication keys
+  		* NB: although RSA comments in public keys may be changed, they cannot in ed25519 
+* Certificates
+ * if you want to improve your key management consider using certificates   
+      * for ideas see https://ef.gy/hardening-ssh
+* 
 
 #### Generate a keypair
 
