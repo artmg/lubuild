@@ -264,8 +264,9 @@ explains two broad methods:
 
 ```
 SERVICE_ID=github
-SERVICE_USER=artmg
-SERVICE_EMAIL=artmg@users.noreply.github.com
+SERVICE_USER=myuser
+SERVICE_DEVICE=myserver
+SERVICE_EMAIL=me@users.noreply.github.com
 SERVICE_HOST=github.com
 
 # Generate a new ED25519 SSH key pair
@@ -275,7 +276,7 @@ KEY_OPTIONS="-t ed25519"
 KEY_FILE=~/.ssh/id_${SERVICE_ID}_$SERVICE_USER
 
 # generate without passphrase
-ssh-keygen $KEY_OPTIONS -f $KEY_FILE -N "" -C "$SERVICE_ID $SERVICE_USER $SERVICE_EMAIL"
+ssh-keygen $KEY_OPTIONS -f $KEY_FILE -N "" -C "$SERVICE_ID $SERVICE_DEVICE $SERVICE_USER $SERVICE_EMAIL"
 # the comment is to help you recognise it
 
 # save this in the ssh config file
