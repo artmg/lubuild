@@ -365,6 +365,55 @@ according to [https://askubuntu.com/q/4667]
 ~/.bashrc
 
 
+### Recommended location for Shell Scripts
+
+Although this is not strictly limited to Desktops, 
+here seems like a good place to address the question:
+
+**where _should_ I store shell scripts I create?**
+
+#### Per user
+
+* **~/.local/bin**
+	* avoids scripts being visible like documents
+	* automatically added into PATH by .profile
+* ~/bin
+	* a very common choice, especially as some people like to see scripts
+	* automatically added into PATH by .profile
+* ~
+	* very common too, but probably rather lazy
+
+
+#### Systemwide scripts
+
+* **/opt/local/bin**
+	* this is very strict interpretation of 'standards'
+	* needs adding to PATH
+* /opt/
+	* slightly looser alternative
+	* needs adding to PATH
+* /usr/local/bin
+	* probably the most common choice
+	* is already in PATH
+	* downside is potential to be overwritten by system scripts (?)
+
+To add the folder to PATH:
+
+```
+PROFILE_NAME=zz-local-scripts-path
+SCRIPT_FOLDER=/opt/local/bin
+if [ ! -f "/etc/profile.d/${PROFILE_NAME}.sh" ; then
+  sudo tee "/etc/profile.d/${PROFILE_NAME}.sh" <<EOF!
+if [ -d "${SCRIPT_FOLDER}" ] ; then
+  if ! echo "$PATH" | /bin/grep -Eq "(^|:)${SCRIPT_FOLDER}($|:)" ; then
+    PATH="${SCRIPT_FOLDER}:$PATH"
+  fi
+fi
+EOF!
+  sudo chmod +r "/etc/profile.d/${PROFILE_NAME}.sh"
+fi
+```
+
 ## User Sessions
 
 ### Other users logged in
