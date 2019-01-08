@@ -103,7 +103,7 @@ sudo apt install iio-sensor-proxy inotify-tools
 # see there for alternative locations
 PROFILE_NAME=zz-local-scripts-path
 SCRIPT_FOLDER=/opt/local/bin
-if [ ! -f "/etc/profile.d/${PROFILE_NAME}.sh" ; then
+if [ ! -f "/etc/profile.d/${PROFILE_NAME}.sh" ] ; then
   sudo tee "/etc/profile.d/${PROFILE_NAME}.sh" <<EOF!
 if [ -d "${SCRIPT_FOLDER}" ] ; then
   if ! echo "$PATH" | /bin/grep -Eq "(^|:)${SCRIPT_FOLDER}($|:)" ; then
@@ -121,7 +121,7 @@ sudo curl -o "${SCRIPT_FOLDER}/${SCRIPT_NAME}" --create-dirs https://raw.githubu
 
 # Make script Autostart for all users
 chmod +x "${SCRIPT_FOLDER}/${SCRIPT_NAME}"
-echo '@"${SCRIPT_FOLDER}/${SCRIPT_NAME}"' | sudo tee -a /etc/xdg/lxsession/Lubuntu/autostart
+echo @"${SCRIPT_FOLDER}/${SCRIPT_NAME}" | sudo tee -a /etc/xdg/lxsession/Lubuntu/autostart
 
 ```
 
