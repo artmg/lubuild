@@ -142,3 +142,21 @@ EOF!
 # credit - https://bugs.launchpad.net/ubuntu/+source/xserver-xorg-video-intel/+bug/1273234
 
 #; fi
+
+
+### HP 11-n001na inverts brightness in Lubuntu 18.04
+# when you increase using function keys, brightness goes down
+# also when you decrease even with mouse in systray, the screen backlight level goes down
+# use driver option to work around
+
+AFFECTED_MODELS='|HP Pavilion 11 x360 PC|sample other|'
+AFFECTED_RELEASES='|18.04|'
+if \
+    [[ $AFFECTED_MODELS == *\|$MODEL_NO\|* ]] \
+    && [[ $AFFECTED_RELEASES == *\|$RELEASE\|* ]] \
+    ; then 
+  sudo tee -a /etc/modprobe.d/i915.conf <<EOF!
+options i915 invert_brightness=1
+EOF!
+# credit - https://dri-devel.freedesktop.narkive.com/9QIH8WAc/
+; fi
