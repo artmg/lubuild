@@ -139,7 +139,7 @@ echo @"${SCRIPT_FOLDER}/${SCRIPT_NAME}" | sudo tee -a /etc/xdg/lxsession/Lubuntu
 #
 
 if [ -f $HOME/.config/lxsession/Lubuntu/autostart ] ; then
-  cat /etc/xdg/lxsession/Lubuntu/autostart" >> $HOME/.config/lxsession/Lubuntu/autostart
+  cat /etc/xdg/lxsession/Lubuntu/autostart >> $HOME/.config/lxsession/Lubuntu/autostart
 fi
 
 ```
