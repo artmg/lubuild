@@ -159,4 +159,4 @@ if \
 options i915 invert_brightness=1
 EOF!
 # credit - https://dri-devel.freedesktop.narkive.com/9QIH8WAc/
-; fi
+fi
