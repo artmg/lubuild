@@ -127,6 +127,21 @@ sudo curl -o "${SCRIPT_FOLDER}/${SCRIPT_NAME}" https://raw.githubusercontent.com
 chmod +x "${SCRIPT_FOLDER}/${SCRIPT_NAME}"
 echo @"${SCRIPT_FOLDER}/${SCRIPT_NAME}" | sudo tee -a /etc/xdg/lxsession/Lubuntu/autostart
 
+
+## NB
+# due to a 'feature' with LXDE Autostart 
+# https://wiki.lxde.org/en/LXSession#autostart
+# if the user has their own local autostart file
+# 'only the entries in the local file will be executed'
+#
+# If you have this issue with a given user, 
+# then add the 'system' autostart to theirs
+#
+
+if [ -f $HOME/.config/lxsession/Lubuntu/autostart ] ; then
+  cat /etc/xdg/lxsession/Lubuntu/autostart" >> $HOME/.config/lxsession/Lubuntu/autostart
+fi
+
 ```
 
 
