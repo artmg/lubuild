@@ -76,7 +76,7 @@ A sensor called an Accelerometer detects the screen orientation,
 and a service monitoring this sensor sends a signal to the screen handler, 
 to change the orientation.
 
-### Gnome 
+### Gnome method
 
 Ubuntu, and other desktops using Gnome, rely on `iio-sensor-proxy` [https://github.com/hadess/iio-sensor-proxy] in the universe repo. 
 
@@ -84,24 +84,59 @@ This proxy sends sensor info to dbus.
 
 How can we have dbus events autorotate xrandr?
 
-```
-# troubleshoot
-# check your video driver supports rotation
-xrandr
-# does it list orientations: normal left inverted right
-```
-
 Other docs: 
 
 * understand iio sensor proxy and the udev rules that allow you to control it [http://askubuntu.com/a/864783]
 * is there any control via `/etc/systemd/logind.conf`?
 * turn it off completely [sudo systemctl stop iio-sensor-proxy.service]
 
+### Add to Lubuntu
 
-Alternative methods
+```
+# credit https://unix.stackexchange.com/a/335516
 
-* script driven: [https://linuxappfinder.com/blog/auto_screen_rotation_in_ubuntu]
+# basic technique https://linuxappfinder.com/blog/auto_screen_rotation_in_ubuntu
+sudo apt install iio-sensor-proxy inotify-tools
+
+# Script location
+# copied from https://github.com/artmg/lubuild/blob/master/help/configure/Desktop.md#systemwide-scripts
+# see there for alternative locations
+PROFILE_NAME=zz-local-scripts-path
+SCRIPT_FOLDER=/opt/local/bin
+if [ ! -f "/etc/profile.d/${PROFILE_NAME}.sh" ; then
+  sudo tee "/etc/profile.d/${PROFILE_NAME}.sh" <<EOF!
+if [ -d "${SCRIPT_FOLDER}" ] ; then
+  if ! echo "$PATH" | /bin/grep -Eq "(^|:)${SCRIPT_FOLDER}($|:)" ; then
+    PATH="${SCRIPT_FOLDER}:$PATH"
+  fi
+fi
+EOF!
+  sudo chmod +r "/etc/profile.d/${PROFILE_NAME}.sh"
+fi
+
+# Download script
+SCRIPT_NAME=autorotate.sh
+# updated script https://github.com/gevasiliou/PythonTests/blob/master/autorotate.sh
+sudo curl -o "${SCRIPT_FOLDER}/${SCRIPT_NAME}" --create-dirs https://raw.githubusercontent.com/gevasiliou/PythonTests/master/autorotate.sh
+
+# Make script Autostart for all users
+chmod +x "${SCRIPT_FOLDER}/${SCRIPT_NAME}"
+echo '@"${SCRIPT_FOLDER}/${SCRIPT_NAME}"' | sudo tee -a /etc/xdg/lxsession/Lubuntu/autostart
+
+```
+
+
 * more scripts: [https://wiki.archlinux.org/index.php/Tablet_PC#Automatic_rotation]
+
+#### troubleshoot
+
+```
+# check your video driver supports rotation
+xrandr
+# does it list orientations: normal left inverted right
+```
+
+
 
 
 
