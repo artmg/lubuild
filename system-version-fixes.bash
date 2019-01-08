@@ -158,5 +158,10 @@ if \
   sudo tee -a /etc/modprobe.d/i915.conf <<EOF!
 options i915 invert_brightness=1
 EOF!
+  # ensure the option is pre-loaded in initramfs
+  update-initramfs -u
 # credit - https://dri-devel.freedesktop.narkive.com/9QIH8WAc/
 fi
+# to diagnose further issues
+#systool -v -m i915
+
