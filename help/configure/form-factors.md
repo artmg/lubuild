@@ -103,6 +103,10 @@ sudo apt install iio-sensor-proxy inotify-tools
 # see there for alternative locations
 PROFILE_NAME=zz-local-scripts-path
 SCRIPT_FOLDER=/opt/local/bin
+
+sudo mkdir -p "${SCRIPT_FOLDER}"
+sudo chmod 755 "${SCRIPT_FOLDER}"
+
 if [ ! -f "/etc/profile.d/${PROFILE_NAME}.sh" ] ; then
   sudo tee "/etc/profile.d/${PROFILE_NAME}.sh" <<EOF!
 if [ -d "${SCRIPT_FOLDER}" ] ; then
@@ -117,7 +121,7 @@ fi
 # Download script
 SCRIPT_NAME=autorotate.sh
 # updated script https://github.com/gevasiliou/PythonTests/blob/master/autorotate.sh
-sudo curl -o "${SCRIPT_FOLDER}/${SCRIPT_NAME}" --create-dirs https://raw.githubusercontent.com/gevasiliou/PythonTests/master/autorotate.sh
+sudo curl -o "${SCRIPT_FOLDER}/${SCRIPT_NAME}" https://raw.githubusercontent.com/gevasiliou/PythonTests/master/autorotate.sh
 
 # Make script Autostart for all users
 chmod +x "${SCRIPT_FOLDER}/${SCRIPT_NAME}"

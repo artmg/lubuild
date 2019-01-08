@@ -402,7 +402,11 @@ To add the folder to PATH:
 ```
 PROFILE_NAME=zz-local-scripts-path
 SCRIPT_FOLDER=/opt/local/bin
-if [ ! -f "/etc/profile.d/${PROFILE_NAME}.sh" ; then
+
+sudo mkdir -p "${SCRIPT_FOLDER}"
+sudo chmod 755 "${SCRIPT_FOLDER}"
+
+if [ ! -f "/etc/profile.d/${PROFILE_NAME}.sh" ] ; then
   sudo tee "/etc/profile.d/${PROFILE_NAME}.sh" <<EOF!
 if [ -d "${SCRIPT_FOLDER}" ] ; then
   if ! echo "$PATH" | /bin/grep -Eq "(^|:)${SCRIPT_FOLDER}($|:)" ; then
@@ -419,7 +423,7 @@ fi
 ### Other users logged in
 
 ```
-# see who else is loged in
+# see who else is logged in
 who
 
 # log off / logout other user session (force to them end)
