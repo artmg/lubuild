@@ -145,6 +145,23 @@ gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dNOPAUSE -dQUIET -dBATCH \
    -sOutputFile=small.pdf original.pdf
 # credit - http://stackoverflow.com/a/20681992
 
+
+##### Using Ghostscript to rasterise
+
+# You may try the solutions above to reduce image quality
+# and still find there is something keeping the size large 
+# as these might affect what you see (such as fonts)
+# you cannot remove them, so try rasterising the document
+
+# credit https://www.ghostscript.com/doc/current/Use.htm#Invoking
+gs -dSAFER -dBATCH -dNOPAUSE -sDEVICE=pgmraw -r150 \
+                -dTextAlphaBits=4 -sOutputFile='page-%00d.pgm' original.pdf
+# if you want even smaller drop the resolution to -r75
+# but check it is still legible
+# We have yet to find a wat to reduce to greyscale only directly in GS
+# consider ImageMagick's convert command
+
+
 #### old notes on Processing Xsane scanned PDF files 
 
 # also options to remove colour: 
