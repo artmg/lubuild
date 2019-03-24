@@ -34,9 +34,11 @@ and which programmes may be used to open / view / extract data
     * `sh lin64/die`
 
 
-## Data Carving ##
+## Data Carving
 
-Recovering data from unused clusters of a disk - like Undelete but better!
+Recovering data from unused clusters of a disk - like Undelete but better! These data recovery tools don't need file tables 
+nor even partition tables – they just look at the raw data on the disk, recognising what look like files and guessing the type 
+using the file signatures mentioned above.
 
 See sections below or other carving utils include MagicRescue, Hachoir
 
@@ -44,7 +46,7 @@ See sections below or other carving utils include MagicRescue, Hachoir
 * [https://help.ubuntu.com/community/DataRecovery]
 
 
-### scalpel and foremost ##
+### scalpel and foremost
 
 Scalpel and Foremost insist on using a disk image file
 This is best practice anyhow, to avoid damaging the original
@@ -59,7 +61,7 @@ sudo apt-get install scalpel
 sudo nano /etc/scalpel/scalpel.conf
 ```
 
-### PhotoRec and TestDisk ###
+### PhotoRec and TestDisk 
 
 PhotoRec runs in terminal and if you supply no parameters 
 it is driven by interactive menus.
@@ -68,7 +70,7 @@ You may use it on directly mounted media, as well as image files
 
 ```
 sudo apt-get install testdisk
-sudo photorec
+sudo photorec /dev/sdYX
 
 # help - http://www.cgsecurity.org/wiki/PhotoRec
 # also - http://www.cgsecurity.org/wiki/Image_Creation
