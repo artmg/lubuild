@@ -124,6 +124,16 @@ sudo cryptsetup close container
 
 ### Rename 
 
+Note: this automation in this section 
+is similar to that used in the pages below, 
+so perhaps they could be merged/unified at some point?
+
+* [Buildroot](https://github.com/artmg/MuGammaPi/wiki/buildroot)
+* [ArchLinuxArm install](https://github.com/artmg/MuGammaPi/wiki/arch-linux-install)
+* [Raspbian basics](https://github.com/artmg/MuGammaPi/wiki/Raspbian-basics)
+* [write Distro to flash](https://github.com/artmg/lubuild/blob/master/help/configure/write-Distro-to-flash.md) 
+
+
 ```
 #!/bin/bash
 # Rename partition to change label and automount path

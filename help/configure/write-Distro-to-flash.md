@@ -83,6 +83,7 @@ so perhaps they could be merged at some point?
 * [Buildroot](https://github.com/artmg/MuGammaPi/wiki/buildroot)
 * [ArchLinuxArm install](https://github.com/artmg/MuGammaPi/wiki/arch-linux-install)
 * [Raspbian basics](https://github.com/artmg/MuGammaPi/wiki/Raspbian-basics)
+* [disks - rename](https://github.com/artmg/lubuild/blob/master/help/configure/disks.md#rename)
 
 ```
 # type and tab after this to choose filename
