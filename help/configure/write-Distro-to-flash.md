@@ -107,16 +107,16 @@ SHORT_LABEL=${MEDIA_LABEL:0:8}
 # set up required tools
 case "${ID}" in
   raspbian)
-    FAT_LABEL_SET="sudo dosfslabel /dev/${MEDIA_DEVICE}1 ${SHORT_LABEL^^}_OS"
-    FAT_LABEL_GET="sudo dosfslabel /dev/${MEDIA_DEVICE}1"
+    FAT_LABEL_SET="sudo dosfslabel /dev/${MEDIA_DEVICE:0:3}1 ${SHORT_LABEL^^}_OS"
+    FAT_LABEL_GET="sudo dosfslabel /dev/${MEDIA_DEVICE:0:3}1"
     ;;
   ubuntu)
     # udisks2 is probably installed by default
     sudo apt install -y udisks2 mtools
     # avoid the error "not a multiple of sectors"
     echo mtools_skip_check=1 > ~/.mtoolsrc
-    FAT_LABEL_SET="sudo mlabel  -i /dev/${MEDIA_DEVICE}1 ::${SHORT_LABEL^^}_OS"
-    FAT_LABEL_GET="sudo mlabel  -i /dev/${MEDIA_DEVICE}1 -s ::"
+    FAT_LABEL_SET="sudo mlabel  -i /dev/${MEDIA_DEVICE:0:3}1 ::${SHORT_LABEL^^}_OS"
+    FAT_LABEL_GET="sudo mlabel  -i /dev/${MEDIA_DEVICE:0:3}1 -s ::"
 esac
 
 # In case the device had volume that auto mounted on insertion...
@@ -151,7 +151,7 @@ the size of the image and speed of the media.
 #echo please eject and re-insert media
 
 sudo partprobe
-# sudo fdisk -l /dev/${MEDIA_DEVICE}
+# sudo fdisk -l /dev/${MEDIA_DEVICE:0:3}
 
 # The partition arrangement here is for Raspbian
 # see [https://github.com/artmg/MuGammaPi/wiki/Rasbian-basics]
