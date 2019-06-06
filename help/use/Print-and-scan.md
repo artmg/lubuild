@@ -5,14 +5,14 @@ See also:
 * [https://github.com/artmg/lubuild/blob/master/help/manipulate/PDF-files.md]
 	* work with portable documents, to extract or include scanned images
 
-## Printers and Scanners
+# Printers and Scanners
 
  Try connecting to the local CUPS console: http://127.0.0.1:631/
  See: https://wiki.ubuntu.com/DebuggingPrintingProblems
 
 ## HP Printers
 
-The simplest way to use HP devices on linux is with **HPLIP**. 
+The simplest way to use an HP printer on linux is with **HPLIP**. 
 See this [http://hplipopensource.com/node/128 Technical Overview] 
 and [http://hplipopensource.com/hplip-web/tech_docs/man_pages/index.html list of commands].
 
@@ -63,7 +63,8 @@ various recomendations include:
 	* comes up before cups? [https://bbs.archlinux.org/viewtopic.php?pid=954010#p954010]
 
 
-## Scanners
+
+### Scanners
 
 ```
 # troubleshooting for HP Scanners
@@ -71,6 +72,19 @@ x-www-browser http://hplipopensource.com/node/333
 # more about the SANE linux scanning subsystem
 x-www-browser https://wiki.archlinux.org/index.php/SANE
 ```
+
+## Brother Printers
+
+* Browse to https://support.brother.com
+* Search for your model
+* Choose Downloads
+* Pick Lunix / Linux (deb)
+* Click on the **Driver Install Tool**
+* Shift click on the EULA accept button to save the file to your downloads
+* There should be instructions now, but you basically use the prompt to gunzip the file, sudo su and bash run the file
+* it's interactive so you need to answer the questions
+* Credit https://askubuntu.com/a/636364
+
 
 ## Scanning software
 
