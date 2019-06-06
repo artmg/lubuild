@@ -85,6 +85,18 @@ x-www-browser https://wiki.archlinux.org/index.php/SANE
 * it's interactive so you need to answer the questions
 * Credit https://askubuntu.com/a/636364
 
+### troubleshooting a Brother printer or scanner
+
+If you are having issues where simple-scan reports 'scanner not detected'
+then try running the relevant brsaneconfigX command, for example:
+
+```
+# query the network for any available scanners using the driverset version 4
+brsaneconfig4 -q
+```
+
+credit: https://wiki.archlinux.org/index.php/SANE/Scanner-specific_problems#Brother
+
 
 ## Scanning software
 
