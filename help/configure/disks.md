@@ -366,6 +366,24 @@ sudo ntfsclone -s -o ./PQSERVICE.ntfsclone /dev/sda1
 sudo dd if=/dev/sda1 of=./PQSERVICE.bootsect.bin bs=512 count=1
 ```
 
+
+#### Restore Acer MBR for windows restore partition ===
+
+```
+# REPLACE X in sdX with the letter for the disk you need
+# Check the current partition table
+sudo cfdisk -Pt /dev/sdX
+# Backup the MBR including primary partition table: 
+sudo dd if=/dev/sdX of=./mbr.bin.plusPrimaryPartitionTable bs=512 count=1
+# find the file RTMBR.bin from the PQSERVICE hidden partition /acer/tools folder
+cd /media/$USER/PQSERVICE/acer/tools
+# Restore the MBR *including* primary partition table: 
+sudo dd if=RTMBR.bin of=/dev/sdX bs=512 count=1
+# to Restore JUST the MBR 
+# sudo dd of=RTMBR.bin if=/dev/sdX bs=446 count=1
+```
+
+
 ### Overwrite entire partition before encyption
 
 Best practice 
@@ -387,58 +405,6 @@ head -c 32 /dev/urandom | openssl enc -rc4 -nosalt -in /dev/zero -pass stdin | d
 
 For more alternatives on how to wipe whole partitions as preparation for encryption 
 see [https://github.com/artmg/lubuild/blob/master/help/manipulate/remove-data.md]
-
-
-## Automount
-
-### IN - validate how current / useful 
-
-#### Xbuntu/Myth Check the NTFS driver is installed
-
-```
-apt-cache search ntfs-3g
-```
-
-#### Identify disks
-
-```
-sudo fdisk -l<br />(or)<br />ls -l /dev/disk/by-uuid/
-sudo editor /etc/fstab
-# Ubuntu:
-sudo gedit /etc/fstab
-# Xbuntu/Myth:
-sudo mousepad /etc/fstab
-```
-
-##### Add mount lines 
-
-```
-/dev/sda2 /media/Windows ntfs-3g rw,auto,user,fmask=0111,dmask=0000 0 0
-/dev/sda3 /media/shared vfat rw,auto,user,fmask=0111,dmask=0000 0 0
-# or using UUIDs:
-
-# /dev/sda2
-UUID=7C84665A846616C4 /media/Windows ntfs-3g rw,auto,user,fmask=0111,dmask=0000 0 0
-# /dev/sda3
-UUID=3C72F85E72F81E78 /media/shared vfat rw,auto,user,fmask=0111,dmask=0000 0 0
-```
-''Sample of original fstab contents:''
-
-```
-# /dev/sda2
-UUID=7C84665A846616C4 /media/sda2 ntfs defaults,umask=007,gid=46 0 0
-# /dev/sda3
-UUID=91A1-25A1 /media/open vfat defaults,utf8,umask=007,gid=46 0 1
-sudo mkdir /media/Windows
-sudo mkdir /media/shared
-sudo mount -a
-credit &gt; https://help.ubuntu.com/community/AutomaticallyMountPartitions
-```
-
-For help with automatically mounting encrypted partitions 
-using a securely stored key file to unlock them 
-see http://thesimplecomputer.info/full-disk-encryption-with-ubuntu
-
 
 
 ## Swap
@@ -709,6 +675,93 @@ for useful links see also - https://wiki.archlinux.org/index.php/System_Encrypti
 
 
 
+## Automount
+
+For issues with NTFS partitions in Dual Boot systems, see also 
+[https://github.com/artmg/lubuild/blob/master/help/configure/Windows.md]
+
+
+### IN - validate how current / useful 
+
+#### Xbuntu/Myth Check the NTFS driver is installed
+
+```
+apt-cache search ntfs-3g
+```
+
+#### Identify disks
+
+```
+sudo fdisk -l<br />(or)<br />ls -l /dev/disk/by-uuid/
+sudo editor /etc/fstab
+# Ubuntu:
+sudo gedit /etc/fstab
+# Xbuntu/Myth:
+sudo mousepad /etc/fstab
+```
+
+##### Add mount lines 
+
+```
+/dev/sda2 /media/Windows ntfs-3g rw,auto,user,fmask=0111,dmask=0000 0 0
+/dev/sda3 /media/shared vfat rw,auto,user,fmask=0111,dmask=0000 0 0
+# or using UUIDs:
+
+# /dev/sda2
+UUID=7C84665A846616C4 /media/Windows ntfs-3g rw,auto,user,fmask=0111,dmask=0000 0 0
+# /dev/sda3
+UUID=3C72F85E72F81E78 /media/shared vfat rw,auto,user,fmask=0111,dmask=0000 0 0
+```
+''Sample of original fstab contents:''
+
+```
+# /dev/sda2
+UUID=7C84665A846616C4 /media/sda2 ntfs defaults,umask=007,gid=46 0 0
+# /dev/sda3
+UUID=91A1-25A1 /media/open vfat defaults,utf8,umask=007,gid=46 0 1
+sudo mkdir /media/Windows
+sudo mkdir /media/shared
+sudo mount -a
+credit &gt; https://help.ubuntu.com/community/AutomaticallyMountPartitions
+```
+
+For help with automatically mounting encrypted partitions 
+using a securely stored key file to unlock them 
+see http://thesimplecomputer.info/full-disk-encryption-with-ubuntu
+
+#### Appendix E - Advanced disk configuration =
+
+##### Boot configuration ==
+
+''WARNING: Do not upgrade or modify grub in dual boot configurations when Windows is HIBERNATED!''
+
+NB: Left Ubuntu as default ??? some machines should make Windows default (see ''Set Up PC.htm'')
+
+<pre>If performance on device has ever been in question: </pre>
+<ul>
+<li><pre>default Grub to Ubuntu</pre></li></ul>
+
+
+
+##### NTFS Permissions 
+
+```
+#==mount options==
+# help &gt; http://www.tuxera.com/community/ntfs-3g-manual/
+ntfs-3g
+users = any user can mount, different user can dismount
+uid=1000
+gid=100
+# less permissive dmask=027,fmask=137
+# more permissive dmask=000,fmask=111
+# totally permissive umask=000
+utf8
+user mapping with windows &gt; http://www.tuxera.com/community/ntfs-3g-manual/#7
+```
+
+
+
+
 ## IN 
 
 The following sections need to be rationalised and reformatted
@@ -790,52 +843,5 @@ sudo update-grub
 To remove grub boot loader and reinstall Windows Master Boot Record (MBR) with 
 NTBootloader, install **boot-repair** tool - see 
 [https://github.com/artmg/lubuild/blob/master/help/diagnose/operating-system.md]
-
-
-#### Appendix E - Advanced disk configuration =
-
-##### Boot configuration ==
-
-''WARNING: Do not upgrade or modify grub in dual boot configurations when Windows is HIBERNATED!''
-
-NB: Left Ubuntu as default ??? some machines should make Windows default (see ''Set Up PC.htm'')
-
-<pre>If performance on device has ever been in question: </pre>
-<ul>
-<li><pre>default Grub to Ubuntu</pre></li></ul>
-
-
-
-##### Restore Acer MBR for windows restore partition ===
-
-```
-# REPLACE X in sdX with the letter for the disk you need
-# Check the current partition table
-sudo cfdisk -Pt /dev/sdX
-# Backup the MBR including primary partition table: 
-sudo dd if=/dev/sdX of=./mbr.bin.plusPrimaryPartitionTable bs=512 count=1
-# find the file RTMBR.bin from the PQSERVICE hidden partition /acer/tools folder
-cd /media/art/PQSERVICE/acer/tools
-# Restore the MBR *including* primary partition table: 
-sudo dd if=RTMBR.bin of=/dev/sdX bs=512 count=1
-# to Restore JUST the MBR 
-# sudo dd of=RTMBR.bin if=/dev/sdX bs=446 count=1
-```
-
-##### NTFS Permissions 
-
-```
-#==mount options==
-# help &gt; http://www.tuxera.com/community/ntfs-3g-manual/
-ntfs-3g
-users = any user can mount, different user can dismount
-uid=1000
-gid=100
-# less permissive dmask=027,fmask=137
-# more permissive dmask=000,fmask=111
-# totally permissive umask=000
-utf8
-user mapping with windows &gt; http://www.tuxera.com/community/ntfs-3g-manual/#7
-```
 
 
