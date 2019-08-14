@@ -29,7 +29,7 @@ e.g. Elevated Command prompt...  Win-X then A
 
 This is also available in Windows 8
 
-### Remove Unwanted Apps
+### Remove Unwanted Apps
 
 You can do this via Apps and Features, but it can be quicker in an Adminsitrators Powershell
 
@@ -153,11 +153,31 @@ which you can turn off in `systempropertiesprotection.exe`.
 
 #### Access windows partition from linux
 
-To access Windows 10 NTFS system parititon when dual booted into ubuntu
+To access Windows 10 NTFS system partiton when dual booted into ubuntu
 
 * Turn of Fast Boot 
 * turn off hibernate with powercfg...
     * http://askubuntu.com/a/457401
+
+##### Read-only issues
+
+If you find that your NTFS Partition is only being mounted read-only, 
+try from the command line:
+
+```
+sudo umount /media/Acer
+sudo mount -a
+```
+
+If you get an error stating that it is mounted read-only beacuse 
+`The NTFS partition is in an unsafe state`
+this might just be because 'Fast Shutdown' is still enabled.
+
+Log into Windows and ensure you do a clean shutdown by using the CMD
+
+```
+shutdown /s
+```
 
 ### bcdedit
 
