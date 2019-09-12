@@ -120,8 +120,8 @@ case "${ID}" in
 esac
 
 # In case the device had volume that auto mounted on insertion...
-udisksctl unmount --block-device /dev/${MEDIA_DEVICE:0:3}1
-udisksctl unmount --block-device /dev/${MEDIA_DEVICE:0:3}2
+sudo udisksctl unmount --block-device /dev/${MEDIA_DEVICE:0:3}1
+sudo udisksctl unmount --block-device /dev/${MEDIA_DEVICE:0:3}2
 sudo partprobe
 
 # now swap the file extension as the image is unzipped directly to the device
