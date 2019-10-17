@@ -8,18 +8,18 @@ git hosting service you might like to use,
 including any internal one you set up and host yourself. 
 
 
-### Basics
+## Basics
 
-#### install
+### install
 
-##### cli
+#### cli
 
 ```
 sudo apt-get install -y git
 # no longer require git-core, see - http://askubuntu.com/a/5935
 ```
 
-##### gui
+#### gui
 
 options for graphical git clients:
 
@@ -41,9 +41,9 @@ sudo apt-get install -y git
 * Actions / New
 	* push
 
-#### configure
+### configure
 
-##### ignore certain file patterns
+#### ignore certain file patterns
 
 Do not sync file changes if they meet certain pattern criteria 
 (e.g. backup files)
@@ -59,14 +59,14 @@ EOF!
 git config --global core.excludesfile ~/.gitignore_global
 ```
 
-##### Authentication
+#### Authentication
 
 see [#authentication-options] section below, e.g.
 
 * [#store-personal-access-token]
 
 
-#### clone 
+### clone 
 
 ```
 # Clone a repository to your computer
@@ -262,29 +262,35 @@ explains two broad methods:
 
 ### Using SSH keys
 
+#### Generate
+
 ```
-SERVICE_ID=github
-SERVICE_USER=myuser
-SERVICE_DEVICE=myserver
-SERVICE_EMAIL=me@users.noreply.github.com
-SERVICE_HOST=github.com
+SOURCE_HOST=github.com
+SOURCE_USER=myuser
+SOURCE_DEVICE=myserver
+SOURCE_EMAIL=me@users.noreply.github.com
 
 # Generate a new ED25519 SSH key pair
-KEY_OPTIONS="-t ed25519"
-# Or if your service doesn't support that, use RSA:
+Key_Opts="${KEY_OPTIONS:-"-t ed25519"}"
+# Or if your service doesn't support that, override with RSA:
 # KEY_OPTIONS="-o -t rsa -b 4096"
-KEY_FILE=~/.ssh/id_${SERVICE_ID}_$SERVICE_USER
 
+KEY_FILE=~/.ssh/id_${SOURCE_HOST}_$SOURCE_USER
 # generate without passphrase
-ssh-keygen $KEY_OPTIONS -f $KEY_FILE -N "" -C "$SERVICE_ID $SERVICE_DEVICE $SERVICE_USER $SERVICE_EMAIL"
+ssh-keygen $Key_Opts -f $KEY_FILE -N "" -C "$SOURCE_HOST $SOURCE_EMAIL $SOURCE_DEVICE $SOURCE_USER `date +%y%m%d`"
 # the comment is to help you recognise it
 
 # save this in the ssh config file
 tee -a ~/.ssh/config << EOF!
-Host $SERVICE_HOST
+Host $SOURCE_HOST
   Preferredauthentications publickey
   IdentityFile $KEY_FILE
 EOF!
+
+cat $KEY_FILE.pub
+
+
+#### Optionally copy key to keyboard
 
 # detect OS
 . /etc/os-release
@@ -292,7 +298,6 @@ EOF!
 if [ -f "/etc/arch-release" ]; then ID=archarm; fi
 if [ "$(uname)" == "Darwin" ]; then ID=macos; fi
 
-# Copy key to keyboard
 case "${ID}" in
   ubuntu|raspbian|archarm)
     # may need to install the 'xclip' package
@@ -303,6 +308,8 @@ case "${ID}" in
 esac
 ```
 
+#### Install
+
 * Go into your Account Settings 
 * Add a new SSH Key
 * Paste this in
@@ -310,11 +317,13 @@ esac
 
 Alternatively you can save this as a per-machine/repo deploy key - see below
 
+#### Test access key
+
 ```
 # test
-ssh -T git@$SERVICE_HOST
+ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -T git@$SOURCE_HOST
 # optionally diagnose
-# ssh -vvvT git@$SERVICE_HOST
+# ssh -vvvT git@$SOURCE_HOST
 ```
 
 ### store Personal Access token
@@ -374,5 +383,180 @@ but then you simple add the public key to the
 Project's Repository Settings
 
 For more see https://developer.github.com/guides/managing-deploy-keys/#deploy-keys
+
+
+## Workflow examples
+
+### Scenarios
+
+When you are deploying a new service 
+linked to source-controlled configuration files 
+you are likely to be in one of the following three scenarios: 
+
+Scenario | Narrative | Steps
+--- | --- | ---
+New Repo | This is the first time I am deploying this service, and I have a bunch of scripts / config file templates to use as a stating point | New, Load, Push
+Fork | This is the first time I am deploying this service, and I want to fork an existing repo containing a template configuration | Fork, Clone
+Redeploy | I have a repo that works, I am just rebuilding the servers | Clone
+
+### Repo Hosting setup
+
+#### New
+
+If you are creating a new empty repository to load manually: 
+
+* open the repo hosting gui (e.g. github.com)
+* ensure you have logged in with an account that has permissions to create a new repo
+* Near you account setup you should find an Add New Repository button
+* leave empty, for now do not add a ReadMe
+
+#### Fork
+
+If you are creating a new repository based on a pre-existing 'template' repo then it should be as simple as
+
+* open the repo hosting gui (e.g. github.com)
+* ensure you have logged in with an account that has permissions to create a new repo
+* browse to the other repo you want to use as a template
+* use the 'Fork' button
+
+### Prerequisites
+
+#### environment block
+
+here is the block of environment variables describing your scenario
+
+```
+SOURCE_HOST=gitlab.com
+SOURCE_USER=myuser
+SOURCE_DEVICE=myserver
+SOURCE_EMAIL=email@me.com
+SOURCE_REPO=myrepo
+SOURCE_FILEMODE=true
+```
+
+* you might pick filemode false if your repo was from a different OS
+
+
+#### Authentication
+
+If you are simply cloning and pulling from a public repository, 
+then you can skip this section. 
+
+If however you need to Push back up to a repo, 
+including if your repo is New, 
+or your chosen repository is _not_ publicly visible, 
+then this is how you ensure that your git source repository 
+'recognises and trusts' your new local server instance. 
+
+* we recommend you generate a key per device
+	* include the `SOURCE_DEVICE=` in the environment block
+* generate and add the key locally
+	* Use the code in the `# Using SSH keys` section above
+	* up until you output the public key
+* Add as Deploy Key
+	* Browse to repo's admin page
+	* In the Repository Settings
+	* Look for Deploy Keys to Add New
+	* Paste in the Public Key
+	* Perhaps add the last part of the comment into the title/name
+	* Choose whether you want read only or read write access
+* Test access key
+	* use the code in section `# Test access key` above 
+* 
+
+_If you are using a private repo, 
+you will need the git config user.* options and maybe your key._
+
+
+
+#### Git client
+
+```
+#### use your package manager to silently install git and dependencies
+sudo apt install -y git
+```
+
+### Local Actions
+
+#### Clone
+
+If Cloning is all you need, this is the simplest part
+
+```
+# This will clone into the CURRENT FOLDER, and assumes its empty
+git clone git@$SOURCE_HOST:$SOURCE_USER/$SOURCE_REPO.git .
+```
+
+If you need to Push after then you should also...
+```
+if [[ $SOURCE_DEVICE ]] ; then
+  git config user.name $SOURCE_USER-$SOURCE_DEVICE
+else 
+  git config user.name $SOURCE_USER
+fi
+git config user.email $SOURCE_EMAIL
+```
+
+#### Load
+
+_(would it be clearer to split Load and Connect??)_
+
+* Create the empty folder
+* Load it with any templates you need
+* connect this folder with the New repo you set up earlier
+* you can continue to refine them even after this
+
+```
+git init
+if [[ $SOURCE_DEVICE ]] ; then
+  git config user.name $SOURCE_USER-$SOURCE_DEVICE
+else 
+  git config user.name $SOURCE_USER
+fi
+git config user.email $SOURCE_EMAIL
+git remote add origin git@$SOURCE_HOST:$SOURCE_USER/$SOURCE_REPO.git
+if [[ $SOURCE_FILEMODE ]] ; then
+  git config core.fileMode $SOURCE_FILEMODE
+fi
+```
+
+
+#### Push
+
+```
+git add *
+git add .gitignore
+git status
+git commit -m "New repo from blank or template config"
+
+git push -u origin master
+```
+
+
+### Other actions under development
+
+#### Merge - Work in Progress
+
+```
+git branch --set-upstream origin master
+git branch --set-upstream-to=origin/<branch> master
+git fetch
+```
+
+##### alternative Merge method - currently borken
+
+**DON'T DO THIS** It may junk useful changes
+
+```
+# or did we do a 
+# git pull
+# git reset --hard
+
+git reset origin/master  # This is how to spot the local changes
+
+git commit -a -m "Added in latest version of skeleton files"
+git push -u origin master
+
+```
 
 
