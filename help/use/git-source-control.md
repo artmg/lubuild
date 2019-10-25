@@ -59,6 +59,22 @@ EOF!
 git config --global core.excludesfile ~/.gitignore_global
 ```
 
+##### files that never get ignored
+
+It is possible that you had some files (especially hidden ones) 
+that found their way into your repo before you git_ignored them. 
+They will seem to keep re-appearing, annoyingly, 
+despite now being in your gitignore. 
+
+Here's how to get rid of them
+
+```
+# banish .DS_Store files that found their way into a repo via a mac
+# credit https://stackoverflow.com/a/107921
+find . -name .DS_Store -print0 | xargs -0 git rm -f --ignore-unmatch
+```
+
+
 #### Authentication
 
 see [#authentication-options] section below, e.g.
