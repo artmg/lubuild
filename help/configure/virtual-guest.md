@@ -73,7 +73,14 @@ it will automatically mount it as follows
 MyFolder /media/sf_MyFolder vboxsf rw,nodev,relatime,iocharset=utf8,uid=0,gid=998,dmode=0770,fmode=0770,tag=VBoxAutomounter 0 0
 ```
 
-The **OLD** instructions to mount it were...
+```
+# to access such folders from your regular user context...
+sudo usermod -aG vboxsf $USER
+```
+
+### OLD
+
+Previously the instructions to mount it were...
 
 ```
 # acess the shared drive from the guest os 
@@ -89,12 +96,6 @@ sudo mount -t vboxsf $MACHINE_FOLDER /mnt/vboxshare
 cd /mnt/vboxshare
 ```
 
-
-```
-# if you get Permission errors when you have created 
-# a Shared Folder into an Ubuntu guest...
-sudo usermod -aG vboxsf $USER
-```
 
 ## USB Device Passthru
 
