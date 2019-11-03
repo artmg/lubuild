@@ -30,6 +30,26 @@ The rest of this section introduces useful commands for understanding
 disks and other storage devices.
 
 
+### Terminal navigation
+
+If you are connecting to a remote device via SSH shell 
+then you will not be able to use a GUI program, 
+however `curses` utilities allow a terminal user interface instead. 
+
+* ncdu
+	* focussed on disk space used
+	* already installed in some distros
+	* quickly browse the used space in a folder tree
+* mc - midnight commander
+	* navigate folders and view files
+	* lightweight to install the `mc` package
+	* similar two-blue-panel look to DOS commercial file 'commanders'
+* cfdisk
+	* interactive partition table editor
+	* already installed in some distros
+	* run with `sudo`
+
+
 ## Discover the attached devices
 
 ```
@@ -225,7 +245,11 @@ sudo badblocks -v /dev/sdX
 If you plug in your USB drive and don't see it appear, how do you know what is wrong? 
 Perhaps it might help to understand the sequence of events. 
 Plug in your drive and after a few seconds use `dmesg | tail` 
-to see what happened. Here is a list of the modules and what they do / tell you...
+to see what happened. Alternatively whilst you plug and unplug you can use 
+
+`udevadm monitor --environment --udev` 
+
+Here is a list of the modules and what they do / tell you...
 
 * usb 
 	- recognises new device
@@ -332,7 +356,12 @@ f3read /path/to/drive
 ```
 
 As 'advanced' filesystems like extX reserve some capacity for internal use, 
-the utility's author [recommends](https://fight-flash-fraud.readthedocs.io/en/latest/usage.html#users-notes) using simple FAT volumes for testing.
+the utility's author [recommends](https://fight-flash-fraud.readthedocs.io/en/latest/usage.html#users-notes) using simple FAT volumes for testing. 
+
+If you get just a small number of errors, 
+you could try removing the files and running f3write again – 
+on some devices the controller recognises sectors with errors 
+and maps them as such - the second time you write the errors may disappear. 
 
 Linux users have additional commands that can speed up the process, although it will destroy any contents:
 
