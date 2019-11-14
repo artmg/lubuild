@@ -1,10 +1,23 @@
-# Lubuild / Help / Diagnose / Network
+# Network Diagnosis
 
-For some background on network interfaces and utilities you may find [https://wiki.openwrt.org/doc/networking/network.interfaces] interesting - its NOT specific to Lubuntu, but practical and applicable nonetheless. 
 
 see also:
+
 * [General hardware diagnostics](https://github.com/artmg/lubuild/blob/master/help/diagnose/hardware.md) including radio devices
-* 
+* [Configure inteface](https://github.com/artmg/lubuild/blob/master/help/configure/network-interface.md)
+	* If you're trying to make a direct connection to a single device
+	* useful when configuring new network equipment
+* [Hardware Troubleshooting](https://github.com/artmg/lubuild/blob/master/help/diagnose/hardware.md) 
+	* For issues turning radios on and off
+* [Samba server](https://github.com/artmg/lubuild/blob/master/help/configure/network-shares-with-Samba.md)
+	* Sharing folders Windows-style
+* [Configuring Networked Services](https://github.com/artmg/lubuild/blob/master/help/configure/Networked-Services.md)
+	* How to set it up in the first place 
+	* including logging and monitoring and analysis
+* [Network Appliances](https://github.com/artmg/lubuild/blob/master/help/configure/network-appliance-firmware.md)
+	* dedicated devices running specialist software
+
+For some background on network interfaces and utilities you may find [the OpenWrt page on network interfaces](https://wiki.openwrt.org/doc/networking/network.interfaces) interesting - its NOT specific to Lubuntu, but practical and applicable nonetheless. 
 
 
 ## Basic Connectivity
@@ -168,15 +181,49 @@ sudo systemctl restart systemd-resolved.service
 
 #### Wifi (WLAN)
 
-##### Issues Connecting
-
 ```
+##### current status
+
 # iwconfig # deprecated in favour of iw
 iw dev
 
-ip address
+ip addr
+
+##### Further diagnostics
+
+# general overview
+nmcli
+
+# other connections previously defined
+nmcli connection show
+
+# details from WPA Supplicant
+sudo wpa_cli status
+
+# increase logging and try the connection
+# remember nmcli is good at autocompleting with Tab key
+sudo nmcli general logging level DEBUG domain SUPPLICANT 
+sudo service network-manager restart 
+nmcli connection up MySSID
+sudo cat /var/log/syslog
+# or   sudo journalctl -u NetworkManager
 
 ```
+
+* For help on NetworkManager (NM)
+	* https://wiki.gnome.org/Projects/NetworkManager/Debugging
+* look at man pages for list of wpa_cli commands
+	* especially in other linux flavours that don't rely on NM
+
+If your diagnosis suggests that the wireless connection 
+is made to the Access Point (AP) but is abandoned 
+because no DHCP address is given, 
+try setting a manual IP address 
+to see if that is really the issue.
+
+If you don't get any clues from the client, 
+you need to look from the AP side - logs and configs
+
 
 ##### Limited Bandwidth 
 
@@ -195,6 +242,7 @@ see also:
 If it does not connect up automatically, try using 
 Network Manager to Edit Connections then Add 
 to create a new "Mobile Broadband" Connection 
+
 ```
 # list connections#
 nmcli c
@@ -404,6 +452,41 @@ dig @8.8.8.8 domain.tld
 
 use **namebench** or *DNS benchmark* utilities to identify optimal 
 
+
+## Packet Capture
+
+This is an advanced technique that allows you to 
+inspect the actual traffic going up and down your network 
+connections. 
+
+### Techniques
+
+Depending on which connections have the traffic you want 
+and on where you have a system capable of running a 
+tool to capture packets:
+
+* If the traffic goes between the device you are using and another device on your local network
+  - you can capture it directly. 
+* If the traffic goes from a device connected to the same switch you are connected to 
+  - you can mirror traffic from that port to yours. 
+* If the traffic uses a port on a different switch
+  - you can make a connection to that switch and then use port mirroring.
+    - see https://wiki.wireshark.org/CaptureSetup/Ethernet 
+  - you can connect a remote device to that switch to capture packets (see below)
+  - DO NOT try to chain mirroring between switches, as you might confuse protocols like Spanning Tree and destablise your network
+* If the traffic is from a remote device, you may be able to use a packet capture feature on that device?
+  - firewalls and routers sometimes have capture tools installed
+
+### Tools
+
+#### Command line
+
+* pcap
+* tcpdump
+
+#### Graphical
+
+* Wireshark
 
 
 ## Discovery
