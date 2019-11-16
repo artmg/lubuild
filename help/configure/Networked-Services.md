@@ -525,6 +525,69 @@ ssh-keygen -t rsa -b 4096
 
 Please see also the section on [#managing-encryption-keys Managing Encryption Keys] below
 
+##### Generate and install SSH Certificate
+
+```
+REMOTE_HOST=MyServer
+# only specify DOMAIN if you need FQDN to connect
+REMOTE_DOMAIN=
+REMOTE_USER=admin
+# if you are happy with individual certs per server 
+# then don't specify ADMIN_GROUP
+ADMIN_GROUP=MyServerGroup
+
+# Generate a new ED25519 SSH key pair
+# this is 'the new standard' for keys
+Key_Opts="${KEY_OPTIONS:-"-t ed25519"}"
+# Or if your service doesn't support that, override with RSA:
+# KEY_OPTIONS="-o -t rsa -b 4096"
+
+Name_Group=${ADMIN_GROUP:-${REMOTE_HOST}}
+Key_File=~/.ssh/${Name_Group}${REMOTE_DOMAIN}
+
+if [ ! -e "${Key_File}" ]; then # if the Group key does not yet exist
+    # generate without passphrase
+    ssh-keygen $Key_Opts -f ${Key_File} -N "" -C "${Name_Group} ${REMOTE_DOMAIN} ${HOSTNAME%%.*} `date +%y%m%d` for ${REMOTE_HOST}"
+    # the comment is to help you recognise it
+fi
+
+ssh-copy-id -o  StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ${Key_File}.pub ${REMOTE_USER}@${REMOTE_HOST}${REMOTE_DOMAIN}
+
+# Just do as far as the command above, as it waits for the password
+
+######## -------- ######## --------- ########
+
+# Now carry on from here
+
+# save this in the ssh config file using 
+# separate sections as the first might be common to all hosts in a group
+tee -a ~/.ssh/config << EOF!
+
+Host $REMOTE_HOST
+    User ${REMOTE_USER}
+    Preferredauthentications publickey,password
+    IdentityFile $Key_File
+Host $REMOTE_HOST
+    Hostname ${REMOTE_HOST}${REMOTE_DOMAIN}
+
+EOF!
+
+
+# NOW TEST
+ssh -o  StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${REMOTE_HOST}
+```
+
+If this fails then the remote ssh server may not 
+be expecting the standard location for authorized_keys file. 
+For example, logging in as root on **dropbear**, 
+the file must be in `/etc/dropbear/authorized_keys`.
+
+Use this test above to log in with the password and copy the file
+
+```
+cat /root/.ssh/authorized_keys >> /etc/dropbear/authorized_keys && chmod 0600 /etc/dropbear/authorized_keys && chmod 0700 /etc/dropbear && mv /root/.ssh/authorized_keys /root/.ssh/authorized_keys.`date +%y%m%d.%H%M%S`
+```
+
 #### generate keys on Windows
 
 Use PuttyGen to import and convert it to a PPK file - credit - http://linux-sxs.org/networking/openssh.putty.html
