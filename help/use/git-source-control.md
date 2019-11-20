@@ -513,6 +513,10 @@ fi
 git config user.email $SOURCE_EMAIL
 ```
 
+If you are using a clone for testing code on your repo, 
+you may need to switch branches for different tests - 
+see [Switching Branches](#switch-branches) below
+
 #### Load
 
 _(would it be clearer to split Load and Connect??)_
@@ -550,6 +554,25 @@ git push -u origin master
 
 
 ### Other actions under development
+
+#### Switch branches
+
+```
+git status
+# clear local changes
+git stash
+# if prevented then bin them manually
+git checkout -- <filename(s)>
+git status
+
+git fetch
+git checkout <branchname>
+
+#git branch -u origin/<branchname> # this should be automatically done by the checkout
+git branch -vv
+git branch -av
+```
+
 
 #### Merge - Work in Progress
 
