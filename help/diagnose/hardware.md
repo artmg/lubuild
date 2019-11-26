@@ -10,6 +10,8 @@ See also:
 	* [https://github.com/artmg/lubuild/blob/master/help/diagnose/disks.md]
 * Monitor displays and Video graphics adaptors (GPU)
 	* [https://github.com/artmg/lubuild/blob/master/help/diagnose/video-display.md]
+* other Audio and Video input and output devices and configuration
+	* [https://github.com/artmg/lubuild/blob/master/help/diagnose/audio-video.md]
 * Printers and Scanners
 	* [https://github.com/artmg/lubuild/blob/master/help/use/Print-and-scan.md]
 * software-level [Network troubleshooting](https://github.com/artmg/lubuild/blob/master/help/diagnose/network.md)
@@ -192,14 +194,13 @@ lsmod | grep br
 sudo reboot
 ```
 
-Note that the open SoftMac driver might NOT fully support your model, see 
-[https://wireless.wiki.kernel.org/en/users/drivers/brcm80211]
+Note that the open SoftMac driver might NOT fully support your model, see [https://wireless.wiki.kernel.org/en/users/drivers/brcm80211] 
 
 ### Bluetooth devices 
 
-(see also Audio section below for Audio Bluetooth issues) 
+For audio device configuration see https://github.com/artmg/lubuild/blob/master/help/diagnose/audio-video.md
 
-``` 
+```
 ##### basic diagnostics
 
 # check if the radios are switched off
@@ -233,7 +234,7 @@ sudo hciconfig hci0 reset
 
 #### devices 
 
-``` 
+```
 # simple list of input devices
 xinput -list
 # credit - http://superuser.com/questions/75817/two-keyboards-on-one-computer-when-i-write-with-a-i-want-a-us-keyboard-layout

@@ -31,6 +31,8 @@ See also:
         * Other generic solutions for playing music 
 	* DNLA / UPnp Media Server
 		* [https://github.com/artmg/lubuild/blob/master/help/configure/Networked-Services.md]
+* [Audio & Video diagnostics](https://github.com/artmg/lubuild/blob/master/help/diagnose/audio-video.md)
+	* troubleshooting devices and configuration for Audio and Video input and output
 
 
 
