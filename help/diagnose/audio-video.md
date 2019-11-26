@@ -10,11 +10,28 @@ See also
 * for help with general hardware components, including radios, etc
 	* <https://github.com/artmg/lubuild/blob/master/help/diagnose/hardware.md>
 
+It might help if you read a little [background on the Linux sound software stack](https://github.com/artmg/lubuild/blob/master/help/understand/about-Sound-software-in-Ubuntu.mediawiki)
+
+There are also detailed troubleshooting steps in the Ubuntu docs <https://help.ubuntu.com/community/SoundTroubleshootingProcedure>
 
 
 # Audio
 
-## Basic sound test
+## ALSA
+
+Alsa is the sound driver, 
+but is often used with its own sound mixer:
+
+* `alsamixer` a terminal user interface to control devices and levels
+* `amixer` for scriptable command line control of the same
+
+### Look for devices
+
+Aside from alsamixer above you can see devices:
+
+`cat /proc/asound/cards`
+
+### Basic sound test
 
 ```
 # play test sound
@@ -22,19 +39,7 @@ aplay /usr/share/sounds/alsa/Front\_Center.wav
 # credit - <https://help.ubuntu.com/community/SoundTroubleshooting>
 ```
 
-## PulseAudio
-
-```
-# Restart Audio
-# <http://askubuntu.com/questions/230888/is-there-another-way-to-restart-ubuntu-12-04s-sound-system-if-pulseaudio-alsa-d>
-# Troubleshooting help - <http://www.freedesktop.org/wiki/Software/PulseAudio/Documentation/User/PerfectSetup/>
-
-pulseaudio -k && sudo alsa force-reload
-
-# Now you should reboot and try again
-```
-
-### Bluetooth Audio Sink
+## Bluetooth Audio Sink
 
 If you get \"Stream Setup Failed\" when connecting to Audio Sink\...
 
@@ -58,7 +63,18 @@ load-module module-switch-on-connect
 AutoConnect=true
 ```
 
-## Other Sound issues
+
+## PulseAudio
+
+```
+# Restart Audio
+# <http://askubuntu.com/questions/230888/is-there-another-way-to-restart-ubuntu-12-04s-sound-system-if-pulseaudio-alsa-d>
+# Troubleshooting help - <http://www.freedesktop.org/wiki/Software/PulseAudio/Documentation/User/PerfectSetup/>
+
+pulseaudio -k && sudo alsa force-reload
+
+# Now you should reboot and try again
+```
 
 ```
 pulseaudio
@@ -68,10 +84,8 @@ pulseaudio
 # help > https://help.ubuntu.com/community/Lubuntu/Setup#Sound
 ```
 
-## detailed troubleshooting steps
+## Other Sound issues
 
-See the
-<https://help.ubuntu.com/community/SoundTroubleshootingProcedure>
 
 # Webcam
 
