@@ -443,10 +443,10 @@ case "${ID}" in
     MOUNT_ROOT=/mnt/nfs
     EXPORT_ROOT=/srv/exports
     MOUNT_OPTIONS=
-    # MOUNT_PERM_OPT="rsize=8192,wsize=8192,timeo=14,_netdev	0 0"
+    # MOUNT_PERM_OPT="rsize=8192,wsize=8192,timeo=14,_netdev   0   0"
     MOUNT_PERM_OPT="defaults,timeo=14,soft   0   0"
     # or even using automount options
-    # MOUNT_PERM_OPT="auto,x-systemd.automount,x-systemd.device-timeout=10,timeo=14,x-systemd.idle-timeout=1min	0 0"
+    # MOUNT_PERM_OPT="auto,x-systemd.automount,x-systemd.device-timeout=10,timeo=14,x-systemd.idle-timeout=1min   0   0"
     # credit [https://wiki.archlinux.org/index.php/NFS#Mount_using_.2Fetc.2Ffstab_with_systemd]
 esac
 
