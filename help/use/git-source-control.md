@@ -598,4 +598,27 @@ git push -u origin master
 
 ```
 
+#### Switch clone to fork
 
+You may have cloned a repo onto a proof of concept server to try out. Once you realise it needs some tweaks 
+you fork it and make your modifications in development.
+
+Now, how do you make your PoC instance use your fork instead?
+
+
+```
+# this might be simpler but not sure it does all that is needed
+# git remote set-url origin https://github.com/$SOURCE_USER/$SOURCE_REPO.git
+
+# what is below might not be working yet, so try the above
+
+git remote rename origin upstream
+git branch -avv # check so see links now go to upstream
+
+
+git remote add origin https://github.com/$SOURCE_USER/$SOURCE_REPO.git
+#git remote add origin git@$SOURCE_HOST:$SOURCE_USER/$SOURCE_REPO.git
+git remote -v # see both now
+
+git checkout origin/master
+```
