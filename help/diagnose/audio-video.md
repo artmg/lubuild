@@ -5,10 +5,11 @@ This article is for help with Audio and Video input and output devices and confi
 
 See also
 
-* for help with graphics cards, video display, drivers etc
-	* <https://github.com/artmg/lubuild/blob/master/help/diagnose/video-display.md>
-* for help with general hardware components, including radios, etc
-	* <https://github.com/artmg/lubuild/blob/master/help/diagnose/hardware.md>
+* <https://github.com/artmg/lubuild/blob/master/help/diagnose/video-display.md>
+	* for help with graphics cards, video display, drivers etc
+* <https://github.com/artmg/lubuild/blob/master/help/diagnose/hardware.md>
+	* for help with general hardware components, 
+	* including bluetooth basics and other radio config, etc
 
 It might help if you read a little [background on the Linux sound software stack](https://github.com/artmg/lubuild/blob/master/help/understand/about-Sound-software-in-Ubuntu.mediawiki)
 

@@ -227,6 +227,16 @@ cat /var/log/syslog|grep -i blue|tail
 # reset the adapter
 sudo hciconfig hci0 reset
 # credit - https://help.ubuntu.com/community/BluetoothSetup
+
+##### change the friendly name
+
+cat <<EOF! | sudo tee /etc/machine-info
+PRETTY_HOSTNAME=device-name
+EOF!
+sudo service bluetooth restart
+# tested fine on Raspbian
+
+
 ```
 ## HIDs (Human Input Devices) 
 
