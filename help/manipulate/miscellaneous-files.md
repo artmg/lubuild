@@ -61,8 +61,12 @@ The requirement is for a tool that is:
     * open source, cross platform and multiple contributor
     * replaced previous Metamorphose project
     * based on python and Qt
-    * not many contributions recently
-    * PPA way out of date and no Macos binary (needs make-ing)
+    * not many contributions recently, PPA way out of date and no Macos binary (needs make-ing)
+    * however there is a new fork
+    	* https://github.com/savoury1/metamorphose2
+    	* also has ubuntu PPA
+    		* 	https://launchpad.net/~savoury1/+archive/ubuntu/metamorphose2
+    	* 
 * Inviska rename
     * open source and cross-platform, using Qt
     * sole developer, site was out for a few months
