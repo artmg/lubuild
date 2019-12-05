@@ -129,6 +129,8 @@ unzip -p $IMAGE_FILENAME ${IMAGE_FILENAME//+(*\/|.*)}.img | sudo dd bs=4M status
 # credit for substitution code https://stackoverflow.com/a/38277789
 # if you have a .img.xz then use...
 # xzcat $IMAGE_FILENAME ${IMAGE_FILENAME%.*}.img | sudo dd bs=4M status=progress of=/dev/${MEDIA_DEVICE:0:3}
+# or for a .img.bz2 file use...
+# bunzip2 -c $IMAGE_FILENAME | sudo dd bs=4M status=progress of=/dev/${MEDIA_DEVICE:0:3}
 
 # write everything still left in the cache 
 sync
