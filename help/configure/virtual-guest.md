@@ -104,3 +104,65 @@ If you have errors, check that the VM / Settings / Ports page uses the appropria
 USB support (e.g. USB3)
 
 
+## VirtualBox Networking
+
+By default each VirtualBox guest VM you create is assigned 
+a single Network Adapter in NAT mode. 
+This is ideal is you just want a basic client machine 
+that can connect to your network and the internet. 
+It comes emulating an Intel PRO/1000 MT Desktop card 
+which gives the highest compatibility.
+
+### Types of Network to be Attached To
+
+* NAT - the default, this allows you to make outbound connections
+* Bridged - the simplest way to have full connectivity
+	* but do you want your guests appearing on your network for everyone to see?
+* Host Only - this allows the PC running virtual box to connect to the VM easily
+
+A common scenario is to leave the default NAT on the first adapter, 
+and enable Adapter 2 making it Host Only. If you didn't want to use 
+Guest Additions, for instance a remote-only server, then you might put Host Only first then NAT - see below for how to get this working. 
+
+For more information on the different Virtual Network Types
+that you can attach adapters to, see 
+https://www.nakivo.com/blog/virtualbox-network-setting-guide/
+
+### Adaptor emulation
+
+For modern linux systems, most of the Adapter Types 
+should be automatically recognised by the kernel. 
+You get slightly better performance for outbound connections 
+using the PCnet-Fast III, or for VM to VM connections with 
+the Paravirtualised virtio drivers.
+
+### Additional adapters without guest additions
+
+If you install the guest additions, there is a feature that 
+will automatically recognise additional virtual 'hardware' 
+presented to the guest, and configure the os network accordingly.
+
+Without VirtualBox Guest Additions only the first adapter is automatically brought up
+and any additional adapters show STATE DOWN
+
+```
+# show the states of all interfaces (including OS loopback)
+ip link show
+
+# list the virtual hardware devices presented to the OS
+sudo lshw -class network -short
+```
+
+If you want to manually bring up the second network adapter
+on Ubuntu (which uses netplan) try:
+
+```
+sudo tee /etc/netplan/90-vm-net2.yaml <<EOF!
+network:
+    version: 2
+    ethernets:
+        enp0s8:
+            dhcp4: true
+EOF!
+sudo netplan apply
+```
