@@ -1,4 +1,8 @@
 
+This may **DESTROY** your data. 
+
+Unless you are careful AND have backups of vital data 
+the commands used below risk wiping out your important files and documents.
 
 This article is focussed mainly on the procedures for actually 
 configuring the disks and partitions you have decided upon. 
@@ -32,6 +36,9 @@ See also:
 
 
 # Configure Disks
+
+Remember many of these steps risk **WIPING** any data
+off drives connected to your machine - proceed with caution. 
 
 ## Install
 
@@ -81,6 +88,7 @@ ubiquity
 ### Partitioning Recommendations
 
 * use fdisk interactively
+    * unless you need larger GPT tables and sizes
     * recent versions handle geometry well
     * you are generally offered logically recommended boundaries
     * you can use +XXG to create partitions in nice round GiB sizes
@@ -121,6 +129,21 @@ dd if=/dev/zero of=/dev/mapper/container --status=progress
 sudo cryptsetup close container 
 
 ```
+
+#### Create exFAT partition from Linux
+
+The MS specification for creating exFAT from Windows 
+which is also used by Macos, involves a couple of little wrinkles. You can see how to convert a partition that might not be working properly at 
+https://unix.stackexchange.com/a/503971 
+but here is how to set one up from scratch
+
+```
+sudo gdisk /dev/sdX
+
+```
+
+see other instructions at https://matthew.komputerwiz.net/2015/12/13/formatting-universal-drive.html
+
 
 ### Rename 
 

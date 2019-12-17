@@ -1,12 +1,19 @@
 
 # Understand Disk Layout
 
-
 Here are some sample disk layouts and notes to try and help you, depending on your needs
+
+NB: This article is somewhat old and needs reviewing and restructuring
 
 ## Sizing Notes
 
-Recommend minimum 16GB device - skip the rest of the section if you're ok with that
+### Recommendation for main system partition
+
+#### Lubuntu Desktop
+
+Recommend minimum 16GB device 
+- for Desktop system based on Ubuntu or Lubuntu 
+- skip the rest of the section if you're ok with that
 
 Reasoning:
 
@@ -28,6 +35,22 @@ Reasoning:
     * leaves enough space to hibernate (suspend to disk)
     * also handy when booting from flash
 
+#### Ubuntu Server
+
+The Ubuntu Server install is a common way to 
+combine the extensibility of the Ubuntu ecosystem 
+with a reasonably low footprint, 
+where you only install what you need.
+
+As of 18.04.3 LTS the initial install 
+before updates and additional packages
+takes around 4 GB. 
+
+You _might_ be able to squeeze what you need into as little as 5 GB but that leaves very little to spare. 
+How much you need depends very much on how many packages you must install, and how much data you need to hold. 
+
+For many common scenarios **10 GB could be ample** and leave room for growth. However if you 
+were running a container system like Docker requiring multiple system images, you might find you need plenty more. 
 
 ## Choice of Filesystem Type
 
@@ -43,6 +66,26 @@ work well with SD cards and USB drives see
 
 Compatibility of Filesystems between Linux, Windows and macOS complicates matters. The only universally supported filesystem types are 
 FAT (and derivatives) that are not the most efficient or resilient these days. 
+
+For many years there was a struggle between FAT32 
+being the most compatible, but limited on size, 
+and exFAT allowing size but being limited cross-platform. Fortunately Apple licensed exFAT (2010-2015?) and built it in as a macos option, 
+then in 2019 Microsoft release the spec allowing Linux kernel to support it natively.
+
+For the best support on Windows AND Linux AND Mac, 
+and considering the size of files and drives,
+exFAT now seems the safest choice. 
+
+Some Notes: 
+
+* exFAT might not be supported by Apple’s Time Machine software
+* exFAT has features designed for Flash but works ok on magnetic media
+    * although it might only has one copy of the allocation table!
+* only FAT-family are cross-platform as NTFS is RO on Mac
+* FAT32 has a limit of max 4GB file size
+
+
+### OLD sections on Compatibility
 
 Filesystem type - see table in https://www.howtogeek.com/73178/
 The safest three-platform choice is FAT(32)
