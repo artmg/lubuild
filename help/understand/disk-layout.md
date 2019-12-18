@@ -74,10 +74,11 @@ then in 2019 Microsoft release the spec allowing Linux kernel to support it nati
 
 For the best support on Windows AND Linux AND Mac, 
 and considering the size of files and drives,
-exFAT now seems the safest choice. 
+**exFAT** now seems the safest choice. 
 
 Some Notes: 
 
+* in legacy debian-like systems you may need to `sudo apt install exfat-fuse exfat-utils`
 * exFAT might not be supported by Apple’s Time Machine software
 * exFAT has features designed for Flash but works ok on magnetic media
     * although it might only has one copy of the allocation table!
