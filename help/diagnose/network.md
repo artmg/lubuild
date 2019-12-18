@@ -291,6 +291,15 @@ ethtool enp6s0
 
 ```
 
+### diagnosing running services
+
+```
+# what services are listening on this machine to allow clients to connect?
+# two alternative commands
+sudo lsof -i -P -n | grep LISTEN
+sudo netstat -tulpn | grep LISTEN
+```
+
 ## Names and Addresses
 
 ```
@@ -360,7 +369,44 @@ nmcli dev show $INTERFACE
 # ifconfig $INTERFACE - deprecated
 ```
 
-### DNS Resolution
+### Name Resolution (DNS)
+
+For quick introduction to Domain Name Services, 
+and how to set some up, 
+please see [Configuring DNS in Networked Services](https://github.com/artmg/lubuild/blob/master/help/configure/Networked-Services.md#name-resolution-dns)
+
+
+#### basic DNS diagnostics
+
+YOu may be having issues on your local network where the local DNS server 
+(or the locally 'recommended' server from your ISP) is failing to resolve.  
+You can try to perform an `nslookup` (simple) or `dig` (with more detail) to see what is going wrong.
+
+```
+# compare your own name response with google
+nslookup domain.tld
+
+nslookup domain.tld 8.8.8.8
+
+# and more info from dig
+dig domain.tld
+
+dig @8.8.8.8 domain.tld
+```
+
+##### choosing alternate DNS providers
+
+If you want to find an optimal thrid party DNS service 
+for your internet connection, 
+consider the **namebench** or *DNS benchmark* utilities.
+
+
+#### checking DNS queries
+
+**dnstop** is a command that watches a specific interface 
+and reports on DNS queries that come through. 
+You could install the dnstop package and run this 
+on a server to see what your netowrk is querying in real time. 
 
 #### local (Network Manager)
 
@@ -388,6 +434,29 @@ cat /etc/nsswitch.conf
 # check what DNS server is set on your network interface(s)
 nmcli dev show | grep DNS
 ```
+
+#### systemd-resolved
+
+If your `/etc/resolv.conf` says `nameserver 127.0.0.53` 
+then your system is using `systemd-resolved` to manage dns resolvers.
+
+You can check its status using `resolvectl status` on newer systems or `systemd-resolve --status` on old. 
+
+```
+# status of the resolved service
+journalctl -u systemd-resolved -f
+
+# low level diagnostics of resolved service
+sudo systemctl edit systemd-resolved
+
+[Service]
+Environment=SYSTEMD_LOG_LEVEL=debug
+
+sudo systemctl restart systemd-resolved
+
+journalctl -u systemd-resolved -n 30
+```
+
 
 #### dnsmasq
 
@@ -430,27 +499,28 @@ dig $HOST_NAME
 # examples - http://www.tecmint.com/10-linux-dig-domain-information-groper-commands-to-query-dns/
 ```
 
-#### network DNS
+#### unbound control
 
-If you are having issues on your local network where the local DNS server 
-(or the locally 'recommended' server from your ISP) is failing to resolve 
-
-```
-# compare your own name response with google
-nslookup domain.tld
-
-nslookup domain.tld 8.8.8.8
-
-# and more info from dig
-dig domain.tld
-
-dig @8.8.8.8 domain.tld
+If your server is using unbound then you can perform diagnostics with unbound-control.
 
 ```
+unbound-control -c ~/unbound-control/unbound-control.conf -s 192.168.1.1@8953 status
+```
 
-##### choosing alternate DNS providers
+You should be able to run this from a terminal on the 
+server itself, ensure you have the right path to the config file, and that 'remote' control is enabled.
+Otherwise you can set it up to run remotely.
 
-use **namebench** or *DNS benchmark* utilities to identify optimal 
+To configure unbound-control please see [Unbound DNS in Networked Services](https://github.com/artmg/lubuild/blob/master/help/configure/Networked-Services.md#unbound)
+
+Commands allow you to:
+
+* dump_cache - identify which names have been looked up recently 
+* reload - flush the cache and re-read config files
+
+
+For further commands see 
+https://nlnetlabs.nl/documentation/unbound/unbound-control/
 
 
 ## Packet Capture

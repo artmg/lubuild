@@ -883,6 +883,140 @@ then add to your startup
 /usr/lib/vino vino-server
 
 
+## Name Resolution (DNS)
+
+Services in the Domain Name System (DNS) look up a hostname, 
+which often also has a domain name following a . dot, like `example.com`, 
+and return the actual IP address (like `123.45.67.89`) of the server. 
+They are likely to first check local hosts, 
+then send queries elsewhere for devices that are not 
+managed locally. 
+It is very common to have a local cache 
+to keep IP addresses for names that have been looked up recently. 
+
+DNS servers are historically an infrastructure service, 
+traditionally using `bind` but more commonly now using `unbound`. 
+Now however it is now common to use mini versions 
+running on clients for caching and forwarding, 
+using services like `dnsmasq`, 
+and even a resolver service like `systemd-resolved` 
+to ensure that all local apps reference the right dns service. 
+
+Although DNS was not designed for filtering purposes, there are blacklist filtering services such as `pihole`
+that can block advertising and malware. 
+
+#### unbound
+
+Providing DNS services to a local network would often rely on `bind`, but the more recent `unbound` equivalent 
+is often preferred for efficiency and modern features.
+
+Here is a simple server install which:
+
+* overrides the root key so that public servers can be queried
+* listens on a specific adapter's IP address because resolved is listening on 127.0.0.53:53
+* Allows queries from local networks
+* forwards queries to local dns server on gateway
+
+```
+# install unbound
+sudo apt install -y unbound
+
+DNS_LISTENER_IP=192.168.1.23
+DNS_LOCAL_SVR_IP=192.168.1.1
+sudo tee /etc/unbound/unbound.conf << EOF!
+# omit the include folder to make this file definitive 
+# include: "/etc/unbound/unbound.conf.d/*.conf"
+
+server:
+    # listen on specific address as resolved is on 127.0.0.53:53
+    interface: ${DNS_LISTENER_IP}
+
+    # allow all local hosts to query
+    access-control: 192.168.0.0/16 allow
+    access-control: 10.0.0.0/8 allow
+
+    # from unbound.conf.d/qname-minimisation.conf
+    # See RFC 7816 "DNS Query Name Minimisation to Improve Privacy" for
+    qname-minimisation: yes
+
+    # from unbound.conf.d/root-auto-trust-anchor-file.conf
+    # root trust anchor for crypto DNSSEC validation
+    # commented out for tests using public server
+    # auto-trust-anchor-file: "/var/lib/unbound/root.key"
+
+# forward queries to lan
+forward-zone:
+    name: "."
+    forward-addr: ${DNS_LOCAL_SVR_IP}@53
+
+EOF!
+sudo systemctl restart unbound
+```
+
+For more configuration hints see https://calomel.org/unbound_dns.html
+
+
+##### Setting up unbound-control for stats and troubleshooting
+
+If you want to be able to obtain statistics and diagnostics 
+for the Unbound DNS Resolver service, you can use its `unbound-control` component.
+
+This assumes that the DNS server already has unbound control enabled 
+and bound to the correct interface.
+
+```
+DNS_LISTENER_IP=192.168.1.1
+sudo tee -a /etc/unbound/unbound.conf << EOF!
+remote-control:
+    control-enable: yes
+   
+    # what interface & port are listened to for remote control.
+    # give 0.0.0.0 and ::0 to listen to all interfaces.
+    control-interface: ${DNS_LISTENER_IP}
+    control-port: 8953
+
+    server-key-file:   "/etc/unbound/unbound_server.key"
+    server-cert-file:  "/etc/unbound/unbound_server.pem"
+    control-key-file:  "/etc/unbound/unbound_control.key"
+    control-cert-file: "/etc/unbound/unbound_control.pem"
+EOF!
+sudo systemctl restart unbound
+```
+
+You can now run commands locally on the server itself
+
+	-c /etc/unbound/unbound.conf 
+
+To run it from a remote server you would need to copy some keys and certs 
+to the local machine and configure it
+
+```
+# see if it is already installed
+unbound-control
+
+# install unbound
+sudo apt install -y unbound
+
+# not sure if we need the resolver running locally
+#sudo systemctl --now disable unbound.service
+#sudo systemctl --now disable unbound-resolvconf.service
+
+mkdir -p ~/unbound-control/
+scp user@server:/etc/unbound/unbound_server.pem  ~/unbound-control/
+scp user@server:/etc/unbound/unbound_control.key ~/unbound-control/
+scp user@server:/etc/unbound/unbound_control.pem ~/unbound-control/
+tee ~/unbound-control/unbound-control.conf << EOF!
+remote-control:
+    server-cert-file:  "$HOME/unbound-control/unbound_server.pem"
+    control-key-file:  "$HOME/unbound-control/unbound_control.key"
+    control-cert-file: "$HOME/unbound-control/unbound_control.pem"
+EOF!
+
+unbound-control -c ~/unbound-control/unbound-control.conf -s 192.168.1.1@8953 status
+
+```
+
+
 
 ## DLNA / UPnP Media Server
 
