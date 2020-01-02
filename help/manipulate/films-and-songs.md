@@ -19,26 +19,12 @@ see also:
     * inspect miscellaneous file formats like binary or email
 
 
-## IN
+## Ripping
 
+Ripping is converting media into computer files
+for portability and flexibility
 
-## Identifying contents
-
-If you have a media file, there are a couple of utilities that can reveal 
-useful details about the contents:
-
-* exiftool
-	* Metadata - information about what device made the file, when, under what conditions, and into what format
-* mediainfo 
-	* specific details about what contents are in the media file, formats and encodings, and whether it is encrypted
-
-NB: If the media file is encrypted, and you don't have the DRM decryption keys, 
-you will not be able to see the contents. 
-For example, if you record onto USB storage from a PVR, 
-most devices make it so you must watch the recordings on that same device.
-
-
-## CD ripping 
+### CD ripping 
 
 Options
 * Asunder is simple, does MP3s and is in repos - gets some +1s
@@ -50,7 +36,7 @@ Options
 * RubyRipper well +1ed but not in repos
 
 
-### asunder
+#### asunder
 
 NB: Asunder does not search or save cover art images
 
@@ -76,7 +62,7 @@ sudo apt-get install -y lame
 * OGG Quality: 1 (or 6 for Oversize)
 
 
-## DVD ripping 
+### DVD ripping 
 
 ```
 # MakeMKV wraps to single file (nicely for XBMC) but no compression
@@ -87,6 +73,49 @@ sudo apt-get install -y lame
 # help - https://help.ubuntu.com/community/RestrictedFormats/RippingDVDs
 sudo apt-get install dvdrip
 ```
+
+### Other audio recording
+
+You might want to 'rip' old vinyl records or cassettes 
+to your computer, or simply records other sounds captured via a microphone. 
+
+You can see more sample commands at http://mocha.freeshell.org/audio.html
+
+For post-recording manipulation see later sections.
+
+#### arecord
+
+Just as ALSA's aplay will playback a wav file, **arecord** will record one. 
+If you want to compress it you can always pipe it into your prefered sound convertor
+
+```
+arecord -vv -f cd output.wav
+arecord -v -f cd -t raw | lame -r -b 192 - output.mp3
+# specific format settings instead of 'cd'
+arecord -f S16_LE -c 2 -r 32000 -t raw -d 2820 C90a.wav
+# Rip Cassettes S16_LE (16 bit little endian) -c 2 (stereo) -r 32000 (32 kHz) 
+# Clear speech  S16_LE (16 bit little endian) -c 1 (mono) -r 22050 (22.050 kHz)
+```
+
+NB: if you record 47 minutes at these 'cassette' settings 
+uncompressed then your C90a.wav file would be around 345 MiB in size
+# credit https://www.colincrawley.com/audio-file-size-calculator/
+
+#### ffmpeg
+
+If you don't need to do any editing, splicing or post-processing 
+or simply don't have the space on your device, 
+then you might want to record straight to a compressed file.
+`ffmeg` can take its input directly from 
+
+```
+ffmpeg -f alsa -ac 2 -ar 44100 -ab 160k -i pulse -acodec libmp3lame OUTPUT.mp3
+```
+
+#### SoX rec
+
+The SOund eXchange `sox` package's `rec` utility has a more friendly set of options, and comes with the `sox` conversion programme too. 
+It might use the same libraries under the covers, but it could be simpler. 
 
 
 ## Music file conversion
@@ -338,8 +367,34 @@ see:
 
 * some alternative software - https://www.reddit.com/r/htpc/comments/2zhntu/alternatives_to_makemkv/
 
+## Handling media files
 
-## Media indexing
+### Identifying contents
+
+If you have a media file, there are a couple of utilities that can reveal 
+useful details about the contents:
+
+* exiftool
+	* Metadata - information about what device made the file, when, under what conditions, and into what format
+* mediainfo 
+	* specific details about what contents are in the media file, formats and encodings, and whether it is encrypted
+
+NB: If the media file is encrypted, and you don't have the DRM decryption keys, 
+you will not be able to see the contents. 
+For example, if you record onto USB storage from a PVR, 
+most devices make it so you must watch the recordings on that same device.
+
+#### exiftool
+
+Using exiftool - see:
+
+* [https://github.com/artmg/lubuild/blob/master/help/manipulate/PDF files.md]
+    * to view a single file's metadata properties
+* [https://github.com/artmg/lubuild/blob/master/help/manipulate/miscellaneous-files.md]
+    * to bulk rename files based on meta properties including artist and album
+
+
+### Media indexing
 
 This is about maintaining a catalogue of your media, 
 for instance DVDs containing films, 
@@ -353,7 +408,7 @@ to help select and locate the one you want to watch.
 see also how to bulk rename based on metadata in [https://github.com/artmg/lubuild/blob/master/help/manipulate/miscellaneous-files.md]
 
 
-### Applications
+#### Applications
 
 Try MyMovies for Android scanner
 
@@ -372,11 +427,11 @@ Other candidates
 * MP3Tag
 
 
-### Data Sources
+#### Data Sources
 
 Some include cover art
 
-#### Incl DVD
+##### Incl DVD
 
 * AllCDCovers - src About
 * Albumart - src About - Amazon backend
@@ -384,12 +439,12 @@ Some include cover art
 * IMDB
 * AllMovie
 
-#### Mainly CD
+##### Mainly CD
 
 * Discogs - src About
 * MusicBrainz - src About
 
-#### to check
+##### to check
 
 * freedb.org
 * theMovieDB
@@ -398,7 +453,7 @@ Some include cover art
 * LastFM
 * rate your music
 
-#### commercial or restricted
+##### commercial or restricted
 
 CDDB
 Gracenote
@@ -407,13 +462,13 @@ AlbumArtExchange
 
 
 
-## Music Metadata tagging
+### Music Metadata tagging
 
 see also:
 * [MultiOS Data Music Metadata.md] for metadata editors
     * and _old_ notes on Windows apps for compressing oversized music files
 
-### Meta data organisers 
+#### Meta data organisers 
 
 The most popular... do not support WMA!
 
@@ -432,20 +487,14 @@ Other candidates:
 * Amarok, although more a player and format convertor, has been reported to update WMA tags successfully
 * 
 
-#### Exiftool
+##### Exiftool
 
 Although not a specific candidate for the functionality mentioned here, 
-**exiftool** is a great CLI utility for basic file metadata manipulation
-
-see:
-* [https://github.com/artmg/lubuild/blob/master/help/manipulate/PDF files.md]
-    * to view a single file's metadata properties
-* [https://github.com/artmg/lubuild/blob/master/help/manipulate/miscellaneous-files.md]
-    * to bulk rename files based on meta properties including artist and album
-* 
+**exiftool** is a great CLI utility for basic file metadata manipulation.
+See previous section above for information
 
 
-#### kid3-qt 
+##### kid3-qt 
 
 * use QT version in Lubuntu to avoid KDE dependencies
 * Also has CLI: http://kid3.sourceforge.net/kid3_en.html
@@ -456,7 +505,7 @@ sudo apt-get install kid3-qt
 ```
 
 
-#### puddletag 
+##### puddletag 
 
 QT-based
 
@@ -482,7 +531,7 @@ See: https://fanart.tv/2012/06/organizing-your-xbmc-music-library/
     * (add the same two as above)
 
 
-#### Picard 
+##### Picard 
 
 ```
 # credit https://musicbrainz.org/doc/Picard_Linux_Install
