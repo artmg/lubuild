@@ -98,8 +98,8 @@ arecord -f S16_LE -c 2 -r 32000 -t raw -d 2820 C90a.wav
 ```
 
 NB: if you record 47 minutes at these 'cassette' settings 
-uncompressed then your C90a.wav file would be around 345 MiB in size
-# credit https://www.colincrawley.com/audio-file-size-calculator/
+uncompressed then your C90a.wav file would be around 345 MiB in size - 
+credit https://www.colincrawley.com/audio-file-size-calculator/
 
 #### ffmpeg
 
