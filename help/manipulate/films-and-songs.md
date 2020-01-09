@@ -9,6 +9,8 @@ see also:
     * creating playlists
     * uPNP discovery and clients
     * other AV remote control software 
+* https://github.com/artmg/lubuild/blob/master/help/diagnose/audio-video.md
+    * troubleshooting hardware or system settings relating to audio and video output and capture
 * [https://github.com/artmg/lubuild/blob/master/help/manipulate/music-and-instruments.md]
     * For creating music or playing instruments 
 * [https://github.com/artmg/lubuild/blob/master/help/manipulate/photos.md]
