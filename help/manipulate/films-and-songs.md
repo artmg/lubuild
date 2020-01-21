@@ -99,13 +99,14 @@ You can also list sound cards using `cat /proc/asound/cards` and configure them 
 #### arecord
 
 Just as ALSA's *aplay* will playback a wav file, **arecord** will record one. 
-If you want to compress it you can always pipe it into your prefered sound convertor
+If you want to compress it you can always pipe the raw audio into your prefered sound convertor
 
 ```
 arecord -vv -f cd output.wav
+# strip the wav container to pipe audio to encoder
 arecord -v -f cd -t raw | lame -r -b 192 - output.mp3
 # specific format settings instead of 'cd'
-arecord -f S16_LE -c 2 -r 32000 -t raw -d 2820 C90a.wav
+arecord -f S16_LE -c 2 -r 32000 -d 2820 C90a.wav
 # Rip Cassettes S16_LE (16 bit little endian) -c 2 (stereo) -r 32000 (32 kHz) 
 # Clear speech  S16_LE (16 bit little endian) -c 1 (mono) -r 22050 (22.050 kHz)
 ```
