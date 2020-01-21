@@ -85,9 +85,20 @@ You can see more sample commands at http://mocha.freeshell.org/audio.html
 
 For post-recording manipulation see later sections.
 
+#### identifying input devices
+
+`arecord` below includes the options:
+
+* `-l` list input devices ('PCM's)
+*  `-D NAME` select device by NAME if there are multiple 
+
+An example of `NAME` for 'card 1' might be `sysdefault:CARD=1`
+
+You can also list sound cards using `cat /proc/asound/cards` and configure them interactively using `alsamixer`. For troubleshooting hardware or system settings relating to audio capture see https://github.com/artmg/lubuild/blob/master/help/diagnose/audio-video.md
+
 #### arecord
 
-Just as ALSA's aplay will playback a wav file, **arecord** will record one. 
+Just as ALSA's *aplay* will playback a wav file, **arecord** will record one. 
 If you want to compress it you can always pipe it into your prefered sound convertor
 
 ```

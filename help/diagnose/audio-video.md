@@ -10,6 +10,8 @@ See also
 * <https://github.com/artmg/lubuild/blob/master/help/diagnose/hardware.md>
 	* for help with general hardware components, 
 	* including bluetooth basics and other radio config, etc
+* <https://github.com/artmg/lubuild/blob/master/help/manipulate/films-and-songs.md>
+    * Use recording programs to rip content from media source devices
 
 It might help if you read a little [background on the Linux sound software stack](https://github.com/artmg/lubuild/blob/master/help/understand/about-Sound-software-in-Ubuntu.mediawiki)
 
