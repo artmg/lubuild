@@ -68,6 +68,12 @@ lsblk
 ls -l /dev/disk/by-label/
 # and all devices
 lsblk -o name,mountpoint,label,size
+
+# for super detailed information, as well as listing column names above
+lsblk -JO # Json output of all cOlumns
+# or you might find this more readable for USB devices
+sudo lsusb -v
+# there are additional commands like lshw or hdparm but the above are usually installed
 ```
 
 ## Simple checks
