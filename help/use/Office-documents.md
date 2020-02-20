@@ -20,7 +20,7 @@ see also:
 	* also general image manipulation 
 * [https://github.com/artmg/lubuild/blob/master/help/manipulate/miscellaneous-files.md]
 	* Other common types of document
-	* including email formats
+	* including email formats like Outlook and others
 * https://github.com/artmg/lubuild/blob/master/help/use/coding
 	* Text Editors and programming environments
 * https://github.com/artmg/lubuild/blob/master/help/use/markdown.md
