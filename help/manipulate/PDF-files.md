@@ -213,6 +213,8 @@ for forensic, development or testing work...
     * see also 	https://stackoverflow.com/a/29474423
     * 
 
+see also https://github.com/artmg/lubuild/blob/master/help/diagnose/disk-recovery-and-forensics.md
+
 ## split pages
 
 
