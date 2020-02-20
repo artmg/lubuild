@@ -23,7 +23,7 @@ see also:
 	* or markdown editors see https://github.com/artmg/lubuild/blob/master/help/use/markdown.md
 * [https://github.com/artmg/lubuild/blob/master/help/manipulate/films-and-songs.md]
 * [https://github.com/artmg/lubuild/blob/master/help/manipulate/FreeCAD-plans-and-designs.md]
-* [https://github.com/artmg/lubuild/blob/master/help/manipulate/disk-recovery-and-forensics.md]
+* [https://github.com/artmg/lubuild/blob/master/help/diagnose/disk-recovery-and-forensics.md]
 	* Check File Signatures ('Magic Characters') to discover what type of file you are looking at
 * [https://github.com/artmg/lubuild/blob/master/help/use/local-search.md]
 	* how to index and search locally stored file content
@@ -372,7 +372,7 @@ S allow editing
 C allow understanding of more complex structures (e.g. tables - see below) 
 
 NB: if you just want to find out what type of file it is, see
-[https://github.com/artmg/lubuild/blob/master/help/manipulate/disk-recovery-and-forensics.md]
+[https://github.com/artmg/lubuild/blob/master/help/diagnose/disk-recovery-and-forensics.md]
 to Check File Signatures ('Magic Characters') 
 
 * lfhex

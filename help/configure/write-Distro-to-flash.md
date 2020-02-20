@@ -23,7 +23,7 @@ see also:
 * Disk configuration and diagnostics
     * very handy if the OS on your hard disk is playing up
 * Data Recovery 
-    * see [https://github.com/artmg/lubuild/blob/master/help/manipulate/disk-recovery-and-forensics.md]
+    * see [https://github.com/artmg/lubuild/blob/master/help/diagnose/disk-recovery-and-forensics.md]
 * 
 
 

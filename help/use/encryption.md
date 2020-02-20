@@ -14,7 +14,7 @@ including encrypted swap, see
 see also:
 
 * discovering the contents of a disk image (loop) file
-	* [loop files and forensics](https://github.com/artmg/lubuild/blob/master/help/manipulate/disk-recovery-and-forensics.md)
+	* [loop files and forensics](https://github.com/artmg/lubuild/blob/master/help/diagnose/disk-recovery-and-forensics.md)
 * general partitioning procedures including encrypted swap
 	* [https://github.com/artmg/lubuild/blob/master/help/configure/Disks.md]
 * how to wipe whole partitions as preparation for encryption
