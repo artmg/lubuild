@@ -96,6 +96,25 @@ that will work on any platform where a JRE is installed
 	* plugin for Project / Team / Share to work with GitHub and other git repos
 
 
+## Python
+
+Popular with Data Scientists, school kids and many hobbyist projects (perhaps due to its low barriers to entry) Python is an increasingly common choice of language outside of specialist niches. Its continued development is supported by partners around the world and from among the largest technology companies. 
+
+On the off chance it is not already installed by something else:
+
+```
+sudo apt install python3
+```
+
+A common choice of IDE is IDLE:
+
+```
+sudo apt install idle3
+```
+
+although print commands are not handled that efficiently at runtime.
+
+
 ## IDEs
 
 ### code editors
