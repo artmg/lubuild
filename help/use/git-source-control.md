@@ -21,7 +21,11 @@ sudo apt-get install -y git
 
 #### gui
 
-options for graphical git clients:
+If you'd rather a GUI to peruse your files before commit, manage your branches and manipulate your repos then consider the unofficial linux fork of the official client written for the Electron framework (a NodeJS runtime rendered by Chrome):
+
+https://github.com/shiftkey/desktop
+
+Alternatives include:
 
 * git-cola
     * qt-based
@@ -30,16 +34,13 @@ options for graphical git clients:
     * minimal install - few dependencies
     * visually helpful
     * need to manually set up actions like merge or push!
-* 
+    * eg: 
+        * Settings
+            * Working Directory / Diff against Working Dir
+            * Commit / Defined in: Local Config
+        * Actions / New
+            * push
 
-```
-sudo apt-get install -y git
-```
-* Settings
-	* Working Directory / Diff against Working Dir
-	* Commit / Defined in: Local Config
-* Actions / New
-	* push
 
 ### configure
 
