@@ -160,80 +160,7 @@ find . -mindepth 1 -maxdepth 1 -type d -print -exec git -C "{}" pull \;
 
 ### working with upstream
 
-#### add upstream remote
-
-If you have forked a repo, then first you should declare it in your local repo as the upstream remote:
-
-```
-# credit https://help.github.com/articles/configuring-a-remote-for-a-fork/
-# check the existing remotes
-git remote -v
-
-# add the upstream remote
-git remote add upstream https://github.com/ORIGINAL_OWNER/ORIGINAL_REPOSITORY.git
-
-# verify the new upstream remote
-git remote -v 
-```
-
-#### sync your fork
-
-Note that you can keep your fork in sync via the GitHub web UI, 
-by creating a Pull Request, Switching Bases, and Merging - 
-see [https://www.sitepoint.com/quick-tip-sync-your-fork-with-the-original-without-the-cli/] for a very clear guide. 
-However this is not a proper rebase, but a merge **commit**, 
-and it will leave your repo 'one commit ahead' 
-even if it now contains identical code.
-
-To perform a proper rebase instead, then use the command line 
-technique explained below.
-
-* First ensure you have a local clone, 
-* and have added the upstream remote as above.
-* NB: If you have any local changes you want to keep
-	- first checkout (-b ?) to retain them
-	- see [http://blog.bigbinary.com/2013/09/13/how-to-keep-your-fork-uptodate.html]
-	- or [https://www.atlassian.com/git/articles/git-forks-and-upstreams]
-* 
-
-```
-# credit - https://help.github.com/articles/syncing-a-fork/
-# fetch upstream changes into upstream/master
-git fetch upstream
-
-# Option 1
-#  This will make your fork look just like the upstream
-#  but you will have no trace of the fact you did this sync
-git rebase upstream/master
-
-# Option 2
-#  This is a merge commit just like the one in the webui mentioned above
-#  but (will) it keep your own changes intact (?)
-#  The merge commit might be a useful way to track who did what when 
-#  if you are multiple people working on the same downstream
-#
-#  check out your fork's master
-#git checkout master
-#  merge upstream into your fork
-#git merge upstream/master
-
-# Option 3
-#  not sure how valid this one really is!!
-#git pull upstream master
-
-
-# push these changes into your fork's github repo
-git push
-
-```
-
-For more about the difference between rebasing and merging see:
-
-* [https://git-scm.com/book/en/v2/Git-Branching-Rebasing]
-* [http://stackoverflow.com/questions/15602037/git-rebase-upstream-master-vs-git-pull-rebase-upstream-master]
-* [https://www.atlassian.com/git/tutorials/merging-vs-rebasing]
-* 
-
+see section below in workflow examples
 
 ### editing GitHub wiki locally ###
 
@@ -449,6 +376,9 @@ SOURCE_DEVICE=myserver
 SOURCE_EMAIL=email@me.com
 SOURCE_REPO=myrepo
 SOURCE_FILEMODE=true
+
+# optionally for forked repos
+SOURCE_UPSTREAM_USER=myteam
 ```
 
 * you might pick filemode false if your repo was from a different OS
@@ -484,7 +414,11 @@ then this is how you ensure that your git source repository
 _If you are using a private repo, 
 you will need the git config user.* options and maybe your key._
 
-
+```
+git config --local user.name $SOURCE_USER
+git config --local user.email $SOURCE_EMAIL
+git config --local user.email $SOURCE_EMAIL
+```
 
 #### Git client
 
@@ -555,6 +489,86 @@ git push -u origin master
 
 
 ### Other actions under development
+
+#### add upstream remote
+
+If you have forked a repo, then first you should declare it in your local repo as the upstream remote:
+
+```
+# credit https://help.github.com/articles/configuring-a-remote-for-a-fork/
+# check the existing remotes
+git remote -v
+
+# add the upstream remote
+git remote add upstream https://github.com/ORIGINAL_OWNER/ORIGINAL_REPOSITORY.git
+
+# verify the new upstream remote
+git remote -v 
+```
+
+#### sync your fork
+
+Note that you can keep your fork in sync via the GitHub web UI, 
+by creating a Pull Request, Switching Bases, and Merging - 
+see [https://www.sitepoint.com/quick-tip-sync-your-fork-with-the-original-without-the-cli/] for a very clear guide. 
+However this is not a proper rebase, but a merge **commit**, 
+and it will leave your repo 'one commit ahead' 
+even if it now contains identical code.
+
+To perform a proper rebase instead, then use the command line 
+technique explained below.
+
+* First ensure you have a local clone, 
+* and have added the upstream remote as above.
+* NB: If you have any local changes you want to keep
+	- first checkout (-b ?) to retain them
+	- see [http://blog.bigbinary.com/2013/09/13/how-to-keep-your-fork-uptodate.html]
+	- or [https://www.atlassian.com/git/articles/git-forks-and-upstreams]
+* 
+
+```
+# credit - https://help.github.com/articles/syncing-a-fork/
+# fetch upstream changes into upstream/master
+git fetch upstream
+
+# Option 1
+#  This will make your fork look just like the upstream
+#  but you will have no trace of the fact you did this sync
+git rebase upstream/master
+
+# Option 2
+#  This is a merge commit just like the one in the webui mentioned above
+#  but (will) it keep your own changes intact (?)
+#  The merge commit might be a useful way to track who did what when 
+#  if you are multiple people working on the same downstream
+#
+#  check out your fork's master
+#git checkout master
+#  merge upstream into your fork
+#git merge upstream/master
+
+# Option 3
+#  not sure how valid this one really is!!
+#git pull upstream master
+
+
+# Option 4
+#  BEWARE: this will trash anything in your local and fork branch
+#git reset --hard  upstream/master
+#git push origin --force
+
+# push these changes into your fork's github repo
+git push
+
+```
+
+For more about the difference between rebasing and merging see:
+
+* [https://git-scm.com/book/en/v2/Git-Branching-Rebasing]
+* [http://stackoverflow.com/questions/15602037/git-rebase-upstream-master-vs-git-pull-rebase-upstream-master]
+* [https://www.atlassian.com/git/tutorials/merging-vs-rebasing]
+* 
+
 
 #### Switch branches
 
