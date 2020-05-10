@@ -490,6 +490,18 @@ git push -u origin master
 
 ### Other actions under development
 
+
+#### Check the current status
+
+If you have forgotten what state your local repo is in...
+
+```
+git status
+git remote -v
+git branch -vv
+# git branch -av
+```
+
 #### add upstream remote
 
 If you have forked a repo, then first you should declare it in your local repo as the upstream remote:
@@ -507,6 +519,9 @@ git remote -v
 ```
 
 #### sync your fork
+
+NB: there is a 4th option, which makes it like a fresh fork,
+but looses all your changes. See Hard Reset below.
 
 Note that you can keep your fork in sync via the GitHub web UI, 
 by creating a Pull Request, Switching Bases, and Merging - 
@@ -550,12 +565,6 @@ git rebase upstream/master
 # Option 3
 #  not sure how valid this one really is!!
 #git pull upstream master
-
-
-# Option 4
-#  BEWARE: this will trash anything in your local and fork branch
-#git reset --hard  upstream/master
-#git push origin --force
 
 # push these changes into your fork's github repo
 git push
@@ -612,6 +621,28 @@ git commit -a -m "Added in latest version of skeleton files"
 git push -u origin master
 
 ```
+
+#### Hard reset forked branch back to upstream master
+
+This will remove any changes in your forked branch, 
+and you will have no trace that this was done.
+
+
+```
+# Check the current status
+git status
+git remote -v
+git branch -vv
+# git branch -av
+
+git fetch upstream
+
+# trash this branch locally and revert to upstream
+git checkout master
+git reset --hard  upstream/master
+git push origin --force
+```
+
 
 #### Switch clone to fork
 
