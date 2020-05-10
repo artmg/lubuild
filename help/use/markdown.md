@@ -133,6 +133,11 @@ see also:
 * QOwnNotes
 	* mac packages available (not yet via homebrew)
 
+see also:
+
+* https://superuser.com/questions/174976/markdown-live-preview-editor
+* https://softwarerecs.stackexchange.com/questions/6915/a-good-editor-for-technical-tutorials-on-mac
+* https://softwarerecs.stackexchange.com/questions/25/markdown-editor-for-osx-that-includes-a-preview-ideally-in-real-time
 
 
 ## Why use Markdown?
