@@ -21,26 +21,32 @@ see also:
 
 ## Windows 10 useful tips
 
+### Quick minimal install
+
+* click on the mic icon to silence Cortana
+* accept keyboard/locale
+* Skip Wifi to allow local account
+	* Or add wifi then disable it before naming first user
+* Accept EULA
+* Name admin account and give three question/answers
+	* if it insists on an email, then disconnect network and retry
+* Say NO or DECLINE or DON'T to all the pointless services
+* now wait for the install to finalise
+* Settings / System / About / Rename PC
+	* enter the new Hostname for this PC
+* Restart
+
+* connect to wifi - ALLOW DISCOVERY 
+
+see also 'Manage applications' below
+
 ### Power Users' menu
 
-Use the Windows key as modifier with letter X ... **Win-X**
+Right-click on Start Menu gets the power user menu up, but there is a shortcut: use the Windows key as modifier with letter X ... **Win-X**
 
-e.g. Elevated Command prompt...  Win-X then A
+e.g. Elevated Command prompt...  **Win-X then A**
 
 This is also available in Windows 8
-
-### Remove Unwanted Apps
-
-You can do this via Apps and Features, but it can be quicker in an Adminsitrators Powershell
-
-```
-Get-AppxPackage | select name | sort name
-Get-AppxPackage -Name 'Microsoft.MicrosoftSolitaireCollection'  | Remove-AppxPackage
-Get-AppxPackage -Name *Microsoft.Xbox*  | Remove-AppxPackage
-Get-AppxPackage -Name *EclipseManager*  | Remove-AppxPackage
-Get-AppxPackage -Name *Duolingo*  | Remove-AppxPackage
-
-```
 
 ### Windows 10 Prevent allow updates to download
 
@@ -55,15 +61,67 @@ Undo the change to allow updates once again:
 
 ### Create a local account
 
-* Click Start, Settings, Family & other users, Add someone else to this PC
+* Click Start, Settings, Accounts, Family & other users, Add someone else to this PC
     * Note that you can’t “Add a family member” with a local account. Presumably that is tied in to parental controls.)
+* Add someone else to this PC 
 * In the box marked “How will this person sign in?” 
-    * down at the bottom, click “The person I want to add doesn’t have an email address.”
+    * down at the bottom, click “The person I want to add doesn’t have an email address.” or "I don't have this person's sign-in information"
 * In the “Let’s create your account” dialog, at the bottom, 
     * click “Add a user without a Microsoft account.”
 * enter user name, password and password hint.
     * Click Next 
 
+
+## Manage Applications
+
+### Remove Unwanted Apps & Features
+
+You can do this via Apps and Features, but it can be quicker in an Adminsitrators Powershell
+
+```
+Get-AppxPackage | select name | sort name
+
+Get-AppxPackage -Name king.com*                | Remove-AppxPackage
+Get-AppxPackage -Name Microsoft.MixedReality*  | Remove-AppxPackage
+Get-AppxPackage -Name Microsoft.GetStarted     | Remove-AppxPackage  # Tips
+Get-AppxPackage -Name Microsoft.SkypeApp       | Remove-AppxPackage  # the 'lite' blue-on-white version
+Get-AppxPackage -Name Microsoft.MicrosoftOfficeHub  | Remove-AppxPackage
+Get-AppxPackage -Name Microsoft.Microsoft3DViewer  | Remove-AppxPackage
+Get-AppxPackage -Name Microsoft.Office.OneNote  | Remove-AppxPackage
+Get-AppxPackage -Name Microsoft.WindowsFeedbackHub  | Remove-AppxPackage
+Get-AppxPackage -Name Microsoft.WindowsMaps     | Remove-AppxPackage
+Get-AppxPackage -Name Microsoft.Xbox*           | Remove-AppxPackage
+Get-AppxPackage -Name Microsoft.Zune*           | Remove-AppxPackage # Groove
+Get-AppxPackage -Name *EclipseManager*          | Remove-AppxPackage
+Get-AppxPackage -Name *Duolingo*                | Remove-AppxPackage
+# Optional items
+# if you have no Windows devices or MS accounts
+Get-AppxPackage -Name Microsoft.YourPhone  | Remove-AppxPackage
+Get-AppxPackage -Name Microsoft.People  | Remove-AppxPackage
+# Apps needing a SIM & Mobile radio
+Get-AppxPackage -Name Microsoft.OneConnect  | Remove-AppxPackage
+# simple games
+Get-AppxPackage -Name 'Microsoft.MicrosoftSolitaireCollection'  | Remove-AppxPackage
+# if you add a proper recorder
+Get-AppxPackage -Name Microsoft.WindowsSoundRecorder  | Remove-AppxPackage
+
+```
+
+```
+Get-WindowsCapability -Online -Name "XPS.Viewer*" | Remove-WindowsCapability -Online
+Get-WindowsCapability -Online -Name "Browser.InternetExplorer*" | Remove-WindowsCapability -Online
+# credit https://jessehouwing.net/tools-for-windows-developers-2019/
+```
+
+### Install Chocolatey
+
+* Right-click on Start for PowerShell Admin
+* paste in from https://chocolatey.org
+	* Get Started / Install Individual
+
+```
+choco install -y <your list of apps>
+```
 
 ## Windows Update
 
@@ -108,6 +166,56 @@ These steps will get you as far forward as you can, quickly and easily.
 
 Now, if you are working in a Virtual Machine, you can take an image of the disk 
 and shrink it to save space. This will be your baseline "OS install"
+
+## Reinstall
+
+In some cases, configurations can get so snarled up that that simplest cure 
+is to reinstall the whole OS, and Windows is closer to the rule than the exception. 
+
+* First back up all data that is not cloud-based
+* Then note any additional software installed
+* then reinstall
+
+
+### Automatic Repair Mode
+
+Windows 10, together with the hidden OEM boot partition, make it easy to refresh your PC as if you'd just unpacked it for the first time.
+
+* Shift Restart
+* Troubleshooting
+* Reset pc
+* Don't keep files
+* Only drive where Windows installed
+* Just remove my files
+* Reset
+
+watch also: https://www.youtube.com/watch?v=yp5bfmRwRY0&t=2s
+
+### Device Encryption
+
+Under Windows 10 Home you may use 'Device Encryption' (MS' free equivalent of bitlocker) to Encrypt the volume
+
+* Provided you have TPMv2 enabled and UEFI, 
+	* Settings / Update & Security / Device Encryption
+* If you don't see this option
+	* Start / Win Admin Tools / System Information / right-click run as Admin
+	* System Summary / Device Encryption Support
+	* There _might_ be ways to deal with errors
+		* by turning on or off certain bios settings
+		* try Googling the error
+			* with your fingers crossed and plenty of patience
+* Alternatively try Veracrypt
+	* `choco install -y veracrypt`
+	* not sure if restart required now
+	* Launch Veracrypt
+	* System / Encrypt System partition
+	* Type: Normal
+	* Area: Windows sys partition
+	* OS: Single Boot
+	* Encryption options: if you don't understand, then default is fine
+	* you'll need a small USB drive to store the Rescue Data
+* 
+
 
 
 ## Dual Boot
