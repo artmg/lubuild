@@ -14,6 +14,39 @@ see also:
     * installed via [Lubuild app-installs.bash](https://github.com/artmg/lubuild/blob/master/app-installs.bash)
     * sample command # pandoc -f markdown -t html -o output.htm input.txt
 
+## Markdown cloud integration
+
+### Browser-based editor
+
+(should this move into editors below?)
+
+#### StackEdit
+
+* browse to https://stackedit.io/
+* Click on Start Writing at the top
+* sign in to Google if you wish to store your markdown docs there
+* Not sure where the content is stored if you don't sign in
+
+### Google docs
+
+Convert from a formatted Google Doc to markdown:
+
+* Ed Bacher's *Docs To Markdown* chrome addin https://gsuite.google.com/marketplace/app/docs_to_markdown/700168918607
+* L Maddox's gdocs2md (forked and improved from others)
+	* https://github.com/lmmx/gdocs2md-html
+* If its a table use MarkDown Table maker add in
+	* https://gsuite.google.com/marketplace/app/markdowntablemaker/46507245362
+* 
+
+
+If you want to write markdown in using Docs editor:
+
+* preview with Mustakim's MarkdownPreview (doc script or addin)
+	* https://github.com/mustakimali/GDocsMarkdownPreview
+* Optimise your Docs settings 
+	* https://www.digitalonlinetactics.com/post/tactics/google-docs/edit-markdown-in-google-docs/
+* 
+
 ## Edit markdown documents
 
 ### Requirements
