@@ -518,10 +518,30 @@ git remote add upstream https://github.com/ORIGINAL_OWNER/ORIGINAL_REPOSITORY.gi
 git remote -v 
 ```
 
+#### Switch branches
+
+```
+git status
+# clear local changes
+git stash
+# if prevented then bin them manually
+git checkout -- <filename(s)>
+git status
+
+git fetch
+git checkout <branchname>
+
+#git branch -u origin/<branchname> # this should be automatically done by the checkout
+git branch -vv
+git branch -av
+```
+
+
 #### sync your fork
 
-NB: there is a 4th option, which makes it like a fresh fork,
-but looses all your changes. See Hard Reset below.
+This is useful for team development on a fork. 
+If you are working solo you may just want to 
+refresh your fork, loosing all your changes – see [Hard Reset](#hard-reset-to-upstream).
 
 Note that you can keep your fork in sync via the GitHub web UI, 
 by creating a Pull Request, Switching Bases, and Merging - 
@@ -571,31 +591,14 @@ git push
 
 ```
 
+...or see the 4th option, [Hard Reset](#hard-reset-to-upstream) below
+
 For more about the difference between rebasing and merging see:
 
 * [https://git-scm.com/book/en/v2/Git-Branching-Rebasing]
 * [http://stackoverflow.com/questions/15602037/git-rebase-upstream-master-vs-git-pull-rebase-upstream-master]
 * [https://www.atlassian.com/git/tutorials/merging-vs-rebasing]
 * 
-
-
-#### Switch branches
-
-```
-git status
-# clear local changes
-git stash
-# if prevented then bin them manually
-git checkout -- <filename(s)>
-git status
-
-git fetch
-git checkout <branchname>
-
-#git branch -u origin/<branchname> # this should be automatically done by the checkout
-git branch -vv
-git branch -av
-```
 
 
 #### Merge - Work in Progress
@@ -606,7 +609,7 @@ git branch --set-upstream-to=origin/<branch> master
 git fetch
 ```
 
-##### alternative Merge method - currently borken
+##### old notes on alternative Merge method
 
 **DON'T DO THIS** It may junk useful changes
 
@@ -622,10 +625,11 @@ git push -u origin master
 
 ```
 
-#### Hard reset forked branch back to upstream master
+#### Hard reset to upstream
 
 This will remove any changes in your forked branch, 
-and you will have no trace that this was done.
+and make it even with the upstream master
+but you will have no trace that this was done.
 
 
 ```
@@ -641,6 +645,12 @@ git fetch upstream
 git checkout master
 git reset --hard  upstream/master
 git push origin --force
+
+# or perhaps on a different branch
+git checkout develop
+git reset --hard  upstream/develop
+git push origin --force
+
 ```
 
 
