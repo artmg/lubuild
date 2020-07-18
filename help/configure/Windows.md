@@ -71,6 +71,32 @@ Undo the change to allow updates once again:
 * enter user name, password and password hint.
     * Click Next 
 
+### UserBenchMark
+
+If you are interested in your relative scores on performance
+
+* https://www.userbenchmark.com/Software
+* quiesce services like updates etc
+	* check task manager
+* Run the tests
+
+### Issue - bonjour not visible
+
+Printers and Spotify devices broadcasting via bonjour are not picked up by Windows 10 PC
+
+According to https://superuser.com/a/1453423 you can add the registry key/value...
+`REG ADD "HKLM\Software\Policies\Microsoft\Windows NT\DNSClient" /V "EnableMulticast" /D "0" /T REG_DWORD /F` and reboot the PC. This might make it appear in Spotify, but has not yet been proven to work.
+
+The Bonjour Service would be automatically installed if you chose to install ITunes onto the PC (but that's 300MB of software you might not otherwise need).
+
+Bonjour browsers for Windows:
+* `dns-sd` comes with IBM Network IPS
+* free but closed source bonjour browsers:
+	* Hobbyist https://hobbyistsoftware.com/bonjourbrowser
+	* Tobias Erichsen http://www.tobias-erichsen.de/software/zeroconfservicebrowser.html
+* 
+
+Not yet resolved :(
 
 ## Manage Applications
 
@@ -121,6 +147,24 @@ Get-WindowsCapability -Online -Name "Browser.InternetExplorer*" | Remove-Windows
 
 ```
 choco install -y <your list of apps>
+```
+
+### Prevent sleep
+
+If you use a Professional Edition of Windows, you can use Presentation Mode to prevent sleep/monitor darkness whilst using the machine passively (e.g. watching something or video conference).
+
+* New Desktop Shortcut
+* C:\Windows\System32\PresentationSettings.exe /start
+* Pin to taskbar
+* Click to test icon in system tray
+* Unlock systray and Always show
+
+If you are on Home Edition this will not work, so you can use one of the following utilities
+
+```
+choco install -y caffeine
+# OR
+choco install -y dontsleep.install
 ```
 
 ## Windows Update
@@ -189,6 +233,12 @@ Windows 10, together with the hidden OEM boot partition, make it easy to refresh
 * Just remove my files
 * Reset
 
+If you had installed Bitlocker encryption, 
+you would then be presented with the Recovery Key ID, 
+and be prompted `Reset this PC` and 
+`enter the Recovery Key` that was generated 
+when Bitlocker was set up.
+
 watch also: https://www.youtube.com/watch?v=yp5bfmRwRY0&t=2s
 
 ### Device Encryption
@@ -215,7 +265,6 @@ Under Windows 10 Home you may use 'Device Encryption' (MS' free equivalent of bi
 	* Encryption options: if you don't understand, then default is fine
 	* you'll need a small USB drive to store the Rescue Data
 * 
-
 
 
 ## Dual Boot
