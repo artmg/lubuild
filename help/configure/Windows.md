@@ -211,6 +211,59 @@ These steps will get you as far forward as you can, quickly and easily.
 Now, if you are working in a Virtual Machine, you can take an image of the disk 
 and shrink it to save space. This will be your baseline "OS install"
 
+## Manage disk space
+
+### Universal package cache
+
+The Universal Apps (UWP, formerly known as Metro apps or Modern Apps), so many apps loaded from the Windows 10 store, save their config and data in the folder 
+%APPDATA%/Local/Packages. Some of these can become extremely bloated with cached data.
+
+Here is a BleachBit CleanerML file for dealing with these. Use the System Info option to find your `personal_cleaner_dir` and install in there as `Streaming.Players.xml` ...
+
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    BleachBit CleanerML file
+    @help: https://github.com/bleachbit/bleachbit/blob/master/doc/example_cleaner.xml
+-->
+<cleaner id="streaming.players" os="windows">
+  <label>Streaming Player caches</label>
+  <description>Cached data for music and video streaming packages</description>
+  <option id="spotify.cache">
+    <label>Spotify cache</label>
+    <description>Spotify song cache</description>
+    <!-- @credit https://community.spotify.com/t5/Desktop-Windows/cache/td-p/4722569 -->
+    <action command="delete" search="walk.all" path="$LOCALAPPDATA\Packages\SpotifyAB.SpotifyMusic_zpdnekdrzrea0\LocalCache\Spotify\Data"/>
+  </option>
+  <option id="spotify.downloads">
+    <label>Spotify downloads</label>
+    <description>Remove all songs that had been downloaded for offline listening</description>
+    <action command="delete" search="walk.all" path="$LOCALAPPDATA\Packages\SpotifyAB.SpotifyMusic_zpdnekdrzrea0\\LocalState\Spotify\Storage"/>
+    <!-- @credit observation/guesswork -->
+  </option>
+  <option id="amazon.prime">
+    <label>Amazon Prime downloads</label>
+    <description>Remove all Prime Videos that had been downloaded</description>
+    <action command="delete" search="walk.all" path="$LOCALAPPDATA\Packages\AmazonVideo.PrimeVideo_pwbj9vvecjh7j\LocalState\Downloads"/>
+    <!-- @credit observation/guesswork -->
+  </option>
+  <option id="netflix">
+    <label>Netflix downloads</label>
+    <description>Remove all Netflix videos that had been downloaded</description>
+    <action command="delete" search="walk.all" path="$LOCALAPPDATA\Packages\4DF9E0F8.Netflix_mcm4njqhnhss8\LocalState\offlineInfo\downloads"/>
+    <!-- @credit observation/guesswork -->
+  </option>
+  <option id="flixster">
+    <label>Flixster films</label>
+    <description>Remove all locally stored Flixster content</description>
+    <action command="delete" search="walk.all" path="$LOCALAPPDATA\Flixster\Storage"/>
+    <!-- @credit observation/guesswork -->
+  </option>
+</cleaner>
+```
+
+
 ## Reinstall
 
 In some cases, configurations can get so snarled up that that simplest cure 
