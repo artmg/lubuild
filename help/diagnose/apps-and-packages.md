@@ -6,7 +6,9 @@ see also:
 	* Applications and Package Management
 
 
-### Which version of XYZ is installed?
+### Which version of XYZ ...
+
+#### ... is installed?
  
 ```
 # Check the exact name of the package
@@ -14,6 +16,12 @@ dpkg -l | grep mypackage
 
 # Then get detailed version info
 dpkg -s fullpackagename
+```
+
+#### ... is available?
+
+```
+apt list fullpackagename
 ```
 
 ### Which Applications ...
