@@ -11,6 +11,8 @@ your Windows instance for such cases.
 
 see also:
 
+* getting started with a Windows Virtual Machine
+	* https://github.com/artmg/lubuild/blob/master/help/configure/virtual-guest.md#windows-guest
 * how to decide on options for partitioning multi-boot systems
 	* [https://github.com/artmg/lubuild/blob/master/help/understand/disk-layout.md] 
 * specific commands for setting up your chosen layout under ubuntu 

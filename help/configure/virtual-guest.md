@@ -9,6 +9,11 @@ see also:
 
 ## Windows Guest
 
+Microsoft downloads to get you going include:
+
+* 5GB ISO installer https://www.microsoft.com/en-gb/software-download/windows10ISO
+* 20GB developer VM ready to start https://developer.microsoft.com/en-us/windows/downloads/virtual-machines/
+
 For step-by-step instructions to create a Windows Virtual Machine on your PC under Ubuntu using virtualbox see [https://itsfoss.com/install-windows-10-virtualbox-linux/] 
 
 NB: you can just install **virtualbox** with no version specifier
