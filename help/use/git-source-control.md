@@ -40,7 +40,9 @@ Alternatives include:
             * Commit / Defined in: Local Config
         * Actions / New
             * push
-
+* LazyGit
+	* terminal UI based on gocui
+	* open source and cross platform
 
 ### configure
 
