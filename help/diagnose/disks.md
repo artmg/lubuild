@@ -11,7 +11,9 @@ see also:
 	* specific examples like OpenElec
 	* will go out to [https://github.com/artmg/lubuild/blob/master/help/understand/disk-layout.md]
 * issues that are specific to solid state / flash storage devices
-	* [https://github.com/artmg/lubuild/blob/master/help/manipulate/flash-drives-and-SSDs.md] 
+	* [Flash drives and SSDs](https://github.com/artmg/lubuild/blob/master/help/manipulate/flash-drives-and-SSDs.md) 
+* if you can't troubleshoot the disk you may need to recover the data from it
+	* [Disk recovery and forensics](https://github.com/artmg/lubuild/blob/master/help/diagnose/disk-recovery-and-forensics.md)
 * diagnosing other types of hardware issue
 	- [Hardware Troubleshooting](https://github.com/artmg/lubuild/blob/master/help/diagnose/hardware.md) 
 
@@ -67,7 +69,7 @@ lsblk
 # by disk (partition) Label, show mounted devices
 ls -l /dev/disk/by-label/
 # and all devices
-lsblk -o name,mountpoint,label,size
+lsblk -o name,fstype,mountpoint,label,size
 
 # for super detailed information, as well as listing column names above
 lsblk -JO # Json output of all cOlumns
@@ -75,6 +77,39 @@ lsblk -JO # Json output of all cOlumns
 sudo lsusb -v
 # there are additional commands like lshw or hdparm but the above are usually installed
 ```
+
+### unmounted filesystems
+
+If you have errors on the filesystem, it might not have been mounted – check with `dmesg` to see quickly.
+
+```
+# identify the FS type
+sudo fdisk -l /dev/sdx
+
+# see what fsck types you have available
+ls /sbin/fsck*
+
+# do a dummy check, e.g.
+sudo fsck.FSTYPE -N /dev/sdxN
+# -n for fat
+
+```
+
+Then you can try the fsck for real - see below. 
+
+If you cannot recover the filesystem, then try testdisk
+
+```
+sudo apt install testdisk
+sudo testdisk
+```
+
+or move on to [Disk recovery and forensics](https://github.com/artmg/lubuild/blob/master/help/diagnose/disk-recovery-and-forensics.md)
+
+NOTE: if your data is high value, then consider
+creating an image before any changes that might make
+files harder to recover
+
 
 ## Simple checks
 
