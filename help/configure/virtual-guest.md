@@ -83,7 +83,23 @@ MyFolder /media/sf_MyFolder vboxsf rw,nodev,relatime,iocharset=utf8,uid=0,gid=99
 sudo usermod -aG vboxsf $USER
 ```
 
-### OLD
+That will require a restart
+
+```
+# create a Desktop icon for the shared drive like the standard home and network icons
+cat > $HOME/Desktop/vm-shared.desktop <<EOF!
+[Desktop Entry]
+Type=Application
+Exec=pcmanfm-qt /media/sf_VmShared
+Icon=media-floppy
+Name=VmShared
+EOF!
+chmod +x $HOME/Desktop/vm-shared.desktop
+gio set $HOME/Desktop/vm-shared.desktop "metadata::trusted" true
+```
+
+
+### OLD shared folder
 
 Previously the instructions to mount it were...
 
