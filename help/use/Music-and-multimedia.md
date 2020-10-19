@@ -81,12 +81,13 @@ For current installs see [https://github.com/artmg/lubuild/blob/master/app-insta
 
 ### FOSS Android music players
 
-Although this is mainly about (L)ubuntu apps, it also touches on various Android clients 
-for rendering or controlling music and multimedia (see relevant sections below). 
+Although this is mainly about (L)ubuntu apps, it also touches on various Android clients for rendering or controlling music and multimedia (see relevant sections below). 
 Just for good measure, then, here are some Free and Open Source (FOSS) Music Players available 
-on android devices:
+on android devices. Note that most players use Android's Media Framework which excludes a decoder for WMA (Windows MediaPlayer Audio) files that you may have ripped.
+
 
 * VLC (see above)
+	* bundled with own codecs including WMA
 * Vanilla Music
 	- reasonably popular and mature
 	- plugins or addons have been developed
@@ -102,7 +103,6 @@ on android devices:
 	- does it support WMA files?
 * Apollo
 	- was a rebuild of Android stock Music player
-
 
 
 ## playlist creation
