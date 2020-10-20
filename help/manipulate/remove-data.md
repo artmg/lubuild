@@ -18,30 +18,29 @@ See also:
 # all the commands below need sdXY changing to your real device
 # ENSURE you are really overwritting data you no longer want - wrong choices will cause you pain
 
-# with ANY of the commands below, if you are curious to check the dd progress, use another window to...
-watch -n30 'sudo pkill -usr1 dd'
-
 # speedy overwrite with zeros
-dd if=/dev/zero of=/dev/sdXY
+dd if=/dev/zero of=/dev/sdXY status=progress
 
 #### random overwrites
 # if you plan to use encryption, then it is recommended you fill the space with random data first 
 # to reduce the ability for others to understand anything about the size of contents of the encrypted area 
 
 # this traditional method is rather SLOW to overwrite, using quality psuedo-random data stream
-dd if=/dev/urandom of=/dev/sdXY bs=1M
+dd if=/dev/urandom of=/dev/sdXY bs=1M status=progress
 
 # use openssl to encrypt the zeros (much QUICKER simple pseudo-RANDOM - better than patterns)
-head -c 32 /dev/urandom | openssl enc -rc4 -nosalt -in /dev/zero -pass stdin | dd of=/dev/sdXY bs=1M
+head -c 32 /dev/urandom | openssl enc -rc4 -nosalt -in /dev/zero -pass stdin | dd of=/dev/sdXY bs=1M status=progress
 # credit - http://askubuntu.com/a/359547
 
 # use built-in cryptsetup to access the kernel dm-crypt encryption for quick psuedo-random
 sudo cryptsetup open --type plain /dev/sdXY container --key-file /dev/random
-dd if=/dev/zero of=/dev/mapper/container
+dd if=/dev/zero of=/dev/mapper/container status=progress
 sudo cryptsetup close container 
 # credit - https://wiki.archlinux.org/index.php/Dm-crypt/Drive_preparation#dm-crypt_wipe_on_an_empty_disk_or_partition
 # if you want a second pass, close then re-open so the random key file changes what will be written
 
+# earlier versions of dd did not support status=progress, you had to use another window to...
+# watch -n30 'sudo pkill -usr1 dd'
 ```
 ### multiple overwrite
 
