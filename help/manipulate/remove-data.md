@@ -34,10 +34,11 @@ head -c 32 /dev/urandom | openssl enc -rc4 -nosalt -in /dev/zero -pass stdin | d
 
 # use built-in cryptsetup to access the kernel dm-crypt encryption for quick psuedo-random
 sudo cryptsetup open --type plain /dev/sdXY container --key-file /dev/random
-dd if=/dev/zero of=/dev/mapper/container status=progress
+sudo dd if=/dev/zero of=/dev/mapper/container status=progress
 sudo cryptsetup close container 
 # credit - https://wiki.archlinux.org/index.php/Dm-crypt/Drive_preparation#dm-crypt_wipe_on_an_empty_disk_or_partition
 # if you want a second pass, close then re-open so the random key file changes what will be written
+# If you must PAUSE, CTRL-C out and note `n` the number of blocks written, then when you restart specify  seek=n 
 
 # earlier versions of dd did not support status=progress, you had to use another window to...
 # watch -n30 'sudo pkill -usr1 dd'
