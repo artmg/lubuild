@@ -7,6 +7,8 @@ see also:
 	* [https://github.com/artmg/lubuild/blob/master/help/understand/layers-on-your-desktop.md]
 * this is where the desktop is initially configured
 	* [https://github.com/artmg/lubuild/blob/master/user-config.bash]
+* for Remote Desktop connection see
+	* https://github.com/artmg/lubuild/blob/master/help/configure/Networked-Services.md#remote-desktop-server
 
 Note this article is about software Desktop in the User Interface (UI), as opposed to physical form-factor of desktop PC. If you want to know how to configure for different form factors, such as desktop, laptop, tablet, etc, see https://github.com/artmg/lubuild/blob/master/help/configure/form-factors.md
 
