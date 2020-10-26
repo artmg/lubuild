@@ -109,6 +109,12 @@ brew cask install osxfuse
 brew install ntfs-3g
 ```
 
+The other way, the filesystem type created on macOS as 
+'Mac OS Extended (Journaled)' is also known as HFS+.
+It can be read on linux systems (perhaps needing a package 
+such as `hfsplus` or `hfsprogs`) but 
+Linux does not support writing to these disks, natively (though commercial software may be available to write). 
+
 NB: you can completely skip the whole Compatibility issue by not plugging in a drive. If you use cloud file sync (Dropbox etc) or NAS shares (CIFS/NFS/etc) then the FS is abstracted and the problem disappears into a puff of ether.
 
 
