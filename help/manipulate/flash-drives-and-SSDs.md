@@ -117,9 +117,13 @@ https://unix.stackexchange.com/a/186954
 and performance is comparable with ext4. 
 There were issues with stability in early days, but these seem to be resolved.
 
-Some alternative distros like slax and puppy are reputed to be more flash friendly (not sure specifically why), but the way you lay out disks can vastly improve reliability. For instance, some OS configurations for embedded use-cases, where very little changes boot after boot, use a ram disk for their core storage. That way writing is mainly done in memory so the flash storage device is mainy read only. That avoids issues with wear levelling and reliability. ALternatively, battery backup (UPS-style) can prevent sudden power loss, removing the cause of some corruption).
-
 Note that linux developed a Memory Technology Device (MTD) subsystem, that improves reliability of flash storage devices. Filesystems such as **JFFS2** (or even UBIFS) use MTD to improve the way that raw flash devices are used. However, SD cards and pendrives have their own build in Flash Translation Layer (FTL) to present them to the system as a good old fashioned 'block device', so these MTD filesystems offer **no** benefit for these. 
+
+### Embedded-style systems
+
+There are other ways you can lay out disks to vastly improve reliability. For instance, some OS configurations for embedded use-cases, where very little changes boot after boot, use a ram disk for their core storage. That way writing is mainly done in memory so the flash storage device is mainy read only. That avoids issues with wear levelling and reliability. ALternatively, battery backup (UPS-style) can prevent sudden power loss, removing the cause of some corruption).
+
+Some alternative distros like Slackware and its derivatives, Slax and PuppyLinux, are reputed to be more flash friendly. This is because the OS is stored in layers that are read into memory, and run from RAM disk. Then, on shutdown, only the changes are written into a new layer file.
 
 
 ### other ssd enhancements ###
