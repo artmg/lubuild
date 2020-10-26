@@ -116,4 +116,24 @@ sudo apt-get remove uvcdynctrl
 # credit > https://bugs.launchpad.net/ubuntu/+source/libwebcam/+bug/811604
 ```
 
+## Browser Media Devices
 
+WebRTC (Real Time Communications) is a widely-used 
+open-source framework for accessing media devices 
+like webcams and microphones, from browsers. 
+Of course, for privacy, the OS and/or browser 
+should prompt you to ask whether you will allow 
+any app and/or site to listen to or watch you. 
+
+The great thing about WebRTC is that many 
+modern video conference providers 
+have a web-only client that allows you to join calls 
+on their service without having to download 
+(and maintain updates on) their clients. 
+
+If you want to check whether WebRTC is working 
+from your browser, visit
+
+https://www.webrtc-experiment.com/DetectRTC/
+
+for a good level of diagnositc output.
