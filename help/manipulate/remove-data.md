@@ -10,6 +10,7 @@ See also:
 
 * why you need to overwrite [https://github.com/artmg/lubuild/blob/master/help/diagnose/disk-recovery-and-forensics.md]
 * how proper total wiping is hard on flash [https://github.com/artmg/lubuild/blob/master/help/manipulate/flash-drives-and-SSDs.md]
+	* if you want to erase SSDs see the later section 
 
 
 ### simple overwrites with dd
@@ -47,7 +48,7 @@ sudo cryptsetup close container
 
 The following utilities perform multiple 'pass' wipes, repeatedly overwriting the same areas. 
 They are based on theories from Guttmann in the late 1990s that erased data could be recovered 
-using magnetic microscope technology. Later [experimnents by Wright in 2008](https://digital-forensics.sans.org/blog/2009/01/15/overwriting-hard-drive-data/) debunked such theories.
+using magnetic microscope technology. Later [experimnents by Wright in 2008](https://digital-forensics.sans.org/blog/2009/01/15/overwriting-hard-drive-data/) debunked such theories. It has been suggested that the density of magnetic datum points on modern media make such forensic recovery less feasible.
 
 If you are unsure which case to beleive, you might consider either of the following contrasting viewpoints:
 * does it cost me much extra time to multi-pass wipe my disk
@@ -105,3 +106,19 @@ srm -rfll folderPathToRemove
 # single pass only
 
 ```
+
+## Solid State (flash) drives
+
+According to [NIST guidelines](http://dx.doi.org/10.6028/NIST.SP.800-88r1) the ATA Secure Erase command is an effective sanitisation technique to 'Clear' data (protection against simple non-invasive data recovery techniques).
+
+IMPORTANT NOTES:
+
+* this procedure is ONLY for ATA attached drives
+	* do NOT use it on drives you attach via USB or SCSI
+* it is suitable for both HDD and SSD drives
+
+See instructions at:
+
+* https://ata.wiki.kernel.org/index.php/ATA_Secure_Erase or
+* https://grok.lsu.edu/Article.aspx?articleid=16716
+
