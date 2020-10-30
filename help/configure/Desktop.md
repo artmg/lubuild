@@ -102,6 +102,31 @@ Configuration is handled using startup parameters in the autostart dekstop file:
 * /etc/xdg/autostart/light-locker.desktop
 
 
+### Add desktop to server
+
+If you install a Ubuntu Server (or other `Lite` version with no desktop), then you can still add a desktop environment later if you need one.
+
+* Lubuntu 
+	* for a fuller and familiar environment
+	* ` sudo apt-get install lubuntu-desktop `
+* xinit & fluxbox
+	* barebones and resource-respectful
+	* ` sudo apt-get install xinit fluxbox `
+
+With xinit you can manually start an X display server using `startx`. Many people prefer openbox over fluxbox, but it might take you longer to configure how you want it. Note that on some distros xinit has a lot of gnome dependencies, and a suggested way to work around these is
+
+```
+sudo apt install xserver-xorg-core --no-install-recommends --no-install-suggests
+sudo apt install openbox --no-install-recommends --no-install-suggests
+# as long as openbox is there already the gnome dependencies are not installed
+sudo apt install xinit
+# credit - https://askubuntu.com/a/1256290
+```
+
+If you want to access this remotely then see
+https://github.com/artmg/lubuild/blob/master/help/configure/Networked-Services.md#remote-desktop-server
+
+
 ## Session Manager
 
 LXDE uses LxSession as its session manager, independent of which 
