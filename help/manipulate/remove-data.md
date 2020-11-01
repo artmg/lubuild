@@ -19,18 +19,32 @@ See also:
 # all the commands below need sdXY changing to your real device
 # ENSURE you are really overwritting data you no longer want - wrong choices will cause you pain
 
+# select the device from which you want to totally wipe the filesystem  (but leave dev node intact)
+MY_DRIVE=/dev/sdXY
+# Make totally SURE this is the right device FIRST
+mount -l | grep $MY_DRIVE
+df | grep $MY_DRIVE
+
 # speedy overwrite with zeros
-dd if=/dev/zero of=/dev/sdXY status=progress
+dd if=/dev/zero of=$MY_DRIVE bs=256K status=progress
+
+# you can check which blocksize gives the quickest throughput
+# https://github.com/tdg5/blog/blob/master/_includes/scripts/dd_obs_test.sh
+
 
 #### random overwrites
 # if you plan to use encryption, then it is recommended you fill the space with random data first 
 # to reduce the ability for others to understand anything about the size of contents of the encrypted area 
 
 # this traditional method is rather SLOW to overwrite, using quality psuedo-random data stream
-dd if=/dev/urandom of=/dev/sdXY bs=1M status=progress
+dd if=/dev/urandom of=$MY_DRIVE bs=1M status=progress
 
-# use openssl to encrypt the zeros (much QUICKER simple pseudo-RANDOM - better than patterns)
-head -c 32 /dev/urandom | openssl enc -rc4 -nosalt -in /dev/zero -pass stdin | dd of=/dev/sdXY bs=1M status=progress
+# This is probably THE quickest way to write a simple pseudo-random stream
+# by using openssl to encrypt the zeros 
+openssl enc -aes-256-ctr -salt -pbkdf2 -pass pass:"$(dd if=/dev/urandom bs=128 count=1 </dev/null | base64)" </dev/zero | sudo dd of=$MY_DRIVE bs=1M status=progress
+
+# previously used
+# head -c 32 /dev/urandom | openssl enc -rc4 -nosalt -in /dev/zero -pass stdin | sudo dd of=$MY_DRIVE bs=1M status=progress
 # credit - http://askubuntu.com/a/359547
 
 # use built-in cryptsetup to access the kernel dm-crypt encryption for quick psuedo-random
