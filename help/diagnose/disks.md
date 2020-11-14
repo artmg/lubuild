@@ -252,7 +252,8 @@ sudo apt-get install -y smartmontools
 # check that SMART is available on the device 
 sudo smartctl -i /dev/sdX
 # you may need the -d sat option if the drive is not in the smartctl database
-# for USB device compatibility see http://www.smartmontools.org/wiki/Supported_USB-Devices 
+# for USB device compatibility see 
+# http://www.smartmontools.org/wiki/Supported_USB-Devices 
 
 # check the health
 sudo smartctl -H /dev/sdX

@@ -113,7 +113,28 @@ head -c 256 < /dev/loop2 | hd
 
 ```
 
-## Recovering from damaged optical media
+## Recovering from damaged media
+
+### Magnetic
+
+There is an older ddrescue package with Garloff's dd_rescue command from 2010, but we'll use ddrescue from GNU. 
+
+sudo apt install gddrescue
+
+lsblk -o name,label,size,fstype,model
+
+ddrescue goes through Copying, Trimming, Scraping and Retrying. You can modify this basic behaviour with options or just leave it to what the authors considered an optimal approach to recovery. Perhaps the first time you might get as much data as you can before risking the disk mechanism, then you might try again more intensively to get every bit of data you possibly can.
+
+ddrescue /dev/sdX saveto.img [mapfile]
+
+Instead of an image, you can write to another disk device, but you might need the -f --force option.
+If you use a mapfile to allow you multiple attempts, 
+you can inspect it with `ddrescuelog`
+
+For the manual see 
+https://www.gnu.org/software/ddrescue/manual/ddrescue_manual.html
+
+### Optical
 
 DVDisaster is in the Ubuntu repos
 and can read as much of CDs and DVDs as possible despite physical damage
