@@ -186,7 +186,15 @@ Including the Windows 10 Upgrade process
 
 #### clear the update cache
 
-For fuller instructions see https://support.microsoft.com/en-gb/kb/971058
+If updates are stuck in perpetual 'Update and Restart' 
+or Checking for "Windows Update" sticks on "please wait" or if you have other reason to want to reset the 
+whole Windows Update agent settings on your PC...
+
+* load the Reset Windows Update Client script
+* https://gallery.technet.microsoft.com/scriptcenter/Reset-Windows-Update-Agent-d824badc
+* expand the zip and run the Batch as Admin
+* pick the options you want (e.g. 2, 3)
+
 
 #### download large updates directly
 
