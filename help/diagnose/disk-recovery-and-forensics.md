@@ -58,7 +58,10 @@ and has had more recent development
 # source - https://github.com/sleuthkit/scalpel
 sudo apt-get install scalpel
 # uncomment the files you want
+
 sudo nano /etc/scalpel/scalpel.conf
+
+scalpel -o NewDirForFilesFound <.img or /dev>
 ```
 
 ### PhotoRec and TestDisk 
