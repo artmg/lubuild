@@ -87,6 +87,73 @@ pulseaudio
 # help > https://help.ubuntu.com/community/Lubuntu/Setup#Sound
 ```
 
+
+## Audio routing software
+
+_(move OUT to music production?)_
+
+The standard system mixers mentioned above 
+are normally all you need to flow sound in and out 
+of your system. However, if you are trying 
+anything more complicated, such as flowing sound 
+between different applications, you might 
+need some audio routing software. 
+
+JACK is cross-platform, open-source software 
+that allows you to specify where sound comes out of 
+one piece of software, it then goes into another. 
+It works well on Linux, Windows and Mac 
+and should be able to operate at low latency. 
+
+Note that people working on sound recording 
+might want to consider a low-latency kernel 
+configuration, as found on Ubuntu Studio, 
+so that the processor is sensitive to the needs 
+of a smooth, consistent sound stream and 
+prioritises processes and interupts 
+to avoid human-detectable gaps in audio processing. 
+
+Alternatives to JACK include Soundflower and Black Hole on the Mac, Synchronous Audio Router on Windows, and the freemium VB-Audio Virtual Cable for Windows and Mac. 
+
+### Microphone pre-processing
+
+An example of why you might need sound routing is 
+if you want to pre-process your microphone input. 
+If you simply record with OBS or Audacity, they 
+have microphone set-up like equalisation built in, 
+or available using the free [Reaper VST plugins](https://reaper.fm/reaplugs). 
+If however you want to equalise for video streaming apps, then you'll need to route from your EQ to your conference client. 
+
+`calf-plugins` in the Ubuntu repos will work with JACK 
+to route your System IN through Pulse Audio JACK to 
+the Calf Studio Equaliser - see this [walkthrough](https://medium.com/@kaerumy/ubuntu-linux-high-quality-sound-processing-5be177c556a0). They are `LV2` open-standard audio plugins, so can be made to work on macOS. 
+
+EqualizerAPO is an open source Windows program, 
+driven by a text config file. You might want to use a 
+GUI such as Peace Equaliser or Room EQ Wizard. 
+You can use the ReaPlugs Reaper VST Plugins with it ([e.g.](https://antlionaudio.com/blogs/news/removing-background-noise-with-equalizer-apo-and-reapers-reafir)). Alternatively you can install LightHost open source VST host and Virtual Audio Cables to 'wire up' the reaplugs [manually](https://antlionaudio.com/blogs/news/sound-booster-and-noise-reduction-for-pc-light-host-and-reaper). Alternative VST hosts include PedalBoard (or Cantabile Lite).
+
+AU Lab is the Audio Unit software from Apple, 
+which you can get using `brew install --cask au-lab`. 
+See [this walkthrough](http://osxdaily.com/2012/05/18/equalizer-for-all-audio-mac-os-x/) of setting up an EQ routed by Soundflower. 
+eqMac is an open source mac equaliser, but it 
+does rely on a web interface (tho you can get that to run locally). eqMac2 is a fork with its own interface, but I'm not sure if it can do input.
+
+### VST hosts
+
+If you want a cross-platform, open source 
+host for audio plugins, your choices include:
+
+* Carla
+	* supports lv2, vst(x), au, etc
+	* available via package managers
+* Element
+	* supports AU, VST 2/3
+* Pedalboard 2
+	* currently only Windows and macOS
+* 
+
+
 ## Other Sound issues
 
 
