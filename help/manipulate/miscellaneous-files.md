@@ -156,12 +156,12 @@ help > http://live.gnome.org/Conduit/Documentation/UserDocumentation
 Synchrorep http://www.iceberg.0rg.fr/ is Python based and supports ftp, samba & ssh mounted shares
 Conduit http://live.gnome.org/Conduit/Development is Python based with many customm data providers
 
-###arch ideas###
+### arch ideas ###
 
 GNU usbsync http://klingspor-thueringen.de/usbsync/ uses file in root to automatically sync USBs with multiple PCs
 https://wiki.ubuntu.com/MultipleComputersSynchronization
 
-###others###
+### others ###
 
 http://sourceforge.net/projects/freefilesync/ C++ wxWidgets
 
@@ -218,16 +218,16 @@ but this is where you need to find the similar ones first!
 
 ### Requirements ###
 
-M  run on Ubuntu and derivatives
-S  be provided in standard repos
-M  Scan a folder
-C  Scan multiple folders
-M  Identify files which have identical content
-S  quick scan to target files by name, date and size
-C  date scan allow hour offset for time-zone issues 
-C  interpret special file types (e..g. ZIP cabinets or Media files) to identify identical or similar content, showing differences (e.g. photo metadata)
-M  list duplicates grouped, with folder information
-S  have GUI to allow the user to choose which to remove
+* M  run on Ubuntu and derivatives
+* S  be provided in standard repos
+* M  Scan a folder
+* C  Scan multiple folders
+* M  Identify files which have identical content
+* S  quick scan to target files by name, date and size
+* C  date scan allow hour offset for time-zone issues 
+* C  interpret special file types (e..g. ZIP cabinets or Media files) to identify identical or similar content, showing differences (e.g. photo metadata)
+* M  list duplicates grouped, with folder information
+* S  have GUI to allow the user to choose which to remove
 
 Note that this is related to, but NOT the same as,  
 identifing the differences between files and/or folders
@@ -249,6 +249,7 @@ find more at http://askubuntu.com/a/118389
         * can only "select all in same folder"
 
 * dupeguru
+	* https://dupeguru.voltaicideas.net/
     * [http://www.hardcoded.net/dupeguru/]
     * based on Python 3 with Qt GUI
     * requires PPA
