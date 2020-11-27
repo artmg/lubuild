@@ -82,6 +82,15 @@ If you are interested in your relative scores on performance
 	* check task manager
 * Run the tests
 
+Note that different commentators have split opinions 
+on whether this closed source executable that 
+doesn't show positive on most antivirus but DOES 
+send data (detail undisclosed) to its developer 
+is really malware or not. Consider this before using 
+on secure systems, especially if you are not planning 
+a final re-install before use. 
+
+
 ### Issue - bonjour not visible
 
 Printers and Spotify devices broadcasting via bonjour are not picked up by Windows 10 PC
@@ -170,6 +179,29 @@ choco install -y dontsleep.install
 ```
 
 ## Windows Update
+
+### Pull Updates that aren't appearing
+
+If you have just installed, but Settings / Updates 
+is not showing stuff you know has come out, 
+like major Features Updates, then you can use the 
+[Update Assistant tool](https://www.microsoft.com/en-gb/software-download/windows10)
+
+If it turns out that the update is being held back by 
+a [Safeguard Hold](https://docs.microsoft.com/en-us/windows/deployment/update/safeguard-holds), then at your own risk you can push forward your device using DisableWUfBSafeguards, e.g. 
+
+```
+Windows Registry Editor Version 5.00
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate]
+"DisableWUfBSafeguards"=dword:00000001
+```
+
+Note: Microsoft creates Safeguard Holds if testing
+has established your hardware is at risk 
+when an update is applied, so think twice before 
+ploughing on ahead regardless.
+
 
 ### Troubleshooting
 
