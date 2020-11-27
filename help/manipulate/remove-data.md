@@ -127,9 +127,22 @@ According to [NIST guidelines](http://dx.doi.org/10.6028/NIST.SP.800-88r1) the A
 
 IMPORTANT NOTES:
 
-* this procedure is ONLY for ATA attached drives
-	* do NOT use it on drives you attach via USB or SCSI
 * it is suitable for both HDD and SSD drives
+* this procedure is ONLY for ATA attached drives
+* do NOT use it on drives you attach via USB or SCSI
+	* only certain USB to SATA/PATA bridges can pass through these commands
+		* e.g. https://hardwarerecs.stackexchange.com/a/7003
+	* and if something goes wrong you risk bricking the drive
+
+If you are not 100% sure your connection supports ATA Secure Erase then simply plug the drive into an old computer's ATA/SATA.
+
+The steps are:
+
+* check you disk supports secure erase and is not frozen
+* set a security password
+* do the erase
+* check it completed
+* disable security to remove the password 
 
 See instructions at:
 
