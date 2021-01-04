@@ -27,6 +27,8 @@ see also:
 	* Check File Signatures ('Magic Characters') to discover what type of file you are looking at
 * [https://github.com/artmg/lubuild/blob/master/help/use/local-search.md]
 	* how to index and search locally stored file content
+* [https://github.com/artmg/lubuild/blob/master/help/manipulate/data-extraction.md]
+	* how to index and search locally stored file content
 * [https://github.com/artmg/lubuild/blob/master/app-installs.bash]
 	* which candidates are currently installed
 
