@@ -16,6 +16,8 @@ see also:
 	* [Disk recovery and forensics](https://github.com/artmg/lubuild/blob/master/help/diagnose/disk-recovery-and-forensics.md)
 * diagnosing other types of hardware issue
 	- [Hardware Troubleshooting](https://github.com/artmg/lubuild/blob/master/help/diagnose/hardware.md) 
+* when you need to clean up disks once you've finished with them:
+	* [Remove Data](https://github.com/artmg/lubuild/blob/master/help/manipulate/remove-data.md) 
 
 
 # Diagnose Disks
@@ -241,25 +243,49 @@ For diagnosing issues affecting other types of hardware see [Hardware Troublesho
 
 ### SMART tests 
 
-```
-gnome-disks
-# highlight the drive and check in the Drive Settings menu for SMART Data and Self Tests
+* gnome-disks
+	* highlight the drive and check in the Drive Settings menu for SMART Data and Self Tests
+	* if this is greyed out on External USB devices, you may need a separate utility to send the SMART ATA commands via the USB interface
 
-# if this is greyed outon External USB devices, you may need a separate utility to send
-# the SMART ATA commands via the USB interface
+```
 sudo apt-get install -y smartmontools
 
 # check that SMART is available on the device 
 sudo smartctl -i /dev/sdX
+
 # you may need the -d sat option if the drive is not in the smartctl database
 # for USB device compatibility see 
 # http://www.smartmontools.org/wiki/Supported_USB-Devices 
+SMT_OPTIONS=( -d sat )
 
 # check the health
-sudo smartctl -H /dev/sdX
-# if you have issues refer to http://blog.shadypixel.com/monitoring-hard-drive-health-on-linux-with-smartmontools/
+sudo smartctl "${SMT_OPTIONS[@]}" -H /dev/sdX
+```
 
+* if you have issues refer to http://blog.shadypixel.com/monitoring-hard-drive-health-on-linux-with-smartmontools/
 
+#### Quick SMART check on multiple drives
+
+```
+SMT_OPTIONS=( -d sat )
+
+lsblk
+sudo blkid
+DEVID=sdX
+
+# Basic Info
+sudo smartctl "${SMT_OPTIONS[@]}" -i /dev/$DEVID
+# start tests
+sudo smartctl "${SMT_OPTIONS[@]}" -t short /dev/$DEVID
+# results
+sudo smartctl "${SMT_OPTIONS[@]}" -a /dev/$DEVID
+# power down
+sudo hdparm -Y /dev/$DEVID
+```
+
+#### Other diagnostics
+
+```
 # start basic tests
 sudo smartctl --test=short /dev/sdX
 # check results after a while

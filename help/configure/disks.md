@@ -225,6 +225,7 @@ udisksctl mount -b /dev/$MEDIA_DEVICE
 Gnome disk utility does not currently create partitions that are
 automatically aligned. This causes performance issues, even on Flash/SSD
 media.
+
 ```
 # credit - http://www.thomas-krenn.com/en/wiki/Partition_Alignment
 
@@ -271,6 +272,7 @@ the front, to ensure they are properly aligned, and use Partition ID
 #### do it with parted
 
 as an alternative 
+
 ```
 # help - fdisk and parted apparently DO align properly - http://superuser.com/a/700554 
 # help - params for parted http://unix.stackexchange.com/a/49274
@@ -298,6 +300,7 @@ sudo mkfs.fat -n U50 ${MYDEVICE}1
 
 This is easiest using the Graphical Interface (GUI) utility GParted. 
 It guides you through the whole procedure and is easy to use. 
+
 ```
 sudo apt-get install gparted
 ```

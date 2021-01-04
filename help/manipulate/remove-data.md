@@ -125,6 +125,8 @@ srm -rfll folderPathToRemove
 
 According to [NIST guidelines](http://dx.doi.org/10.6028/NIST.SP.800-88r1) the ATA Secure Erase command is an effective sanitisation technique to 'Clear' data (protection against simple non-invasive data recovery techniques).
 
+### ATA Secure Erase
+
 IMPORTANT NOTES:
 
 * it is suitable for both HDD and SSD drives
@@ -144,7 +146,36 @@ The steps are:
 * check it completed
 * disable security to remove the password 
 
-See instructions at:
+
+```
+DEVID=sdX
+HDPWD=Junk
+# check if SECURE ERASE UNIT is supported
+# and it is not frozen
+sudo hdparm -I /dev/$DEVID
+
+# set the password
+sudo hdparm --user-master u --security-set-pass $HDPWD /dev/$DEVID
+
+# check the security is now enabled
+sudo hdparm -I /dev/$DEVID
+
+# perform the erase (this is the enhanced version)
+time sudo hdparm --user-master u --security-erase-enhanced $HDPWD /dev/$DEVID
+
+# check the status
+sudo hdparm -I /dev/$DEVID
+
+# finally turn off the security
+# although experience running enhanced erase this is unset at the end!
+sudo hdparm --security-disable $HDPWD /dev/$DEVID
+sudo hdparm -I /dev/$DEVID
+
+# IF you want to spin down -y else to power down...
+sudo hdparm -Y /dev/$DEVID
+```
+
+See also instructions at:
 
 * https://ata.wiki.kernel.org/index.php/ATA_Secure_Erase or
 * https://grok.lsu.edu/Article.aspx?articleid=16716

@@ -4,6 +4,17 @@ See also:
 	* how to find out details (metadata and contents) of media files
 
 
+## Start with Image
+
+If you need to keep a record of how to was for evidence, or if the medium is in a fragile state, 
+then you might consider taking a full disk image 
+and working on that instead.
+
+**`dd`** is simple but effective, 
+but if you are having issues then see the 
+media recovery section below.
+
+
 ## file types ##
 
 ### common types
