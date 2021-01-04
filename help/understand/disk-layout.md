@@ -73,17 +73,23 @@ and exFAT allowing size but being limited cross-platform. Fortunately Apple lice
 then in 2019 Microsoft release the spec allowing Linux kernel to support it natively.
 
 For the best support on Windows AND Linux AND Mac, 
-and considering the size of files and drives,
-**exFAT** now seems the safest choice. 
+for small drives with many tiny files **FAT** uses space well, but **exFAT** is the safest choice for large volumes with large files. 
 
-Some Notes: 
+* FAT32 has a limit of max 4GB file size
+* macOS has limitations with exFAT Allocation Unit Size (AUS, also know as cluster or block size)
+	* You cannot specify the size when formatting
+	* there are reports of drives not being recognised with custom AUS
+	* Earlier macOS versions may have been limited to 128KB, but it is possible they now follow Microsoft's published defaults https://support.microsoft.com/en-gb/help/140365/
+	* This makes exFAT inefficient for small volumes with many tiny files
+
+Other Notes: 
 
 * in legacy debian-like systems you may need to `sudo apt install exfat-fuse exfat-utils`
 * exFAT might not be supported by Apple’s Time Machine software
 * exFAT has features designed for Flash but works ok on magnetic media
     * although it might only has one copy of the allocation table!
 * only FAT-family are cross-platform as NTFS is RO on Mac
-* FAT32 has a limit of max 4GB file size
+
 
 
 ### OLD sections on Compatibility
