@@ -291,7 +291,9 @@ sudo smartctl --test=short /dev/sdX
 # check results after a while
 sudo smartctl -l selftest /dev/sdX
 
-sudo smartctl --test=long /dev/sdX
+# full test in captive (exclusive access) mode
+sudo smartctl -C -t long /dev/sdX
+
 
 sudo badblocks -v /dev/sdX
 # for destructive test -wsv  
