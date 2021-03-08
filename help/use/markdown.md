@@ -1,3 +1,6 @@
+Markdown
+=======
+
 see also:
 
 * https://github.com/artmg/lubuild/blob/master/help/use/coding
@@ -26,6 +29,15 @@ see also:
 * Click on Start Writing at the top
 * sign in to Google if you wish to store your markdown docs there
 * Not sure where the content is stored if you don't sign in
+* recent versions may have introduced a DB instead of all 'file'based storage
+* Project not actively developed since 2019 - no viable fork
+
+#### HackMD
+
+* register at https://hackmd.io/ with freemium limited account
+* appears to use their private git, but can also sync with public GitHub
+* 
+
 
 ### Google docs
 
@@ -45,6 +57,7 @@ If you want to write markdown in using Docs editor:
 	* https://github.com/mustakimali/GDocsMarkdownPreview
 * Optimise your Docs settings 
 	* https://www.digitalonlinetactics.com/post/tactics/google-docs/edit-markdown-in-google-docs/
+* Or just use it as it is and turn off or Undo formatting corrections https://www.digitalonlinetactics.com/post/tactics/google-docs/edit-markdown-in-google-docs/#comment-4818763694
 * 
 
 ## Edit markdown documents
@@ -100,6 +113,11 @@ For Android Apps see the section below.
 	* author has PPA for Ubuntu (and Arm builds for Pi)
 		* ppa:pbek/qownnotes
 	* based on author's own Qt Widget qmarkdowntextedit
+* Joplin ?
+	* sometimes mentioned as a competitor to QOwnNotes
+	* has many different sync providers
+	* includes Android client
+	* but does it **simply edit** markdown files?
 * CuteMarkEd
 	* Qt and C++
 	* commits have waned drastically in past year 
@@ -123,6 +141,10 @@ For Android Apps see the section below.
 	* electron-based
 	* generic code editor with preview mode including Markdown
 * others?
+	* VS Code
+		* VisualStudio seems a heavyweight solution
+		* but as MS are opening to wider platforms
+		* you might find this a neat solution
 	* springseed / flame ??
 	* haroopad
 		* well featured but no activity since 2013
@@ -148,6 +170,11 @@ see also:
 * Markdrop
 * Draft
 
+* Suggestions by users of QOwnNotes
+	* Markor
+	* Epsilon
+	* QuickEdit Text Editor
+	* Joplin ?
 
 ### macOS editors
 
