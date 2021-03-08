@@ -280,21 +280,11 @@ At their basis these are 'religious differences'
 
 sudo apt-get install ffmpeg
 
-Examples:
-* Video Cutter - extract timed sequence from VOB files
-    * VOB is Video Object container format for DVD
-    * it contains MPEG program stream video, audio & subtitles (limited variety of compression standards)
-    * to demux the video and audio stream, 
-    * and Cut them from the start to end frame/time, 
-        * -ss <duration> -i input -t <duration>
-    * but not to re-encode
-        * ffmpeg stream copy mode '-c(odec) copy' omits decoding and encoding
- ffmpeg -ss 00:04:30 -i VTS_01_1.VOB -t 00:07:00 -codec copy My_Movie_Cut.MPG
-
-
 * (command documentation)[https://www.ffmpeg.org/ffmpeg.html]
 * (some useful samples)[http://www.labnol.org/internet/useful-ffmpeg-commands/28490/]
 * (load more useful samples)[https://wiki.archlinux.org/index.php/FFmpeg]
+
+see example syntax for `Basic video cutting` below
 
 ### others
 
@@ -304,6 +294,8 @@ Examples:
 * h264enc ?
 
 * what's below the covers of Handbrake and MakeMKV?
+
+
 
 ## Films
 
@@ -380,6 +372,67 @@ see:
 
 
 * some alternative software - https://www.reddit.com/r/htpc/comments/2zhntu/alternatives_to_makemkv/
+
+
+### Video editing
+
+#### basic video cutting
+
+If all you need is to splice out the video from a given point to another, 
+you can use **ffmpeg's copy mode*** `-c(odec) copy` 
+which omits decoding and encoding so your content is transcribed verbatim. 
+
+Examples:
+
+```
+# Video Cutter - extract timed sequence from VOB files
+ffmpeg -ss 00:04:30 -i VTS_01_1.VOB -t 00:07:00 -codec copy My_Movie_Cut.MPG
+```
+
+Notes:
+
+* VOB is Video Object container format for DVD
+* it contains MPEG program stream video, audio & subtitles (limited variety of compression standards)
+* This will simply demux the video and audio stream, 
+* and Cut them from the start to end frame/time, 
+    * -ss <startpoint> -i <inputfile> -t <duration>
+* and in this case re-mux into an MPG container
+
+
+#### Video editing suites
+
+Non-linear editing (NLE) is offline planning of 
+how your video and audio sequences will be placed, cut and transitioned, and then you perform a final 
+render to create the linear AV output.
+
+These are alternatives to stock editors like Apple iMovie or Windows Video Editor, 
+and are cross-platform open-source projects:
+
+* OpenShot
+    * simple and similar to stock editors
+    * reasonably straightforward to learn the ropes
+    * might be limiting for more complex video projects 
+    * Qt with C++ video editing library libopenshot, JUCE library for audio, some python
+    * single principle developer, still active after 12 years
+    * brew openshot-video-editor requires elevation for `sh`!
+* Shotcut
+    * similar, uses Media Lovin' Toolkit (MLT framework)
+    * interface may be more modern than OpenShot
+    * but it might take more learning
+* Kdenlive
+    * aslo uses MLT
+    * very mature project, but some have find implementations buggy
+* Avidemux
+    * very simple - almost like a GUI for ffmpeg copy
+    * does have script editor for automation
+* Olive video editor
+    * relatively new project aiming towards professional high-end users
+    * could be one to watch, if the complexity is not too high 
+* OBS (Open Broadcast Studio)
+    * more for editing captured video streams (e.g. webcam)
+    * however it can import existing footage
+* 
+
 
 ## Handling media files
 
