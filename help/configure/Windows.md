@@ -362,6 +362,18 @@ Under Windows 10 Home you may use 'Device Encryption' (MS' free equivalent of bi
 * 
 
 
+## Hardware misc
+
+### Internal temperature
+
+If you want to troubleshoot issues with cooling or the 
+heat readings from CPU, GPU or other components
+
+* choco install openhardwaremonitor
+	* opensource alternative to the popular `hwinfo`
+	* similar to the mac 'stats' package in brew
+* 
+
 ## Dual Boot
 
 ### shrink Windows volume
