@@ -11,7 +11,8 @@ See also:
 * why you need to overwrite [https://github.com/artmg/lubuild/blob/master/help/diagnose/disk-recovery-and-forensics.md]
 * how proper total wiping is hard on flash [https://github.com/artmg/lubuild/blob/master/help/manipulate/flash-drives-and-SSDs.md]
 	* if you want to erase SSDs see the later section 
-
+* if you just want to clean up a particularly full disk: [Troubleshooting Disks](https://github.com/artmg/lubuild/blob/master/help/diagnose/disks#specifics-to-clean-up) 
+* 
 
 ### simple overwrites with dd
 ```

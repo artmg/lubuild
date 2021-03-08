@@ -7,6 +7,10 @@ see also:
 ## Extraction from unstructured sources
 
 How to take a source where the table or other structure is not immediately obvious to a data import mechanism, and to use some simple logic to recognise or describe what the structure is. Then to prepare that data into a recognisable form, such as a table, for other systems to easily import and work on.
+An example of this might be to parse and interpret html code 
+to recognise the data columns and rows, 
+so that this can be saved easily as a table. 
+
 
 ### from pdfs
 
@@ -29,13 +33,16 @@ How to take a source where the table or other structure is not immediately obvio
 	* cross platform, open source python cli tool
 	* extract data from websites
 	* 
-* UI.Vision RPA
-	* automation for tasks and testing 
-	* browser extension
 * portia
 	* from scrapy team
 	* visual, no coding
 	* 
+* Beautiful Soup
+	* open source python library for parsing html
+	* creates a parse tree ready to interpret
+* UI.Vision RPA
+	* automation for tasks and testing 
+	* browser extension
 * selenium
 	* web testing can be used to scrape
 * 
