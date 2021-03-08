@@ -6,13 +6,15 @@ See also:
 
 ## Start with Image
 
-If you need to keep a record of how to was for evidence, or if the medium is in a fragile state, 
+**IMPORTANT**
+
+IF you need to keep a record of how to was for evidence, or if the medium is in a fragile state, 
 then you might consider taking a full disk image 
 and working on that instead.
 
 **`dd`** is simple but effective, 
 but if you are having issues then see the 
-media recovery section below.
+Media Recovery section below.
 
 
 ## file types ##
@@ -56,6 +58,21 @@ See sections below or other carving utils include MagicRescue, Hachoir
 * [http://www.forensicswiki.org/wiki/Tools%3aData_Recovery#Carving]
 * [https://help.ubuntu.com/community/DataRecovery]
 
+### Initial analysis
+
+You might not be able to mount (all of) the disk medium, 
+so how can you get an idea of what is on there
+
+* Autopsy
+    * Forensic browser GUI with plugins
+    * runs as a local http-served app in your browser
+    * uses commands and libaries from the Sleuth Kit (same project)
+    * Universe package: `sudo add-apt-repository universe || sudo apt update || sudo apt install autopsy`
+* wxHexEditor
+    * (the hard way)
+    * open-source, cross-platform Hex Viewer and Editor
+    * can handle raw disk images and massive files
+* 
 
 ### scalpel and foremost
 
@@ -127,7 +144,9 @@ head -c 256 < /dev/loop2 | hd
 
 ```
 
-## Recovering from damaged media
+## Media Recovery
+
+Recovering what you can from damaged media
 
 ### Magnetic
 
