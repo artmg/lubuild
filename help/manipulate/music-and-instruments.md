@@ -16,6 +16,7 @@ see also:
 
 ### Midi Keyboard ###
 
+```
 # just plug it then check it shows
 lsusb
 
@@ -27,6 +28,7 @@ lsusb
 
 # step by step to record midi through Jack to Ardour
 # http://sungwonchoe.com/how-to-configure-jack-and-ardour-in-ubuntu-linux-for-recording-midi/
+```
 
 [play live with Bristol organ](http://zenit.senecac.on.ca/wiki/index.php/Performing_Live_with_Jack,Qsynth,_and_Bristol_Organ)
 
@@ -74,6 +76,47 @@ http://soundbible.com/1264-Sunday-Church-Ambiance.html
 http://bedroomproducersblog.com/tag/free-samples/
 
 full orchestral samples to download - http://www.newgrounds.com/bbs/topic/1200140
+
+
+### Creating your own scores
+
+Software for editing and printing scores. 
+Note that an alternative workflow involves editing 
+using a 'piano roll' editor such as in Rosegarden. 
+
+* museScore
+	* open source cross-platform notation software
+	* supports lots of file formats
+* LilyPond
+	* good alternative for 'music engraving'
+	* use with Frescobaldi to compose from text markup
+* TuxGuitar
+	* notation for guitar tabs
+* Rosegarden has a score editor - see above
+* Improv-visor
+	* for jazz musicians to prepare riffs and solos
+	* includes automatic playing of backing for chords and rhythm
+
+Software and services to interpret audio files and 
+transcribe the notes 'heard' into musical notation 
+(often via MIDI files). 
+
+* PianoScribe
+	* https://piano-scribe.glitch.me/
+	* live working demo with open source for frontend
+	* converts audio uploaded or recorded directly in the browser
+	* uses a network called 'Onsets and Frames' based on Majenta and TensorFlow
+	* network is trained for polyphonic piano and drum kits, as described in the paper https://arxiv.org/pdf/1710.11153.pdf
+* AmazingMidi
+	* abandoned freeware to produce MIDI from WAVs
+* Transcribe
+	* includes audio recognition
+	* 30 day free trial
+	* AnthemScore is the paid software that some people recommend for this
+* ScoreCloud
+	* service that some people said was reliable for transcribing an audio recoording automatically
+	* freemium service does not allow export on free plans
+* 
 
 
 ## improving your set up 
