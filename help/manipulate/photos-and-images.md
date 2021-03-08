@@ -232,6 +232,25 @@ like instaLooter, taken over from instaRaider. [https://github.com/althonos/inst
 	* `-m`, --add-metadata    add date and caption metadata
 	* credit [http://instalooter.readthedocs.io/en/latest/usage.html]
 
+## Recognising content
+
+Systems for recognising content in photos:
+
+* faces of individual people
+* elements of scenes
+* similarities of content
+* (partial) duplication
+
+and for metadata tagging them based on this, 
+or categorising or organising in other ways.
+
+* DigiKam
+	* Face recognition
+		* uses OpenCV's `Deep Neural Network` module
+		* previously used OpenTLD
+* OpenBR ?
+	* Face detection, normalisation, extraction and matching
+* 
 
 ## turning images into text
 
