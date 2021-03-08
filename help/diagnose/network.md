@@ -691,9 +691,33 @@ sudo apt-get install iperf
 # Android clients include: ???
 # install as daemon:
 # sudo iperf -s -D > ??? tee
+```
+
+iperf version notes:
+
+* no combatibility maintained between these three variants
+* iperf
+	* the original iperf was developed by academics with support from US govt, and made it to 1.7 in 2003
+	* after team changes another push took it to version  2.0.x between 2005-8, but was then abandoned
+	* the ubuntu package iperf actually contains iperf2
+* **iperf2**
+	* forked in 2014 and developed by a Broadcom employee
+	* extended with a focus on wifi
+	* in ubuntu repos as iperf
+	* also has maintained Windows build 
+* **iperf3**
+	* by ESnet (US govt supported academic) group 
+	* forked late 2014 from the original 2.0.x code
+	* rewritten to have a smaller simpler codebase
+	* supported on linux and macos
+		* there was a Windows build in 2016 by iperf.fr
+		* but this has not been maintained
+	* available as iperf3 in ubuntu repos
+* 
 
 #### Interface issues?
 
+```
 # Latest NIC drivers? Correct drivers for card?
 # does dmesg show errors?
 
