@@ -157,10 +157,10 @@ baobab &
 
 ## local package cache ##
 # display cache size
-sudo du -sh /var/cache/apt/archives
+du -sh /var/cache/apt/archives
 # credit - http://www.howtogeek.com/howto/28502/
 # purge
-sudo apt clean
+sudo apt-get clean
 
 
 ## crash logs ##
@@ -198,31 +198,6 @@ sudo apt-get install bleachbit
 # as well as locations above, it also checks locations for well-known apps (like browser caches)
 
 ```
-
-#### Can't clean up?
-
-You might have a system process that fills your drive to the brim. 
-
-Looking with df it shows 0% free, so you purge some of the bulky data you don't need. Now, you see the Blocks Used going down, but they are NOT becoming Available and it stays at Use% 100%. Why?
-
-Ext2-Ext4 partitions are created with a System-Reserved 
-safety buffer of 5% by default. Once the user thinks they 
-have filled the drive, this allows logs and vital service files 
-to continue being written, avoiding a crash. 
-
-You can tweak this down to 4, 2 or even 0% if 
-you are desparate to get space to allow your 
-backup or clearup or however you want to deal with the issue.
-
-```
-sudo tune2fs -m 2 /dev/sdX1
-# check that Available / Use% has adjusted
-df
-```
-
-Some people leave this tuned down, but you might want to 
-put it back up to(wards) 5% to keep your system reliable. 
-
 
 ## Specific disk configurations
 
