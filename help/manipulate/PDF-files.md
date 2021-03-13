@@ -217,6 +217,12 @@ see also https://github.com/artmg/lubuild/blob/master/help/diagnose/disk-recover
 
 ## split pages
 
+* pdf-shuffler
+	* linux only
+	* in many repos
+* pdfsam
+	* cross platform
+	* it is freemium, but nag-light and still open source
 
 
 ## Working with Fonts
@@ -234,6 +240,24 @@ Note that many fonts are only the subset of letters used, so won't include every
 For more on fontforge, see [http://designwithfontforge.com]
 
 For even more techniques see [https://stackoverflow.com/a/3489099]
+
+
+## Editing file contents
+
+Depending on how the file was created, 
+you might find either of the following 
+useful for modifying the contents and layout
+of PDF files
+
+* LibreOffice
+	* defaults to opening in the Draw program 
+	* this is the one that handles PDF content best
+	* see also [use/Office documents](https://github.com/artmg/lubuild/blob/master/help/use/Office-documents.md)
+* Inkscape
+	* more appropriate for low level editing or complex contents
+	* see also [manipulate/plans and designs](https://github.com/artmg/lubuild/blob/master/help/manipulate/plans-and-designs.md)
+
+Watch out for the metadata when you write the final file
 
 
 ## modify file properties ##
