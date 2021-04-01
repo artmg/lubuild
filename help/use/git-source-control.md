@@ -94,7 +94,11 @@ see [#authentication-options] section below, e.g.
 # if omitted the destination folder will be created in the current working directory
 
 # e.g.
-git clone https://github.com/artmg/nixnote2-packaging.git
+git clone https://github.com/artmg/lubuild.git
+
+# NB: as an alternative you may want to use SSH not HTTPS
+# git clone git@github.com:artmg/lubuild.git 
+# check Authentication options below for details 
 
 
 ### check what has changed
@@ -208,6 +212,10 @@ explains two broad methods:
 
 ### Using SSH keys
 
+This applies to remotes that have been cloned 
+using HTTPS not SSH, for instance 
+`git@github.com:artmg/lubuild.git` rather than 
+
 #### Generate
 
 ```
@@ -272,6 +280,20 @@ ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -T git@$SOURCE_H
 # ssh -vvvT git@$SOURCE_HOST
 ```
 
+##### failure to use SSH key
+
+If these tests pass successfully, but 
+you continue to get errors when pushing (etc), 
+it may be because you cloned the repo over HTTPS not SSH. 
+You can change this back to SSH using 
+
+```
+git config remote.origin.url git@github.com:artmg/lubuild.git
+```
+
+* credit [switching between HTTPS and SSL methods of access](http://superuser.com/a/683651)
+
+
 ### store Personal Access token
 
 Note that you should guard these tokens as if they were passwords, 
@@ -303,12 +325,6 @@ Now all your local git access should include these credentials automatically
 
 Periodically review the tokens you have at [https://github.com/settings/tokens]
 
-#### other
-
-see also:
-* [http://superuser.com/a/683651]
-    * switching between HTTPS and SSL methods of access
-* 
 
 
 ### deploy keys
@@ -638,6 +654,9 @@ but you will have no trace that this was done.
 # Check the current status
 git status
 git remote -v
+# if the upstream remote is not yet defined, then add it
+# git remote add upstream https://github.com/ORIGINAL_OWNER/ORIGINAL_REPOSITORY.git
+
 git branch -vv
 # git branch -av
 
