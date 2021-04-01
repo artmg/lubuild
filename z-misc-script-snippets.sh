@@ -59,3 +59,10 @@ chmod a+rx ~/Desktop/${NAME[i]}.desktop
 sudo fc-cache -f -v
 # credit http://askubuntu.com/a/3706
 
+
+## ls examples
+
+# Cut part of name and sort
+ls | cut -d'.' -f3- | sort -r
+# Sort on date with gaps
+find . -iname "*FileNamePateern*" -maxdepth 1 -printf '%TY-%Tm-%Td\t%f\n' | sort -r | awk -v i=1 'NR>1 && $i!=p { print "" }{ p=$i } 1'
