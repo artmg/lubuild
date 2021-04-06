@@ -1,4 +1,18 @@
-#! /bin/bash
+#!/bin/bash
+
+cat "$0"
+echo
+echo FYI: these are shell script samples (snippets), not meant to be run!
+echo
+read -p "Press [Enter] key to end"
+exit 1
+
+# see also:
+# * https://github.com/artmg/lubuild/blob/master/help/manipulate/files-and-folders.sh
+# * https://github.com/artmg/lubuild/blob/master/help/use/Music-and-multimedia.md
+#    * for and find to output to playlists
+#
+
 
 ### OS and Version ###
 
@@ -66,3 +80,11 @@ sudo fc-cache -f -v
 ls | cut -d'.' -f3- | sort -r
 # Sort on date with gaps
 find . -iname "*FileNamePateern*" -maxdepth 1 -printf '%TY-%Tm-%Td\t%f\n' | sort -r | awk -v i=1 'NR>1 && $i!=p { print "" }{ p=$i } 1'
+
+## sed examples
+
+# wrap with quotes part of a CSV in case it contains commas
+sed -i -E 's/^(.{11})(.{66})(.*)/\1\"\2\"\3/' filename
+# this quote delimts the entire portion from column positions 12 to 77
+# wraping with quotes was simpler than substituting ONLY within that range of column positions!
+

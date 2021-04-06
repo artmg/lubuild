@@ -7,6 +7,13 @@ echo
 read -p "Press [Enter] key to end"
 exit 1
 
+# see also:
+# * https://github.com/artmg/lubuild/blob/master/z-misc-script-snippets.sh
+# * https://github.com/artmg/lubuild/blob/master/help/use/Music-and-multimedia.md
+#    * for and find to output to playlists
+#
+
+
 ## Empty folders
 
 ### Extract files from folder structure
@@ -45,3 +52,16 @@ do
     popd >nul
 done
 echo pathname $DELIM folders $DELIM files $DELIM datavolume
+
+## take multiple named files
+
+### concatenate files removing headers
+
+# If there are multiple table files (e.g. CSVs) 
+# and you want to concatenate them into one single table
+# removing headers from all but the first
+# then you can simply add the first line from any 
+# credit - http://apple.stackexchange.com/a/88564
+
+{ cat Historical*.CSV | head -n1 ; for f in His*.CSV; do tail -n+2 "$f"; done; } > JoinedUp.`date +%y%m%d.%H%M%S`.csv
+
