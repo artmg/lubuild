@@ -208,6 +208,25 @@ then Pad to extrude, and Pocket to remove blocks
 
 Arch Survey (quick dimension entry) - http://forum.freecadweb.org/viewtopic.php?f=9&t=5659
 
+### Addin workbenches
+
+* CurvesWB
+    * allows two 2d wires to be joined together into a 3d wire for complex pipes
+    * also has wide ranging features for curved surfaces
+    * https://github.com/tomate44/CurvesWB
+* 
+
+### Dependency Graph
+
+This diagnostic tool may need addional libraries to work
+
+* on macos GraphWiz is required
+	* `brew install graphviz`
+	* has quite a few dependency packages too
+	* you may need to tell FreeCad the path, e.g.
+		* /usr/local/Cellar/graphviz/<version>/bin/
+* 
+
 
 
 # SweetHome3D
