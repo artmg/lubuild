@@ -16,6 +16,8 @@ see also:
     * convert between markdown and numerous other formats
     * installed via [Lubuild app-installs.bash](https://github.com/artmg/lubuild/blob/master/app-installs.bash)
     * sample command # pandoc -f markdown -t html -o output.htm input.txt
+	* if you get UTF-8 errors you can try [iconv](https://pandoc.org/MANUAL.html#character-encoding)
+
 
 ## Markdown cloud integration
 
@@ -172,9 +174,13 @@ see also:
 
 * Suggestions by users of QOwnNotes
 	* Markor
+		* decent editor
+		* no 'search in files'
+			* use aGrep as alternative
 	* Epsilon
 	* QuickEdit Text Editor
 	* Joplin ?
+
 
 ### macOS editors
 
