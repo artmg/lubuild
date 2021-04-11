@@ -374,6 +374,15 @@ heat readings from CPU, GPU or other components
 	* similar to the mac 'stats' package in brew
 * 
 
+### audio app control
+
+If you want to diagnose which application is the 
+sound source program that is currently sending audio, 
+like macOS `background-music`, 
+consider the advanced volume controller app EarTrumptet 
+(`choco install eartrumpet`).
+
+
 ## Dual Boot
 
 ### shrink Windows volume
