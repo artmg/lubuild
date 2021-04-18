@@ -1267,7 +1267,7 @@ service syslog-ng restart
 Open source, cross platform GUI tools for viewing logs 
 and dynamically filtering which entries appear:
 
-* glogg
+* klogg (forked from abandoned glogg)
 * logstash
 * ? splunk ?
 * ? Fluentd ?
