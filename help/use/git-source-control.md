@@ -699,3 +699,28 @@ git remote -v # see both now
 
 git checkout origin/master
 ```
+
+
+#### test a PR in isolation
+
+If someone has submitted a Pull Request, 
+you may want to perform tests on that 
+in isolation from your main cloned repos.
+Where xxx is the PR number...
+
+Option 1: git-extras
+
+```
+git pr https://github.com/user_name/repo_name/pull/xxx
+```
+
+Option 2: standard git
+
+```
+git clone https://github.com/user_name/repo_name.git --depth 1 TestFolderName
+cd TestFolderName
+git pull origin pull/xxx/head
+```
+
+Unfortunately at v 2.31 you cannot pull a PR branch in clone using -b pull/xxx/head
+
