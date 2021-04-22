@@ -217,12 +217,19 @@ see also https://github.com/artmg/lubuild/blob/master/help/diagnose/disk-recover
 
 ## split pages
 
+* PDF Arranger
+	* forked from defunct pdfshuffler
+	* available for Linux and Windows
+		* not required in macOS as buint-in Preview allows PDF editing
+	* `pdfarranger` in choco, debian and other repos
 * pdf-shuffler
 	* linux only
-	* in many repos
+	* was in many repos
+	* project abandoned since 2018
 * pdfsam
-	* cross platform
-	* it is freemium, but nag-light and still open source
+	* cross platform and open source
+	* however as freemium software, premium features will be locked
+	* over time the interface has become too full of locked features to really be usable
 
 
 ## Working with Fonts
