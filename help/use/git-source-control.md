@@ -21,12 +21,19 @@ sudo apt-get install -y git
 
 #### gui
 
-If you'd rather a GUI to peruse your files before commit, manage your branches and manipulate your repos then consider the unofficial linux fork of the official client written for the Electron framework (a NodeJS runtime rendered by Chrome):
+If you'd rather a GUI to peruse your files before commit, manage your branches and manipulate your repos then consider:
 
-https://github.com/shiftkey/desktop
-
-Alternatives include:
-
+* GitAhead
+	* cross-platform, open source, c++/qt graphical client
+	* available via many linux repos, windows choco and mac brew
+	* previously from a commercial developer, now open-sourced
+* Github Desktop
+	* the official client on Windows and macOS
+	* written for the Electron framework (a NodeJS runtime rendered by Chrome):
+ the unofficial linux fork of 
+* ShiftKey Git Desktop
+	* the unofficial linux fork of official electron client
+	* https://github.com/shiftkey/desktop
 * git-cola
     * qt-based
 * QGit
