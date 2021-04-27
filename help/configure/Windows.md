@@ -63,6 +63,10 @@ Undo the change to allow updates once again:
 
 ### Create a local account
 
+If you don't find the options below to 'not use an email address' 
+then the last gap appraoch is to disconnect from the internet, 
+by removing the ethernet cable or turning off the wifi. 
+
 * Click Start, Settings, Accounts, Family & other users, Add someone else to this PC
     * Note that you can’t “Add a family member” with a local account. Presumably that is tied in to parental controls.)
 * Add someone else to this PC 
@@ -222,10 +226,12 @@ If updates are stuck in perpetual 'Update and Restart'
 or Checking for "Windows Update" sticks on "please wait" or if you have other reason to want to reset the 
 whole Windows Update agent settings on your PC...
 
-* load the Reset Windows Update Client script
-* https://gallery.technet.microsoft.com/scriptcenter/Reset-Windows-Update-Agent-d824badc
-* expand the zip and run the Batch as Admin
-* pick the options you want (e.g. 2, 3)
+https://docs.microsoft.com/en-us/windows/deployment/update/windows-update-resources
+
+_Microsoft appears to have hidden the previous "Reset Windows Update Client script" from 
+https://gallery.technet.microsoft.com/scriptcenter/Reset-Windows-Update-Agent-d824badc 
+where you could expand the zip and run the Batch as Admin then 
+pick the options you want (e.g. 2, 3)_
 
 
 #### download large updates directly
@@ -316,7 +322,7 @@ is to reinstall the whole OS, and Windows is closer to the rule than the excepti
 * then reinstall
 
 
-### Automatic Repair Mode
+### Automatic Repair Mode
 
 Windows 10, together with the hidden OEM boot partition, make it easy to refresh your PC as if you'd just unpacked it for the first time.
 
@@ -381,6 +387,85 @@ sound source program that is currently sending audio,
 like macOS `background-music`, 
 consider the advanced volume controller app EarTrumptet 
 (`choco install eartrumpet`).
+
+
+## Subsystem for Linux
+
+WSL is the Windows Subsystem for Linux, 
+where you can choose a Linux flavour to install 
+from the Windows App Store to run via this subsystem. 
+With the `wsl` executable you can either 
+open a linux terminal or directly run a linux shell command. 
+You might find this a useful alternative to 
+either dual booting or installing a whole virtual machine. 
+
+### Enable the WSL
+
+* open an admin powershell
+* execute:
+
+```
+Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux 
+```
+
+* restart your computer
+* Open the App Store
+* search for `wsl`
+* pick your preferred distro flavour
+
+For help using WSL see https://adamtheautomator.com/windows-subsystem-for-linux/
+
+
+## User accounts
+
+For adding a local-only user by dropping the network, 
+see [# create a local account](#create-a-local-account) section above 
+
+### Lost Password
+
+There are numerous ways to recover or reset lost passwords 
+for local user accounts on Windows, like the administrator. 
+Generally speaking it will take longer to recover a password, 
+e.g. using `ophcrack` or John the Ripper,  than it will to simply 
+Reset the password in the Windows SAM.  Although there are 
+hacks to do this via `net user` you are likely to need to sideboot 
+from a different OS.  So the simplest method is to use a live linux,  e.g. 
+
+* Ubuntu Live USB
+* PuppyLinux frugal
+
+#### chntpw
+
+Many distros already include the small utility `chntpw` 
+but if not then you can install it with...
+
+* `sudo apt` cli installer on ubuntu 
+* `ppm` Puppy Package Manager on Puppy 
+
+You can find dedicated distros like HirensBootCd that include this, 
+but you can just as easily add it to a general purpose distro you might 
+be used to using. 
+
+
+```
+# mount the drive and check
+mkdir /mnt/Win
+mount /dev/sdaX /mnt/Win
+ls /mnt/Win
+
+# Go into registry folder and back up SAM
+cd /mnt/Win/Windows/System32/config/
+cp SAM SAM.yymmdd.bak
+chntpw -l SAM
+
+# make your changes
+chntpw -l SAM
+
+# save and unmount
+sync
+mount -u /mnt/Win
+```
+
 
 
 ## Dual Boot
@@ -678,5 +763,6 @@ fixmbr
 * or in Ubuntu
 	* try Bootinfoscript for diagnostic info
 	* see boot-repair
+
 
 
