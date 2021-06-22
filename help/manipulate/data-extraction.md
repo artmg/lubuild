@@ -75,7 +75,7 @@ so that this can be saved easily as a table.
 ## data cleansing
 
 once you have the data inside, you might want to 
-increase the consistency between items to prepare it for solid ananlysis. For instance, categories may have been entered differently by different people, but actually relate to the same topic. 
+increase the consistency between items to prepare it for solid analysis. For instance, categories may have been entered differently by different people, but actually relate to the same topic. 
 
 * OpenRefine
 	* previously google refine
@@ -96,7 +96,7 @@ increase the consistency between items to prepare it for solid ananlysis. For in
 * Orange
 	* very mature open-source, cross platform project
 	* Python and C with Qt interface
-	* data visualization, machine learning and data mining features
+	* data analytics, visualization, machine learning and data mining features
 * Scriptella is ETL scripting in Java
 * KETL integration platform in Java
 * Jedox full BI, with OLAP and ETL
