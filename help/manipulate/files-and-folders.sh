@@ -65,3 +65,4 @@ echo pathname $DELIM folders $DELIM files $DELIM datavolume
 
 { cat Historical*.CSV | head -n1 ; for f in His*.CSV; do tail -n+2 "$f"; done; } > JoinedUp.`date +%y%m%d.%H%M%S`.csv
 
+# this adds the date and timestamp as YYMMDD . HHMMSS to the filename
