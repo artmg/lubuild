@@ -466,6 +466,33 @@ sync
 mount -u /mnt/Win
 ```
 
+## Blue screen errors
+
+The Windows Blue Screen fatal errors now have a sad face 'smiley' emoticon. Sometimes referred to as Stop errors or bugchecks, they are still known as the Blue Screen of Death (BSOD) as there is no recovery, just restarting
+
+### BSOD Diagnostics
+
+```
+Get-EventLog -LogName application -Newest 1000 -Source 'Windows Error*' | select timewritten, message | where message -match 'bluescreen' |  ft -auto -wrap
+# credit https://techgenix.com/powertip-use-powershell-report-bluescreens/
+```
+
+* leave off the `-Wrap` if you want a date summary instead
+	* I tried using ` | Out-String -Width 250` to just get some of the message but to no avail
+
+### Some things to check
+
+System File Checker looks for changes or damage to protected system files, Deployment Image Servicing and Management and a Disk Scan look for simple issues in the Windows system files and on the hard disk
+
+```
+sfc /scannow
+dism /online /cleanup-image /restorehealth
+chkdsk /scan
+```
+
+Some people suggest you do a memcheck too - Windows Memory Diagnostic then check eventvwr for System log and Find source `MemoryDiagnostic`
+
+If you are still stuck see https://docs.microsoft.com/en-us/windows/client-management/troubleshoot-stop-errors
 
 
 ## Dual Boot
