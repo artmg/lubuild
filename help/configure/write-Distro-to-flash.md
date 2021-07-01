@@ -445,7 +445,8 @@ You can use **mkusb** above for a more controlled approach, which makes it more 
 ### expand the second partition
 
 for details on expanding the default Raspbian 
-second parition to fill your device, see
+second parition to fill your device, see 
+https://github.com/artmg/MuGammaPi/wiki/Raspbian-basics#expand-partition
 
 
 ### Partition start improvement?
