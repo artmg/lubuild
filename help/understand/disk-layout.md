@@ -335,7 +335,7 @@ Finally proceed with the Ubuntu installation
 ## LiveUSB
 
 see also:
-* [https://github.com/artmg/lubuild/blob/master/help/configure/write-Distro-to-flash.md]
+* [https://github.com/artmg/lubuild/blob/master/help/configure/write-Distro-to-flash.md]()
     * For creating a LiveUSB install or trial flash-drive 
     * Adding a Persistence volume
     * troubleshooting
