@@ -536,6 +536,20 @@ which you can turn off in `systempropertiesprotection.exe`.
 
 ### Windows 10 Dual Boot
 
+#### Simple dualboot with UEFI
+
+* shutdown /s /t 0 
+* Check for the BIOS key (e.g. Del/F10) and Boot Select (e.g. F12) 
+* Boot into UEFI ('bios')
+* (as you may need to check Safeboot is off)
+* ensure you can override to choose boot USB
+* boot Lubuntu (persistent or Live, but **not** to RAM)
+* Launch installer
+* choose to partition manually
+* you should have existing FAT32 100-250MB for EFI
+* mount this as /boot/efi; create 1GB ext4 /boot + <amount of RAM> swap + 15-30GB ext4 / 
+	* the 1GB boot is for the kernel files and will permit full volume encryption to protect your main root folder
+
 #### Access windows partition from linux
 
 To access Windows 10 NTFS system partiton when dual booted into ubuntu
