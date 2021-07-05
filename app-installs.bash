@@ -22,8 +22,9 @@ sudo add-apt-repository -y ppa:nixnote/nixnote2-daily
 # sudo add-apt-repository -y ppa:freecad-maintainers/freecad-stable # FreeCAD (newer than Ubuntu version)
 # sudo add-apt-repository -y ppa:recoll-backports/recoll-1.15-on    # now in user-apps.bash
 
+# For each source, test the distro does NOT already have it
+# then add the key and the source
 
-# if this distros does NOT have chrome sources already...
 if [ ! -f /etc/apt/sources.list.d/google-chrome.list ]; then (
   # Google Key - https://www.google.com/linuxrepositories/
   wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add - 
@@ -31,12 +32,17 @@ if [ ! -f /etc/apt/sources.list.d/google-chrome.list ]; then (
   sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list' ;
 ) ; fi
 
-# if this distros does NOT have skype sources already...
 if [ ! -f /etc/apt/sources.list.d/skype-stable.list ]; then (
   # credit https://repo.skype.com/
   dpkg -s apt-transport-https > /dev/null || bash -c "sudo apt-get update; sudo apt-get install apt-transport-https -y"
   wget -q -O - https://repo.skype.com/data/SKYPE-GPG-KEY | sudo apt-key add - 
   echo "deb [arch=amd64] https://repo.skype.com/deb stable main" | sudo tee /etc/apt/sources.list.d/skype-stable.list
+) ; fi
+
+if [ ! -f /etc/apt/sources.list.d/anydesk-stable.list ]; then (
+  # credit http://deb.anydesk.com/howto.html
+  wget -q -O - https://keys.anydesk.com/repos/DEB-GPG-KEY | sudo apt-key add - 
+  echo "deb http://deb.anydesk.com/ all main" | sudo tee /etc/apt/sources.list.d/anydesk-stable.list ;
 ) ; fi
 
 # Prepare for repository installs
