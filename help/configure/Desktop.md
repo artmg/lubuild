@@ -92,6 +92,17 @@ see [https://github.com/lxde/lxqt/blob/master/CONTRIBUTING.md]
 
 Not sure where the Lubuntu Next settings source is 
 
+#### Monitor settings
+
+see also:
+
+* some useful help with monitor settings
+	* [Chapter 3.2.10 of the Lubuntu manual](https://manual.lubuntu.me/stable/3/3.2/3.2.10/monitor_settings.html)
+* Diagnostics for Monitor displays and Video graphics adaptors (GPU)
+	* [https://github.com/artmg/lubuild/blob/master/help/diagnose/video-display.md]
+
+If you have a high resolution (or 'HiDPI') monitor you may want to 'zoom' in the fonts and icons, using `QT_SCALE_FACTOR=2` in the LxQT Session Settings / Environment Variables (stored in the `[Environment]` section of `~/.config/lxqt/session.conf`)
+
 
 ### Screen locker
 
@@ -314,6 +325,16 @@ sudo chown --reference=defaults.list myprog.desktop
 
 see also [https://lkubaski.wordpress.com/2012/06/29/adding-lxde-start-menu-and-desktop-shortcuts/]
 
+#### trust for execution
+
+In LxQt versions, shortcuts e.g. on the Desktop 
+may appear with an exclamation mark by the icon 
+if you have not checked `trust this executable`. 
+The command line equivalent of this is 
+
+```
+gio set $HOME/Desktop/MyIcon.desktop "metadata::trusted" true
+```
 
 #### icon files
 
@@ -341,6 +362,10 @@ Terminal=false
 
 If you have issues with -e syntax try --command="" instead
 
+
+#### Quicklaunch
+
+In LxQt the config file for quicklaunch icons is `.config/lxqt/panel.conf` where an entry in the `[quicklaunch]` section points to the the desktop file. The quickest way to config it, though, is to drag and drop copy the icon from the desktop to the panel quicklaunch area.
 
 
 ### Create New ...
