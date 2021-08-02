@@ -210,6 +210,8 @@ sudo echo
 
 # help https://help.ubuntu.com/community/mkusb
 sudo add-apt-repository -y ppa:mkusb/ppa
+# if you get errors...
+# sudo apt-get install software-properties-common
 sudo apt update
 sudo apt install -y mkusb
 
@@ -237,6 +239,8 @@ MEDIA_DEVICE=sdX9
 unzip -p $IMAGE_FILENAME ${IMAGE_FILENAME%.*}.img | sudo dd bs=4M status=progress of=/dev/${MEDIA_DEVICE:0:3}
 # if you have a .img.xz then use...
 # xzcat $IMAGE_FILENAME ${IMAGE_FILENAME%.*}.img | sudo dd bs=4M status=progress of=/dev/${MEDIA_DEVICE:0:3}
+# or if you have a .iso then use...
+# sudo dd bs=4M status=progress if=$IMAGE_FILENAME of=/dev/${MEDIA_DEVICE:0:3}
 
 ```
 
