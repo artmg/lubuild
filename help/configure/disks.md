@@ -706,6 +706,41 @@ for useful links see also - https://wiki.archlinux.org/index.php/System_Encrypti
 For issues with NTFS partitions in Dual Boot systems, see also 
 [https://github.com/artmg/lubuild/blob/master/help/configure/Windows.md]
 
+### Inserted media
+
+Most of this section is talking about 
+automatically mounting permanently connected drives when the system starts. 
+However some people think of automatic mounting of inserted drive media, like when you plug in a USB drive, so the user can read and write to it. In a desktop environment this is often handled by PCManFM, but with a CLI only you may need to do this manually
+
+```
+udisksctl mount -b /dev/sdxN
+
+
+#### if you get authentication errors
+# first check you are in the 'disk' group
+groups | grep plugdev || groups
+
+# if not ...
+sudo usermod -a -G plugdev $USER
+# log out and try again
+
+# if that still fails, or if they were already in plugdev...
+
+# We would apply this anywhere in our organisation
+sudo tee /var/lib/polkit-1/localauthority/20-org.d/21-udisks2-plugdev-mount-other.pkla <<EndOfPkla
+# if the user is in the Debian SystemGroup plugdev, which allows members to (un-)mount removable devices,
+# then allow them to mount drives other than those internally seated, such as USB connected drive
+
+[Allow plugdevs to mount other drives]
+Identity=unix-group:plugdev
+Action=org.freedesktop.udisks2.filesystem-mount-other-seat
+ResultAny=yes
+EndOfPkla
+
+
+```
+
+
 
 ### IN - validate how current / useful 
 
