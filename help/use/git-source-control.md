@@ -568,7 +568,11 @@ This is useful for team development on a fork.
 If you are working solo you may just want to 
 refresh your fork, loosing all your changes – see [Hard Reset](#hard-reset-to-upstream).
 
-Note that you can keep your fork in sync via the GitHub web UI, 
+Update: There is now a Fetch Upstream button in the Github web UI 
+to Fetch and Merge Fast-forward, bringing your fork's current branch 
+into line with the same branch on the upstream repo. 
+
+Old Note: that you can keep your fork in sync via the GitHub web UI, 
 by creating a Pull Request, Switching Bases, and Merging - 
 see [https://www.sitepoint.com/quick-tip-sync-your-fork-with-the-original-without-the-cli/] for a very clear guide. 
 However this is not a proper rebase, but a merge **commit**, 
