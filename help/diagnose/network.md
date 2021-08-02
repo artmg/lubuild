@@ -651,6 +651,22 @@ Other pictorial tools include:
 * [SpiceWorks IT-ad-supported free tools](http://www.spiceworks.com/free-network-mapping-software/)
 * 
 
+### Filtering tests
+
+If you want to prove whether your host filtering is working, for instance in VLANs or firewalls, 
+you might want to quickly try accessing a wide spread of hosts
+
+```bash
+# Ping tests to show whether there is connectivity to different networks
+testip() {
+   ping -c 1 -W 1 192.168.$1 &> /dev/null && echo response from $1 || echo NO response from $1
+}
+
+testip 1.1
+testip 100.254
+testip 108.5
+```
+
 ## Performance 
 
 ### ISP Diagnostics 
@@ -693,7 +709,19 @@ sudo apt-get install iperf
 # sudo iperf -s -D > ??? tee
 ```
 
-iperf version notes:
+#### bandwidth troubleshooting
+
+* Use your router or switch diagnostics to check:
+	* negociated rate on your ethernet port
+		* or check `dmesg | grep eth`
+	* port statistics for errors or collisions on link
+* Check to see whether your device is multi-homed
+    * in case it prefers a route over wifi to your destination
+    * see routing diagnostics like `mtr` above
+    * use `ip route del x.x.x.x/y` to temporarily remove the route whilst you test
+* 
+
+#### iPerf versions
 
 * no combatibility maintained between these three variants
 * iperf
