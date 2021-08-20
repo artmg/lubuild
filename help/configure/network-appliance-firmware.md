@@ -24,8 +24,8 @@ See also:
 	* Sharing folders Windows-style
 * [https://github.com/artmg/lubuild/blob/master/help/configure/Networked-Services.md]
 	* For configuring other Network Services 
-* [Network Appliances](https://github.com/artmg/lubuild/blob/master/help/configure/network-appliance-firmware.md)
-	* dedicated devices running specialist software
+* [Firewall development instance](https://github.com/artmg/lubuild/blob/master/help/configure/firewall-development-instance.md)
+	* virtual develop and test for network appliance software
 
 
 
