@@ -111,7 +111,8 @@ Bonjour browsers for Windows:
 	* Tobias Erichsen http://www.tobias-erichsen.de/software/zeroconfservicebrowser.html
 * 
 
-Not yet resolved :(
+Update 2021: it seems as though more recent versions of Windows 10 can find printer devices via mDNS. However, if the client and printer are in different subnets, you may need an mDNS Repeater like Avahi helping between the networks.
+
 
 ## Manage Applications
 
