@@ -592,6 +592,7 @@ reboot 0
 ```
 
 * You might still need to right-click the Falkon icon and Trust it
+	* or simply click Execute every time you open the icon
 * VirtualBox Guest Additions
 
 ```
@@ -669,20 +670,6 @@ for the Cli4 & 5 machines to connect to the router.
 * eject the DVD
     * `VBoxManage storageattach $VM_NAME --storagectl "IDE Controller" --port 0 --device 1 --type dvddrive --medium none `
 
-#### configure proxy
-
-You _might_ need the OpnSense machine active to get DHCP on the second proxy interface
-
-* Power up VM interactively
-* wait a minute or two for the config to finish, even once the monochrome login appears
-* log on: bitnami / bitnami
-* hostname will be debian
-* .
-* https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy/
-
-(would it have worked if I set it up for [transparent proxy](https://www.nginx.com/blog/ip-transparency-direct-server-return-nginx-plus-transparent-proxy/)?)
-
-
 #### Configure OpnSense
 
 Factory default configuration:
@@ -736,12 +723,105 @@ and have to restart from scratch using the command line
 
 #### Config files on VM
 
-Theoretically, you could do similar to [[#shared drive]] to make config files available on the main Appliance VM, but you would need to [install VBox Guest Additions on FreeBSD](https://docs.freebsd.org/en/books/handbook/virtualization/#virtualization-guest-virtualbox) and perhaps it might be simpler just to:
+##### Alternative means to transfer config
 
+Here are ways you _could_ make config files available on the main Appliance VM:
+
+* use the desktop and the WebGui to push configurations
 * push config files to the VM using `scp` 
 	* then use the importer commands
-* OR
-* use the desktop and the WebGui to push configurations
+* [[#shared drive]] as above
+	* complex as it requires you to [install VBox Guest Additions on FreeBSD](https://docs.freebsd.org/en/books/handbook/virtualization/#virtualization-guest-virtualbox)
+* Mount a hot-swap drive as below 
+
+
+##### Hot-swap drive for config files
+
+Control commands from virtual host
+
+```
+### Prepare controller on dekstop and the blank medium
+VM_MEDIUM=HotPlugMedium.vdi
+VM_MEDSIZE=40
+VBoxManage storagectl $VM_NAME2 --name "SATA Controller" --add sata --portcount 2
+# limit the number of ports simply because TinyCoreLinux enumerates each port on startup
+VBoxManage createmedium disk --filename "$VM_MEDIUM" --size $VM_MEDSIZE
+
+### Mount to Desktop
+VBoxManage storageattach $VM_NAME  --storagectl "SATA Controller" --port 1 --type hdd --medium none
+# avoid Port 0 as it's NOT hot-plugable
+VBoxManage storageattach $VM_NAME2 --storagectl "SATA Controller" --port 1 --type hdd --medium "$VM_MEDIUM"
+
+# see formatting commands for guest below
+
+
+### Mount to Appliance
+VBoxManage storageattach $VM_NAME2 --storagectl "SATA Controller" --port 1 --type hdd --medium none
+VBoxManage storageattach $VM_NAME  --storagectl "SATA Controller" --port 1 --type hdd --medium "$VM_MEDIUM"
+
+## Dismount totally
+VBoxManage storageattach $VM_NAME  --storagectl "SATA Controller" --port 1 --type hdd --medium none
+VBoxManage storageattach $VM_NAME2 --storagectl "SATA Controller" --port 1 --type hdd --medium none
+```
+
+Formatting and mounting comands from desktop guest
+
+```bash
+
+###### Prepare
+
+apt install -y dosfstools
+
+###### Format
+
+DISK_UNIT=/dev/sdb
+sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF | fdisk ${DISK_UNIT}
+  o # clear the in memory partition table
+  n # new partition
+  p # primary partition
+  1 # partition number 1
+    # default - start at beginning of disk 
+    # default, extend partition to end of disk
+  t # choose type of partition
+  b # W95 FAT32
+  p # print the in-memory partition table
+  w # write the partition table
+  q # and we're done
+EOF
+# credit for fdisk sed technique https://superuser.com/a/984637
+mkfs.msdos -n HOTPLUGCONF ${DISK_UNIT}1
+
+###### Mount
+
+udisksctl mount -b ${DISK_UNIT}1
+cd /media/root/HOTPLUGCONF
+
+###### Create folder for config.xml file
+
+mkdir conf
+```
+
+Now copy your config file in there and call it **config.xml**
+
+```
+###### unmount
+
+cd /
+udisksctl unmount -b ${DISK_UNIT}1
+
+```
+
+* use the 'Mount to appliance' commands above on the host terminal
+
+Configuration importer from appliance:
+
+* soon after boot following factory reset:
+	* the disks are enumerated
+	* the option appears `Press any key to start the configuration importer`
+		* press a key
+	* disks are listed
+		* the hot-plug disk will appear as ada1
+			* after boot it will be `/dev/ada1s1` on appliance
 
 
 ### Using test clients
@@ -763,6 +843,7 @@ Testing Notes:
 * For ping tests see https://github.com/artmg/lubuild/tree/master/help/diagnose/network.md#filtering-tests
 * by default there are no allow rules for OPNsense VLANs, except autorules for DHCP, and you may need to enable ICMP to This Firewall before you can even ping the router
 * TinyCore clients use udhcpc client
+	* to refresh DHCP leases if reconfiguring the network use ` udhcpc `
 * if you can't manage your tests from curl or wget, then maybe consider the lynx character browser?
 
 
@@ -793,7 +874,25 @@ commands to be aware of:
     * Disable all off-loading settings in Interfaces > Settings
 * 
 
+#### configure proxy
+
+proxy is NO LONGER a component
+
+You _might_ need the OpnSense machine active to get DHCP on the second proxy interface
+
+* Power up VM interactively
+* wait a minute or two for the config to finish, even once the monochrome login appears
+* log on: bitnami / bitnami
+* hostname will be debian
+* .
+* https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy/
+
+(would it have worked if I set it up for [transparent proxy](https://www.nginx.com/blog/ip-transparency-direct-server-return-nginx-plus-transparent-proxy/)?)
+
+
 ### Finalise the setup
+
+Not sure this is still relevant
 
 ```
 # take a snapshot of the clean install
