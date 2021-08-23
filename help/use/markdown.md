@@ -10,15 +10,6 @@ see also:
     * requirement for markup languages
     * reasons for choosing Markdown as preference over MediaWiki
 
-## Convert markdown documents
-
-* pandoc
-    * convert between markdown and numerous other formats
-    * installed via [Lubuild app-installs.bash](https://github.com/artmg/lubuild/blob/master/app-installs.bash)
-    * sample command # pandoc -f markdown -t html -o output.htm input.txt
-	* if you get UTF-8 errors you can try [iconv](https://pandoc.org/MANUAL.html#character-encoding)
-
-
 ## Markdown cloud integration
 
 ### Browser-based editor
@@ -62,6 +53,15 @@ If you want to write markdown in using Docs editor:
 * Or just use it as it is and turn off or Undo formatting corrections https://www.digitalonlinetactics.com/post/tactics/google-docs/edit-markdown-in-google-docs/#comment-4818763694
 * 
 
+## Convert markdown documents
+
+* pandoc
+    * convert between markdown and numerous other formats
+    * installed via [Lubuild app-installs.bash](https://github.com/artmg/lubuild/blob/master/app-installs.bash)
+    * sample command # pandoc -f markdown -t html -o output.htm input.txt
+	* if you get UTF-8 errors you can try [iconv](https://pandoc.org/MANUAL.html#character-encoding)
+
+
 ## Edit markdown documents
 
 ### Requirements
@@ -71,7 +71,23 @@ If you want to write markdown in using Docs editor:
 * hyperlinked URLs - click to open (either browser or editor if local)
 * prefer Qt-based widget system 
 
-### Candidates
+
+### Cross-platform
+
+There are some FOSS candidates below that work on 
+multiple platforms. However, despite the fact it is 
+NOT open source, my current favourite is the very-cross-platform **Obsidian**. 
+
+It is a free (beer) rich editor for collections of markdown files, 
+that helps to edit, find, organise and cross-link. 
+Although it's part of a freemium service there is 
+ZERO lock-in, because you're editing markdown files
+stored locally, and you can switch over to an alternative editor any time you fancy.
+
+As it's available on Choco for Windows, Brew for Mac and AppImage/ Snap/ Flatpak for Linux, 
+it's very easy to start using. There are Android and iOS apps too, so where ELSE would you consider using it.
+
+### Linux candidates
 
 These are open source applications readily available for Ubuntu linux. 
 For Android Apps see the section below. 
@@ -181,9 +197,42 @@ see also:
 	* QuickEdit Text Editor
 	* Joplin ?
 
+#### Android sync
+
+Dropbox for Android does not simply make your files available on the device filesystem for third party editors, as it does on PCs.
+
+The technique below uses **FolderSync** to move your data daily, and I used **Markor** for editing, **aGrep** for search, and **Amaze** as file manager. You might consider the new Obsidian mobile client. 
+
+* Dropbox setup
+	* Create new folder for mobile content
+	* Create new limited account for mobile
+		* Set Notifications OFF for News and Files
+	* Share mobile folder with new limited account
+
+* Note your choices: 
+	* MyNotesFolder
+	* MyDropboxAcct
+
+* Install Amaze File Manager
+	* in Android create: MyNotesFolder
+* Install FolderSync (not Pro) onto mobile
+	* Permissions: 
+		* File: Write to Device, Emulated Android
+* Add account MyDropboxAcct
+	* use Browser to authenticate and Allow
+* Create Two-way sync
+	* local folder browse 'MyNotesFolder'
+	* ensure that the **Sync Deletions** is turned **on**
+	* schedule: daily
+* Install Markor on mobile as markdown Editor
+	* Settings / Notebook select local folder
+* Install aGrep as search app
+	* add the Target Directory
+	* add md as a target extension
+	* Use the Menu / View option to open in Markor for editing
+
 
 ### macOS editors
-
 
 * macdown
 	* foss
@@ -192,6 +241,7 @@ see also:
 	* uses Hoedown for rendering and Prism for syntax highlighing 
 * sublime text
 	* nagware
+	* but quite a powerful editor, nonetheless
 * Ghostwriter
 	* foss, but no mac package ready - _should_ build
 * ReText
