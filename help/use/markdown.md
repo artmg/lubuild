@@ -214,16 +214,21 @@ The technique below uses **FolderSync** to move your data daily, and I used **Ma
 	* MyDropboxAcct
 
 * Install Amaze File Manager
-	* in Android create: MyNotesFolder
+	* in Emulated / Android folder create: MyNotesFolder
 * Install FolderSync (not Pro) onto mobile
-	* Permissions: 
-		* File: Write to Device, Emulated Android
-* Add account MyDropboxAcct
-	* use Browser to authenticate and Allow
-* Create Two-way sync
-	* local folder browse 'MyNotesFolder'
-	* ensure that the **Sync Deletions** is turned **on**
-	* schedule: daily
+	* Fix Permissions: 
+		* File: Write to Device, Manage all files, Emulated Android folder
+	* Accounts / Create / MyDropboxAcct
+		* use Browser to authenticate and Allow
+	* Folderpair / Create 
+		* Two-way sync
+		* user folder icons to browse
+		* local folder browse 'MyNotesFolder'
+		* ensure that the **Sync Deletions** is turned **on**
+		* schedule: daily
+
+previously I used Markor but you may be able to use the new Obsidian Android client
+
 * Install Markor on mobile as markdown Editor
 	* Settings / Notebook select local folder
 * Install aGrep as search app
