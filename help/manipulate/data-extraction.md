@@ -27,6 +27,41 @@ so that this can be saved easily as a table.
 	* tables from pdf (text and image)
 	* 
 
+
+### Copy a website
+
+If you want to make a copy of an existing published website to mock up potential changes 
+
+`brew install httrack`
+
+* either use cli command 
+    - extensive help https://www.httrack.com/html/fcguide.html
+* or use locally-spawned, browser-based gui command `webhttrack`
+
+#### single webpage
+
+simpler way to capture a single page, to obtain html image css and javascript source files (as delivered, not necessarily server-side source):
+
+
+```
+brew install wget
+
+wget -E -k -K -p http://site/document
+
+# credit https://www.gnu.org/software/wget/manual/wget.html#Recursive-Retrieval-Options
+# -p, --page-requisites
+# -k, --convert-links
+# -K, --backup-converted
+# -E, --adjust-extension  (e.g. .asp -> .html)
+
+## other hosts
+# if you want to get content from other hosts too...
+
+# -H, --span-hosts - https://www.gnu.org/software/wget/manual/wget.html#Spanning-Hosts
+#
+
+```
+
 ### web scraping and automatic ingestion
 
 * scrapy
