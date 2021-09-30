@@ -719,6 +719,22 @@ and have to restart from scratch using the command line
 
 * if you only have the `root@~` prompt, get the console using `opnsense-shell`
 * choose option 4 to 'Reset to factory defaults'
+* this will shut down the system
+
+##### Use config.xml on disk
+
+When the system boots it looks to see: 
+if it was just reset to factory defaults, 
+the message appears: press any key to load configuration file
+
+This allows you to specify a disk unit, 
+such as `ada1` from which to load `/conf/config.xml`.
+
+Note that this imports ONLY the config.xml, 
+it does NOT overlay it over system defaults. 
+Therefore in addition to the settings you want, 
+you should leave system defauls in the file too.
+
 
 
 #### Config files on VM
@@ -739,6 +755,11 @@ Here are ways you _could_ make config files available on the main Appliance VM:
 
 Control commands from virtual host
 
+NB: FreeBSD as delivered by OPNsense does not appear to support 
+the hotswap on the SATA controller, 
+so you may need to shut down the VM 
+to add or remove the disk on the Appliance. 
+
 ```
 ### Prepare controller on dekstop and the blank medium
 VM_MEDIUM=HotPlugMedium.vdi
@@ -746,6 +767,8 @@ VM_MEDSIZE=40
 VBoxManage storagectl $VM_NAME2 --name "SATA Controller" --add sata --portcount 2
 # limit the number of ports simply because TinyCoreLinux enumerates each port on startup
 VBoxManage createmedium disk --filename "$VM_MEDIUM" --size $VM_MEDSIZE
+
+# start the Desktop VM before mounting, else it won't boot
 
 ### Mount to Desktop
 VBoxManage storageattach $VM_NAME  --storagectl "SATA Controller" --port 1 --type hdd --medium none
