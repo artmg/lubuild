@@ -183,6 +183,12 @@ choco install -y caffeine
 choco install -y dontsleep.install
 ```
 
+### Useful apps to consider
+
+* Cmder - coder's shell with tab completion and git integration
+	* may need extra .REG for Explorer integration
+* 
+
 ## Windows Update
 
 ### Pull Updates that aren't appearing
