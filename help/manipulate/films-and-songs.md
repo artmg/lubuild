@@ -131,6 +131,44 @@ ffmpeg -f alsa -ac 2 -ar 44100 -ab 160k -i pulse -acodec libmp3lame OUTPUT.mp3
 The SOund eXchange `sox` package's `rec` utility has a more friendly set of options, and comes with the `sox` conversion programme too. 
 It might use the same libraries under the covers, but it could be simpler. 
 
+### Burning optical media
+
+Operating systems like Windows 10 and macOS now come with built-in features for writing ('burning') to optical media like CDR, CDRW, DVD+-RW. These tend to be either via music managers (iTunes/Music or Windows Media Player) for burning .WAV files into audio discs, or through file managers (Explorer or Finder) for simple data files. Some video editors may have ways to output to DVD formats. 
+
+What about Ubuntu and derivatives?
+
+#### Normalise peak amplitude
+
+In case you audio file is too quiet (or too loud) 
+you can make it a 'suitable' volume 
+
+* manually with ffmpeg
+	* can be done from command line if you really want
+	* https://superuser.com/a/323127
+* Audacity with ffmpeg
+	* graphical alternative
+	* adding the extra libraries allows you to open many more file formats
+
+* open Audacity application
+* Menu / File / Open
+	* Browse to Downloads where the audio or video file was saved
+* Menu / Select / Select All
+* Menu / Effect / Normalize
+	* Leave it set to peak amplitude -1.0 dB and click OK
+* Audacity window / Bottom left corner / Project Rate (Hz)
+	* This should be 44100
+	* If it is anything else, drop down the list and choose 44100
+* Menu / File / Export / Export as WAV
+	* this should say File type: WAV (Microsoft)
+	* and Encoding: Signed 16-bit PCM
+	* in Save As enter the filename (e.g.  audio1 )
+	* click Save
+	* in the Edit Metadata Tags dialog simply click OK
+	* after a few seconds the export should be complete
+* Menu / File / Close
+	* Save Project before closing: No
+* Menu / File / Quit
+
 
 ## Music file conversion
 
@@ -425,6 +463,7 @@ and are cross-platform open-source projects:
 * Avidemux
     * very simple - almost like a GUI for ffmpeg copy
     * does have script editor for automation
+    * option to easily save the audio track to file 
 * Olive video editor
     * relatively new project aiming towards professional high-end users
     * could be one to watch, if the complexity is not too high 
