@@ -374,6 +374,39 @@ Under Windows 10 Home you may use 'Device Encryption' (MS' free equivalent of bi
 	* you'll need a small USB drive to store the Rescue Data
 * 
 
+#### Windows updates puts Veracrypt into Recovery
+
+If you have used Veracrypt System Encryption to encrypt your full Windows System Partition, you might encounter issues 
+following a Windows Update. 
+Instead of asking for the encryption password at Power On, a blue Recovery warning appears.
+
+    Recovery
+    Your PC/Device needs to be repaired.
+    A required device isn’t connected or can’t be accessed 0xc000000f
+
+This appears to happen because Windows Update moves up the Windows Boot option to the top of the Boot Order list, and moves down the Veracrypt boot partition (which may appear to have a blank description). 
+
+* Esc to go into UEFI Firmware settings
+* UEFI asks for Enter Current Password
+    - this is the Windows User Password used to unlock the desktop screen
+    - it is NOT the Veracrypt System Encryption password
+* Use arrows to move across to the Boot page
+* Use arrows to move down to blank line
+    - this is the Veracrypt boot partition that prompts for the Power On password
+* Use F6 multiple times to move that line up to the top
+	* NB: your UEFI 'bios' may use different function keys
+* F10 to Save and Exit
+* Enter to say Yes to save
+
+The Veracrypt developer [has produced](https://sourceforge.net/p/veracrypt/discussion/general/thread/d68f12c213/) a utility called [VcFixBoot]() which you can [download](https://github.com/veracrypt/VcFixBoot/tags) (previously [here](https://sourceforge.net/projects/veracrypt/files/Contributions/)). Although early source versions had no documentation, [the developer stated](https://sourceforge.net/p/veracrypt/discussion/general/thread/d68f12c213/)
+
+    The tool VcFixBoot can be
+    run after booting Windows manually through Rescue Disk or BIOS VeraCrypt
+    entry. It will fix the EFI partition content so that Windows will boot
+    normally without needing the Rescue Disk or changing the BIOS boot order.
+
+NB: there was [one report](https://libredd.it/r/VeraCrypt/comments/m8b4hc/) that turning off FastBoot might also work around this issue, but we did not want to try that. 
+
 
 ## Hardware misc
 
