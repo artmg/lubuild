@@ -365,6 +365,36 @@ Get Passwords from IAF file Outlook Express email account export
     * [https://gist.github.com/kurochan/9038608]
 
 
+### Quick mailbox archive
+
+If you want to take an offline copy of your mailbox 
+for archiving purposes, the Thunderbird client 
+is a reasonable choice. 
+It is available on multiple platforms, for now is well-supported and as open source should be available for a while. If your mailbox provides IMAP access, it makes it easy to download all messages from all (selected) folders, and IMAP automatically includes all content including attachments.
+
+* Use your system's package manager to install Thunderbird
+* if possible, obtain an app token from your email service
+    - safer than using your main password
+    - if asked, grant it IMAP read rights
+* Open Thunderbird and begin configuring
+* use Advanced settings to locate folders to save to
+	- if you're doing this as an archive you probably care where they are stored locally
+	- Server Settings / Message Storage / Local Directory
+* ensure that all folders are selected for sync
+	- or at least those you are interested in
+* Tools / Preferences / Config Editor
+	- search for `folders`
+	- modify the setting `mail.server.default.check_all_folders_for_new`
+	- set it true
+	- this means it will sync the folders _without_ you having to view them all one by one
+	- credit https://tech.tiefpunkt.com/2014/08/automatically-sync-all-folders-in-thunderbird/
+* exit and restart Thunderbird to begin the full sync
+
+The file-system contents after caching are very similar to the storage on many IMAP services, 
+with the same-named folder structure, and each folder-leaf's contents storage in a file as raw text showing the MIME structure clearly. This makes it a very futureproof archive. 
+
+However the simplest way to find and read the messages is likely to be via the Thunderbird client. This readily interprets all the message metadata from the .msf file accompanying each folder's raw data.
+
 
 ## Hex Viewer ##
 
