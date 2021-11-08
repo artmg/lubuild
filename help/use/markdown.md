@@ -87,6 +87,9 @@ stored locally, and you can switch over to an alternative editor any time you fa
 As it's available on Choco for Windows, Brew for Mac and AppImage/ Snap/ Flatpak for Linux, 
 it's very easy to start using. There are Android and iOS apps too, so where ELSE would you consider using it.
 
+An alternative editor focussed on cross-linking knowledge and notes is Foam bubbles, a FOSS extension to the Visual Studio VS Code editor.
+
+
 ### Linux candidates
 
 These are open source applications readily available for Ubuntu linux. 
