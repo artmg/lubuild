@@ -263,6 +263,15 @@ stored in image files
 
 * ocrfeeder, including the tesseract engine, is installed by [Lubuild app-installs]
 
+If you want a cross-platform GUI for the Tesseract engine, the only one mentioned on the [Tesseract 3rd party list](https://tesseract-ocr.github.io/tessdoc/User-Projects-%E2%80%93-3rdParty.md) is:
+
+* normcap
+	* python front end for tesseract
+	* install engine and languages using your package manager
+	* `pip install normcap` to install
+	* `./normcap` to run
+	* see https://github.com/dynobo/normcap#python-package
+
 
 ### QR codes
 
