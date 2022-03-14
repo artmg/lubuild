@@ -90,6 +90,11 @@ nc -zv $HOST_NAME $PORT_NO
 
 ## Physical and Transport
 
+To diagnose the network interface see also:
+
+* at a driver level [network-interface.md](../configure/network-interface.md)
+* at a physical level [hardware.md](../diagnose/hardware.md)
+
 ### diagnosing Network Manager Connections
 
 ```

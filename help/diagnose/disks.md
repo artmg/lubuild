@@ -236,6 +236,15 @@ sudo blkid | grep swap
 #
 ```
 
+### RAID volumes
+
+Examining and assembling volumes created from multiple disks
+
+sudo apt install mdadm
+sudo mdadm --examine /dev/sdg1
+
+
+
 ## Low level hardware diagnostics
 
 For diagnosing issues affecting other types of hardware see [Hardware Troubleshooting](https://github.com/artmg/lubuild/blob/master/help/diagnose/hardware.md) 
@@ -282,6 +291,8 @@ sudo smartctl "${SMT_OPTIONS[@]}" -a /dev/$DEVID
 # power down
 sudo hdparm -Y /dev/$DEVID
 ```
+
+(alternative for USB-connected drives: `sudo udisksctl power-off -b /dev/$DEVID`)
 
 #### Other diagnostics
 

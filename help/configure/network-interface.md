@@ -11,6 +11,27 @@ Otherwise, for:
 * For configuring [Network Services](https://github.com/artmg/lubuild/blob/master/help/configure/Networked-Services.md)
 
 
+### Driver issues
+
+```
+# Identify the hardware device and subsystem
+HW_TYPE=ethernet
+lspci -nnk | grep -i $HW_TYPE -A3
+
+DRIVER_ID=r8169
+# check for system messages involving this driver
+dmesg | grep $DRIVER_ID
+
+# look for older messages showing link being negociated
+journalctl -g $DRIVER_ID.*Link.*Up
+
+# Check when drivers updated
+lsmod | grep $DRIVER_ID
+
+# Check when drivers updated
+grep "status installed linux-image" /var/log/dpkg.log*
+
+```
 
 ### Using DHCP
 
