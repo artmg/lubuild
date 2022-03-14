@@ -257,7 +257,7 @@ find more at http://askubuntu.com/a/118389
     * requires PPA
         * **not available for every release**
     * available also for macos (even though the UI is Objective C and Cocoa)
-        * may be installed via `brew cask install dupeguru`
+        * may be installed on macOS via `brew cask install dupeguru`
     * is quite a large package
     * the Media Versions, Picture Edition (PE) and Music Edition (ME) have all been merged into a single app
     * still maintained (just)

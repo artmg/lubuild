@@ -1,5 +1,5 @@
 
-Although some of the tools for working with photos also apply to films and songs, 
+Although some of the tools for working with photos and images also apply to films and songs, 
 they are treated separately here as we assume films and songs are bought, 
 whereas photos are captured, unique and irreplaceable. 
 

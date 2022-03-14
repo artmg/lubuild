@@ -8,6 +8,7 @@ the most important task is to ensure that ALL data is physically, actually overw
 
 See also:
 
+* below for [ATA secure erase](#ata-secure-erase) using hdparm extended secure wipe
 * why you need to overwrite [https://github.com/artmg/lubuild/blob/master/help/diagnose/disk-recovery-and-forensics.md]
 * how proper total wiping is hard on flash [https://github.com/artmg/lubuild/blob/master/help/manipulate/flash-drives-and-SSDs.md]
 	* if you want to erase SSDs see the later section 
@@ -59,6 +60,7 @@ sudo cryptsetup close container
 # earlier versions of dd did not support status=progress, you had to use another window to...
 # watch -n30 'sudo pkill -usr1 dd'
 ```
+
 ### multiple overwrite
 
 The following utilities perform multiple 'pass' wipes, repeatedly overwriting the same areas. 
