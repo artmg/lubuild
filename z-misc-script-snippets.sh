@@ -7,10 +7,21 @@ echo
 read -p "Press [Enter] key to end"
 exit 1
 
+# This file is part of the public `Lubuild` repo
+# It includes specifics relating to ?ubuntu installation and config
+
+# other keywords: examples
+
 # see also:
-# * https://github.com/artmg/lubuild/blob/master/help/manipulate/files-and-folders.sh
-# * https://github.com/artmg/lubuild/blob/master/help/use/Music-and-multimedia.md
+#
+# * [Lubuild use Music and multimedia](https://github.com/artmg/lubuild/blob/master/help/use/Music-and-multimedia.md)
 #    * for and find to output to playlists
+# * [Lubuild / manipulate / files-and-folders.sh](https://github.com/artmg/lubuild/blob/master/help/manipulate/files-and-folders.sh)
+#     * useful ways to deal with your data stores
+#         * find examples - types, structure, metadata
+#         * for basics
+#         * deal with empty folders
+#         * loop through list of dirpaths and output #files dirs and datasize
 #
 
 
