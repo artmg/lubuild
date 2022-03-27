@@ -528,7 +528,9 @@ Please see also the section on [#managing-encryption-keys Managing Encryption Ke
 
 ##### Generate and install SSH Certificate
 
-```
+These instructions should be carried out from the client, so if you have already connected with an `ssh` session to the server, then you should `exit` first.
+
+```
 REMOTE_HOST=MyServer
 # only specify DOMAIN if you need FQDN to connect
 REMOTE_DOMAIN=
