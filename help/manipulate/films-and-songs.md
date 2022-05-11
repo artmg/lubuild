@@ -411,6 +411,19 @@ see:
 
 * some alternative software - https://www.reddit.com/r/htpc/comments/2zhntu/alternatives_to_makemkv/
 
+### online video caching
+
+If you need to download a video from an online service, such as YouTube or Vimeo, in order to cache it temporarily, to ensure it is available offline, you could use VLC – it will show you the temporary viewing url from the online player.
+
+* Open VLC media player
+* Menu / File / Open Network
+* paste in the URL to the player page for the video you want
+* pause the playback once you are sure it is the correct media
+* Menu / Window / Media Information / Location
+* open the Link with a browser or paste it into a browser, then you can use the Save As from the browser to cache
+
+Note that doing this may, in some cases, contravene the terms of use of the service.
+
 
 ### Video editing
 
