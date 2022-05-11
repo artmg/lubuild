@@ -189,6 +189,23 @@ choco install -y dontsleep.install
 	* may need extra .REG for Explorer integration
 * 
 
+### Print to PDF
+
+In earlier version of Windows you needed expensive Adobe Acrobat to install a 'print to PDF' printer driver. Freeware like CutePDF or PDFCreator, but as proprietary binaries with no obvious income there is an increasing risk that these contain bundled adware or worse kinds of malware. Choco installs sometimes counter these issues, but third party software is not necessary with more recent versions of Windows.
+
+Windows 10 _should_ include the `Microsoft Print to PDF` feature, their own bundled PDF printer driver. If you cannot see Print to PDF in your list of printers then it might be:
+
+* removed as a printer, or 
+* turned off as a feature
+
+The Microsoft articles below explain the steps to reinstate the feature / driver. For newer versions (e.g. Windows 10 build 20H2? or later) the `dism` technique works better. For older versions (e.g. Windows 10 build 1903? or earlier), the `dism` technique doesn't work so you'll have to try the manual setup.
+
+* [Use DISM command to reinstate MS PDF printer](https://answers.microsoft.com/en-us/windows/forum/all/how-to-add-or-reinstall-the-microsoft-pdf-printer/a473357b-8a8f-44fe-ba3a-9680b6bdfa79)
+* [Manually re-add MS PDF printer](https://answers.microsoft.com/en-us/windows/forum/all/how-to-add-or-reinstall-the-microsoft-pdf-printer/70377c34-e50a-42be-b9f3-92345d6e25df)
+
+If you are still having issues then [this forum Question](https://answers.microsoft.com/en-us/windows/forum/all/cant-reinstall-the-driver-for-microsoft-print-to/9433dd1f-6ed7-498d-878e-ab654a62d702) has Answers suggesting links to alternative solution steps and alternative commands and method to properly clear out old drivers before re-instating a fresh.
+
+
 ## Windows Update
 
 ### Pull Updates that aren't appearing

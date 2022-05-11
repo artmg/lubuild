@@ -19,7 +19,7 @@ see also:
 
 
 
-## core applications
+## Viewing
 
 The default PDF veiwer in Lubuntu is called "Document Viewer" 
 also known as GNOME Evince, has capabilities including: 
@@ -30,18 +30,68 @@ also known as GNOME Evince, has capabilities including:
 	- although it may not properly support security features like copy protection
 
 
-The following are on the default list of Lubuild apps
+### browse content and structure
 
-* pdftk
-    * manipulate PDF files (e.g. split, combine) 
-    * as alternative to installed GhostScript 
-    * see http://askubuntu.com/questions/195037/is-there-a-tool-to-split-a-book-saved-as-a-single-pdf-into-one-pdf-per-chapter/195044#195044
-* pdfshuffler
-    * GUI for PDF page manipulation
-    * PdfMod is more feature-rich but needs Mono; 
-    * LibreOffice-PdfImport is already installed
-* poppler-utils 
-    * includes pdfimages to extract image files from PDFs
+for forensic, development or testing work...
+
+* candidates:
+    * PoDoFo library - http://podofo.sourceforge.net/
+        * PoDoFoBrowser 
+            * http://podofo.sourceforge.net/download.html#browser
+            * QT based GUI
+            * any repos?
+	* qpdf
+		* cli utility to extract from PDF to text readable format
+		* cross platform, open source
+		* can be found in many distro repos
+    * see also http://forensicswiki.org/wiki/PDF#PDF_Tools
+    * iTextRUPS is Java based
+    * see also 	https://stackoverflow.com/a/29474423
+    * 
+
+see also https://github.com/artmg/lubuild/blob/master/help/diagnose/disk-recovery-and-forensics.md
+
+### viewing metadata
+
+See the Editing Metadata section below for utilities that can also display current metadata values
+
+
+## Extracting
+
+### Working with Fonts
+
+Many Document Viewer apps will allow you to see what fonts are embedded in PDF documents
+inlcuding: 
+
+* Evince 
+* qpdfview
+
+You can also use the command line **pdffonts** from poppler-utils. 
+
+To extract the fonts for local use, install **fontforge** from the ubuntu repos. 
+Note that many fonts are only the subset of letters used, so won't include every character. 
+For more on fontforge, see [http://designwithfontforge.com]
+
+For even more techniques see [https://stackoverflow.com/a/3489099]
+
+### Copy image files out from PDF documents
+
+```
+# requires poppler-utils
+sudo apt-get install poppler-utils
+# on Mac use:  brew install poppler
+# but beware, there are LOADS of dependencies
+
+#### raster images
+
+pdfimages -all source-file-name.PDF /path/to/output/image-files
+# -j will write JPEGs as such
+# -all will extract all raster image types - equivalent to -png -tiff -j -jp2 -jbig2 -ccitt
+
+#### vector graphics
+pdftocairo -svg source-file-name.PDF /path/to/output/image-files.SVG
+
+```
 
 
 
@@ -80,21 +130,8 @@ check the libre software above to see if it can.
 
 ### Copy image files out from PDF documents
 
-```
-# requires poppler-utils
-sudo apt-get install poppler-utils
-# on Mac use:  brew install poppler
+see Extracting section above
 
-#### raster images
-
-pdfimages -all source-file-name.PDF /path/to/output/image-files
-# -j will write JPEGs as such
-# -all will extract all raster image types - equivalent to -png -tiff -j -jp2 -jbig2 -ccitt
-
-#### vector graphics
-pdftocairo -svg source-file-name.PDF /path/to/output/image-files.SVG
-
-```
 
 ### Create PDF from image files
 
@@ -182,74 +219,28 @@ include:
 * http://svn.ghostscript.com/ghostscript/trunk/gs/doc/Ps2pdf.htm#PDFA scan to PostScript and convert
 
 
-
-
 ### completely remove images from PDF files
 
-```
-# coherentpdf has a draft option which removes them
-cpdf -draft original.pdf -o version_without_images.pdf
-# it's free for -$ non-commercial but NOT libre
+see section under Editing below
 
 
-```
+## Editing content
 
-## browse content and structure
+### Creating PDF files
 
-for forensic, development or testing work...
+The most common ways to create files include:
 
-* candidates:
-    * PoDoFo library - http://podofo.sourceforge.net/
-        * PoDoFoBrowser 
-            * http://podofo.sourceforge.net/download.html#browser
-            * QT based GUI
-            * any repos?
-	* qpdf
-		* cli utility to extract from PDF to text readable format
-		* cross platform, open source
-		* can be found in many distro repos
-    * see also http://forensicswiki.org/wiki/PDF#PDF_Tools
-    * iTextRUPS is Java based
-    * see also 	https://stackoverflow.com/a/29474423
-    * 
+* Export a PDF directly from the application, such as LibreOffice, Inkscape, Gimp, etc
+	* this allows more granular control of output, and may include the chance to set metadata as the file is written
+* Print to PDF file
+	* this is simpler but should work with ANY application that can print
 
-see also https://github.com/artmg/lubuild/blob/master/help/diagnose/disk-recovery-and-forensics.md
+On Ubuntu and many Linux systems, the Print to PDF printer driver will already be installed by default. If not you can simply install the `cups-pdf` package to enable the feature. 
 
-## split pages
-
-* PDF Arranger
-	* forked from defunct pdfshuffler
-	* available for Linux and Windows
-		* not required in macOS as buint-in Preview allows PDF editing
-	* `pdfarranger` in choco, debian and other repos
-* pdf-shuffler
-	* linux only
-	* was in many repos
-	* project abandoned since 2018
-* pdfsam
-	* cross platform and open source
-	* however as freemium software, premium features will be locked
-	* over time the interface has become too full of locked features to really be usable
+For Windows systems see [Lubuild configure Windows # Print to PDF](https://github.com/artmg/lubuild/blob/master/help/configure/Windows.md#print-to-pdf) for troubleshooting on this feature.
 
 
-## Working with Fonts
-
-Many Document Viewer apps will allow you to see what fonts are embedded in PDF documents
-inlcuding: 
-
-* Evince 
-* qpdfview
-
-You can also use the command line **pdffonts** from poppler-utils. 
-
-To extract the fonts for local use, install **fontforge** from the ubuntu repos. 
-Note that many fonts are only the subset of letters used, so won't include every character. 
-For more on fontforge, see [http://designwithfontforge.com]
-
-For even more techniques see [https://stackoverflow.com/a/3489099]
-
-
-## Editing file contents
+### Editing file contents
 
 Depending on how the file was created, 
 you might find either of the following 
@@ -267,9 +258,52 @@ of PDF files
 Watch out for the metadata when you write the final file
 
 
-## modify file properties ##
+### Other editing
 
-including pdf metadata 
+The following are on the default list of Lubuild apps
+
+* pdftk
+    * manipulate PDF files (e.g. split, combine) 
+    * as alternative to installed GhostScript 
+    * see http://askubuntu.com/questions/195037/is-there-a-tool-to-split-a-book-saved-as-a-single-pdf-into-one-pdf-per-chapter/195044#195044
+* pdfshuffler
+    * GUI for PDF page manipulation
+    * PdfMod is more feature-rich but needs Mono; 
+    * LibreOffice-PdfImport is already installed
+* poppler-utils 
+    * includes pdfimages to extract image files from PDFs
+
+
+### split pages
+
+* PDF Arranger
+	* forked from defunct pdfshuffler
+	* available for Linux and Windows
+		* not required in macOS as buint-in Preview allows PDF editing
+	* `pdfarranger` in choco, debian and other repos
+* pdf-shuffler
+	* linux only
+	* was in many repos
+	* project abandoned since 2018
+* pdfsam
+	* cross platform and open source
+	* however as freemium software, premium features will be locked
+	* over time the interface has become too full of locked features to really be usable
+
+
+### completely remove images from PDF files
+
+```
+# coherentpdf has a draft option which removes them
+cpdf -draft original.pdf -o version_without_images.pdf
+# it's free for -$ non-commercial but NOT libre
+
+
+```
+
+## Editing metadata
+
+To modify file properties, including pdf metadata ...
 
 ### cli ###
 
@@ -302,8 +336,10 @@ NB: Although the exiftool can write PDF metadata, it only adds updates.
 It will NOT remove previously written PDF metadata
 http://www.sno.phy.queensu.ca/~phil/exiftool/TagNames/PDF.html
 
- # display current properties
- exiftool path/filename.pdf
+```
+# display current properties
+exiftool path/filename.pdf
+```
 
 See suggestions of how to clear it in comments under http://askubuntu.com/a/39906
 
@@ -331,20 +367,20 @@ but not sure how well supported or featured they are
 
 
 
-## lifting restrictions on existing files
+### lifting restrictions on existing files
 
 Before using any of the following techniques, please ensure that 
 the changes you plan to make will not breach 
 any terms or conditions of license agreements or usage rights!
 
-### Owner passwords
+#### Owner passwords
 
 "OWNER" password restricts user rights but can be overridden
 
 * http://stackoverflow.com/q/10772686
 
 
-### User Passwords
+#### User Passwords
 
 "USER" password prevents opening, and uses encryption
 
