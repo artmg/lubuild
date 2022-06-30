@@ -703,6 +703,20 @@ wget 'http://mirror.skylink-datacenter.de/ubuntu-releases/13.10/ubuntu-13.10-des
 
 ### Internal bandwidth tests 
 
+When you see iperf as a command or a package, 
+this is almost always the open source project 
+iperf2. There is also a distinct project, 
+from a different team, called iperf3.
+
+Different people may tell you one is better 
+than the other, but for the most simple use cases
+they are reasonably similar. However they are
+NOT cross-compatible. An iperf2 client cannot 
+connect to an iperf3 server and vice versa.
+
+For simiplicty the following uses iperf2. 
+See more detail on versions below.
+
 ```
 # to set up network performance tests
 sudo apt-get install iperf
@@ -710,8 +724,52 @@ sudo apt-get install iperf
 # client: iperf -c <hostname or ip> (options)
 # e.g. iperf -c myIperfSvr -i 1 -t 100  # report every second for 100 seconds
 # Android clients include: ???
-# install as daemon:
-# sudo iperf -s -D > ??? tee
+```
+
+#### install as daemon
+
+There are numerous ways to automatically start a process on linux, including: 
+
+* rc.local (or the runlevel rcX.d folder scripts)
+* systemd
+* autostart (for graphical desktops)
+* init.d tab (inherited from Unix System V)
+* crontab; .bashrc
+
+```
+##### Simple using rc.local
+sudo nano /etc/rc.local
+# add the line (without comment) before the exit 0 line
+# sudo iperf -s -D
+
+# test the daemon is running
+ps aux | grep iperf | grep -v grep
+```
+
+Although systemd has its critics, you could use 
+this choice to keep things clean. 
+This assuming that you're using a mainstream 
+Linux distro, not a hyper-compact distro that avoids systemd. 
+
+
+```
+##### Use systemd to start iperf
+SERVICE_NAME=iperf
+sudo tee /etc/systemd/system/$SERVICE_NAME.service <<EOF!
+[Unit]
+Description=iperf v2 server for measuring bandwidth
+After=syslog.target network.target auditd.service
+
+[Service]
+ExecStart=/usr/bin/iperf -s
+# do not need -D daemon mode when using systemd
+
+[Install]
+WantedBy=multi-user.target
+EOF!
+sudo chmod 644 /etc/systemd/system/$SERVICE_NAME.service
+sudo systemctl daemon-reload
+sudo systemctl enable $SERVICE_NAME.service
 ```
 
 #### bandwidth troubleshooting
