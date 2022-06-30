@@ -22,14 +22,15 @@ Reasoning:
 	* fresh LxQt 17.10 with typical app installs c 7GB
 * home
 	* not only data and config but browser cache and search indexes
-* allow 1GB for boot
+* allow 1GB for boot (or up to 4GB - see below)
     * recommendations say 200-300 MB
     * this is fine until you start applying updates (especially automatically)
     * you get the following error from Software Updater: 
         * "Not enough free disk space"
-    * Workaround: sudo apt-get autoremove 
+    * Workaround: sudo apt-get autoremove (or dkpg -r if that fails)
     * better solution is to leave enough room on boot partition
         * allow space for at least two or three extra kernel versions 
+    * In a user-maintained system that is updated regularly using the GUI, 1GB may fill after a year or so. If you have no way to instruct how to 'autoremove' old kernels, then go larger like 4GB, so it will be longer before the errors appear
 * allow a swap on HDD
     * equal to the total amount of RAM installed
     * leaves enough space to hibernate (suspend to disk)
