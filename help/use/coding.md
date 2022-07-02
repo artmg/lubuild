@@ -267,3 +267,275 @@ This section is focused on free/libre IDEs that run using Qt widgets
 	* kturtle 
 	* scratch
 
+
+## Build and test examples
+
+### Build Samba on Raspbian
+
+```
+### remove previous install from repos
+sudo systemctl stop smbd.service
+# remove the samba package and all it's now unneeded dependencies
+sudo apt remove samba --autoremove -y
+
+# install screen for remote continuity
+sudo apt install -y screen
+screen
+# to reconnect use   screen -r
+
+### Install the prereqs
+#### Official way
+# https://wiki.samba.org/index.php/Package_Dependencies_Required_to_Build_Samba#Packages_Required_to_Build_Samba
+# e.g. https://git.samba.org/?p=samba.git;a=blob_plain;f=bootstrap/generated-dists/debian10/bootstrap.sh;hb=v4-12-test
+# NB: would need PhantomJS to GET this as it has client-side javascript
+# Consider using the verified dependencies for your distro and version – 
+# may include extra packages used for CI, but it should be comprehensive.
+# To elevate your prompt use:    sudo bash
+
+##### Official way is missing...
+sudo apt install libavahi-client-dev libtracker-miner-2.0-dev libtracker-sparql-2.0-dev
+
+#### alternative way
+
+http://apt.van-belle.nl/debian/dists/buster-samba412/main/source/Sources.gz
+See Package: samba / Build-Depends:               
+
+# credit https://lists.samba.org/archive/samba/2020-April/229168.html
+wget -O - http://apt.van-belle.nl/louis-van-belle.gpg-key.asc | sudo apt-key add -
+echo "deb-src http://apt.van-belle.nl/debian buster-samba412 main contrib non-free" | sudo tee -a /etc/apt/sources.list.d/van-belle.list
+sudo apt update
+sudo apt build-dep samba
+
+# added the following above the 'official' way used above
+#  dh-exec libcmocka-dev libcmocka0 libldb-dev libldb2 librados-dev libtalloc-dev libtdb-dev libtdb1
+#  libtevent-dev python3-etcd python3-extras python3-fixtures python3-ldb python3-ldb-dev python3-linecache2
+#  python3-mimeparse python3-pbr python3-setuptools python3-talloc python3-talloc-dev python3-tdb
+#  python3-testtools python3-traceback2 python3-unittest2
+
+
+### clone the single branch
+cd ~
+git clone --single-branch --branch=v4-12-stable --depth=1 https://gitlab.com/samba-team/samba.git
+# was
+#git clone --single-branch --branch=artmg-tmsize-overflow-fix --depth=1 https://gitlab.com/artmg/samba.git
+
+### build
+cd samba
+
+
+## If you are rebuilding on the same machine
+# first remove the old version
+# sudo systemctl stop smbd.service
+# sudo make -j$(nproc) uninstall
+
+
+# see alternative configure options
+# https://vapour-apps.com/build-samba-4-9-from-source-on-debian-9-or-ubuntu-18-04/
+
+
+# simple configure
+#./configure
+
+# remove unwanted functionality
+
+#./configure  --without-ad-dc --enable-avahi --enable-debug
+# we don't need domains
+# ensure avahi (even though this is supposed to be default anyhow)
+# enable debug, well you must be building for a special reason
+# help https://wiki.samba.org/index.php/Build_Samba_from_Source
+
+# FYI from ./configure output on raspbian buster lite
+#Checking uname machine type              : armv7l
+#Checking if size of size_t == 4                          : ok
+#Checking if size of off_t == 8                           : ok
+
+#dpkg-architecture -qDEB_HOST_MULTIARCH
+# e.g.   arm-linux-gnueabihf
+
+
+
+### trying more complex configure
+
+# credit https://kirb.me/2018/03/24/using-samba-as-a-time-machine-network-server.html
+# see also https://lists.samba.org/archive/samba/2019-April/222220.html
+
+
+# prereqs for --enable-spotlight
+sudo apt install build-essential avahi-daemon tracker libtracker-sparql-2.0-dev
+
+DEB_HOST_MULTIARCH=$(dpkg-architecture -qDEB_HOST_MULTIARCH)
+
+./configure \
+    --prefix=/usr --exec-prefix=/usr --sysconfdir=/etc \
+    --localstatedir=/var --libdir=/usr/lib/$DEB_HOST_MULTIARCH \
+    --with-privatedir=/var/lib/samba/private \
+    --with-smbpasswd-file=/etc/samba/smbpasswd \
+    --enable-fhs --enable-spotlight --with-systemd \
+    --enable-avahi 
+
+## see even
+# https://lists.samba.org/archive/samba-technical/2018-October/130648.html
+
+# NB some projects compiling on Pi avoid multi-thread compiling
+# e.g. https://www.domoticz.com/forum/viewtopic.php?t=26124
+# because they risk going into swap death. 
+# Monitoring the memory consumption on a Pi 2 compiling Samba with
+# make -j 4
+# there was always enough free memory to avoid using swap
+# both during compile and during linking
+make -j$(nproc)
+
+sudo make -j$(nproc) install
+
+# throws up errors
+# samba4.so: invalid string offset for section `.strtab'
+# https://lists.samba.org/archive/samba/2019-October/226558.html
+# https://bugzilla.samba.org/show_bug.cgi?id=13754
+
+# sudo systemctl unmask smbd.service
+sudo systemctl restart smbd.service
+
+
+
+# When not using the full enough list of options, 
+# AVAHI is not auto configured
+# for an example avahi service file
+#sudo tee /etc/avahi/services/samba.service << EOF!
+#<?xml version="1.0" standalone='no'?><!--*-nxml-*-->
+#<!DOCTYPE service-group SYSTEM "avahi-service.dtd">
+#EOF!
+# see https://mudge.name/2019/11/12/using-a-raspberry-pi-for-time-machine/
+
+```
+
+#### rebuild
+
+
+```
+sudo systemctl stop smbd.service
+sudo make uninstall
+
+# ./configure with whatever options you need
+make -j$(nproc) && sudo make -j$(nproc) install
+sudo systemctl unmask smbd.service
+sudo systemctl restart smbd.service
+```
+
+##### later Build Tests for v12
+
+```
+screen
+mkdir samba.4.12
+cd samba.4.12
+
+git clone --single-branch --branch=v4-12-stable --depth=1 https://gitlab.com/samba-team/samba.git
+
+cd samba
+DEB_HOST_MULTIARCH=$(dpkg-architecture -qDEB_HOST_MULTIARCH)
+
+
+./configure \
+    --prefix=/usr --exec-prefix=/usr --sysconfdir=/etc \
+    --localstatedir=/var --libdir=/usr/lib/$DEB_HOST_MULTIARCH \
+    --with-privatedir=/var/lib/samba/private \
+    --with-smbpasswd-file=/etc/samba/smbpasswd \
+    --enable-fhs --enable-spotlight --with-systemd \
+    --enable-avahi 
+
+make
+
+# sudo make install
+
+
+
+./configure \
+                --prefix=/usr \
+                --enable-fhs \
+                --sysconfdir=/etc \
+                --localstatedir=/var \
+                --libexecdir=/usr/lib/$DEB_HOST_MULTIARCH \
+                --with-privatedir=/var/lib/samba/private \
+                --with-smbpasswd-file=/etc/samba/smbpasswd \
+                --with-piddir=/var/run/samba \
+                --with-pammodulesdir=/lib/$DEB_HOST_MULTIARCH/security \
+                --with-pam \
+                --with-syslog \
+                --with-utmp \
+                --with-winbind \
+                --with-shared-modules=idmap_rid,idmap_ad,idmap_adex,idmap_hash,idmap_ldap,idmap_tdb2,vfs_dfs_samba4,auth_samba4,vfs_nfs4acl_xattr \
+                --with-automount \
+                --with-gpgme \
+                --libdir=/usr/lib/$DEB_HOST_MULTIARCH \
+                --with-modulesdir=/usr/lib/$DEB_HOST_MULTIARCH/samba \
+                --datadir=/usr/share \
+                --with-lockdir=/var/run/samba \
+                --with-statedir=/var/lib/samba \
+                --with-cachedir=/var/cache/samba \
+                --enable-avahi \
+                --disable-rpath \
+                --disable-rpath-install \
+                --with-socketpath=/var/run/ctdb/ctdbd.socket \
+                --with-logdir=/var/log/ctdb \
+
+# added for our use case
+                --enable-spotlight \
+                --without-ad-dc \
+                --enable-debug \
+
+
+# failed! https://pastebin.com/McaDiFdj
+                --without-ldap \
+                --without-ads \
+
+# See here for a fuller list of exclusions:
+# https://lists.samba.org/archive/samba/2018-February/213891.html
+
+
+# don't want this to stop on compile warnings
+                --enable-developer \
+
+
+
+# not needed in our usecase
+                --with-ldap \
+                --with-ads \
+                --with-dnsupdate \
+
+
+# failed with missing depends
+                --bundled-libraries=NONE,pytevent,iniparser,roken,replace,wind,hx509,asn1,heimbase,hcrypto,krb5,gssapi,heimntlm,hdb,kdc,com_err,compile_et,asn1_compile \
+                --builtin-libraries=ccan,samba-cluster-support \
+                --with-cluster-support \
+
+```
+
+#### Debug
+
+see links in OUT / Debugging section above
+
+
+```
+sudo smbstatus
+# this shows nothing
+
+sudo systemctl status smbd.service
+# shows 4 PIDs
+
+ps -A | grep smbd
+# should confirm which of above is plain old smbd (probably first)
+
+sudo gdb -p 4465
+
+info shared
+
+
+
+ls -la /usr/lib/samba/vfs/fruit.so
+ls -la /usr/lib/arm-linux-gnueabihf/samba/vfs/fruit.so
+
++ install /usr/lib/arm-linux-gnueabihf/samba/vfs/fruit.so (from bin/	default/source3/modules/libvfs_module_fruit.inst.so)
+
+
+
+```
+
