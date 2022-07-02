@@ -807,7 +807,7 @@ sudo service rsyslog restart
 # This gives one log file for all
 LOG_FILE=/var/log/mylogs.log
 sudo touch $LOG_FILE
-sudo tee /etc/rsyslog.d/60-network.conf cat <<EOF!
+sudo tee /etc/rsyslog.d/60-network.conf <<EOF!
 \$template NetworkLog, "/var/log/netgear.log"
 *.* -?NetworkLog
 & ~
@@ -830,6 +830,16 @@ EOF!
 # you can choose which host sends to which file with...
 # :fromhost-ip, isequal, "192.168.0.1" -?NetworkLog
 
+##### Syntax
+#
+# Note that these recipes all use the old basic syntax
+# but for more complex needs you might prefer the 
+# advanced filter language
+#
+# * https://www.rsyslog.com/filter-optimization-with-arrays/
+# * https://www.rsyslog.com/recipe-apache-logs-rsyslog-parsing-elasticsearch/
+
+
 
 #### Log Rotation
 
@@ -848,6 +858,7 @@ EOF!
 sudo logrotate /etc/logrotate.conf --debug
 
 ```
+
 
 #### moving log folder
 
