@@ -125,12 +125,18 @@ sudo udisksctl unmount --block-device /dev/${MEDIA_DEVICE:0:3}2
 sudo partprobe
 
 # now swap the file extension as the image is unzipped directly to the device
-unzip -p $IMAGE_FILENAME ${IMAGE_FILENAME//+(*\/|.*)}.img | sudo dd bs=4M status=progress of=/dev/${MEDIA_DEVICE:0:3}
 # credit for substitution code https://stackoverflow.com/a/38277789
-# if you have a .img.xz then use...
-# xzcat $IMAGE_FILENAME ${IMAGE_FILENAME%.*}.img | sudo dd bs=4M status=progress of=/dev/${MEDIA_DEVICE:0:3}
-# or for a .img.bz2 file use...
-# bunzip2 -c $IMAGE_FILENAME | sudo dd bs=4M status=progress of=/dev/${MEDIA_DEVICE:0:3}
+case "$IMAGE_FILENAME" in
+  *.img.xz)
+    echo xzcat $IMAGE_FILENAME ${IMAGE_FILENAME%.*}.img | sudo dd bs=4M status=progress of=/dev/${MEDIA_DEVICE:0:3}
+    ;;
+  *.img.bz2)
+    echo bunzip2 -c $IMAGE_FILENAME | sudo dd bs=4M status=progress of=/dev/${MEDIA_DEVICE:0:3}
+    ;;
+  *.img.zip)
+    echo unzip -p $IMAGE_FILENAME ${IMAGE_FILENAME//+(*\/|.*)}.img | sudo dd bs=4M status=progress of=/dev/${MEDIA_DEVICE:0:3}
+esac
+
 
 # write everything still left in the cache 
 sync
