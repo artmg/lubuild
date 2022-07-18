@@ -1,9 +1,12 @@
 ## Troubleshooting Apps
 
-see also:
+This article is to [Diagnose Applications and Package Management](https://github.com/artmg/lubuild/blob/master/help/diagnose/apps-and-packages.md)
 
-* Diagnose [https://github.com/artmg/lubuild/blob/master/help/diagnose/apps-and-packages.md]
-	* Applications and Package Management
+See also:
+
+* [Troubleshooting the OS](https://github.com/artmg/lubuild/blob/master/help/diagnose/operating-system.md)
+	* for help with OS version, kernel, logs, services, etc
+	* including the Service portion of applications you might install
 
 
 ### Which version of XYZ ...

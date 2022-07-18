@@ -16,6 +16,8 @@ see also:
 	* including logging and monitoring and analysis
 * [Network Appliances](https://github.com/artmg/lubuild/blob/master/help/configure/network-appliance-firmware.md)
 	* dedicated devices running specialist software
+* [Troubleshooting the OS](https://github.com/artmg/lubuild/blob/master/help/diagnose/operating-system.md)
+	* for help with OS version, kernel, logs, services, etc
 
 For some background on network interfaces and utilities you may find [the OpenWrt page on network interfaces](https://wiki.openwrt.org/doc/networking/network.interfaces) interesting - its NOT specific to Lubuntu, but practical and applicable nonetheless. 
 
@@ -735,6 +737,8 @@ There are numerous ways to automatically start a process on linux, including:
 * autostart (for graphical desktops)
 * init.d tab (inherited from Unix System V)
 * crontab; .bashrc
+
+For more see [OS diags # Services](operating-system.md#Services)
 
 ```
 ##### Simple using rc.local

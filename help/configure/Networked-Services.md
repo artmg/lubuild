@@ -17,7 +17,8 @@ see also:
 	* Sharing folders Windows-style
 * [Network Appliances](https://github.com/artmg/lubuild/blob/master/help/configure/network-appliance-firmware.md)
 	* dedicated devices running specialist software
-
+* [Troubleshooting the OS](https://github.com/artmg/lubuild/blob/master/help/diagnose/operating-system.md)
+	* for help with OS version, kernel, logs, services, etc
 
 
 ## Network discovery

@@ -1,3 +1,12 @@
+# Operating System
+
+See also:
+
+* [Diagnose Applications and Package Management](apps-and-packages.md)
+	* controlling and checking what software is present
+* [understand the layers on your desktop](../understand/layers-on-your-desktop.md)
+	* includes some layers that might start up application like services
+
 ## OS Version
 
 ``` 
@@ -268,14 +277,14 @@ echo mem | sudo tee /sys/power/state
 * background: [https://wiki.ubuntu.com/UnderstandingSuspend]
 * NB System crash bug reports can be rejected if BIOS version has been superseded - strongly consider [[Troubleshooting#BIOS_Upgrade]] to latest version
 
-``` 
+```
 # soak test suspend...
 sudo fwts s3 --s3-multiple=20
- 
+
 # HOW TO DEBUG...
 # help - https://wiki.ubuntu.com/DebuggingKernelSuspend
 #
- 
+
 # credit - https://bugs.launchpad.net/ubuntu/+source/lubuntu-default-settings/+bug/961122
 sudo pm-hibernate
 
@@ -306,3 +315,72 @@ cat /var/log/syslog | grep PM:
 sysv-rc-conf
 ```
 
+## Services
+
+On some systems, especially servers, it can be quite handy that some 
+software programmes start themselves automatically. 
+These are often known as Services or Daemons. 
+
+There are historically quite a number of ways to start apps:
+
+* Runlevels
+	* rc.local (or the runlevel rcX.d folder scripts)
+* crontab
+	* this is a timed startup service
+* sysvinit
+	* SysV init is inherited from Unix System V 
+	* init.d tab
+* systemd
+* .bashrc
+	* used more often for software to run during interactive sessions
+* autostart (for graphical desktops)
+
+Although systemd has its critics, especially 
+hyper-compact distro that want to avoid any bloat, 
+most mainstream Linux distros do include systemd. 
+
+You will often see `servicectl` command used to manipulate 
+systemd-based services, but there is also the more agnostic 
+service script, which is a front-end to whichever service manager 
+might be in use on the system.
+
+```
+# show all services
+service --status-all
+
+# just those that are running
+service --status-all | grep '\[ + \]'
+# use minus instead for those NOT running
+
+# equivalent for systemd
+systemctl list-units
+
+# without the paging feature
+systemctl --no-pager
+
+```
+
+The disadvantage of the 'service' wrapper script is that it generally only considers services in `/etc/init.d` and if your service is in `/lib/systemd`
+then it might be disregarded!
+
+```
+# on many systems you will need to elevate privilege
+
+# notice the difference in syntax
+sudo service cron start
+
+# noun (service name) before verb
+
+systemctl start cron.service
+
+# verb first, the .service may be autocompleted or omitted
+
+# be careful not to conflate the two into ~~servicectl~~ !
+```
+
+
+
+See also:
+
+* [understand the layers on your desktop](../understand/layers-on-your-desktop.md)
+	* includes some layers that might start up application like services
