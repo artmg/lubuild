@@ -5,13 +5,13 @@ and how to add a Persistence volume
 
 see also:
 
-* [https://github.com/artmg/lubuild/blob/master/help/configure/Disks-and-layout.md]
+* [Disks and layout](../configure/Disks-and-layout.md)
     * once you've booted your distro, how do you want to configure your storage?
-* [https://github.com/artmg/lubuild/blob/master/help/manipulate/flash-drives-and-SSDs.md]
+* [Manipulate Flash](../manipulate/flash-drives-and-SSDs.md)
     * special info about how to work with flash (non-mechanical) storage devices
-* [https://github.com/artmg/MuGammaPi/wiki/Disks#distro-images]
+* [Distro images](https://github.com/artmg/MuGammaPi/wiki/Disks#distro-images)
     * 
-* [https://github.com/artmg/lubuild/blob/master/help/understand/test-and-qa-for-Lubuntu.md]
+* [Lubuntu test and QA](../understand/test-and-qa-for-Lubuntu.md)
     * contributing to the Lubuntu Test and QA community
 
 
@@ -22,8 +22,7 @@ see also:
     * includes basic memory and storage testing ability
 * Disk configuration and diagnostics
     * very handy if the OS on your hard disk is playing up
-* Data Recovery 
-    * see [https://github.com/artmg/lubuild/blob/master/help/diagnose/disk-recovery-and-forensics.md]
+* [Data Recovery](../diagnose/disk-recovery-and-forensics.md)
 * 
 
 
@@ -83,7 +82,7 @@ so perhaps they could be merged at some point?
 * [Buildroot](https://github.com/artmg/MuGammaPi/wiki/buildroot)
 * [ArchLinuxArm install](https://github.com/artmg/MuGammaPi/wiki/arch-linux-install)
 * [Raspbian basics](https://github.com/artmg/MuGammaPi/wiki/Raspbian-basics)
-* [disks - rename](https://github.com/artmg/lubuild/blob/master/help/configure/disks.md#rename)
+* [disks - rename](../configure/disks.md#rename)
 
 ```
 # type and tab after this to choose filename
@@ -128,13 +127,13 @@ sudo partprobe
 # credit for substitution code https://stackoverflow.com/a/38277789
 case "$IMAGE_FILENAME" in
   *.img.xz)
-    echo xzcat $IMAGE_FILENAME ${IMAGE_FILENAME%.*}.img | sudo dd bs=4M status=progress of=/dev/${MEDIA_DEVICE:0:3}
+    xzcat $IMAGE_FILENAME ${IMAGE_FILENAME%.*}.img | sudo dd bs=4M status=progress of=/dev/${MEDIA_DEVICE:0:3}
     ;;
   *.img.bz2)
-    echo bunzip2 -c $IMAGE_FILENAME | sudo dd bs=4M status=progress of=/dev/${MEDIA_DEVICE:0:3}
+    bunzip2 -c $IMAGE_FILENAME | sudo dd bs=4M status=progress of=/dev/${MEDIA_DEVICE:0:3}
     ;;
   *.img.zip)
-    echo unzip -p $IMAGE_FILENAME ${IMAGE_FILENAME//+(*\/|.*)}.img | sudo dd bs=4M status=progress of=/dev/${MEDIA_DEVICE:0:3}
+    unzip -p $IMAGE_FILENAME ${IMAGE_FILENAME//+(*\/|.*)}.img | sudo dd bs=4M status=progress of=/dev/${MEDIA_DEVICE:0:3}
 esac
 
 
