@@ -6,6 +6,9 @@ See also:
 	* controlling and checking what software is present
 * [understand the layers on your desktop](../understand/layers-on-your-desktop.md)
 	* includes some layers that might start up application like services
+* [Network diagnostics # running services](network.md#diagnosing-running-services)
+	* Discover basic network services running on the OS
+ 
 
 ## OS Version
 
@@ -53,11 +56,10 @@ sudo add-apt-repository ppa:yannubuntu/boot-repair && sudo apt-get update
 sudo apt-get install -y boot-repair && (sudo boot-repair &)
 
 # make a note of any URL you are given to Pastebin or similar log caching site
-
-# if you are still having problems with a dual-boot install 
-# see also the section **Dual Boot / bcdedit** in 
-# [https://github.com/artmg/lubuild/blob/master/help/configure/Windows.md] 
 ```
+
+if you are still having problems with a dual-boot install 
+see also the [Windows section on Dual Boot / bcdedit](../configure/Windows.md)
 
 ## Hostname 
 

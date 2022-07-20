@@ -3,20 +3,20 @@
 
 see also:
 
-* [General hardware diagnostics](https://github.com/artmg/lubuild/blob/master/help/diagnose/hardware.md) including radio devices
-* [Configure inteface](https://github.com/artmg/lubuild/blob/master/help/configure/network-interface.md)
+* [General hardware diagnostics](../diagnose/hardware.md) including radio devices
+* [Configure inteface](../configure/network-interface.md)
 	* If you're trying to make a direct connection to a single device
 	* useful when configuring new network equipment
-* [Hardware Troubleshooting](https://github.com/artmg/lubuild/blob/master/help/diagnose/hardware.md) 
+* [Hardware Troubleshooting](../diagnose/hardware.md) 
 	* For issues turning radios on and off
-* [Samba server](https://github.com/artmg/lubuild/blob/master/help/configure/network-shares-with-Samba.md)
+* [Samba server](../configure/network-shares-with-Samba.md)
 	* Sharing folders Windows-style
-* [Configuring Networked Services](https://github.com/artmg/lubuild/blob/master/help/configure/Networked-Services.md)
+* [Configuring Networked Services](../configure/Networked-Services.md)
 	* How to set it up in the first place 
 	* including logging and monitoring and analysis
-* [Network Appliances](https://github.com/artmg/lubuild/blob/master/help/configure/network-appliance-firmware.md)
+* [Network Appliances](../configure/network-appliance-firmware.md)
 	* dedicated devices running specialist software
-* [Troubleshooting the OS](https://github.com/artmg/lubuild/blob/master/help/diagnose/operating-system.md)
+* [Troubleshooting the OS](../diagnose/operating-system.md)
 	* for help with OS version, kernel, logs, services, etc
 
 For some background on network interfaces and utilities you may find [the OpenWrt page on network interfaces](https://wiki.openwrt.org/doc/networking/network.interfaces) interesting - its NOT specific to Lubuntu, but practical and applicable nonetheless. 
@@ -380,7 +380,7 @@ nmcli dev show $INTERFACE
 
 For quick introduction to Domain Name Services, 
 and how to set some up, 
-please see [Configuring DNS in Networked Services](https://github.com/artmg/lubuild/blob/master/help/configure/Networked-Services.md#name-resolution-dns)
+please see [Configuring DNS in Networked Services](../configure/Networked-Services.md#name-resolution-dns)
 
 
 #### basic DNS diagnostics
@@ -518,7 +518,7 @@ You should be able to run this from a terminal on the
 server itself, ensure you have the right path to the config file, and that 'remote' control is enabled.
 Otherwise you can set it up to run remotely.
 
-To configure unbound-control please see [Unbound DNS in Networked Services](https://github.com/artmg/lubuild/blob/master/help/configure/Networked-Services.md#unbound)
+To configure unbound-control please see [Unbound DNS in Networked Services](../configure/Networked-Services.md#unbound)
 
 Commands allow you to:
 

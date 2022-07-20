@@ -2,22 +2,22 @@
 
 see also:
 
-* [Secure SHell SSH](https://github.com/artmg/lubuild/blob/master/help/configure/Secure-SHell-SSH.md)
+* [Secure SHell SSH](../configure/Secure-SHell-SSH.md)
 	* how to configure Secure SHell (SSH) services and clients, and how to use other services that piggy-back off SSH connections.
-* [General Network troubleshooting](https://github.com/artmg/lubuild/blob/master/help/diagnose/network.md)
+* [General Network troubleshooting](../diagnose/network.md)
 	* general Network Diagnostics
 	* If you want to find out more about what is on your local network
-		* see Discovery / Services in  [https://github.com/artmg/lubuild/blob/master/help/diagnose/network.md#Discovery] 
-* [Configure inteface](https://github.com/artmg/lubuild/blob/master/help/configure/network-interface.md)
+		* [Discovery / Services](../diagnose/network.md#Discovery)
+* [Configure inteface](../configure/network-interface.md)
 	* If you're trying to make a direct connection to a single device
 	* useful when configuring new network equipment
-* [Hardware Troubleshooting](https://github.com/artmg/lubuild/blob/master/help/diagnose/hardware.md) 
+* [Hardware Troubleshooting](../diagnose/hardware.md) 
 	* For issues turning radios on and off
-* [Samba server](https://github.com/artmg/lubuild/blob/master/help/configure/network-shares-with-Samba.md)
+* [Samba server](../configure/network-shares-with-Samba.md)
 	* Sharing folders Windows-style
-* [Network Appliances](https://github.com/artmg/lubuild/blob/master/help/configure/network-appliance-firmware.md)
+* [Network Appliances](../configure/network-appliance-firmware.md)
 	* dedicated devices running specialist software
-* [Troubleshooting the OS](https://github.com/artmg/lubuild/blob/master/help/diagnose/operating-system.md)
+* [Troubleshooting the OS](../diagnose/operating-system.md)
 	* for help with OS version, kernel, logs, services, etc
 
 
@@ -47,7 +47,7 @@ sudo apt-get install -y libnss-mdns
 ```
 
 For clients you can use to discover services advertised via mDNS 
-see Discovery / Services in Network Diagnostics [https://github.com/artmg/lubuild/blob/master/help/diagnose/network.md#Discovery]
+see [Discovery / Services in Network Diagnostics](../diagnose/network.md#Discovery)
 
 ## Sharing Folders
 
@@ -122,13 +122,13 @@ not to the deprecated Simple File Transfer Protocol.
 SFTP is technically different from both FTPS and FTP over SSH, 
 fortunately however many FTP clients have been written to also use SFTP.
 
-For more details on SFTP see the [section in teh Secure SHell SSH page](https://github.com/artmg/lubuild/blob/master/help/configure/Secure-SHell-SSH.md#sftp).
+For more details on SFTP see the [section in teh Secure SHell SSH page](../configure/Secure-SHell-SSH.md#sftp).
 
 
 #### Share with Samba
 
 For the main article on configuring network shares with samba 
-please see [https://github.com/artmg/lubuild/blob/master/help/configure/network-shares-with-Samba.md]
+please see [Configure Samba](../configure/network-shares-with-Samba.md)
 
 Below are simple instructions for setting up a basic Samba share in Lubuntu. 
 For more explanation, background, and further examples of advanced use 
@@ -140,9 +140,9 @@ please see the above-mentioned article.
 
 * dedupe between ...
  * here
- * Samba [https://github.com/artmg/lubuild/blob/master/help/configure/network-shares-with-Samba.md]
+ * [Configure Samba](../configure/network-shares-with-Samba.md)
   * including WINS and Windows access
- * sharing printers - [https://github.com/artmg/MuGammaPi/wiki/Print-server]
+ * [sharing printers](https://github.com/artmg/MuGammaPi/wiki/Print-server)
 
 ```
 ##### SAMBA
@@ -177,7 +177,7 @@ testparm -s /etc/samba/smb.conf.master && testparm -s /etc/samba/smb.conf.master
 ```
 
 NB: by default, samba users are separate from linux system users.  
-For more on advanced configuration please see [https://github.com/artmg/lubuild/blob/master/help/configure/network-shares-with-Samba.md]
+For more on advanced configuration please see [main Samba article](../configure/network-shares-with-Samba.md)
 
 
 #### Sharing folders between computers 
@@ -483,7 +483,7 @@ fi
 
 ## SSH - (remote) Secure SHell
 
-These sections have been moved out into a new, separate article on [Secure SHell SSH](https://github.com/artmg/lubuild/blob/master/help/configure/Secure-SHell-SSH.md)
+These sections have been moved out into a new, separate article on [Secure SHell SSH](../configure/Secure-SHell-SSH.md)
 
 Please update any links you have to point to the new article.
 
@@ -656,7 +656,7 @@ Digital Livingroom Network Alliance (DLNA) extends the
 Universal Plug and Play (UPnP) network standard to provide audio services. 
 This is to set up a **Media Server**, but to find out 
 more about other components see
-[https://github.com/artmg/lubuild/blob/master/help/use/Music-and-multimedia.md]
+[Music and Multimedia article](../use/Music-and-multimedia.md)
 
 For alternatives to ReadyMedia see [https://www.reddit.com/r/linux/comments/4zh324/how_dead_is_minidlna_readymedia_too_dead/]
 
