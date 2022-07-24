@@ -85,6 +85,7 @@ so perhaps they could be merged at some point?
 * [disks - rename](../configure/disks.md#rename)
 
 ```
+### Prepare variables for the next code block
 # type and tab after this to choose filename
 IMAGE_FILENAME=
 
@@ -93,11 +94,15 @@ MEDIA_LABEL=
 
 # check the output for the dev name set as **vfat**
 MEDIA_DEVICE=sdX9
+```
 
+```
 # enter your password for su
 sudo echo
+```
 
-# Prepare
+```
+# prepare settings used later
 SHORT_LABEL=${MEDIA_LABEL:0:8}
 # detect unix release
 . /etc/os-release
@@ -141,22 +146,13 @@ esac
 sync
 #
 
-
 ```
 
 Now you wait a few minutes depending on 
 the size of the image and speed of the media.
 
 ```
-
-## don't yet have to ...
-## eject
-#udisksctl unmount --block-device /dev/${MEDIA_DEVICE:0:3}1
-#udisksctl unmount --block-device /dev/${MEDIA_DEVICE:0:3}2
-#udisksctl power-off --block-device /dev/${MEDIA_DEVICE:0:3}
-## help - https://udisks.freedesktop.org/docs/latest/udisksctl.1.html
-#echo please eject and re-insert media
-
+# use partprobe instead of ejecting and reinserting
 sudo partprobe
 # sudo fdisk -l /dev/${MEDIA_DEVICE:0:3}
 
