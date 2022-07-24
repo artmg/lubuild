@@ -106,6 +106,7 @@ Please see also the section on [#managing-encryption-keys Managing Encryption Ke
 These instructions should be carried out from the client, so if you have already connected with an `ssh` session to the server, then you should `exit` first.
 
 ```
+# example variables
 REMOTE_HOST=MyServer
 # only specify DOMAIN if you need FQDN to connect
 REMOTE_DOMAIN=
@@ -113,7 +114,9 @@ REMOTE_USER=admin
 # if you are happy with individual certs per server 
 # then don't specify ADMIN_GROUP
 ADMIN_GROUP=MyServerGroup
+```
 
+```
 # Generate a new ED25519 SSH key pair
 # this is 'the new standard' for keys
 Key_Opts="${KEY_OPTIONS:-"-t ed25519"}"
@@ -132,9 +135,9 @@ fi
 ssh-copy-id -o  StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ${Key_File}.pub ${REMOTE_USER}@${REMOTE_HOST}${REMOTE_DOMAIN}
 
 # Just do as far as the command above, as it waits for the password
+```
 
-######## -------- ######## --------- ########
-
+```
 # Now carry on from here
 
 # save this in the ssh config file using 
