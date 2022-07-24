@@ -6,7 +6,7 @@ and preparing for use, especially setting up the multimedia components.
 See also:
 * [https://github.com/artmg/lubuild/blob/master/help/manipulate/music-and-instruments.md]
     * for details on the applications software bundled with the distro
-* [https://github.com/artmg/lubuild/blob/master/help/understand/about-Sound-software-in-Ubuntu.mediawiki]
+* [https://github.com/artmg/lubuild/blob/master/help/understand/about-Sound-software-in-Ubuntu.md]
     * how the audio subsystem fits together
 * [https://github.com/artmg/lubuild/blob/master/help/configure/write-Distro-to-flash.md]
     * prepare your install media

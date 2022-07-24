@@ -13,7 +13,7 @@ See also
 * <https://github.com/artmg/lubuild/blob/master/help/manipulate/films-and-songs.md>
     * Use recording programs to rip content from media source devices
 
-It might help if you read a little [background on the Linux sound software stack](https://github.com/artmg/lubuild/blob/master/help/understand/about-Sound-software-in-Ubuntu.mediawiki)
+It might help if you read a little [background on the Linux sound software stack](https://github.com/artmg/lubuild/blob/master/help/understand/about-Sound-software-in-Ubuntu.md)
 
 There are also detailed troubleshooting steps in the Ubuntu docs <https://help.ubuntu.com/community/SoundTroubleshootingProcedure>
 
@@ -66,6 +66,10 @@ load-module module-switch-on-connect
 AutoConnect=true
 ```
 
+See also:
+
+* basic diagnostics on [Bluetooth hardware devices](hardware.md#Bluetooth%20devices)
+* more detail how to configure a [Bluetooth audio sink for A2DP](https://github.com/artmg/MuGammaPi/wiki/bluetooth-audio-sink)
 
 ## PulseAudio
 

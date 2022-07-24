@@ -5,7 +5,7 @@ rather than playing pre-recorded media
 see also:
 * [https://github.com/artmg/lubuild/blob/master/help/configure/Ubuntu-Studio.md]
     * setting up a distro that has a lot of these apps ready to use
-* [https://github.com/artmg/lubuild/blob/master/help/understand/about-Sound-software-in-Ubuntu.mediawiki]
+* [https://github.com/artmg/lubuild/blob/master/help/understand/about-Sound-software-in-Ubuntu.md]
     * what audio components in the operating system help these apps
 *  [https://github.com/artmg/lubuild/blob/master/help/use/Music-and-multimedia.md]
     * listening to music someone else has already created
