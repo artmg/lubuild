@@ -101,6 +101,8 @@ MEDIA_DEVICE=sdX9
 sudo echo
 ```
 
+**First** block to write the image...
+
 ```
 # prepare settings used later
 SHORT_LABEL=${MEDIA_LABEL:0:8}
@@ -148,8 +150,9 @@ sync
 
 ```
 
-Now you wait a few minutes depending on 
-the size of the image and speed of the media.
+Now you wait a few minutes, depending on 
+the size of the image and speed of the media, 
+before the **second** block to personalise the partitions. 
 
 ```
 # use partprobe instead of ejecting and reinserting
