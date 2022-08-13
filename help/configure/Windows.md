@@ -21,6 +21,56 @@ see also:
 	* [https://github.com/artmg/lubuild/blob/master/help/diagnose/disks.md]
 
 
+## Windows 11 quick local setup
+
+This follows the Windows 'out of (the) box experience' to provide the quickest, simplest way to get a working Windows 11 system from the OEM vendor-preinstalled recovery partition. Note that this process reverts to a local administrator account, avoiding using a Microsoft Account with real user credentials, until the build is complete enough to offer to the user. 
+
+* Accept Region
+* Accept Input Method
+* Shift F10 for command prompt
+* enter the command  `oobe\bypassnro`  to finish setup with no network
+	* otherwise Connect Wireless
+	* then when prompted for Microsoft Account...
+	* see below
+* wait for updates
+* wait for restart
+
+* Accept license agreement
+* Set hostname
+	* record in Private Config Note
+* wait for restart
+
+* if prompted for Microsoft Account...
+	* disconnect network
+		* e.g. use Flight Mode function key
+	* press back button
+	* Enter local user name & security details
+		* record in Private Config Note
+* No Location
+* No Find
+* Required only
+* No inking
+* No diagnostic
+* No Ad ID
+
+* Vendor registration
+	* by-pass as needed
+	* (e.g. HP Register and Protect...)
+		* Leave empty and next
+		* Leave unticked and next
+
+* Wait for completion
+* turn Flight Mode back on
+* Settings / WIndows Updates / Download Now
+* Restart as required 
+* Keep an eye on Update download status
+* until updates all complete
+
+In the mean time you can check the System Configuration, Windows Editions and build info, Disk Layout, etc - ready to continue your preferred configuration and installation process. 
+
+Once updates are complete you may consider uninstalling OEM provided 'bloatware', but be cautious not to remove useful features or render your system inoperable. See [Manage Applications](#Manage%20Applications) section below.
+
+
 ## Windows 10 useful tips
 
 ### Quick minimal install
@@ -120,32 +170,69 @@ Update 2021: it seems as though more recent versions of Windows 10 can find prin
 
 You can do this via Apps and Features, but it can be quicker in an Adminsitrators Powershell
 
-```
-Get-AppxPackage | select name | sort name
+Note that this list is based on Windows 10 20H2
 
-Get-AppxPackage -Name king.com*                | Remove-AppxPackage
-Get-AppxPackage -Name Microsoft.MixedReality*  | Remove-AppxPackage
-Get-AppxPackage -Name Microsoft.GetStarted     | Remove-AppxPackage  # Tips
-Get-AppxPackage -Name Microsoft.SkypeApp       | Remove-AppxPackage  # the 'lite' blue-on-white version
-Get-AppxPackage -Name Microsoft.MicrosoftOfficeHub  | Remove-AppxPackage
-Get-AppxPackage -Name Microsoft.Microsoft3DViewer  | Remove-AppxPackage
-Get-AppxPackage -Name Microsoft.Office.OneNote  | Remove-AppxPackage
-Get-AppxPackage -Name Microsoft.WindowsFeedbackHub  | Remove-AppxPackage
-Get-AppxPackage -Name Microsoft.WindowsMaps     | Remove-AppxPackage
-Get-AppxPackage -Name Microsoft.Xbox*           | Remove-AppxPackage
-Get-AppxPackage -Name Microsoft.Zune*           | Remove-AppxPackage # Groove
-Get-AppxPackage -Name *EclipseManager*          | Remove-AppxPackage
-Get-AppxPackage -Name *Duolingo*                | Remove-AppxPackage
+```
+# Get-AppxPackage | select name | sort name
+Get-AppxPackage -AllUsers | Select Name, PackageFullName
+
+function FullyRemove-AppxPackage {
+    param (
+        $AppxPackageName
+    )
+    Get-AppxPackage -Name $AppxPackageName | Remove-AppxPackage 
+    Get-AppxPackage -AllUsers -Name $AppxPackageName | Remove-AppxPackage -AllUsers
+}
+
+FullyRemove-AppxPackage -AppxPackageName Microsoft.GetStarted
+FullyRemove-AppxPackage -AppxPackageName Microsoft.MicrosoftOfficeHub
+FullyRemove-AppxPackage -AppxPackageName Microsoft.Office.OneNote
+FullyRemove-AppxPackage -AppxPackageName Microsoft.Microsoft3DViewer
+FullyRemove-AppxPackage -AppxPackageName Microsoft.MixedReality*
+FullyRemove-AppxPackage -AppxPackageName Microsoft.WindowsFeedbackHub
+FullyRemove-AppxPackage -AppxPackageName Microsoft.WindowsMaps
+FullyRemove-AppxPackage -AppxPackageName Microsoft.SkypeApp # use full version if you want it
+FullyRemove-AppxPackage -AppxPackageName Microsoft.Xbox*
+FullyRemove-AppxPackage -AppxPackageName Microsoft.Zune*
+FullyRemove-AppxPackage -AppxPackageName Microsoft.BingNews
+FullyRemove-AppxPackage -AppxPackageName Microsoft.BingWeather
+
 # Optional items
 # if you have no Windows devices or MS accounts
-Get-AppxPackage -Name Microsoft.YourPhone  | Remove-AppxPackage
-Get-AppxPackage -Name Microsoft.People  | Remove-AppxPackage
+FullyRemove-AppxPackage -AppxPackageName Microsoft.YourPhone
+FullyRemove-AppxPackage -AppxPackageName Microsoft.People
+FullyRemove-AppxPackage -AppxPackageName Microsoft.OneDriveSync
 # Apps needing a SIM & Mobile radio
-Get-AppxPackage -Name Microsoft.OneConnect  | Remove-AppxPackage
+FullyRemove-AppxPackage -AppxPackageName Microsoft.OneConnect
+
 # simple games
-Get-AppxPackage -Name 'Microsoft.MicrosoftSolitaireCollection'  | Remove-AppxPackage
+FullyRemove-AppxPackage -AppxPackageName 'Microsoft.MicrosoftSolitaireCollection'
+FullyRemove-AppxPackage -AppxPackageName *.SimpleSolitaire
+FullyRemove-AppxPackage -AppxPackageName Microsoft.MinecraftEducationEdition
+FullyRemove-AppxPackage -AppxPackageName king.com*
+
 # if you add a proper recorder
-Get-AppxPackage -Name Microsoft.WindowsSoundRecorder  | Remove-AppxPackage
+FullyRemove-AppxPackage -AppxPackageName Microsoft.WindowsSoundRecorder
+
+# more trialware
+FullyRemove-AppxPackage -AppxPackageName *.McAfeeSecurity
+FullyRemove-AppxPackage -AppxPackageName DropboxInc.DropboxOEM
+
+# if you don’t use these services:
+FullyRemove-AppxPackage -AppxPackageName *.AmazonAlexa
+FullyRemove-AppxPackage -AppxPackageName Disney.*
+FullyRemove-AppxPackage -AppxPackageName *.McAfeeSecurity
+FullyRemove-AppxPackage -AppxPackageName DropboxInc.Dropbox
+FullyRemove-AppxPackage -AppxPackageName SpotifyAB.SpotifyMusic
+
+# example vendor bundleware
+FullyRemove-AppxPackage -AppxPackageName *.myHP
+FullyRemove-AppxPackage -AppxPackageName *.HPSupportAssistant
+
+# other bundled apps
+FullyRemove-AppxPackage -AppxPackageName *EclipseManager*
+FullyRemove-AppxPackage -AppxPackageName *Duolingo*
+
 
 ```
 
@@ -368,7 +455,18 @@ watch also: https://www.youtube.com/watch?v=yp5bfmRwRY0&t=2s
 
 ### Device Encryption
 
-Under Windows 10 Home you may use 'Device Encryption' (MS' free equivalent of bitlocker) to Encrypt the volume
+Full disk encryption will secure your 'data at rest' - in other words, if your device falls into the wrong hands, people cannot access your stored data by loading it onto a different system. 
+Under Windows Home editions you may use the simple, straightforward 'Device Encryption' to encrypt your storage volume, as opposed to the more complex Bitlocker system available on Professional editions. 
+
+Under Settings / Privacy and Security / Device Encryption you will find whether your device supports Windows Device Encryption (WDE). For instance, your computer must have a Trusted Platform Module (TPM). Even though Bitlocker is not available on Home edition WDE is not bad. The issue comes if you use a local account. 
+
+When you install Windows Home on hardware that supports WDE, it will turn on Device Encryption and encrypt the disk ready using a Clear Key, which is left on the disk as Full Volume Encryption Metadata. This would let you recover the data if a password was lost/forgotten, but it is clearly not secure from attack!
+
+When you log on with a Microsoft account, it replaces that Clear Key with a Volume Master Key (VMK) sealed onto the computer’s TPM. In the process it also generates a Recovery Key, which it escrows to your Microsoft account, allowing you to get the data back if the password is forgotten/lost.
+
+Even if you have the right hardware on your computer, you can only safely encrypt your data on Home edition using Windows Device Encryption when you log on with a Microsoft Account. If you want an alternative, you may use Veracrypt to turn on Full Disk Encryption (FDE) before committing sensitive data to the disk.
+
+#### Check if Device Encryption is available
 
 * Provided you have TPMv2 enabled and UEFI, 
 	* Settings / Update & Security / Device Encryption
@@ -379,19 +477,33 @@ Under Windows 10 Home you may use 'Device Encryption' (MS' free equivalent of bi
 		* by turning on or off certain bios settings
 		* try Googling the error
 			* with your fingers crossed and plenty of patience
-* Alternatively try Veracrypt
-	* `choco install -y veracrypt`
-	* not sure if restart required now
-	* Launch Veracrypt
-	* System / Encrypt System partition
-	* Type: Normal
-	* Area: Windows sys partition
-	* OS: Single Boot
-	* Encryption options: if you don't understand, then default is fine
-	* you'll need a small USB drive to store the Rescue Data
-* 
 
-#### Windows updates puts Veracrypt into Recovery
+#### Veracrypt System Encryption
+
+If you choose to use Veracrypt to encrypt your system partition, you might consider turning off Windows FDE in settings (even if it is not fully encrypted for the reasons above).
+
+* `choco install -y veracrypt`
+* not sure if restart is required now
+* launch the Veracrypt app
+* System / Encrypt System Partition
+* Type: Normal
+* Area: Windows System Partition
+* Number of OS: (choose as appropriate, e.g. Single Boot)
+* Encryption options: 
+	* if you don't understand these, default is fine
+	* if you change these, it may take a couple of seconds longer to boot
+	* however it will make it MUCH harder for other people to brute-force crack your encryption
+	* Of course a longer password really helps this too!
+* Use mouse for random data
+* Disable Windows Fast Startup
+* save the recovery data to a removable drive medium
+	* the Rescue Data only takes a handful of MB
+* choose Wipe Mode
+* reboot for a PreTest
+* finally Encrypt
+
+
+##### Windows updates puts Veracrypt into Recovery
 
 If you have used Veracrypt System Encryption to encrypt your full Windows System Partition, you might encounter issues 
 following a Windows Update. 
