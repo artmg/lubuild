@@ -132,6 +132,64 @@ rsync -avuz dest/ source/
 # credit [http://www.linuxquestions.org/questions/showthread.php?p=2899735#post2899735]
 ```
 
+#### Basic usage
+
+```
+# credit > http://samba.anu.edu.au/rsync/
+
+rsync -av --delete --inplace /sr/folder/ /dest/folder/
+
+# If you omit the trailing backslash on the source
+# then that folder will be reproduced in dest
+# With a trailing backslash, only its contents
+# Backslash on dest makes no odds
+# https://download.samba.org/pub/rsync/rsync.1
+
+### testing
+
+-n --dry-run
+# don't actually make changes
+
+--progress
+# show how its doing
+
+
+#### Special circumstances
+
+
+# Regular backup to medium with limited space
+--delete-during
+
+# Daylight savings difference between FAT and NTFS
+# allow modified times to vary by up to an hour
+--modify-window=3601 
+# credit > http://samba.anu.edu.au/rsync/daylight-savings.html
+
+```
+
+* [samba rsync official list of documation links](https://rsync.samba.org/documentation.html)
+
+
+#### using 3rd 'compare' folder to find differences
+
+```
+# then delete the files removed in the mean time
+
+    rsync -av --compare-dest=../B A/ C
+    # ftp each file from C to remote site and move it into B.
+    rsync -av --existing --ignore-existing --delete A/ B | tee dels
+    # perform deletions mention in "del" on remote site.
+
+# credit > http://lists.samba.org/archive/rsync/2006-June/015827.html
+```
+
+QUESTIONS: 
+
+* do we really need compression if its local to local?!?!
+	* -z
+* should I not --delete every time I do a sync?
+
+
 #### grsync
 
 graphical interface
