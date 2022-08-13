@@ -143,8 +143,8 @@ https://github.com/artmg/lubuild/blob/master/help/configure/Networked-Services.m
 LXDE uses LxSession as its session manager, independent of which 
 desktop manager or window manager is being used. 
 
-* Configuration files: ~/.config/lxsession/<Profile Name>
-* Default configs: /etc/xdg/lxsession/<Profile name> 
+* Configuration files: ~/.config/lxsession/(Profile Name)
+* Default configs: /etc/xdg/lxsession/(Profile name)
 
 For more see [https://wiki.lxde.org/en/LXSession]
 
@@ -523,28 +523,14 @@ Use Hex
 http://askubuntu.com/questions/32764/using-alt-keycode-for-accents
 
  Use ComposeKey
- SHIFT-ALTGR <release> e ' = ??
+ SHIFT-ALTGR (release) e ' = ??
  https://help.ubuntu.com/community/ComposeKey
 
-### Policy Kit
+### Polkit rules
 
-freedesktop.org Policy Kit (polkit-1)
-e.g. 
-* Allow all users to add wifi connections
-* "Authentication is required to unlock the encrypted device"
-
-
-#### Polkit rules
+for an introduction to the Policy Kit see [Understanding layers on your desktop # Policy Kit](../understand/layers-on-your-desktop.md#Policy%20Kit)
 
 ```
- # http://www.freedesktop.org/software/polkit/docs/latest/polkit.8.html
- # Actions are defined by applications
- # Rules are how Sys Admins control authorisation
- # also corroborated by https://wiki.archlinux.org/index.php/Polkit
- # which suggests the javascript .rules files go under
- # /usr/share/polkit-1/rules.d   for third parties and
- # /etc/polkit-1/rules.d   for local configuration
-
  # sample rules files...
  # https://gist.github.com/grawity/3886114
  # https://wiki.mageia.org/en/Useful_polkit_policies
@@ -567,7 +553,7 @@ e.g.
 
  
 
-====polkit actions==== 
+#### polkit actions
 
  # many examples show modifying the actions, but could these change during updates?
  # e.g. http://ubuntuforums.org/showthread.php?t=1873477&page=2&p=11780597#post11780597
@@ -592,51 +578,36 @@ e.g.
 
  # nb there is an lxpolkit package but not sure this is yet mainstream
 
- # also ...
- man pklocalauthority 
- # describes the tree including
- # /etc/polkit-1/localauthority  sub folders such as 30-site.d and 50-local.d which are useful scopes
- # but these are all .conf files
 ```
 
-#### Ubuntu PolKit implementation
-
-According to [https://askubuntu.com/a/704062] 
-If you are on Ubuntu 17.04 or lower
-then you are still using the old version of PolKit, 
-where there are no .rules files but only .pkla and .conf files.
-
-```
-pkaction --version
-```
-
-If it says **< 0.106** then you can only use the old syntax, 
-to create a .pkla file in /etc/polkit-1/localauthority/
-
-Lubuntu Next 17.10 Alpha 2 gives pkaction version 0.105
-
-#### IN from old mediwiki
 
 
-== Mounting and options ==
+## Mounting and options
 
-=== Automount disks ===
+### Automount disks
 
 You can modify the fstab entries, or simply edit the mount options using
 
-<pre>gnome-disks</pre>
-=== Allow users to mount internal NTFS volumes ===
+`gnome-disks`
+
+### Allow users to mount internal NTFS volumes
 
 By default you need to type in an admin password to mount a drive as a regular user (&quot;Authentication is required to mount ...&quot;).
 
-<pre>sudo gedit /var/lib/polkit-1/localauthority/10-vendor.d/com.ubuntu.desktop.pkla</pre>
-In the first section, <code>[Mounting, checkin ...]</code>, comment out the old line and add in the following (you may be able to copy this from the end of the file)
+```
+sudo gedit /var/lib/polkit-1/localauthority/10-vendor.d/com.ubuntu.desktop.pkla
+```
 
-<pre>Identity=unix-user:*
-# Identity=unix-group:admin;unix-group:sudo</pre>
+In the first section, `<code>[Mounting, checkin ...]</code>`, comment out the old line and add in the following (you may be able to copy this from the end of the file)
+
+```
+Identity=unix-user:*
+# Identity=unix-group:admin;unix-group:sudo
+```
+
 credit &gt; http://handytutorial.com/ask-password-for-mounting-drives-in-ubuntu-12-10-12-04/
 
-=== Prevent auto open at startup of automounted volumes ===
+### Prevent auto open at startup of automounted volumes
 
 <pre>gsettings set org.gnome.desktop.media-handling automount-open false</pre>
 credit &gt; http://askubuntu.com/questions/289621/dont-automatically-open-the-folder-of-mounted-devices
@@ -646,7 +617,7 @@ credit &gt; http://askubuntu.com/questions/72070/how-do-i-change-dconf-keys-with
 
 ## Background
 
-The '''User Privileges''' in the ''Users & Groups'' GUI '''users-admin''' actually refer to groups of which they are made members.
+The **User Privileges** in the _Users & Groups_ GUI **users-admin** actually refer to groups of which they are made members.
 
 To see which groups the initial install user was put into use
 

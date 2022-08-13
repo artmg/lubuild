@@ -5,7 +5,7 @@ See also:
 * [Diagnose Applications and Package Management](apps-and-packages.md)
 	* controlling and checking what software is present
 * [understand the layers on your desktop](../understand/layers-on-your-desktop.md)
-	* includes some layers that might start up application like services
+	* includes some layers that might start up application like services or authorise actions like polkit
 * [Network diagnostics # running services](network.md#diagnosing-running-services)
 	* Discover basic network services running on the OS
  
