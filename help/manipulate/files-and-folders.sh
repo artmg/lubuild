@@ -18,7 +18,8 @@ exit 1
 #    * for and find to output to playlists
 # * [Lubuild /z Misc script snippets](https://github.com/artmg/lubuild/blob/master/z-misc-script-snippets.sh)
 #     * specifics relating to ?ubuntu installation and config
-#
+# * [macUP / backUP with 7-Zip](https://github.com/artmg/macUP/blob/main/backUP_with_7-Zip.md)
+#     * ways to compress files into a single container for archiving etc
 
 
 
