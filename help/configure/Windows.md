@@ -163,7 +163,6 @@ Bonjour browsers for Windows:
 
 Update 2021: it seems as though more recent versions of Windows 10 can find printer devices via mDNS. However, if the client and printer are in different subnets, you may need an mDNS Repeater like Avahi helping between the networks.
 
-
 ## Manage Applications
 
 ### Remove Unwanted Apps & Features
@@ -252,12 +251,49 @@ Get-WindowsCapability -Online -Name "Browser.InternetExplorer*" | Remove-Windows
 choco install -y <your list of apps>
 ```
 
+### Terminal
+You may consider a themed developers’ terminal prompt, similar to OhMyZsh, but want to sail close to the Microsoft direction for better supportability and futureproofing. Fortunately the Windows Terminal, built into Windows 11 (and in the [app store for 10](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX20HK701)) strategically integrates PowerShell, supports ssh natively, and has the winget package manager. 
+
+```powershell
+# allow scripts
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned  -Scope CurrentUser
+# install Oh My Posh
+winget install JanDeDobbeleer.OhMyPosh -s winget
+# restart terminal to get effects
+exit
+```
+
+* For configuring your Terminal profile see https://docs.microsoft.com/en-us/windows/terminal/tips-and-tricks 
+* If you [install Terminal into Windows 10](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX20HK701) you might also want to [add the shortcuts into WinX Quick Links menu](https://www.neowin.net/guides/guide-add-terminal-to-windows-10-quick-links-winx-right-click-on-start-menu/) 
+
+#### Useful shortcuts
+
+* Ctrl+Shift+P - command palette
+* Ctrl+R or Ctrl+S - command history reverse and normal search
+   - start typing a match (any position in command)
+   - repeat the search key (e.g. Ctrl+R) to search next or previous match
+        - note: this comes from the PSReadLine module and shows bck-i-search
+
+#### In-terminal editor
+It can be useful to have an editor directly in the terminal, rather than ‘shell out’ to a GUI editor, so to satisfy both camps you can install both geeky vim and friendly nano.
+
+```powershell
+choco install -y vim nano
+```
+
+#### Previous alternatives
+
+* Cmder - coder's shell with tab completion and git integration
+	* may need extra .REG for Explorer integration
+* 
+
+
 ### Prevent sleep
 
 If you use a Professional Edition of Windows, you can use Presentation Mode to prevent sleep/monitor darkness whilst using the machine passively (e.g. watching something or video conference).
 
 * New Desktop Shortcut
-* C:\Windows\System32\PresentationSettings.exe /start
+* `C:\Windows\System32\PresentationSettings.exe /start`
 * Pin to taskbar
 * Click to test icon in system tray
 * Unlock systray and Always show
@@ -269,12 +305,6 @@ choco install -y caffeine
 # OR
 choco install -y dontsleep.install
 ```
-
-### Useful apps to consider
-
-* Cmder - coder's shell with tab completion and git integration
-	* may need extra .REG for Explorer integration
-* 
 
 ### Print to PDF
 
@@ -557,6 +587,26 @@ like macOS `background-music`,
 consider the advanced volume controller app EarTrumptet 
 (`choco install eartrumpet`).
 
+### USB ports and devices
+
+If you want to find out information about your USB ports on the PC, or devices connected via them, the Device Manager (devmgmt.msc) does not make it easy to view this. 
+
+Microsoft offer an [open source](https://github.com/Microsoft/Windows-driver-samples/tree/main/usb/usbview) sample tool called [USBView](https://docs.microsoft.com/en-us/windows-hardware/drivers/debugger/usbview#where-to-get-usbview) in their Windows Debugging Tools component, included in the Windows SDK or Driver WDK. Although these are both pretty meaty downloads, the link above explains how to install just the Debugging Tools (less than a gig) and then run the utility.
+
+There is a mature standalone thrid party utility [USBTreeView](https://www.uwe-sieber.de/usbtreeview_e.html) that has been derived from this. Although it has many more features that have been developed over the years it is still much quicker and easier to download. However, being closed source, it is up to you whether or not to trust the author.
+
+Here are a couple of PoSh commands that can help
+
+```powershell
+# simple list
+Get-PnpDevice -PresentOnly | Where-Object { $_.InstanceId -match '^USB' }
+
+# full detail
+Get-PnpDevice -PresentOnly | Where-Object { $_.InstanceId -match '^USB' } | Format-List
+
+# credit https://www.shellhacks.com/windows-lsusb-equivalent-powershell/
+
+```
 
 ## Subsystem for Linux
 
@@ -569,6 +619,18 @@ You might find this a useful alternative to
 either dual booting or installing a whole virtual machine. 
 
 ### Enable the WSL
+
+#### Windows 11
+
+If you want to set up the Virtual Machine Platform and WSLcomponents and download Ubuntu to run full Linux commands and stacks, simply
+
+```powershell
+wsl --install
+```
+You will most likely need a reboot to use this VM, but to configure it see https://docs.microsoft.com/en-us/windows/wsl/setup/environment 
+
+
+#### Windows 10
 
 * open an admin powershell
 * execute:
