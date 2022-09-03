@@ -26,11 +26,20 @@ you find the following names cropping up
 
 * [Borg Backup](https://www.borgbackup.org/)
 	* Supported on Linux, macOS, BSD, ...
+		* Windows can use it via its Linux Subsystem
 	* Compressed encrypted backups
 	* Can back up just changed chunks in larger files
 	* that can be mounted with FUSE
 	* store to local, ssh, sftp, S3, ...
-	* can be used with Vorg front-end
+	* front-ends include: Vorg, Vorta, Borgmatic
+	* does not rely on, nor is it improved by, using filesystem journaling 
+* Restic
+	* often mentioned in comparisons with borg
+	* in some ways less efficient than borg (but in others more)
+	* Windows supported by its Go language client
+	* deduplication between mutliple source devices makes it well suited to multi-machine use cases, especially server estates
+* Kopia.io
+	* some people suggest this is the sweetspot between borg and restic - compressed AND dedpued between machines
 * [Cronopete](https://gitlab.com/rastersoft/cronopete)
 	* mature
 	* uses vala with meson/ninja
@@ -42,7 +51,6 @@ you find the following names cropping up
 * [Backintime](https://github.com/bit-team/backintime)
 	* python code to rsync via sshfs
 	* mature project
-	* 
 * backup-manager
 	* in the repos, and self-contained
 	* is this related to Duplicity ?
@@ -50,9 +58,11 @@ you find the following names cropping up
 
 Disk snapshotting (like the COW snapshot management in Apple's Time Machine)
 
+Rather than focussing 'full backup solution' use cases, this is more about rolling back (recent?) change
+
 * snapper on btrfs
 	* does this rely on btrbk?
-* ? on zfs
+* incremental snapshot on zfs
 * Timeshift
 	* third party FOSS software to achieve similar goals
 
