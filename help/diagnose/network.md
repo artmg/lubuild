@@ -243,6 +243,7 @@ see also:
 * iperf below
 * **wavemon** cli utility
 * [https://wiki.archlinux.org/index.php/Wireless_network_configuration#Troubleshooting]
+	* includes suggestions for what could be causing random wifi dropouts
 
 #### WWAN (Mobile Broadband)
 
