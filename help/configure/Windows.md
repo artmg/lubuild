@@ -252,7 +252,7 @@ choco install -y <your list of apps>
 ```
 
 ### Terminal
-You may consider a themed developers’ terminal prompt, similar to OhMyZsh, but want to sail close to the Microsoft direction for better supportability and futureproofing. Fortunately the Windows Terminal, built into Windows 11 (and in the [app store for 10](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX20HK701)) strategically integrates PowerShell, supports ssh natively, and has the winget package manager. 
+You may consider a themed developers’ terminal prompt, similar to OhMyZsh, but want to sail close to the Microsoft direction for better supportability and futureproofing. Fortunately the Windows Terminal, built into Windows 11 (and in the [app store](https://apps.microsoft.com/store/detail/windows-terminal/9N0DX20HK701) and `choco install microsoft-windows-terminal` for Windows 10) strategically integrates PowerShell, supports ssh natively, and has the winget package manager. 
 
 ```powershell
 # allow scripts
@@ -465,7 +465,7 @@ is to reinstall the whole OS, and Windows is closer to the rule than the excepti
 
 ### Automatic Repair Mode
 
-Windows 10, together with the hidden OEM boot partition, make it easy to refresh your PC as if you'd just unpacked it for the first time.
+Windows 10, together with the hidden OEM recovery partition, make it easy to refresh your PC as if you'd just unpacked it for the first time.
 
 * Shift Restart
 * Troubleshooting
@@ -483,7 +483,29 @@ when Bitlocker was set up.
 
 watch also: https://www.youtube.com/watch?v=yp5bfmRwRY0&t=2s
 
-### Device Encryption
+### USB Recovery Drive
+
+If you decide you wish to remove the recovery partition, to make more space, 
+search in the Start Menu for Recovery and select '**Create a recovery drive**'. 
+This will transfer the contents of the hidden recovery drive to a bootable usb 
+medium and allow you to do a repair as above, regardless of the state of the boot partitions on the disk. 
+
+http://windows.microsoft.com/en-US/windows-8/create-usb-recovery-drive
+
+### Full reinstall
+
+If you go to the Windows 11 download page you have the Media Creation Tool 
+that will download the correct ISO image and write it to a drive and 
+make it bootable. Using this you could delete the existing partition(s) and start with a totally fresh image. 
+
+#### Activation with digital license
+
+Providing your OEM has included a digital license onto its motherboard (stored permanently into the system BIOS during the manufacturing process), and you have not swapped that motherboard out, then Windows 11 will use that key to (re-)activate Windows 11 on that specific system. This replaces the activation code on the sticker from the underside of the PC, and most major vendors follow this approach.
+
+This activation requires an internet connection (to check for blacklisted license keys). If you install without an internet connection you will have a 'Deferred activation' which is 'Not Activated', but fully functional. If you have an internet connection but there is an issue with the digital license your PC will be 'Not activated' and message on desktop and personalization features are blocked.
+
+
+## Device Encryption
 
 Full disk encryption will secure your 'data at rest' - in other words, if your device falls into the wrong hands, people cannot access your stored data by loading it onto a different system. 
 Under Windows Home editions you may use the simple, straightforward 'Device Encryption' to encrypt your storage volume, as opposed to the more complex Bitlocker system available on Professional editions. 
@@ -496,7 +518,7 @@ When you log on with a Microsoft account, it replaces that Clear Key with a Volu
 
 Even if you have the right hardware on your computer, you can only safely encrypt your data on Home edition using Windows Device Encryption when you log on with a Microsoft Account. If you want an alternative, you may use Veracrypt to turn on Full Disk Encryption (FDE) before committing sensitive data to the disk.
 
-#### Check if Device Encryption is available
+### Check if Device Encryption is available
 
 * Provided you have TPMv2 enabled and UEFI, 
 	* Settings / Update & Security / Device Encryption
@@ -508,7 +530,7 @@ Even if you have the right hardware on your computer, you can only safely encryp
 		* try Googling the error
 			* with your fingers crossed and plenty of patience
 
-#### Veracrypt System Encryption
+### Veracrypt System Encryption
 
 If you choose to use Veracrypt to encrypt your system partition, you might consider turning off Windows FDE in settings (even if it is not fully encrypted for the reasons above).
 
@@ -532,8 +554,18 @@ If you choose to use Veracrypt to encrypt your system partition, you might consi
 * reboot for a PreTest
 * finally Encrypt
 
+Fast Startup is related to 'Hybrid boot and shutdown', which essentially means shutdown is not fully shutdown, but a disguised hibernate. 
+The unencrypted volume might still be mounted when you restart, 
+unacceptably exposing your private data. 
+The bits that 'slow it down' are features that you _actually_ want!
 
-##### Windows updates puts Veracrypt into Recovery
+#### Veracrypt Bootloader
+
+On older BIOS systems, Veracrypt would install it's own bootloader over the 
+default system bootloader. With modern UEFI systems, Veracrypt only needs to add it's bootloader into the EFI list and ask if that can be default. This leaves the original Windows OS bootloder intact, even if second in line for now. 
+
+
+#### Windows updates puts Veracrypt into Recovery
 
 If you have used Veracrypt System Encryption to encrypt your full Windows System Partition, you might encounter issues 
 following a Windows Update. 
@@ -565,6 +597,23 @@ The Veracrypt developer [has produced](https://sourceforge.net/p/veracrypt/discu
     normally without needing the Rescue Disk or changing the BIOS boot order.
 
 NB: there was [one report](https://libredd.it/r/VeraCrypt/comments/m8b4hc/) that turning off FastBoot might also work around this issue, but we did not want to try that. 
+
+
+### Reinstall Windows on encrypted system disk
+
+If you have Veracrypt System Partition encrypted, and you want to reinstall Windows:
+* I want to overwrite the system files with new copies to fix issues, but leave my data intact
+	* theoretically you should be able to do this leaving the encryption on
+* I want to wipe my disk and reinstall my system with a fresh copy of Windows, ready to pass onto someone else, but without putting my data at risk
+	* if I need to remove System Partition encryption, how do I protect my data from inspection?
+		* if I rmdir folders and choose A (All), System Partition encryption does not interpret the filesystem but simply encrypts and decrypts the lot. This means that data could theoretically be recovered post-deletion if it has not yet been overwritten.
+	* You could simply reinstall Windows using a bootable ISO (e.g. via the Media Creation Tool) and remove the old System Partition to restart from scratch.
+		* you may also remove the old recovery partition, 
+			* most of the time anything non-MS that it contains is only bloatware
+			* unless you have some very esoteric OEM hardware that requires special drivers and software
+		* then during Windows 11 install it will create a new one for you
+
+Refer to the installation flows at the top of this article for other help.
 
 
 ## Hardware misc
