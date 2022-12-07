@@ -80,6 +80,7 @@ NOT open source, my current favourite is the very-cross-platform **Obsidian**.
 
 It is a free (beer) rich editor for collections of markdown files, 
 that helps to edit, find, organise and cross-link. 
+It seems to follow CommonMark syntax. 
 Although it's part of a freemium service there is 
 ZERO lock-in, because you're editing markdown files
 stored locally, and you can switch over to an alternative editor any time you fancy.
@@ -228,9 +229,22 @@ The technique below uses **FolderSync** to move your data daily, and I used **Ma
 		* user folder icons to browse
 		* local folder browse 'MyNotesFolder'
 		* ensure that the **Sync Deletions** is turned **on**
-		* schedule: daily
+		* schedule: daily / 1hr / 15 mins ???
+		* Notifications
+			* show on error
+				* helps catch conflicts quicker
+		* Filters:
+			* Exclude - File name starts with - .
+			* Exclude - Folder name starts with - .
+				* these prevent clashes from Obsidian system files being synced
 
-previously I used Markor but you may be able to use the new Obsidian Android client
+Options to Consider: 
+
+* Advanced / Monitor device folder / Instant Sync
+	* may mitigate conflicts - see section below
+
+
+Previously I used Markor but you may be able to use the new Obsidian Android client
 
 * Install Markor on mobile as markdown Editor
 	* Settings / Notebook select local folder
@@ -238,6 +252,18 @@ previously I used Markor but you may be able to use the new Obsidian Android cli
 	* add the Target Directory
 	* add md as a target extension
 	* Use the Menu / View option to open in Markor for editing
+
+##### resolving sync conflicts
+
+Synchronising can produce conflicts when the same file has been modified recently in two different locations. As the person who makes edits, you need to choose which of the conflicting items is the current, or you need to merge line changes from the two sides. This is rarely something that can be automated (unless you use line-level tracking like Git does). 
+
+The main two mitigations for conflicts are:
+
+* Sync before they happen
+	* if you sync more regularly it is unlikely the you have enough time to make edits to the same item in two different locations
+* Notice (and resolve) sooner
+	* Ask for notifications of conflicts so that you can become aware of conflicts earlier, and deal with them before you forget what the edits were about
+
 
 
 ### macOS editors
