@@ -162,6 +162,50 @@ If you get issues where apt-get seems to hang at 98% and chew CPU on your system
 * Check whether any PPAs are giving you this issue: http://askubuntu.com/questions/156650/apt-get-update-very-slow-stuck-at-waiting-for-headers
 * Consider whether any sites might be giving you issues with "pipelining" settings: http://www.webupd8.org/2010/04/fix-google-chrome-repository-making-apt.html
 
+#### Autoupdates stuck on full boot disk 
+
+Increasingly distros can perform upgades automatically for you, which has many advantages. However if you forget to do the housekeeping, myriad kernel version updates can eventually clog your boot partition. You can mitigate this by [leaving a big enough boot partition to cope](../understand/disk-layout.md#Recommendation%20for%20main%20system%20partition).
+
+Symptoms, aside from autoupdates simply failing, include: 
+
+```
+$ sudo apt upgrade
+The following packages have unmet dependencies: linux-image-*
+$ sudo apt install -f
+dpkg: error processing archive linux-image-*
+failed to write (No space left on device)
+No apport report written because the error message indicates a disk full error
+dpkg-deb: error: paste subprocess was killed by signal (Broken pipe)
+```
+
+==WARNING== if you use these commands on the **wrong** kernel versions, 
+you risk making your system unbootable!
+
+Be VERY careful about the versions you remove - not the one that's running and not the packages with NO version!
+
+* check your disk free space on /boot
+	* df
+* check which kernel is running so you **leave this version alone**
+	* ` uname -r `
+* List your installed kernels
+	* ` dpkg --get-selections | grep -v deinstall | grep linux-image `
+* leave the latest but remove an earlier one or two:
+	* do NOT touch `linux-image-generic`
+	* `sudo apt -y autoremove linux-modules-x.y.0-zzz-generic ` and ` linux-headers-x.y.0-zzz `
+		* these also remove the main 'image'
+* if that fails to to repair
+	* ` sudo apt -f install `
+* if these still fail with errors then your may need to force-? (e.g. depends)
+	* ` sudo dpkg --force-depends --purge linux-modules-x.y.0-zzz-generic ` and same with linux-headers
+		* purge to also remove the files & configs
+	* and retry the repair above
+* if all that fails 
+	* you can clear up some space by removing files like sudo rm /boot/vmlinuz-x.y.0-zzz-generic and sudo rm /boot/initrd.img-x.y.0-zzz-generic 
+	* and then you use the clean and autorepair
+		* but auto 'repair' may re-install some space fillers so watch out
+* recheck disk space and kernel versions installed
+
+
 #### Odd issues on legacy distro versions ####
 
 Sometimes when you do an ''apt-get update'' or ''install'' you get errors like:
