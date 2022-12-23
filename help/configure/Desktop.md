@@ -26,6 +26,20 @@ Note this article is about software Desktop in the User Interface (UI), as oppos
 #### Check which display manager is in use
 update-alternatives --get-selections|grep dm
 
+
+#### Lubuntu LxQt SDDM autologon 
+
+The new Lubuntu LxQt uses Simple Desktop Display Manager, 
+and you can set autologon by adding the third line below 
+to the first two, in there by default, in /etc/sddm.conf
+
+```
+[Autologin]
+Session=Lubuntu
+User=username
+```
+
+
 #### Lubuntu LightDM autologon 
 
 # credit - https://askubuntu.com/a/456957
