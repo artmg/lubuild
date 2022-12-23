@@ -410,7 +410,6 @@ sudo systemctl restart smbd.service
 
 #### rebuild
 
-
 ```
 sudo systemctl stop smbd.service
 sudo make uninstall
@@ -419,6 +418,14 @@ sudo make uninstall
 make -j$(nproc) && sudo make -j$(nproc) install
 sudo systemctl unmask smbd.service
 sudo systemctl restart smbd.service
+```
+
+##### patching
+
+if you need to apply a patch file, do it between the uninstall and the make.
+
+```
+git apply path/to/file.patch
 ```
 
 ##### later Build Tests for v12
