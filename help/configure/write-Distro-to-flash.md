@@ -150,6 +150,8 @@ sync
 
 ```
 
+NB: `zxcat` might not need that second parameter, at least not on Debian, as it often returns the error: `xzcat: /home/user/Downloads/image-file-name.img.img: No such file or directory` - consider checking and removing in the syntax above.
+
 Now you wait a few minutes, depending on 
 the size of the image and speed of the media, 
 before the **second** block to personalise the partitions. 
@@ -455,6 +457,8 @@ You can use **mkusb** above for a more controlled approach, which makes it more 
 for details on expanding the default Raspbian 
 second parition to fill your device, see 
 https://github.com/artmg/MuGammaPi/wiki/Raspbian-basics#expand-partition
+
+For ideas around creating an additional partition to limit this expansion, issues you may encounter, and how you might persist data on this additional partition, see [MuGammaPi Disks # additional partition](https://github.com/artmg/MuGammaPi/wiki/Disks#additional-persistent-data-partition-after-pi-os)
 
 
 ### Partition start improvement?
