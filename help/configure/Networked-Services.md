@@ -292,9 +292,6 @@ NFS_MOUNT_POINT=/mnt/myMediaLocation/myDataDir
 NFS_EXPORT_NAME=myExportName
 NFS_EXPORT_PERMS=usr:grp
 
-# create mount point if not already there
-sudo mkdir -p $NFS_MOUNT_POINT
-
 ###### Base software install
 sudo apt-get update
 # workaround for Raspbian distros `rpcinfo -p` showing "can't contact portmapper"
@@ -302,6 +299,9 @@ sudo apt-get update
 if [[ "${ID}" == "raspbian" ]] ; then sudo apt-get purge -y rpcbind ; fi ;
 # software install
 sudo apt-get install -y nfs-kernel-server
+
+# create mount point if not already there
+sudo mkdir -p $NFS_MOUNT_POINT
 
 ###### best practice to collect export points
 # you could share specific folders directly, but best practice suggests 
@@ -312,9 +312,10 @@ sudo apt-get install -y nfs-kernel-server
 sudo mkdir -p /srv/exports/$NFS_EXPORT_NAME
 
 # check the mount has set the correct perms itself
-ls -la $NFS_EXPORT_PERMS /srv/exports/$NFS_EXPORT_NAME
+ls -la /srv/exports/$NFS_EXPORT_NAME
 # otherwise
 sudo chown $NFS_EXPORT_PERMS /srv/exports/$NFS_EXPORT_NAME
+ls -la /srv/exports/$NFS_EXPORT_NAME
 
 ###### Bind the data into the nfs exports directory
 cat <<EOF | sudo tee -a /etc/fstab
@@ -839,11 +840,11 @@ EOF!
 #
 # * https://www.rsyslog.com/filter-optimization-with-arrays/
 # * https://www.rsyslog.com/recipe-apache-logs-rsyslog-parsing-elasticsearch/
-
-
+```
 
 #### Log Rotation
 
+```
 sudo tee /etc/logrotate.d/rsyslog-data.conf <<EOF!
 $LOG_LOCATION/*.log $LOG_LOCATION/*/*.log {
         rotate 10
@@ -857,9 +858,9 @@ $LOG_LOCATION/*.log $LOG_LOCATION/*/*.log {
 EOF!
 
 sudo logrotate /etc/logrotate.conf --debug
-
 ```
 
+Note that the syntax for the post rotate command can vary between distros. At the end of the day there are so many ways to send the HangUP (HUP) signal to the rsyslogd PID, but if your rotation is not working then copy the syntax from the distro-included `/etc/logrotate.d/rsyslog`
 
 #### moving log folder
 
