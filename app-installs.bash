@@ -25,24 +25,35 @@ sudo add-apt-repository -y ppa:nixnote/nixnote2-daily
 # For each source, test the distro does NOT already have it
 # then add the key and the source
 
+# apt-key is deprecated - reference keyrings put via gpg into this folder
+sudo mkdir -p /etc/apt/keyrings/
 if [ ! -f /etc/apt/sources.list.d/google-chrome.list ]; then (
   # Google Key - https://www.google.com/linuxrepositories/
-  wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add - 
+  wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub |
+    gpg --dearmor |
+    sudo tee /etc/apt/keyrings/google-chrome.gpg > /dev/null
   # Chrome Repo - http://www.ubuntuupdates.org/ppa/google_chrome
-  sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list' ;
+  echo "deb [signed-by=/etc/apt/keyrings/google-chrome.gpg] http://dl.google.com/linux/chrome/deb/ stable main" |
+    sudo tee /etc/apt/sources.list.d/google-chrome.list ;
+) ; fi
+
+if [ ! -f /etc/apt/sources.list.d/anydesk-stable.list ]; then (
+  # credit http://deb.anydesk.com/howto.html
+  wget -q -O - https://keys.anydesk.com/repos/DEB-GPG-KEY |
+    gpg --dearmor |
+    sudo tee /etc/apt/keyrings/anydesk-stable.gpg > /dev/null
+  echo "deb [signed-by=/etc/apt/keyrings/anydesk-stable.gpg] http://deb.anydesk.com/ all main" |
+    sudo tee /etc/apt/sources.list.d/anydesk-stable.list ;
 ) ; fi
 
 if [ ! -f /etc/apt/sources.list.d/skype-stable.list ]; then (
   # credit https://repo.skype.com/
   dpkg -s apt-transport-https > /dev/null || bash -c "sudo apt-get update; sudo apt-get install apt-transport-https -y"
-  wget -q -O - https://repo.skype.com/data/SKYPE-GPG-KEY | sudo apt-key add - 
-  echo "deb [arch=amd64] https://repo.skype.com/deb stable main" | sudo tee /etc/apt/sources.list.d/skype-stable.list
-) ; fi
-
-if [ ! -f /etc/apt/sources.list.d/anydesk-stable.list ]; then (
-  # credit http://deb.anydesk.com/howto.html
-  wget -q -O - https://keys.anydesk.com/repos/DEB-GPG-KEY | sudo apt-key add - 
-  echo "deb http://deb.anydesk.com/ all main" | sudo tee /etc/apt/sources.list.d/anydesk-stable.list ;
+  wget -q -O - https://repo.skype.com/data/SKYPE-GPG-KEY |
+    gpg --dearmor |
+    sudo tee /etc/apt/keyrings/skype-stable.gpg > /dev/null
+  echo "deb [signed-by=/etc/apt/keyrings/skype-stable.gpg] [arch=amd64] https://repo.skype.com/deb stable main" |
+    sudo tee /etc/apt/sources.list.d/skype-stable.list ;
 ) ; fi
 
 # Prepare for repository installs
