@@ -150,7 +150,7 @@ sync
 
 ```
 
-NB: `zxcat` might not need that second parameter, at least not on Debian, as it often returns the error: `xzcat: /home/user/Downloads/image-file-name.img.img: No such file or directory` - consider checking and removing in the syntax above.
+NB: `xzcat` might not need that second parameter, at least not on Debian, as it often returns the error: `xzcat: /home/user/Downloads/image-file-name.img.img: No such file or directory` - consider checking and removing in the syntax above. It does however work fine in RaspberryPiOS, so ideas need testing.
 
 Now you wait a few minutes, depending on 
 the size of the image and speed of the media, 
