@@ -294,12 +294,16 @@ you continue to get errors when pushing (etc),
 it may be because you cloned the repo over HTTPS not SSH. 
 You can change this back to SSH using 
 
-```
+```shell
 git config remote.origin.url git@github.com:artmg/lubuild.git
 ```
 
 * credit [switching between HTTPS and SSL methods of access](http://superuser.com/a/683651)
 
+alternatively
+```sh
+git remote set-url origin  git@github.com:artmg/lubuild.git
+```
 
 ### store Personal Access token
 
@@ -513,6 +517,32 @@ git push -u origin master
 ```
 
 
+#### Config backup
+
+If you want to snapshot the current git configs, both globally and for your individual repositories, try the following code
+
+**gitCheckAllConfigs.bash**
+```bash
+#!/bin/bash
+
+# credit various answers to https://stackoverflow.com/q/3497123
+
+OutFile="${PWD}/gitAllConfigs.txt"
+
+echo "### git configs - GLOBAL" >${OutFile}
+git config --global --list >>${OutFile}
+
+find . \
+    -maxdepth 2 -type d \
+    -name ".git" \
+    -execdir echo "" >>${OutFile} \; \
+    -execdir echo -n "### " >>${OutFile} \; \
+    -execdir pwd >>${OutFile} \; \
+    -execdir git config --local --list >>${OutFile} \;
+```
+
+This assumes that your repos are all under the current working directory
+
 ### Other actions under development
 
 
@@ -541,6 +571,9 @@ git remote add upstream https://github.com/ORIGINAL_OWNER/ORIGINAL_REPOSITORY.gi
 
 # verify the new upstream remote
 git remote -v 
+
+# now get all the upstream branches
+git fetch upstream
 ```
 
 #### Switch branches
@@ -572,7 +605,12 @@ Update: There is now a Fetch Upstream button in the Github web UI
 to Fetch and Merge Fast-forward, bringing your fork's current branch 
 into line with the same branch on the upstream repo. 
 
-Old Note: that you can keep your fork in sync via the GitHub web UI, 
+You can do the same from your local using the [CLI instructions](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork#syncing-a-fork-branch-from-the-command-line)
+
+
+##### Old Notes
+
+: that you can keep your fork in sync via the GitHub web UI, 
 by creating a Pull Request, Switching Bases, and Merging - 
 see [https://www.sitepoint.com/quick-tip-sync-your-fork-with-the-original-without-the-cli/] for a very clear guide. 
 However this is not a proper rebase, but a merge **commit**, 
@@ -653,6 +691,36 @@ git commit -a -m "Added in latest version of skeleton files"
 git push -u origin master
 
 ```
+
+#### Putting dev back on par with master
+
+If you have a develop branch, but some commits have been sent directly to master, how can you get develop back up to date for further use?
+
+```shell
+# get all commits on all branches as 'origin/branch'
+git fetch origin
+# switch to your local master
+git checkout master
+# bring in the upstream changes
+git merge --ff-only origin/master
+
+# make sure this is the name of your develop branch
+# we specify the origin in case other branches have that name (e.g. upstream)
+git checkout --track origin/dev
+
+
+# and bring in the changes needed
+git merge origin/master
+
+# credit https://stackoverflow.com/a/20103414
+# check there for details on the FF switches
+
+
+# once you are happy that the changes went ok, 
+# push them up to your remote
+git push
+```
+
 
 #### Hard reset to upstream
 
