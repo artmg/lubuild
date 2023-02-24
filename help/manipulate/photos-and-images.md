@@ -267,10 +267,26 @@ If you want a cross-platform GUI for the Tesseract engine, the only one mentione
 
 * normcap
 	* python front end for tesseract
+		* allows you to clip an area of screen to recognise
+		* the resulting text is pasted onto the clipboard
 	* install engine and languages using your package manager
 	* `pip install normcap` to install
 	* `./normcap` to run
 	* see https://github.com/dynobo/normcap#python-package
+
+#### tesseract command line usage
+
+If you don't want to install a GUI 
+it is quite straightforward to use...
+
+`tesseract my-image.tiff text-file-to-output`
+
+It will not work directly with PDF files, 
+but see if your PDF viewer can export as TIFF 
+to a multipage image instead.
+
+For more instructions see 
+https://tesseract-ocr.github.io/tessdoc/Command-Line-Usage.html
 
 
 ### QR codes
