@@ -41,8 +41,10 @@ if [ ! -f /etc/apt/sources.list.d/anydesk-stable.list ]; then (
   # credit http://deb.anydesk.com/howto.html
   wget -q -O - https://keys.anydesk.com/repos/DEB-GPG-KEY |
     gpg --dearmor |
-    sudo tee /etc/apt/keyrings/anydesk-stable.gpg > /dev/null
-  echo "deb [signed-by=/etc/apt/keyrings/anydesk-stable.gpg] http://deb.anydesk.com/ all main" |
+    sudo tee /usr/share/keyrings/anydesk-stable.gpg > /dev/null
+# previously used   /etc/apt/keyrings/my-app-name.gpg  
+# but that was not best practice - is there any way to avoid hard coded paths in sources ?
+  echo "deb [signed-by=/usr/share/keyrings/anydesk-stable.gpg] http://deb.anydesk.com/ all main" |
     sudo tee /etc/apt/sources.list.d/anydesk-stable.list ;
 ) ; fi
 
