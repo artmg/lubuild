@@ -7,8 +7,14 @@ See also:
 
 # Printers and Scanners
 
- Try connecting to the local CUPS console: http://127.0.0.1:631/
- See: https://wiki.ubuntu.com/DebuggingPrintingProblems
+The basic interfaces for printing and scanning should come with your Ubuntu flavour OS. Most Linuxes use CUPS for printing and, for instance, Lubuntu QT comes with Skanlite GUI (on top of SANE susbsystem) for scanning images from documents on your scanner flatbed or in your Multi-Function Device (MFD) feeder.
+
+However most printers will need specific drivers for the scan or print subsystems, and these are usually best to come from the device vendors. Fortunately the major vendors include Linux printer and scanner drivers amongst the available downloads.
+
+## Basic troubleshooting
+
+* Try connecting to the local CUPS console: http://127.0.0.1:631/
+* See https://wiki.ubuntu.com/DebuggingPrintingProblems
 
 ## HP Printers
 
@@ -78,10 +84,11 @@ x-www-browser https://wiki.archlinux.org/index.php/SANE
 * Browse to https://support.brother.com
 * Search for your model
 * Choose Downloads
-* Pick Lunix / Linux (deb)
+* Pick Linux / Linux (deb)
 * Click on the **Driver Install Tool**
 * Shift click on the EULA accept button to save the file to your downloads
 * There should be instructions now, but you basically use the prompt to gunzip the file, sudo su and bash run the file
+	* or alternatively you might simply need to cd into the Downloads folder and `sudo dpkg -i packagename.deb`
 * it's interactive so you need to answer the questions
 * Credit https://askubuntu.com/a/636364
 
