@@ -55,18 +55,44 @@ Then reinstall the tools as above
 
 ### Command line (e.g. Ubuntu Server)
 
+Note that VirtualBox Clipboard may not work anyhow if your 
+Ubuntu Server only uses the Wayland compositor.
+
 ```
+# the device may be sr0 but cdrom should redirect there
 sudo mount /dev/cdrom /mnt
 cd /mnt
-ls
-sudo apt-get install -y dkms build-essential linux-headers-generic linux-headers-$(uname -r)
-sudo su
 
-./VboxLinuxAdditions.run
+# check the contents
+ls
+
+# install dependencies
+sudo apt install -y dkms build-essential linux-headers-generic linux-headers-$(uname -r)
+sudo apt install -y module-assistant libxt6 libxmu6
+# apparently no longer needed
+# sudo apt install -y virtualbox-guest-dkms gcc make
+
+# if you are reinstalling, remove old version first
+# sudo sh ./VBoxLinuxAdditions.run uninstall
+
+# get ready for kernel rebuild
+sudo m-a prepare
+
+# now install the additions
+sudo sh ./VBoxLinuxAdditions.run
+
+# check the status
+sudo systemctl -all | grep box
 
 ```
 
 Reboot once complete
+
+If time slips, then 
+
+```
+sudo VBoxService --enable-timesync
+```
 
 ## Shared Folder
 
@@ -187,3 +213,28 @@ network:
 EOF!
 sudo netplan apply
 ```
+
+## Increasing disk volume
+
+Normally VirtualBox uses disk efficiently. 
+If you say 'create an 80 GB disk', and only put 15 GB data on it, 
+the VDI file will not use more than 15 GB on your host, 
+and with compression it will likely use less.
+
+If you don't allocate a large-enough volume at the outset, 
+you can increase the size
+
+* VirtualBox
+	* Power off the VM
+	* VirtualBox / Tools / Media - Virtual Media Manager
+	* look for the main vdi file and increase the size
+* Ubuntu Server
+	* on older versions, without LVM, you can just 
+		* lsblk
+		* sudo resize2fs /dev/sdnX
+	* with LVM it is more complicated
+		* sudo cfdisk
+			* check that the new size is showing
+			* see how to rescan https://packetpushers.net/ubuntu-extend-your-default-lvm-space/
+			* what if it's still not showing??
+		* see https://allinoneadmin.eu/2022/03/24/ubuntu-20-04-vm-increase-disk-size/ for examples of `growpart`
