@@ -85,7 +85,7 @@ find . -name .DS_Store -print0 | xargs -0 git rm -f --ignore-unmatch
 ```
 
 
-#### Authentication
+#### for Authentication see
 
 see [#authentication-options] section below, e.g.
 
@@ -594,6 +594,46 @@ git branch -vv
 git branch -av
 ```
 
+
+#### Ready to release
+
+```
+# sync your dev with the upstream dev
+git checkout dev
+git fetch upstream
+git merge upstream/dev
+```
+
+* Edit CHANGELOG to reflect actual version (remove `-beta` etc)
+
+```
+RELEASE_VERSION=YYYY.M.D
+git commit -a -m "set version to {$RELEASE_VERSION} in CHANGELOG ready for release"
+git tag -a v{$RELEASE_VERSION} -m "v{$RELEASE_VERSION} release with major change"
+git push origin v{$RELEASE_VERSION}
+git push origin
+git push --tags upstream
+```
+
+If you get errors when pushing upstream, check [failure to use SSH key](#failure%20to%20use%20SSH%20key)
+
+##### Post-release Cleanup
+
+Bring your origin up to upstream
+
+```
+git fetch upstream
+git checkout master
+git merge upstream/master
+git push
+git checkout dev
+```
+
+Delete any dev branches
+
+```
+git branch --delete mydevsubbranch
+```
 
 #### sync your fork
 
