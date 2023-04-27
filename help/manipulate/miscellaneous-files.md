@@ -413,6 +413,12 @@ see also:
 * readpst
     [https://github.com/artmg/lubuild/blob/master/app-installs.bash]
 
+To open .EML files you can:
+
+* drag them onto a browser - this should show the HTML MIME content but not the headers
+* use weget linux package (GUI viewer and editor based on gmime C library and webkit viewer library)
+* 
+
 ### Outlook Express IAF files
 
 Get Passwords from IAF file Outlook Express email account export
