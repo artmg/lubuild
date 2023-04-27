@@ -95,6 +95,16 @@ find "\$(dirname "\$0")" -maxdepth 1 -mindepth 1 -type d -exec sh -c '(cd "{}" &
 EOF
 chmod +x $SCRIPT_NAME
 
+# Find any folder matching a name (or pattern) and 
+# cat out the contents of any subfile 
+# (optionally matching another pattern)
+sudo find / -iname myFoldername -type d -print -exec sh -c '
+  for f
+  do
+    find "$f" -type f -printf "\n==> %p <==\n" -exec cat {\} \;
+  done' find-sh {} + | less
+
+
 
 ### find using metadata
 
