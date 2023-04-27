@@ -23,10 +23,13 @@ sudo apt-get install -y git
 
 If you'd rather a GUI to peruse your files before commit, manage your branches and manipulate your repos then consider:
 
-* GitAhead
+* Gittyup
+	* Replaced the defunct GitAhead
 	* cross-platform, open source, c++/qt graphical client
 	* available via many linux repos, windows choco and mac brew
 	* previously from a commercial developer, now open-sourced
+* GitKraken
+	* Freemium cross-platform client
 * Github Desktop
 	* the official client on Windows and macOS
 	* written for the Electron framework (a NodeJS runtime rendered by Chrome):
@@ -595,6 +598,14 @@ git branch -av
 ```
 
 
+#### Changelog
+
+To find out what you need to add to CHANGELOG use
+
+```
+git log --oneline
+```
+
 #### Ready to release
 
 ```
@@ -608,9 +619,9 @@ git merge upstream/dev
 
 ```
 RELEASE_VERSION=YYYY.M.D
-git commit -a -m "set version to {$RELEASE_VERSION} in CHANGELOG ready for release"
-git tag -a v{$RELEASE_VERSION} -m "v{$RELEASE_VERSION} release with major change"
-git push origin v{$RELEASE_VERSION}
+git commit -a -m "set version to ${RELEASE_VERSION} in CHANGELOG ready for release"
+git tag -a v${RELEASE_VERSION} -m "v${RELEASE_VERSION} release with major change"
+git push origin v${RELEASE_VERSION}
 git push origin
 git push --tags upstream
 ```
