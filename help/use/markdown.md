@@ -264,7 +264,19 @@ The main two mitigations for conflicts are:
 * Notice (and resolve) sooner
 	* Ask for notifications of conflicts so that you can become aware of conflicts earlier, and deal with them before you forget what the edits were about
 
+##### manual conflict resolution
 
+If you have left things too long, and need to compare the two different versions side by side you could:
+
+* Rename the conflicting files on one device to add a unique character
+* Now perform the sync - you will have almost duplicate files in both places
+* use a compare tool, like Meld, to view line-by-line differences
+* resolve the conflicts manually
+* remove the unwanted duplicate file
+* remove any unique character added in the remaining file's name
+* repeat the sync to leave only the files as you chose
+
+It is a little long winded, but is a good way to be 100% safe and sure that you loose nothing you might have wanted
 
 ### macOS editors
 
