@@ -112,7 +112,7 @@ SHORT_LABEL=${MEDIA_LABEL:0:8}
 
 # set up required tools
 case "${ID}" in
-  raspbian)
+  raspbian|debian)
     FAT_LABEL_SET="sudo dosfslabel /dev/${MEDIA_DEVICE:0:3}1 ${SHORT_LABEL^^}_OS"
     FAT_LABEL_GET="sudo dosfslabel /dev/${MEDIA_DEVICE:0:3}1"
     ;;
