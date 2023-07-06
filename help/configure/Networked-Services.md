@@ -508,6 +508,8 @@ Please update any links you have to point to the new article.
 
 ## Remote Desktop Server
 
+These sections have been moved out into a new, separate article on [Secure SHell SSH](../configure/Secure-SHell-SSH.md)
+
 ### Vino
 
 ### Starting VNC over SSH
