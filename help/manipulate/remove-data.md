@@ -13,7 +13,7 @@ See also:
 * how proper total wiping is hard on flash [https://github.com/artmg/lubuild/blob/master/help/manipulate/flash-drives-and-SSDs.md]
 	* if you want to erase SSDs see the later section 
 * if you just want to clean up a particularly full disk: [Troubleshooting Disks](https://github.com/artmg/lubuild/blob/master/help/diagnose/disks#specifics-to-clean-up) 
-* 
+* Anonymisation in [data-extraction](data-extraction.md)
 
 ### simple overwrites with dd
 ```

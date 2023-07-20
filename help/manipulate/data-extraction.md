@@ -122,8 +122,23 @@ increase the consistency between items to prepare it for solid analysis. For ins
 	* https://openrefine.org/
 * 
 
+## Anonymisation
+
+There are several different approaches to anonymisation, but one calls for simply inspecting text and either replacing with generic placeholders like name surname, or simply removing the PII altogether. 
+
+TACIT is intended for crawling social media, but it also has direct import, allowing you to use its pre-processing modules. It [does have useful features](https://doi.org/10.3758/s13428-016-0722-4) like stemming (all verb forms to infinitive) and co-currence analysis (which phrases appear together). There are also classifying tools and other advanced analysis features. It is not clear how capable it is of keyword extraction. It is Java-based and [runs as an Eclipse application](https://github.com/USC-CSSL/TACIT/wiki/Quick-Start-Instructions) – clearly not lightweight but it does have a GUI!  
+
+Looked at [CRATE](https://crateanon.readthedocs.io/) (Clinical Records Anonymisation and Text Extraction) the open-source health-industry-led project, but the docker-delivered browser-based database analysis system seemed somewhat overkill for our immediate need. 
+
+TextWash looks like a great fit, so I tried that out. It took quite a bit of installing to discover it is not a very mature product yet, and not fit for our purpose (not without better instructions). It uses conda and at the time of writing relied on almost-end-of-life python v3.8. 
+
+TextClean is a candidate but looks pretty hardcore with its interactive prompt.  This is a collection of R libraries that you can use for all sorts of manipulation, but it does require your to write R code to be interpreted, whether interactively or in a program. See more on R below.
+
+Nltk.org is the Natural Language Tool Kit for python, which obviously requires programming to do anything. And it goes a little bit further than the simple ‘wordfreq’ pyPi package, although that does support 40 languages!
 
 ## General data manipulation software
+
+See also the first two choices in [Anonymisation](#Anonymisation) above
 
 * RStudio
 	* open source cross-platform IDE for the R language 
