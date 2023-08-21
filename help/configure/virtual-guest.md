@@ -5,6 +5,12 @@ see also:
     * 
 * 
 
+Containers, such as Docker or Kubernetes or Linux LXC, provide a way to execute different software in a compartmentalised way. However Virtual Guests offer a much cleaner division between the virtualised system inside the guest, running with its own disk and memory, and the host system it is running on. 
+
+Virtual Guests can be started from blank operating system installation, just like a regular computer PC or server. Alternatively you can get ready-build guest images, with an OS and all the layers of software needed to run a particular application, such as LAMP or XAMPP or Wordpress. These can be trial systems, like the Windows below, or fully fledged turnkey computer appliances, like in the **Bitnami** range. Even though now owned by VWware, Bitnami appliances can run directly as virtual guests on Oracle's open-source VirtualBox.
+
+For more specifics see [using Virtual Bitnami Guests](../use/virtual-bitnami-guests.md)
+
 # VirtualBox
 
 ## Windows Guest
