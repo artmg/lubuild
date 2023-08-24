@@ -64,22 +64,25 @@ wget -E -k -K -p http://site/document
 
 ### web scraping and automatic ingestion
 
-* scrapy
+* Scrapy
 	* cross platform, open source python cli tool
 	* extract data from websites
-	* 
-* portia
-	* from scrapy team
-	* visual, no coding
-	* 
-* Beautiful Soup
-	* open source python library for parsing html
-	* creates a parse tree ready to interpret
+	* the Portia visual, no-code interface was withdrawn, as maintainer Zyte now offers hosted API tools
+* MechanicalSoup 
+	* uses Beautiful Soup for document navigation
+		* open source python library for parsing html
+		* creates a parse tree ready to interpret
+	* and Requests for HTTP sessions
 * UI.Vision RPA
 	* automation for tasks and testing 
 	* browser extension
-* selenium
+* Selenium
 	* web testing can be used to scrape
+* Playwright
+* Puppeteer
+	* node library runs a chrome browser (optionally headless) so you can scrape a webpage using HTML DOM hierarchy
+* Crawlee
+	* part of Apify SDK so aimed at freemium usage
 * 
 
 
@@ -120,7 +123,8 @@ increase the consistency between items to prepare it for solid analysis. For ins
 	* extensions for many data formats
 	* API for programmtic manipulation in R, python, bash etc
 	* https://openrefine.org/
-* 
+* See R and tidyverse below
+
 
 ## Anonymisation
 
@@ -143,6 +147,7 @@ See also the first two choices in [Anonymisation](#Anonymisation) above
 * RStudio
 	* open source cross-platform IDE for the R language 
 	* R is a great choice of programming language for data preparation, and most things a data geek might want to do, but it IS a programming language
+	* if data cleansing is your scope then also `install.packages("tidyverse")`
 * Orange
 	* very mature open-source, cross platform project
 	* Python and C with Qt interface
