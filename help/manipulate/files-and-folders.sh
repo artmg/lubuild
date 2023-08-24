@@ -182,8 +182,10 @@ echo pathname $DELIM folders $DELIM files $DELIM datavolume
 
 # this adds the date and timestamp as YYMMDD . HHMMSS to the filename
 
-
-
+# the first cat into pipe takes a header
+# if the header is more than a single line then increase BOTH -n values accordingly 
+# to reverse the order in the for
+#   replace the wildcard filename with $(ls -1 His*.csv | sort -r)
 
 ## Empty folders
 
