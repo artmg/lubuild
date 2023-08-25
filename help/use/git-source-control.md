@@ -228,12 +228,15 @@ using HTTPS not SSH, for instance
 
 #### Generate
 
+Define your authentication variables in a block like this
 ```
 SOURCE_HOST=github.com
 SOURCE_USER=myuser
 SOURCE_DEVICE=myserver
 SOURCE_EMAIL=me@users.noreply.github.com
-
+```
+then copy and paste this code into your macOS or Ubuntu terminal
+```
 # Generate a new ED25519 SSH key pair
 Key_Opts="${KEY_OPTIONS:-"-t ed25519"}"
 # Or if your service doesn't support that, override with RSA:
