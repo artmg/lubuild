@@ -227,6 +227,7 @@ using HTTPS not SSH, for instance
 `git@github.com:artmg/lubuild.git` rather than 
 
 #### Generate
+Use your Ubuntu or macOS terminal, however `zsh` might not like the syntax, so run ` sh ` or ` bash ` first.
 
 Define your authentication variables in a block like this
 ```
@@ -235,7 +236,7 @@ SOURCE_USER=myuser
 SOURCE_DEVICE=myserver
 SOURCE_EMAIL=me@users.noreply.github.com
 ```
-then copy and paste this code into your macOS or Ubuntu terminal
+then copy and paste this code 
 ```
 # Generate a new ED25519 SSH key pair
 Key_Opts="${KEY_OPTIONS:-"-t ed25519"}"
@@ -274,6 +275,41 @@ case "${ID}" in
     pbcopy < $KEY_FILE.pub
 esac
 ```
+
+If you get `unknown key type ed25519` on macOS, and you have already installed `openssh` ([macUP Terminal GNU utils](https://github.com/artmg/macUP/blob/main/terminal.md#gnu-utils)) then do remember to run the code above in a sh or bash shell, not zsh.
+
+##### Multiple accounts for same host
+
+If you need to log in with different identities to the same source host, e.g. you have two different gitlab accounts, it is easy if the subdomains are different. If they are the same, you can still have two different apparent ssh hosts pointing to the same service. E.g. 
+
+* main account
+	* set ` SOURCE_HOST=gitlab.com `
+	* set your other variables
+	* follow the commands above
+* secondary account
+	* set ` SOURCE_HOST=gitlab.com-purpose `
+		* the ` -purpose ` on the end is what differentiates them
+	* set your other variables
+	* follow the commands above
+* now check your ~/.ssh/config
+
+```
+Host gitlab.com
+  Preferredauthentications publickey
+  IdentityFile ~/.ssh/id_gitlab.com_user
+
+Host gitlab.com-purpose
+  Preferredauthentications publickey
+  IdentityFile ~/.ssh/id_gitlab.com-purpose_user
+  HostName gitlab.com
+  User git
+```
+
+* you will need to manually add those extra **HostName** and **User** entries at the end
+* now to use that account for a repo you need to specify `-purpose` on the ssh address
+* e.g.
+	* ` git clone git@gitlab.com-purpose:user/repo.git `
+	* or ` git remote add origin git@gitlab.com-purpose:user/repo.git `
 
 #### Install
 
