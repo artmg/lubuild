@@ -65,7 +65,10 @@ work well with SD cards and USB drives see
 
 ### Compatibility
 
-Compatibility of Filesystems between Linux, Windows and macOS complicates matters. The only universally supported filesystem types are 
+Spoiler: for cross-system support, format drives with GPT records and ExFAT partitions.
+
+Compatibility of Filesystems between Linux, Windows and macOS complicates matters. 
+The only universally supported filesystem types are 
 FAT (and derivatives) that are not the most efficient or resilient these days. 
 
 For many years there was a struggle between FAT32 
@@ -82,6 +85,14 @@ for small drives with many tiny files **FAT** uses space well, but **exFAT** is 
 	* there are reports of drives not being recognised with custom AUS
 	* Earlier macOS versions may have been limited to 128KB, but it is possible they now follow Microsoft's published defaults https://support.microsoft.com/en-gb/help/140365/
 	* This makes exFAT inefficient for small volumes with many tiny files
+
+Partition records:
+
+You should now **always** use GPT (GUID partition map) partition tables, 
+unless you are aware of a specific compatibility issue. 
+GPT is widely supported for external drives
+and has less limitations than the legacy MBR.
+
 
 Other Notes: 
 
