@@ -74,6 +74,8 @@ ubiquity
 	* Something else
 	* select the root of the drive for boot loader
 	* select small volume ax ext4 /boot
+		* do not re-use any ext3 volumes
+			* reformat them as ext4 against Y2038
 	* larger volume as Physical Volume for Encryption and enter pass phrase twice
 	* Afterwards you will find a crypt mapper device at the top of the list
 	* set this as the root
@@ -96,6 +98,8 @@ ubiquity
     * makes it simpler when you run the install
 * Create the partitions in order (e.g. within an Extended partition)
     * it helps fdisk make sensible suggestions for you
+* **avoid ext3**
+	* to avoid the Year 2038 problem
 * write and exit at the end
     * `sudo partprobe` if you want to re-read the table to check
 

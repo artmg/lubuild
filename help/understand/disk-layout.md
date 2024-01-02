@@ -89,7 +89,7 @@ for small drives with many tiny files **FAT** uses space well, but **exFAT** is 
 Partition records:
 
 You should now **always** use GPT (GUID partition map) partition tables, 
-unless you are aware of a specific compatibility issue. 
+unless you are aware of a specific compatibility issue (like old game controllers). 
 GPT is widely supported for external drives
 and has less limitations than the legacy MBR.
 
@@ -101,6 +101,7 @@ Other Notes:
 * exFAT has features designed for Flash but works ok on magnetic media
     * although it might only has one copy of the allocation table!
 * only FAT-family are cross-platform as NTFS is RO on Mac
+* always **avoid ext3** to avoid the Year 2038 problem
 
 
 
