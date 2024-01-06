@@ -697,6 +697,16 @@ into line with the same branch on the upstream repo.
 
 You can do the same from your local using the [CLI instructions](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork#syncing-a-fork-branch-from-the-command-line)
 
+```sh
+git fetch upstream
+# this will show any new branches
+git checkout master
+git merge upstream/master
+git push
+
+# automatically track any new upstream branchs
+git checkout new-branch-name
+```
 
 ##### Old Notes
 
