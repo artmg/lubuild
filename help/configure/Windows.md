@@ -402,6 +402,13 @@ and shrink it to save space. This will be your baseline "OS install"
 
 ## Manage disk space
 
+### Disk usage analyser
+
+* Venerable **WinDirStat** is still a great FOSS option on Windows
+* but you might be using GrandPerspective on macOS and [baobab](lubuild/help/diagnose/disks#What's using my space?) on linux
+* [SquirrelDisk](https://github.com/adileo/squirreldisk)is a cross-platform React/Rust FOSS project, 
+	* although it might not be popular enough to be in package managers yet
+
 ### Universal package cache
 
 The Universal Apps (UWP, formerly known as Metro apps or Modern Apps), so many apps loaded from the Windows 10 store, save their config and data in the folder 
