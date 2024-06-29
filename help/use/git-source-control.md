@@ -26,8 +26,16 @@ If you'd rather a GUI to peruse your files before commit, manage your branches a
 * Gittyup
 	* Replaced the defunct GitAhead
 	* cross-platform, open source, c++/qt graphical client
-	* available via many linux repos, windows choco and mac brew
+	* available via many linux repos and mac brew
+		* cannot find windows choco package!
 	* previously from a commercial developer, now open-sourced
+* Visual Studio Code
+	* the elephant in the room has a built in git client
+	* the electron-based IDE is available on most OSs and in many populare package managers
+	* considering how feature rich it is, it is relatively lightwieght 
+	* there is also a 'no install' version at https://vscode.dev.
+	* very rich ecosystem of plugins covering all sorts of code, test and execution technologies
+	* since Microsoft open-sourced this slimmed-down brother to its commercial product and distributed it freely it has marched on to be probably the most widely used IDE overall
 * GitKraken
 	* Freemium cross-platform client
 * Github Desktop
