@@ -31,7 +31,7 @@ you find the following names cropping up
 	* Can back up just changed chunks in larger files
 	* that can be mounted with FUSE
 	* store to local, ssh, sftp, S3, ...
-	* front-ends include: Vorg, Vorta, Borgmatic
+	* front-ends include: Vorg, Vorta, Borgmatic, Pika (GTK), 
 	* does not rely on, nor is it improved by, using filesystem journaling 
 * Restic
 	* often mentioned in comparisons with borg
