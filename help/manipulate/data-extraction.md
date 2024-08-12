@@ -12,6 +12,7 @@ See also the first two choices in [Anonymisation](#Anonymisation) below
 	* open source cross-platform IDE for the R language 
 	* R is a great choice of programming language for data preparation, and most things a data geek might want to do, but it IS a programming language
 	* if data cleansing is your scope then also `install.packages("tidyverse")`
+	* for an alternative R IDE consider Positron (VS Code-based) once mature enough
 * Orange
 	* very mature open-source, cross platform project
 	* Python and C with Qt interface
