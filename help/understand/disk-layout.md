@@ -102,6 +102,7 @@ Other Notes:
     * although it might only has one copy of the allocation table!
 * only FAT-family are cross-platform as NTFS is RO on Mac
 * always **avoid ext3** to avoid the Year 2038 problem
+* for more on Apple macOS filesystems see https://developer.apple.com/library/archive/documentation/FileManagement/Conceptual/FileSystemProgrammingGuide/FileSystemOverview/FileSystemOverview.html
 
 
 
