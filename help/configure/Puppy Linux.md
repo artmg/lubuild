@@ -26,6 +26,15 @@ from .sfs files and the medium may be ejected.
 Configuration changes and other core files are kept in RAM, 
 and at shutdown you are offered the option to commit them. 
 
+It is designed to be used in this 'frugal' mode, with its 
+small image, that is loaded with additional overlay files. 
+If is a different way of thinking about an OS, 
+where you don't really 'install' it.
+Any changes you make (that you want to keep) you can 
+put into a 'save' overlay file that is loaded last. 
+But it is much of an 'embedded' way of thinking 
+rather than a traditional OS install. 
+
 In recent years Puppy has been built from Ubuntu packages, 
 using the 'Woof' toolset, and versions track Ubuntu LTS versions. 
 This means it dropped 32-bit support after v8 (BionicPup). 
@@ -193,6 +202,25 @@ It had failed previously when I tried Lubuntu on an Extended Partition
 and Puppy on it's own additional ext4 partition, 
 although I did manage to make it boot VIA the Puppy USB to the HDD.
 Perhaps I had to address the custom grub code block to a different location?
+
+#### Easy Windows dualboot
+
+If you have Windows installed, the easy way to try 
+Puppy Linux is with a USB drive. If you decide you like it, 
+and want to use it in a more permanent way:
+
+* Download the Puppy you want
+	* according to your CPU architecture and BIOS/UEFI environment
+* Turn off Hibernate in Windows
+* Use 'LICK' .exe file as the installer
+* https://github.com/noryb009/lick/releases/latest
+	* This will turn off 'Fastboot' too
+	* it will also set up a boot manager for you
+		* it installs grub
+		* also adds entries for Windows and your Puppy ISO
+		* The ISO file can easily be a file on the regular NTFS partition
+* 
+
 
 ### Frugal Install to media via Pi
 
