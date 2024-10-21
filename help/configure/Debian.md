@@ -7,14 +7,14 @@ Ubuntu, and its variants like Lubuntu, are derived from the Debian operating sys
 
 Perhaps you might like to try this distro directly. This gives you the flexibility to add the layers you want directly, instead of the choices being made for you by a supplier like Canonical. Of course that does mean that you need to make more choices yourself. There might have been a time when it was not as easy to get started with the installation, but the Debian project has made great strides in simplifying things for beginners. The only hard part is choosing where to start and what to add.
 
-Here we will:
+Here we will choose:
 
 * **installer**: use a small USB ISO [netinst image](https://www.debian.org/CD/netinst/) 
 	* just enough to get you connected and pull down what you need
 * **init**: let's leave the default `systemd`
 	* If you wanted to pick a different one see [here](https://wiki.debian.org/Init#Changing_the_init_system_-_at_installation_time)
 * **desktop**: you could go for the vanilla but full GNU/Linux desktop or pick something lighter
-
+	* If you're used to Lubuntu then LXQt will make you feel at home
 
 
 In this example we are using an x64 architecture system, with amd64 netinst image which is around 630MB
@@ -22,6 +22,8 @@ In this example we are using an x64 architecture system, with amd64 netinst imag
 ```
 wget --trust-server-names https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-12.7.0-amd64-netinst.iso
 ```
+
+You can use [a simple dd to write the disk image](https://github.com/artmg/lubuild/blob/master/help/configure/write-Distro-to-flash.md#choice--simpler---dd) to the full disk, as it contains the partition table inside the ISO, but do remember to **` sync `** after writing
 
 When you boot netinst, you have the choice of a full graphical window-based installer with mouse, or an ncurses keyboard-only terminal-based installer. Both look pretty similar inside, with similar choices.
 
@@ -93,4 +95,22 @@ Boot from your `netinst` boot media (e.g. USB with the ISO written to it), and a
 - Use the proposed `ssh installer@` with it's ip address
 
 Now you may continue the install (using text mode) via the ssh session, making it easier to paste in commands and configuration.
+
+NB: after the main install, make sure that you include the Software Choice: `SSH server` so that you can continue to use it remotely. You can also [use SSH certificates](https://github.com/artmg/lubuild/blob/master/help/configure/Secure-SHell-SSH.md#generate-and-install-ssh-certificate) to log onto the machine more easily in future.
+
+## Post-installation configuration
+
+### set user as sudoer
+
+* this is quicker and easier to type than to paste in any blocks
+* you must be root to make this change
+	* **` su `**
+* you will be prompted for root password
+* now as root, add the user into the sudo group
+	* use the specific user_name here
+	* **` sudo adduser `** _user_name_  **` sudo `**
+* once done, reboot for it to take effect
+	* **` /sbin/reboot `**
+* credit https://unix.stackexchange.com/a/773999
+* after reboot, if you were remote, reconnect to ssh
 
