@@ -37,6 +37,15 @@ also check out the Category Template at the end of the article.
 The display server is that protocol that clients (i.e. applications) use to talk to the display. 
 X (or X Server) is the original display server, and was designed to be run on separate nodes if required – the application on one computer and the display across the network on another. More commonly now Wayland seems to be gaining ground, after a very slow start, and positions itself as a protocol for talking to a display server. The Display Servers themselves being called Wayland Compositors, and they are Compositing Window Managers, the line blurs with the next layer.
 
+#### Wayland vs X
+
+Under X, two separate applications help draw a window:
+
+* the display server creates windows on the screen and gives applications a place to draw their content
+* the window manager positions windows relative to each other and decorates windows with title bars and frames.
+
+Wayland combines these two functions into a single application called the Compositor. Applications running on a Wayland system only need to talk to one endpoint.
+
 ## Window Manager
 
 Although the common way to use a Window Manager is via a full Desktop Environment (including Greeter, Session and others described below), you can just use a Window Manager directly from a command boot environment. There is a [long list of X Window Managers](https://wiki.archlinux.org/title/Window_manager#List_of_window_managers) to choose from, if you have X in your environment. As mentioned above, a [Wayland Compositor](https://wiki.archlinux.org/title/Wayland#Compositors) gives you both layers, and there are plenty to choose from there too. See [this stackexchange question](https://unix.stackexchange.com/q/768524) for some specific options.
