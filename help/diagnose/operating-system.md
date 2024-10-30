@@ -76,6 +76,23 @@ cat /etc/hostname
 sudo cat /var/log/installer/syslog | head -1 | cut -f 1-3 -d " "
 ```
 
+## Desktop components
+
+To understand these better see [layers-on-your-desktop](../understand/layers-on-your-desktop.md).
+
+```bash
+# check which desktop manager is in use
+loginctl
+
+# show the session type (check output above if not 1)
+loginctl show-session 1 -p Type
+# should show x11 or wayland
+
+# check your own session
+loginctl show-session `loginctl|grep $USER|awk '{print $1}'` -p Type
+# credit https://unix.stackexchange.com/a/325972
+
+```
 ## Resource utilisation
 
 ```
