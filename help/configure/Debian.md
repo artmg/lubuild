@@ -78,29 +78,39 @@ Boot from your `netinst` boot media (e.g. USB with the ISO written to it), and a
 - Expert Install (Graphical or text as you prefer)
 - Detect and Mount Install media
 - Load installer components
-- `network-console` - Continue
+- check the item `network-console` then Continue
 	- This will install some component from the install media
 	- You will now see additional steps appear in the 'choose next step'
-- Detect network hardware
-	- If you have ethernet, connect the cable for a simpler config
-- Configure the network
-	- Hostname: _determined by your local instructions_
-		- although this is for your install session only, 
-		- so perhaps the default `debian` is just fine
-	- Domain name: _determined by your local instructions_
+* Network config steps are not ONLY used for the installation process, but also retained into the finalised config 
+	* _determine the value from your local instructions_
+	* enter and respond to the sections...
+		- Detect network hardware
+		- Configure the network
+		    - Hostname and Domain name
 - Continue installation remotely using SSH
 	- enter the password for your ssh session
 	- even if it's only temporary, make it secure-ish
 	- enter it twice
-- Use the proposed `ssh installer@` with it's ip address
+- Use the proposed ` ssh installer@ ` with it's ip address
 
 Now you may continue the install (using text mode) via the ssh session, making it easier to paste in commands and configuration.
+
+- Start Installer
+- Set up users and passwords
+	- Allow root: NO
+	- enter the username and password
+- Configure the clock
+	- NTP Yes, default
+- Continue with the various other options to install
 
 NB: after the main install, make sure that you include the Software Choice: `SSH server` so that you can continue to use it remotely. You can also [use SSH certificates](https://github.com/artmg/lubuild/blob/master/help/configure/Secure-SHell-SSH.md#generate-and-install-ssh-certificate) to log onto the machine more easily in future.
 
 ## Post-installation configuration
 
 ### set user as sudoer
+
+If you HAD allowed Root above, but then wanted to use sudo,
+this is how you would change your user's config...
 
 * this is quicker and easier to type than to paste in any blocks
 * you must be root to make this change
