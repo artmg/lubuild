@@ -130,23 +130,32 @@ sudo udisksctl unmount --block-device /dev/${MEDIA_DEVICE:0:3}1
 sudo udisksctl unmount --block-device /dev/${MEDIA_DEVICE:0:3}2
 sudo partprobe
 
-# now swap the file extension as the image is unzipped directly to the device
-# credit for substitution code https://stackoverflow.com/a/38277789
-case "$IMAGE_FILENAME" in
-  *.img.xz)
-    xzcat $IMAGE_FILENAME ${IMAGE_FILENAME%.*}.img | sudo dd bs=4M status=progress of=/dev/${MEDIA_DEVICE:0:3}
-    ;;
-  *.img.bz2)
-    bunzip2 -c $IMAGE_FILENAME | sudo dd bs=4M status=progress of=/dev/${MEDIA_DEVICE:0:3}
-    ;;
-  *.img.zip)
-    unzip -p $IMAGE_FILENAME ${IMAGE_FILENAME//+(*\/|.*)}.img | sudo dd bs=4M status=progress of=/dev/${MEDIA_DEVICE:0:3}
-esac
+# check it really was unmounted, in case that's the system drive
+# look at the block device info to see if it has mount points
+MOUNT_POINTS=`udisksctl info --block-device /dev/${MEDIA_DEVICE:0:3}1 | sed -n -e 's/^.*MountPoints:\s*//p'`
+if [ ! -z "${MOUNT_POINTS}" ]; then
+    echo "/dev/${MEDIA_DEVICE:0:3}1 is still mounted as ${MOUNT_POINTS}!" 
+    echo "You really need to check which \$MEDIA_DEVICE you are trying to write to"
+else
 
-
-# write everything still left in the cache 
-sync
-#
+	# now swap the file extension as the image is unzipped directly to the device
+	# credit for substitution code https://stackoverflow.com/a/38277789
+	case "$IMAGE_FILENAME" in
+	  *.img.xz)
+	    xzcat $IMAGE_FILENAME ${IMAGE_FILENAME%.*}.img | sudo dd bs=4M status=progress of=/dev/${MEDIA_DEVICE:0:3}
+	    ;;
+	  *.img.bz2)
+	    bunzip2 -c $IMAGE_FILENAME | sudo dd bs=4M status=progress of=/dev/${MEDIA_DEVICE:0:3}
+	    ;;
+	  *.img.zip)
+	    unzip -p $IMAGE_FILENAME ${IMAGE_FILENAME//+(*\/|.*)}.img | sudo dd bs=4M status=progress of=/dev/${MEDIA_DEVICE:0:3}
+	esac
+	
+	
+	# write everything still left in the cache 
+	sync
+	#
+fi
 
 ```
 
