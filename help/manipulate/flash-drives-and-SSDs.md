@@ -121,10 +121,11 @@ Note that linux developed a Memory Technology Device (MTD) subsystem, that impro
 
 ### Embedded-style systems
 
-There are other ways you can lay out disks to vastly improve reliability. For instance, some OS configurations for embedded use-cases, where very little changes boot after boot, use a ram disk for their core storage. That way writing is mainly done in memory so the flash storage device is mainy read only. That avoids issues with wear levelling and reliability. ALternatively, battery backup (UPS-style) can prevent sudden power loss, removing the cause of some corruption).
+There are other ways you can lay out disks to vastly improve reliability. For instance, some OS configurations for embedded use-cases, where very little changes boot after boot, use a ram disk for their core storage. That way writing is mainly done in memory so the flash storage device is mainy read only. That avoids issues with wear levelling and reliability. Alternatively, battery backup (UPS-style) can prevent sudden power loss, removing the cause of some corruption).
 
 Some alternative distros like Slackware and its derivatives, Slax and PuppyLinux, are reputed to be more flash friendly. This is because the OS is stored in layers that are read into memory, and run from RAM disk. Then, on shutdown, only the changes are written into a new layer file.
 
+See [read-only raspberry](https://github.com/artmg/MuGammaPi/wiki/read-only-raspberry.md) for examples of how to use operating systems on a Pi that have very few writes to the system flash card. 
 
 ### other ssd enhancements ###
 
