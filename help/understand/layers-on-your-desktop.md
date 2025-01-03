@@ -46,6 +46,8 @@ Under X, two separate applications help draw a window:
 
 Wayland combines these two functions into a single application called the Compositor. Applications running on a Wayland system only need to talk to one endpoint.
 
+If you want to know which you are using, see this [stack exchange](https://unix.stackexchange.com/a/325972)
+
 ## Window Manager
 
 Although the common way to use a Window Manager is via a full Desktop Environment (including Greeter, Session and others described below), you can just use a Window Manager directly from a command boot environment. There is a [long list of X Window Managers](https://wiki.archlinux.org/title/Window_manager#List_of_window_managers) to choose from, if you have X in your environment. As mentioned above, a [Wayland Compositor](https://wiki.archlinux.org/title/Wayland#Compositors) gives you both layers, and there are plenty to choose from there too. See [this stackexchange question](https://unix.stackexchange.com/q/768524) for some specific options.
@@ -66,6 +68,7 @@ Taking this idea of a window manager without a desktop environment, you could al
 * SDDM
 	* preferred by Lxqt / Lubuntu Next
 
+You can see what X sessions and Wayland sessions are available to a desktop manager by viewing the contents of `/usr/share/xsessions/`  and `/usr/share/wayland-sessions/` folders.
 
 Greeter 
 login screen
@@ -81,6 +84,8 @@ widgets
 
 Old set of defauls [https://wiki.ubuntu.com/UDSProceedings/N/PackageSelectionAndSystemDefaults]
 
+ArchLinux has a good article on [display managers](https://wiki.archlinux.org/title/Display_manager)
+
 ### frame buffer
 
 The Linux framebuffer (fbdev) is a graphic hardware-independent 
@@ -94,6 +99,9 @@ The framebuffer can be used to:
 
 Examples of the third application include Linux programs such as MPlayer, links2, Netsurf, fbida,[2] and fim [3] and libraries such as GGI, SDL, GTK+, and Qt, which can all use the framebuffer directly. 
 
+#### Remote Frame Buffer protocol
+
+RFB is the technique that is used to send images from the frame buffer over the network to view the screen from a different computer. This is used by the VNC virtual network clients. See [Remote Desktop](https://github.com/artmg/MuGammaPi/wikiRemote-Desktop) for more about VNC servers and clients.  
 ## Policy Kit
 
 The freedesktop.org Policy Kit was introduced for authorising actions on the desktop to specific users or groups, although it has actually been adopted and extended to more fundamental aspects of the operating system. For instance even Raspberry Pi OS Lite [uses it](https://forum.openmediavault.org/index.php?thread/41757-polkit-s-pkexec-component-identified-as-cve-2021-4034-pwnkit/&postID=299687#post299687) to allow non-privileged users to elevate privileges to reboot. And of course it is this ability that exploits like 'pwnkit' leverage.
