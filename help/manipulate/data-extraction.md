@@ -1,8 +1,11 @@
 
 see also:
 
-* [https://github.com/artmg/lubuild/blob/master/help/manipulate/miscellaneous-files.md]
-    * general working with files and folders, inspecting and managing
+* general working with files and folders, inspecting and managing
+	* [lubuild / help / manipulate / miscellaneous-files.md](https://github.com/artmg/lubuild/blob/master/help/manipulate/miscellaneous-files.md)
+* a repo dedicated to the art of data 'science' with R
+	* [https://gitlab.com/artmg/scienzaRt](https://gitlab.com/artmg/scienzaRt)
+		* which will have sections on data extraction techniques going beyond what is below here
 
 ## General data manipulation software
 

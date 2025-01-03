@@ -333,7 +333,8 @@ http://manpages.ubuntu.com/manpages/utopic/man1/pdftk.1.html
 #### exiftool ####
 
 NB: Although the exiftool can write PDF metadata, it only adds updates.
-It will NOT remove previously written PDF metadata
+It can make the metadata _appear_ blank, but it 
+will NOT remove previously written PDF metadata
 http://www.sno.phy.queensu.ca/~phil/exiftool/TagNames/PDF.html
 
 ```

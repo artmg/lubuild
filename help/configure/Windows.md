@@ -407,7 +407,7 @@ and shrink it to save space. This will be your baseline "OS install"
 * Venerable **WinDirStat** is still a great FOSS option on Windows
 * but you might be using GrandPerspective on macOS and [baobab](lubuild/help/diagnose/disks#What's using my space?) on linux
 * [SquirrelDisk](https://github.com/adileo/squirreldisk)is a cross-platform React/Rust FOSS project, 
-	* although it might not be popular enough to be in package managers yet
+	* and since Dec 2024 it is availabe via ` choco install squrreldisk `
 
 ### Universal package cache
 
