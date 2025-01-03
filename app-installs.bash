@@ -11,7 +11,7 @@ sudo echo
 # backup software sources
 sudo cp /etc/apt/sources.list{,.`date +%y%m%d.%H%M%S`}
 # Add partner
-sudo add-apt-repository -y "deb http://archive.canonical.com/ $(lsb_release -sc) partner"
+sudo add-apt-repository -y "deb http://archive.ubuntu.com/ $(lsb_release -sc) partner"
 # help > https://help.ubuntu.com/community/Repositories/CommandLine
 
 ### PPAs ###
@@ -47,15 +47,16 @@ if [ ! -f /etc/apt/sources.list.d/anydesk-stable.list ]; then (
     sudo tee /etc/apt/sources.list.d/anydesk-stable.list ;
 ) ; fi
 
-if [ ! -f /etc/apt/sources.list.d/skype-stable.list ]; then (
-  # credit https://repo.skype.com/
-  dpkg -s apt-transport-https > /dev/null || bash -c "sudo apt-get update; sudo apt-get install apt-transport-https -y"
-  wget -q -O - https://repo.skype.com/data/SKYPE-GPG-KEY |
-    gpg --dearmor |
-    sudo tee /etc/apt/keyrings/skype-stable.gpg > /dev/null
-  echo "deb [signed-by=/etc/apt/keyrings/skype-stable.gpg] [arch=amd64] https://repo.skype.com/deb stable main" |
-    sudo tee /etc/apt/sources.list.d/skype-stable.list ;
-) ; fi
+# Use snap instead
+#if [ ! -f /etc/apt/sources.list.d/skype-stable.list ]; then (
+#  # credit https://repo.skype.com/
+#  dpkg -s apt-transport-https > /dev/null || bash -c "sudo apt-get update; sudo apt-get install apt-transport-https -y"
+#  wget -q -O - https://repo.skype.com/data/SKYPE-GPG-KEY |
+#    gpg --dearmor |
+#    sudo tee /etc/apt/keyrings/skype-stable.gpg > /dev/null
+#  echo "deb [signed-by=/etc/apt/keyrings/skype-stable.gpg] [arch=amd64] https://repo.skype.com/deb stable main" |
+#    sudo tee /etc/apt/sources.list.d/skype-stable.list ;
+#) ; fi
 
 # Prepare for repository installs
 sudo apt-get update
