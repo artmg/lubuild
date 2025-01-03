@@ -16,11 +16,10 @@ sudo add-apt-repository -y "deb http://archive.canonical.com/ $(lsb_release -sc)
 
 ### PPAs ###
 # NB: do NOT add comments to the end of apt-get commands, it may produce errors
-# nixnote2
-sudo add-apt-repository -y ppa:nixnote/nixnote2-daily
 # repos now deprectated or not required
 # sudo add-apt-repository -y ppa:freecad-maintainers/freecad-stable # FreeCAD (newer than Ubuntu version)
 # sudo add-apt-repository -y ppa:recoll-backports/recoll-1.15-on    # now in user-apps.bash
+# sudo add-apt-repository -y ppa:nixnote/nixnote2-daily             # nixnote2 use deprecated
 
 # For each source, test the distro does NOT already have it
 # then add the key and the source
@@ -67,30 +66,31 @@ sudo apt-get update
 ### *** REMOVE BUNDLED APPS *** ###
 ###################################
 
-### Clean up OS install
+### NO LONGER REQUIRED
+# When using Minimal Install option
 
-# prevent purchasable items appearing in software list
-sudo apt-get remove -y unity-lens-shopping  
-# credit > http://www.omgubuntu.co.uk/2012/10/10-things-to-do-after-installing-ubuntu-12-10
-
-# avoid this 'dependendency only' package being removed when a dependee is removed
-if [[ $DESKTOP_SESSION == Lubuntu ]] ; then
- sudo apt-mark manual lubuntu-desktop ;
-fi
-# credit - https://help.ubuntu.com/community/Lubuntu/Documentation/RemoveLubuntuDesktop
-if [[ "$DESKTOP_SESSION" == "QLubuntu" ]] ; then
- sudo apt-mark manual lubuntu-qt-desktop ;
-fi
-
-# assuming the LibreOffice suite is installed, remove the lighter weight alternatives
-if [[ $DESKTOP_SESSION == Lubuntu ]] ; then (
-	# remove abiword to avoid doc corruption issues
-	sudo apt-get remove -y abiword
-	# sudo apt-get remove -y abiword abiword-common
-	## or will this do it all?
-	sudo apt-get remove -y gnumeric
-) fi
-# sudo apt-get autoremove
+## prevent purchasable items appearing in software list
+#sudo apt-get remove -y unity-lens-shopping  
+## credit > http://www.omgubuntu.co.uk/2012/10/10-things-to-do-after-installing-ubuntu-12-10
+#
+## avoid this 'dependendency only' package being removed when a dependee is removed
+#if [[ $DESKTOP_SESSION == Lubuntu ]] ; then
+# sudo apt-mark manual lubuntu-desktop ;
+#fi
+## credit - https://help.ubuntu.com/community/Lubuntu/Documentation/RemoveLubuntuDesktop
+#if [[ "$DESKTOP_SESSION" == "QLubuntu" ]] ; then
+# sudo apt-mark manual lubuntu-qt-desktop ;
+#fi
+#
+## assuming the LibreOffice suite is installed, remove the lighter weight alternatives
+#if [[ $DESKTOP_SESSION == Lubuntu ]] ; then (
+#	# remove abiword to avoid doc corruption issues
+#	sudo apt-get remove -y abiword
+#	# sudo apt-get remove -y abiword abiword-common
+#	## or will this do it all?
+#	sudo apt-get remove -y gnumeric
+#) fi
+## sudo apt-get autoremove
 
 
 ######################################
