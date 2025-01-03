@@ -10,7 +10,7 @@ see also:
 * [Manipulate Flash](../manipulate/flash-drives-and-SSDs.md)
     * special info about how to work with flash (non-mechanical) storage devices
 * [Distro images](https://github.com/artmg/MuGammaPi/wiki/Disks#distro-images)
-    * 
+    * info on typical Raspberry Pi images 
 * [Lubuntu test and QA](../understand/test-and-qa-for-Lubuntu.md)
     * contributing to the Lubuntu Test and QA community
 
@@ -24,7 +24,6 @@ see also:
     * very handy if the OS on your hard disk is playing up
 * [Data Recovery](../diagnose/disk-recovery-and-forensics.md)
 * 
-
 
 ### Multiboot ISOs
 
@@ -42,24 +41,39 @@ data.
 See also further down for old instructions on combined UBCD multi-boot
 
 
+### Basic image download
 
-## check ISO integrity
+If you just wanted to do a plain old install using a Lubuntu ISO image, check the release and image names at https://lubuntu.me/downloads/
 
-Ensuring the package arrived intact is not only about maintaining security, 
+```bash
+# Basic image download
+IMAGE_FILENAME=lubuntu-24.04.1-desktop-amd64.iso
+RELEASE_FOLDER=24.04.1/release
+
+wget --trust-server-names -P ~/Downloads https://cdimage.ubuntu.com/lubuntu/releases/$RELEASE_FOLDER/$IMAGE_FILENAME
+
+### check ISO integrity
+wget --trust-server-names -P ~/Downloads https://cdimage.ubuntu.com/lubuntu/releases/$RELEASE_FOLDER/SHA256SUMS
+pushd ~/Downloads
+sha256sum -c SHA256SUMS
+popd
+```
+
+The second part ensures the package arrived intact. 
+This is not only about maintaining security, 
 it will also save you time and much frustration if you discover immediately 
 whether you inadvertently lost some bits during transmission. 
 
-Copy the hyperlink to MD5SUMS. Browsing in pcmanfm in the folder containing the ISO image, press F4 for a terminal
+### basic image write
 
-```
-wget url_to_MD5SUMS
-md5sum -c MD5SUMS
-```
-
-Alternatively if you just see the SHA-256 checksum on the download page you can manually compare it to the output from `sha256sum ~/Downloads/myimage`
-
+Lubuntu recommends the [mkusb](https://help.ubuntu.com/community/mkusb) wrapper for dd to make sure you only overwrite the correct device, and although [Debian just suggests using cp](https://wiki.debian.org/DebianInstall#Creating_a_Bootable_Debian_USB_Flashdrive) (you will need sudo) it suggests [Rufus](https://github.com/pbatard/rufus/) for Windows. However [Ubuntu recommends](https://ubuntu.com/tutorials/create-a-usb-stick-on-windows#1-overview) using [Balena Etcher](https://github.com/balena-io/etcher) for Windows, Mac _and_ Linux. 
 
 ## Flash two partitions
+
+Lubuntu and Ubuntu come with three partition 
+Live Installer images, but some other distros, 
+especially those aimed at the Raspberry Pi with its microSD boot
+come with simpler ready to run images. 
 
 Below is a handy bit of automation 
 that also sorts out the media labels and other details. 
