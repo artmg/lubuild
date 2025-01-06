@@ -10,9 +10,9 @@ sudo echo
 
 # backup software sources
 sudo cp /etc/apt/sources.list{,.`date +%y%m%d.%H%M%S`}
-# Add partner
-sudo add-apt-repository -y "deb http://archive.ubuntu.com/ $(lsb_release -sc) partner"
-# help > https://help.ubuntu.com/community/Repositories/CommandLine
+# partner repo was axed
+# sudo add-apt-repository -y "deb http://archive.ubuntu.com/ $(lsb_release -sc) partner"
+## help > https://help.ubuntu.com/community/Repositories/CommandLine
 
 ### PPAs ###
 # NB: do NOT add comments to the end of apt-get commands, it may produce errors
@@ -23,6 +23,8 @@ sudo add-apt-repository -y "deb http://archive.ubuntu.com/ $(lsb_release -sc) pa
 
 # For each source, test the distro does NOT already have it
 # then add the key and the source
+# as we manage the keys via local admin account we use the folder
+# /etc/apt/keyrings/ as recommended by https://askubuntu.com/a/1437410
 
 # apt-key is deprecated - reference keyrings put via gpg into this folder
 sudo mkdir -p /etc/apt/keyrings/
