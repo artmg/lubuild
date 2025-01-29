@@ -344,7 +344,7 @@ There are historically quite a number of ways to start apps:
 
 * Runlevels
 	* rc.local (or the runlevel rcX.d folder scripts)
-* crontab
+* cron
 	* this is a timed startup service
 * sysvinit
 	* SysV init is inherited from Unix System V 
