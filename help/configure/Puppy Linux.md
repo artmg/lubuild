@@ -48,6 +48,29 @@ development organisation refers to as 'the Puppy family'.
 * Downloads http://distro.ibiblio.org/puppylinux/
 
 
+# Configuring
+
+## Applications
+### Default Abiword to save .docx
+
+By default, AbiWord saves files as ".abw" (plain text with XML markup). 
+To change on BookwormPup64, so Abiword defaults to .odt or .docx
+* Use Geany text editor
+* Open ~/.config/abiword/profile
+* Set the option `DefaultSaveFormat=".docx"` in the custom scheme e.g.
+  
+```xml
+<Scheme
+     name="_custom_"
+     DefaultSaveFormat=".docx"
+/>
+```
+
+
+# Installing
+
+Moved these down as some of them are bit old now
+
 ## Universal Install of FossaPup using TahrPup
 
 * Trying FossaPup64 9.5 based on ubuntu focal 20.04
