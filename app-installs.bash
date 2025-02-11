@@ -21,20 +21,24 @@ sudo cp /etc/apt/sources.list{,.`date +%y%m%d.%H%M%S`}
 # sudo add-apt-repository -y ppa:recoll-backports/recoll-1.15-on    # now in user-apps.bash
 # sudo add-apt-repository -y ppa:nixnote/nixnote2-daily             # nixnote2 use deprecated
 
-# For each source, test the distro does NOT already have it
-# then add the key and the source
-# as we manage the keys via local admin account we use the folder
-# /etc/apt/keyrings/ as recommended by https://askubuntu.com/a/1437410
 
-# apt-key is deprecated - reference keyrings put via gpg into this folder
-sudo mkdir -p /etc/apt/keyrings/
+# For each source, test the distro does NOT already have it,
+# then add the key via gpg (apt-key is deprecated) and the source.
+# Previously we used the folder /etc/apt/keyrings/ as recommended by 
+# https://askubuntu.com/a/1437410 as local admin account manages keys. 
+# Now /usr/share/keyrings/ as that's where the ubuntu sources put them
+APT_KEYRING_PATH=/usr/share/keyrings
+#APT_KEYRING_PATH=/etc/apt/keyrings
+
+# - reference keyrings put via gpg into this folder
+sudo mkdir -p ${APT_KEYRING_PATH}/
 if [ ! -f /etc/apt/sources.list.d/google-chrome.list ]; then (
   # Google Key - https://www.google.com/linuxrepositories/
   wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub |
     gpg --dearmor |
-    sudo tee /etc/apt/keyrings/google-chrome.gpg > /dev/null
+    sudo tee ${APT_KEYRING_PATH}/google-chrome.gpg > /dev/null
   # Chrome Repo - http://www.ubuntuupdates.org/ppa/google_chrome
-  echo "deb [signed-by=/etc/apt/keyrings/google-chrome.gpg] http://dl.google.com/linux/chrome/deb/ stable main" |
+  echo "deb [signed-by=${APT_KEYRING_PATH}/google-chrome.gpg] http://dl.google.com/linux/chrome/deb/ stable main" |
     sudo tee /etc/apt/sources.list.d/google-chrome.list ;
 ) ; fi
 
@@ -42,12 +46,34 @@ if [ ! -f /etc/apt/sources.list.d/anydesk-stable.list ]; then (
   # credit http://deb.anydesk.com/howto.html
   wget -q -O - https://keys.anydesk.com/repos/DEB-GPG-KEY |
     gpg --dearmor |
-    sudo tee /usr/share/keyrings/anydesk-stable.gpg > /dev/null
-# previously used   /etc/apt/keyrings/my-app-name.gpg  
-# but that was not best practice - is there any way to avoid hard coded paths in sources ?
-  echo "deb [signed-by=/usr/share/keyrings/anydesk-stable.gpg] http://deb.anydesk.com/ all main" |
+    sudo tee ${APT_KEYRING_PATH}/anydesk-stable.gpg > /dev/null
+  echo "deb [signed-by=${APT_KEYRING_PATH}/anydesk-stable.gpg] http://deb.anydesk.com/ all main" |
     sudo tee /etc/apt/sources.list.d/anydesk-stable.list ;
 ) ; fi
+
+if [ ! -f /etc/apt/sources.list.d/megasync.list ]; then (
+  # repo folders see https://mega.nz/linux/repo/ 
+  # locations follow naming from debian.postinst found in .deb
+  wget -q -O - https://mega.nz/linux/repo/xUbuntu_24.04/Release.key |
+    gpg --dearmor |
+    sudo tee ${APT_KEYRING_PATH}/meganz-archive-keyring.gpg > /dev/null
+  echo "deb [signed-by=${APT_KEYRING_PATH}/meganz-archive-keyring.gpg] https://mega.nz/linux/repo/xUbuntu_24.04/ ./" |
+    sudo tee /etc/apt/sources.list.d/megasync.list ;
+) ; fi
+
+if [ ! -f /etc/apt/sources.list.d/spotify.list ]; then (
+  # credit https://www.spotify.com/de-en/download/linux/ 
+  wget -q -O - https://download.spotify.com/debian/pubkey_C85668DF69375001.gpg |
+    gpg --dearmor |
+    sudo tee /etc/apt/keyrings/spotify.gpg > /dev/null
+  echo "deb [signed-by=${APT_KEYRING_PATH}/spotify.gpg] http://repository.spotify.com stable non-free" |
+    sudo tee /etc/apt/sources.list.d/spotify.list ;
+) ; fi
+
+## Alternate key syntax:
+# curl -sS https://download.spotify.com/debian/pubkey_C85668DF69375001.gpg | 
+#  sudo gpg --dearmor --yes -o /etc/apt/trusted.gpg.d/spotify.gpg
+## which did not need the signed-by path specifying  
 
 # Use snap instead
 #if [ ! -f /etc/apt/sources.list.d/skype-stable.list ]; then (
@@ -55,8 +81,8 @@ if [ ! -f /etc/apt/sources.list.d/anydesk-stable.list ]; then (
 #  dpkg -s apt-transport-https > /dev/null || bash -c "sudo apt-get update; sudo apt-get install apt-transport-https -y"
 #  wget -q -O - https://repo.skype.com/data/SKYPE-GPG-KEY |
 #    gpg --dearmor |
-#    sudo tee /etc/apt/keyrings/skype-stable.gpg > /dev/null
-#  echo "deb [signed-by=/etc/apt/keyrings/skype-stable.gpg] [arch=amd64] https://repo.skype.com/deb stable main" |
+#    sudo tee ${APT_KEYRING_PATH}/skype-stable.gpg > /dev/null
+#  echo "deb [signed-by=${APT_KEYRING_PATH}/skype-stable.gpg] [arch=amd64] https://repo.skype.com/deb stable main" |
 #    sudo tee /etc/apt/sources.list.d/skype-stable.list ;
 #) ; fi
 
