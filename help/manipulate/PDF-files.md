@@ -147,7 +147,10 @@ convert `ls -1v` file.pdf
 
 ### Reduce PDF filesize by reducing image quality
 
-```
+qdpf is a mature and still current cross-platform open source command line (cli) utility, with its own C++ library so it requires relatively few external dependencies. It can inspect and manipulate the structure of PDF files packages are available in many linux repos, brew and choco.
+
+
+```bash
 #### simply using qpdf
 sudo apt-get install qpdf
 
@@ -155,14 +158,16 @@ sudo apt-get install qpdf
 qpdf --linearize input.pdf output.pdf
 # this automatically invokes the default option --stream-data=compress
 
-# ABOUT qpdf - http://qpdf.sourceforge.net/ - http://qpdf.sourceforge.net/files/qpdf-manual.html
-#   * C++ library with relatively few external dependencies and offering cli executables
-#    * inspect and manipulate the structure of PDF files
-#    * debian package available
-#    * active development with versions issued throughout 2014/5
-#    * published under Artistic License
+# other suggested options:
+# qpdf --compress-streams=y --decode-level=generalized --recompress-flate --compression-level=9 --optimize-images --object-streams=generate
+# as of early 2025 this converts to JPEG but does not lossily degrade to save space
+```
 
+for help see https://qpdf.readthedocs.io/
 
+#### qpdf alternatives
+
+```bash
 #### using ghostscript
 sudo apt-get install ghostscript
 
@@ -211,10 +216,8 @@ gs -dNOPAUSE -dQUIET -dBATCH -sDEVICE=pdfwrite -sOutputFile=output.pdf ~/out.pdf
 # help > http://milan.kupcevic.net/ghostscript-ps-pdf/
 ```
 
+Also ran:
 
-#### Alternatives
-
-include:
 * http://gscan2pdf.sourceforge.net/ orphaned gui to link sane to GS
 * http://svn.ghostscript.com/ghostscript/trunk/gs/doc/Ps2pdf.htm#PDFA scan to PostScript and convert
 
