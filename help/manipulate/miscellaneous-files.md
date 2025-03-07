@@ -358,6 +358,22 @@ Not available for 15.10!
 
 ## Emails
 
+### summary of mail file formats
+
+| Extension(s)      | Description                                                       | Main Applications                              | Open-Source Tools                                                                         |
+| ----------------- | ----------------------------------------------------------------- | ---------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| .eml              | Individual email messages in text-based MIME format               | Windows Mail, Thunderbird, Outlook, Apple Mail | `email` (Python library), `emlx_to_eml` (converter), `libvmime` (C++ library)             |
+| .emlx             | Individual MIME messages with Apple extensions                    | Apple Mail, Thunderbird                        | `emlx_to_mbox` (converter), `emlx-tools` (Python library)                                 |
+| .mhtml, .mht      | Individual MIME HTML archive format                               | Internet Explorer, Microsoft Outlook           | `mhonarc` (mail-to-HTML converter), `BeautifulSoup` (Python library for parsing)          |
+| .msg              | Individual emails in MS Office binary stream format               | Microsoft Outlook                              | `libmsg`, `msg-extractor`, `pytnef`, `Aid4Mail`                                           |
+| .mbox, .mbx, .mbs | Multiple emails per text / MIME file separated by From_ envelopes | Unix mail, Thunderbird, Apple Mail             | `mailbox` (Python library), `mutt` (text-based mail client), `grepmail` (search tool)     |
+| .sbd, .msf        | Folder-based storage containing `mbox` files and `msf` metadata   | Thunderbird                                    | `Thunderbird ImportExportTools NG`, `mbox` converters                                     |
+| .Maildir          | Folder-based format with one file per message                     | Qmail, Postfix, Dovecot                        | `dovecot` (IMAP/POP3 server), `notmuch` (mail indexer), `mu` (maildir indexer/searcher)   |
+| .mh               | Folder-based numbered emails files                                | nmh, GNU Mailutils                             | `nmh`, `mutt`, `reformail`                                                                |
+| .pst, .ost        | Database format Personal / Offline Storage Table                  | Microsoft Outlook, Exchange                    | `libpst`, `libpff`, `readpst` (command-line converter), `pst-utils` (tools for PST files) |
+| .dbx (also .iaf)  | Database format (and export)                                      | Outlook Express                                | `dbxconv` (converter), `libdbx` (library)                                                 |
+_This table was added after the following and may make some of it redundant._
+
 ### MIME / MHTML / EML and other email attachment or multipart formats
 
 To extract files from MIME text files
