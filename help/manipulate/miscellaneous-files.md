@@ -475,6 +475,65 @@ with the same-named folder structure, and each folder-leaf's contents storage in
 
 However the simplest way to find and read the messages is likely to be via the Thunderbird client. This readily interprets all the message metadata from the .msf file accompanying each folder's raw data.
 
+#### Import IMAP archives into Thunderbird
+
+This assumes that you have previously created an archive of your IMAP folders by
+* Attaching your Thunderbird client to your IMAP mail server
+* Syncing all folders to your local machine
+* Opening your profile folder and looking under the ImapMail folder
+* keeping a copy of the msf file and the folder containing the mbox files from under it
+* these would look like `imap.provider.com` or similar
+
+
+To create a new Thunderbird profile, and open your IMAP archives in it, but without creating an account:
+
+##### Create the empty profile
+
+* Open the Thunderbird Profile manager:
+	* Open Thunderbird
+	* Help / Troubleshooting information / About:profiles
+* New Profile
+* Name: My archive profile
+* Choose Folder
+	* `~/MyArchives/Old.Email.Profile`
+	* creating any new folders required
+* Done
+* Launch (your new) Profile in new browser
+	* This will create the template profile in the newly created folder
+	* it should prompt you to Set up your existing email address
+* Set up Email Address: CANCEL
+	* you probably don't need to Check use without email account
+* Exit Setup
+	* you probably should Quit Thunderbird
+
+##### add in the archive data
+
+* using a file browser like Finder,  view the Folder path above
+	* find the file `prefs.js`
+	* open with a text editor
+	* insert the line and save
+```
+user_pref("mail.server.server2.directory-rel", "[ProfD]ImapMail/nickname.provider.com");
+```
+* Create the ImapMail folder and add in your imap archive folder and imap.msf file
+	* we assume the path is just as in the prefs relative path above
+##### get Thunderbird to recognise the folder
+
+* Back in the Profile Manager
+	* Launch (once again your new) Profile in new browser
+	* it should prompt you to Set up your existing email address
+* put dummy data in
+	* Full name: a
+	* email address: a@a
+* Configure manually / Advanced Config / Ok
+* Click down on Outgoing Server / back up on `a@a`
+* Now there should be a red Delete button, click it
+	* and Check remove message data then Remove
+* Click on Local Folders and rename to ` nickname.provider.com (local) `
+	* If you get the warning `The Local Directory path "is not suitable for message storage"` you can just Ok to disregard it
+* 
+
+Now when you reopen Thunderbird you should be able to open and read the emails as if you had just downloaded them.
 
 ## Hex Viewer ##
 
