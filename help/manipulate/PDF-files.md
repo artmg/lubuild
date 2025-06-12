@@ -167,6 +167,7 @@ for help see https://qpdf.readthedocs.io/
 
 #### qpdf alternatives
 
+
 ```bash
 #### using ghostscript
 sudo apt-get install ghostscript
@@ -218,6 +219,7 @@ gs -dNOPAUSE -dQUIET -dBATCH -sDEVICE=pdfwrite -sOutputFile=output.pdf ~/out.pdf
 
 Also ran:
 
+* FileOptimizer is an established open-source file compressor for Windows and Wine that includes PDF amongst many file types it can squeze, but is only works losslessly, and will not denigrate image quality.
 * http://gscan2pdf.sourceforge.net/ orphaned gui to link sane to GS
 * http://svn.ghostscript.com/ghostscript/trunk/gs/doc/Ps2pdf.htm#PDFA scan to PostScript and convert
 
