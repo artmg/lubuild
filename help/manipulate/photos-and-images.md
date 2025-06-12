@@ -89,6 +89,51 @@ sudo apt install photoqt
 moved out to [https://github.com/artmg/lubuild/blob/master/help/manipulate/miscellaneous-files.md]
 
 
+## manipulating image files
+
+### compressing image data
+
+Some image file formats have the capability to be compressed, 
+with (lossy) or without (lossless) a denigration of image quality. 
+Lossy compression, either by reducing quality or pixel resolution, 
+may be acceptable depending on your purpose for storing the image.
+#### cross platform GUI
+
+Focussing on FOSS solutions that can easily be installed on a variety of desktop OSes. 
+PDF image compression would be a nice to have.
+
+* Caeseum
+	* strong contender from mature project
+	* JPG, PNG, WebP, and TIFF - lossless and lossy
+	* good batch processing
+	* in choco, mac needs DMG - is linux CLI only?
+* ImageOptim
+	* very popular independent project
+	* mac-oriented, nice GUI with good Finder integration 
+	* Some linux support, (windows not sure)
+	* does not keep EXIF (by default)
+* Squoosh
+	* Google browser-based PWA with app wrapper
+	* purports to do everything in browser with web servers
+	* popular
+	* lots of tweaking options with instant visualisation and metrics
+* FileOptimizer
+	* Windows, so needs Wine for unix
+	* Wide range of formats, including PDF
+	* lossless only
+* Curtail
+	* python
+	* lossy and lossless
+	* might just be linux?
+* Trimage
+	* simple but effective compression
+	* limited, only lossless
+* E-Mage
+* Imagine
+	* relative newcomer - not very active project
+	* Electron-based
+	* jpeg, png, webp
+	* win, mac, linux
 
 ## Create photo collage
 
