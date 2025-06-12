@@ -213,6 +213,15 @@ gollum .
 x-www-browser http://localhost:4567/
 ```
 
+### stats
+
+Quick and simple git statistics from your current local repo folder using this ready command from a stack overflow comment:
+
+```sh
+# credit https://stackoverflow.com/q/1486819#comment115136622_1487540
+git ls-files | while read f; do git blame -w -M -C -C --line-porcelain "$f" | grep -I '^author '; done | sort -f | uniq -ic | sort -n --reverse
+```
+
 ## Authentication options
 
 see also:
