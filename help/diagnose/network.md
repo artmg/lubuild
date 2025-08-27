@@ -566,6 +566,19 @@ tool to capture packets:
 
 * Wireshark
 
+### Detailed application inspection
+
+If you were concerned about traffic in your network, and wanted to get a better idea of what data was being passed via API calls, then you do have mechanisms that allow you to inspect at the application layer. Note that this level of inspection might cause privacy issues for people using your network, so ensure that you have the legal right to use such tools.
+
+`mitmproxy` is a modular, event-driven HTTP(S) proxy built in Python which can be placed between a client and its server connection, 'man in the middle'. It is open-source software with a rich ecosystem of Addons & Scripts that can respond to events. Alternatively, if you are happy to perform analytical processing offline, you can simply get it to dump HTTP Request and Response data to JSON using
+
+```
+mitmdump -s jsondump.py --mode transparent
+```
+
+As long as you set the client to use this as its proxy, it will allow you to capture in cleartext all of the content of the https traffic sent and received.
+
+If you were unsure of which clients were sending and receiving nefarious traffic, `Suricata` is an open-source IDS/IPS with SSL inspection capabilities.
 
 ## Discovery
 
